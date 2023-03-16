@@ -2,6 +2,12 @@
 #include "GameEnginePath.h"
 #include "GameEngineSerializer.h"
 
+enum class SAVEMODE
+{
+	Text,
+	Bin,
+};
+
 // Ό³Έν :
 class GameEngineFile
 {
@@ -22,7 +28,11 @@ public:
 		return Path.Path.string();
 	}
 
-	void Save(const GameEngineSerializer& _Data);
+	void SaveBin(const GameEngineSerializer& _Data);
+	void SaveText(const std::string_view& _View);
+
+	void LoadBin(GameEngineSerializer& _Data);
+
 protected:
 
 private:

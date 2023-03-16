@@ -1,6 +1,8 @@
 #pragma once
 #include <string>
 #include <Windows.h>
+#include <functional>
+
 #include <GameEngineBase/GameEngineMath.h>
 
 // 윈도우는 핸들 방식이라는것을 이용한다.
@@ -51,7 +53,11 @@ public:
 
 	//다른 클래스와 단절시켜 시키는것만 하게함
 	//callback함수 : 함수포인터를 이용해 다른함수를 대신 실행시켜줌
-	static int WindowLoop(void(*Start)(), void(*Loop)(), void(*End)());
+	static int WindowLoop(
+	std::function<void()> _Start,
+		std::function<void()> _Loop,
+		std::function<void()> _End
+		);
 
 	static float4 GetMousePosition();
 

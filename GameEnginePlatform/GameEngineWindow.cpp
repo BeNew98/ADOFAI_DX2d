@@ -130,7 +130,11 @@ void GameEngineWindow::DoubleBufferRender()
     BackBufferImage->BitCopy(DoubleBufferImage, WindowSize.half(), WindowSize);
 }
 
-int GameEngineWindow::WindowLoop(void(*_Start)(), void(*_Loop)(), void(*_End)())
+int GameEngineWindow::WindowLoop(
+    std::function<void()> _Start,
+    std::function<void()> _Loop,
+    std::function<void()> _End
+)
 {
     // 단축키. 안써도 문제 x
     // HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_WINDOWSPROJECT1));
