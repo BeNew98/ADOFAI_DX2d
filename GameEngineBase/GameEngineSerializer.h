@@ -24,7 +24,7 @@ public:
 
 	void BufferResize(size_t _Size);
 
-	// 실수할 여지가 있어서 선생님은 템플릿을 나중에 만들려고 합니다.
+	////////////////////// Write
 	void Write(const int& _Value);
 
 	void Write(const std::string_view& _Value);
