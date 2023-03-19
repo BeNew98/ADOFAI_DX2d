@@ -19,12 +19,17 @@
     <ClCompile Include="GameEngineFile.cpp">
       <Filter>IO%28File%29</Filter>
     </ClCompile>
-    <ClCompile Include="GameEngineTime.cpp" />
     <ClCompile Include="GameEngineRandom.cpp">
       <Filter>Math</Filter>
     </ClCompile>
     <ClCompile Include="GameEngineSerializer.cpp">
       <Filter>IO%28File%29</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineTime.cpp">
+      <Filter>Time</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineTimeEvent.cpp">
+      <Filter>Time</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -46,12 +51,17 @@
     <ClInclude Include="GameEngineFile.h">
       <Filter>IO%28File%29</Filter>
     </ClInclude>
-    <ClInclude Include="GameEngineTime.h" />
     <ClInclude Include="GameEngineRandom.h">
       <Filter>Math</Filter>
     </ClInclude>
     <ClInclude Include="GameEngineSerializer.h">
       <Filter>IO%28File%29</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngineTime.h">
+      <Filter>Time</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngineTimeEvent.h">
+      <Filter>Time</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -66,6 +76,9 @@
     </Filter>
     <Filter Include="String">
       <UniqueIdentifier>{f9fc6c6b-6bd1-4bf0-b1c1-581c33d10fd1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Time">
+      <UniqueIdentifier>{4afb06d1-0768-41e4-b9d1-a3a12f616e79}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -14,9 +14,9 @@ public:
 	ContentsCore& operator=(const ContentsCore& _Other) = delete;
 	ContentsCore& operator=(ContentsCore&& _Other) noexcept = delete;
 
-protected:
 	static void GameStart();
 	static void GameEnd();
+protected:
 
 
 private:

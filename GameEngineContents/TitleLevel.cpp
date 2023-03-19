@@ -8,3 +8,7 @@ TitleLevel::~TitleLevel()
 {
 }
 
+void TitleLevel::Loading()
+{
+}
+
