@@ -3,6 +3,7 @@
 #include <math.h>
 #include <cmath>
 #include <string>
+#include <Windows.h>
 #include <vector>
 
 //final은 더이상 상속을 못내리게함.
@@ -132,7 +133,7 @@ public:
 
 	void RotaitonZDeg(float _Deg)
 	{
-		RotaitonZRad(_Deg * GameEngineMath::RadToDeg);
+		RotaitonZRad(_Deg * GameEngineMath::DegToRad);
 	}
 
 	void RotaitonZRad(float _Rad)
@@ -142,6 +143,17 @@ public:
 		y = Copy.x * sinf(_Rad) + Copy.y * cosf(_Rad);
 	}
 
+	float4 RotaitonZDegReturn(float _Deg)
+	{
+		float4 Copy = *this;
+		Copy.RotaitonZDeg(_Deg);
+		return Copy;
+	}
+
+	POINT ToWindowPOINT()
+	{
+		return POINT(ix(), iy());
+	}
 
 	float4 half() const
 	{
