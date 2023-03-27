@@ -179,12 +179,13 @@ public:
 	}
 
 	static float4 Lerp(const float4& Start, const float4& End, float Ratio)
+	static float4 Lerp(const float4&& Start, const float4&& End, float Ratio)
 	{
 		// 1.5 + 0.5 * 2.5;
 		return Start * (1.0f - Ratio) + (End * Ratio);
 	}
 
-	static float4 LerpClamp(const float4& Start, const float4& End, float Ratio)
+	static float4 LerpClamp(const float4& Start, const float4&& End, float Ratio)
 	{
 		if (0 >= Ratio)
 		{
