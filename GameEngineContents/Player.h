@@ -20,6 +20,6 @@ protected:
 	void Render(float _Delta) override;
 
 private:
-
+	float Angle = 0.0f;
 };
 

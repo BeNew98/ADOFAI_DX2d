@@ -19,11 +19,9 @@ void Player::Render(float _Delta)
 {
 	HDC Dc = GameEngineWindow::GetWindowBackBufferHdc();
 
-	// Rectangle(Dc, 0, 0, 100, 100);
-
 	const int VertexCount = 24;
 
-	float4 Pos = { 640, 360 };
+	//float4 Pos = { 640, 360 };
 
 	// 최초의 버텍스의 위치를 로컬공간이라고 부릅니다.
 	float4 ArrVertex[VertexCount];
@@ -34,10 +32,10 @@ void Player::Render(float _Delta)
 	ArrVertex[3] = { -0.5f, 0.5f,0.5f };
 
 	// 뒷면
-	ArrVertex[4] = ArrVertex[0].RotaitonXDegReturn(180.0f);
-	ArrVertex[5] = ArrVertex[1].RotaitonXDegReturn(180.0f);
-	ArrVertex[6] = ArrVertex[2].RotaitonXDegReturn(180.0f);
-	ArrVertex[7] = ArrVertex[3].RotaitonXDegReturn(180.0f);
+	ArrVertex[4] = ArrVertex[0].RotaitonXDegReturn(150.0f);
+	ArrVertex[5] = ArrVertex[1].RotaitonXDegReturn(150.0f);
+	ArrVertex[6] = ArrVertex[2].RotaitonXDegReturn(150.0f);
+	ArrVertex[7] = ArrVertex[3].RotaitonXDegReturn(150.0f);
 
 	// 왼쪽면
 	ArrVertex[8] = ArrVertex[0].RotaitonYDegReturn(90.0f);
@@ -64,13 +62,10 @@ void Player::Render(float _Delta)
 
 	POINT ArrPoint[VertexCount];
 
-	float4x4 ScaleMat;
-	ScaleMat.Scale({ 100, 100, 100 });
+	GetTransform().SetLocalScale({ 100, 100, 100 });
+	GetTransform().SetLocalPosition({ 100,100});
+	GetTransform().AddLocalRotation({ _Delta * 100.0f, _Delta * 200.0f, _Delta * 300.0f });
 
-	float4x4 PosMat;
-	PosMat.Pos(Pos);
-
-	float4x4 WorldMat = ScaleMat * PosMat;
 
 	// 크자이공부
 	// 크기
@@ -89,7 +84,7 @@ void Player::Render(float _Delta)
 
 	for (size_t i = 0; i < VertexCount; i++)
 	{
-		ArrVertex[i] = ArrVertex[i] * WorldMat;
+		ArrVertex[i] = ArrVertex[i] * GetTransform().GetLocalWorldMatrixRef();
 		ArrPoint[i] = ArrVertex[i].ToWindowPOINT();
 	}
 
