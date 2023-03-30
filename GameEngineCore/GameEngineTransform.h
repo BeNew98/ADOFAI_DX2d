@@ -52,6 +52,36 @@ public:
 		TransformUpdate();
 	}
 
+	float4 GetLocalForwardVector()
+	{
+		return LocalWorldMatrix.ArrVector[2].NormalizeReturn();
+	}
+
+	float4 GetLocalUpVector()
+	{
+		return LocalWorldMatrix.ArrVector[1].NormalizeReturn();
+	}
+
+	float4 GetLocalRightVector()
+	{
+		return LocalWorldMatrix.ArrVector[0].NormalizeReturn();
+	}
+
+	float4 GetLocalPosition()
+	{
+		return LocalPosition;
+	}
+
+	float4 GetLocalScale()
+	{
+		return LocalScale;
+	}
+
+	float4 GetLocalRotation()
+	{
+		return LocalRotation;
+	}
+
 	float4x4 GetLocalWorldMatrix()
 	{
 		return LocalWorldMatrix;
@@ -60,6 +90,22 @@ public:
 	const float4x4& GetLocalWorldMatrixRef()
 	{
 		return LocalWorldMatrix;
+	}
+
+	const float4x4 GetWorldMatrix()
+	{
+		return WorldMatrix;
+	}
+
+	const float4x4& GetWorldMatrixRef()
+	{
+		return WorldMatrix;
+	}
+
+	inline const void SetView(const float4x4& _View)
+	{
+		View = _View;
+		WorldMatrix = WorldMatrix * View;
 	}
 
 protected:
@@ -79,5 +125,9 @@ private:
 	float4x4 LocalPositionMatrix;
 
 	float4x4 LocalWorldMatrix;
+
+	float4x4 WorldMatrix;
+
+	float4x4 View;
 };
 

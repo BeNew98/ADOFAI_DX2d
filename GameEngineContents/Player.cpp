@@ -1,6 +1,8 @@
 #include "Player.h"
 #include <GameEngineBase/GameEngineMath.h>
 #include <GameEnginePlatform/GameEngineWindow.h>
+#include <GameEngineCore/GameEngineLevel.h>
+#include <GameEngineCore/GameEngineCamera.h>
 
 
 Player::Player() 
@@ -32,10 +34,10 @@ void Player::Render(float _Delta)
 	ArrVertex[3] = { -0.5f, 0.5f,0.5f };
 
 	// µÞ¸é
-	ArrVertex[4] = ArrVertex[0].RotaitonXDegReturn(150.0f);
-	ArrVertex[5] = ArrVertex[1].RotaitonXDegReturn(150.0f);
-	ArrVertex[6] = ArrVertex[2].RotaitonXDegReturn(150.0f);
-	ArrVertex[7] = ArrVertex[3].RotaitonXDegReturn(150.0f);
+	ArrVertex[4] = ArrVertex[0].RotaitonXDegReturn(180.f);
+	ArrVertex[5] = ArrVertex[1].RotaitonXDegReturn(180.0f);
+	ArrVertex[6] = ArrVertex[2].RotaitonXDegReturn(180.0f);
+	ArrVertex[7] = ArrVertex[3].RotaitonXDegReturn(180.0f);
 
 	// ¿ÞÂÊ¸é
 	ArrVertex[8] = ArrVertex[0].RotaitonYDegReturn(90.0f);
@@ -64,8 +66,9 @@ void Player::Render(float _Delta)
 
 	GetTransform().SetLocalScale({ 100, 100, 100 });
 	GetTransform().SetLocalPosition({ 100,100});
-	GetTransform().AddLocalRotation({ _Delta * 100.0f, _Delta * 200.0f, _Delta * 300.0f });
+	//GetTransform().AddLocalRotation({ _Delta * 100.0f, _Delta * 200.0f, _Delta * 300.0f });
 
+	GetTransform().SetView(GetLevel()->GetMainCamera()->GetView());
 
 	// Å©ÀÚÀÌ°øºÎ
 	// Å©±â
@@ -84,7 +87,7 @@ void Player::Render(float _Delta)
 
 	for (size_t i = 0; i < VertexCount; i++)
 	{
-		ArrVertex[i] = ArrVertex[i] * GetTransform().GetLocalWorldMatrixRef();
+		ArrVertex[i] = ArrVertex[i] * GetTransform().GetWorldMatrixRef();
 		ArrPoint[i] = ArrVertex[i].ToWindowPOINT();
 	}
 

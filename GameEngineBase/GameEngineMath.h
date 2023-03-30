@@ -46,6 +46,27 @@ public:
 		return float4(cosf(_Rad), sinf(_Rad), 0.0f, 1.0f);
 	}
 
+	static float GetAngleVectorToVectorDeg(const float4& _Left, const float4& _Right)
+	{
+		return GetAngleVectorToVectorRad(_Left, _Right) * GameEngineMath::RadToDeg;
+	}
+
+	static float GetAngleVectorToVectorRad(const float4& _Left, const float4& _Right)
+	{
+		float4 Left = _Left;
+		float4 Right = _Right;
+
+		Left.Normalize();
+		Right.Normalize();
+
+		float CosSeta = DotProduct3D(Left, Right);
+
+		float Angle = acosf(CosSeta);
+
+		return Angle;
+	}
+
+	// 외적의 결과는 두개의 백터가 겹칠때 주의해서 처리해줘야 한다.
 	static float4 Cross3DReturnNormal(const float4& _Left, const float4& _Right)
 	{
 		return Cross3DReturn(_Left.NormalizeReturn(), _Right.NormalizeReturn()).NormalizeReturn();
@@ -59,6 +80,13 @@ public:
 		ReturnValue.y = (_Left.z * _Right.x) - (_Left.x * _Right.z);
 		ReturnValue.z = (_Left.x * _Right.y) - (_Left.y * _Right.x);
 		return ReturnValue;
+	}
+
+	static float DotProduct3D(const float4& _Left, const float4& _Right)
+	{
+		//            1         1          1          0          0          0
+		float Value = _Left.x * _Right.x + _Left.y * _Right.y + _Left.z * _Right.z;
+		return Value;
 	}
 
 public:
@@ -159,12 +187,12 @@ public:
 		return w * 0.5f;
 	}
 
-	float GetAngleDeg()
+	float GetAngleDegZ()
 	{
-		return GetAngleRad() * GameEngineMath::RadToDeg;
+		return GetAngleRadZ() * GameEngineMath::RadToDeg;
 	}
 
-	float GetAngleRad()
+	float GetAngleRadZ()
 	{
 		float4 AngleCheck = (*this);
 		AngleCheck.Normalize();		
@@ -182,65 +210,42 @@ public:
 	float4 RotaitonXDegReturn(float _Deg)
 	{
 		float4 ReturnValue = *this;
-		ReturnValue.RotaitonXRad(_Deg * GameEngineMath::DegToRad);
+		ReturnValue.RotationXRad(_Deg * GameEngineMath::DegToRad);
 		return ReturnValue;
 	}
 
 	float4 RotaitonYDegReturn(float _Deg)
 	{
 		float4 ReturnValue = *this;
-		ReturnValue.RotaitonYRad(_Deg * GameEngineMath::DegToRad);
+		ReturnValue.RotationYRad(_Deg * GameEngineMath::DegToRad);
 		return ReturnValue;
 	}
 
 	float4 RotaitonZDegReturn(float _Deg)
 	{
 		float4 ReturnValue = *this;
-		ReturnValue.RotaitonZRad(_Deg * GameEngineMath::DegToRad);
+		ReturnValue.RotationZRad(_Deg * GameEngineMath::DegToRad);
 		return ReturnValue;
 	}
 
 	void RotaitonXDeg(float _Deg)
 	{
-		RotaitonXRad(_Deg * GameEngineMath::DegToRad);
+		RotationXRad(_Deg * GameEngineMath::DegToRad);
 	}
 
 	void RotaitonYDeg(float _Deg)
 	{
-		RotaitonYRad(_Deg * GameEngineMath::DegToRad);
+		RotationYRad(_Deg * GameEngineMath::DegToRad);
 	}
 
 	void RotaitonZDeg(float _Deg)
 	{
-		RotaitonZRad(_Deg * GameEngineMath::DegToRad);
+		RotationZRad(_Deg * GameEngineMath::DegToRad);
 	}
 
-	void RotaitonXRad(float _Rad)
-	{
-		float4 Copy = *this;
-		float Z = Copy.z;
-		float Y = Copy.y;
-		y = Y * cosf(_Rad) - Z * sinf(_Rad);
-		z = Y * sinf(_Rad) + Z * cosf(_Rad);
-	}
-
-	void RotaitonYRad(float _Rad)
-	{
-		float4 Copy = *this;
-		float X = Copy.x;
-		float Z = Copy.z;
-		z = Z * cosf(_Rad) - X * sinf(_Rad);
-		x = Z * sinf(_Rad) + X * cosf(_Rad);
-	}
-
-	void RotaitonZRad(float _Rad)
-	{
-		float4 Copy = *this;
-		float X = Copy.x;
-		float Y = Copy.y;
-		x = X * cosf(_Rad) - Y * sinf(_Rad);
-		y = X * sinf(_Rad) + Y * cosf(_Rad);
-	}
+	void RotationXRad(float _Rad);
+	void RotationYRad(float _Rad);
+	void RotationZRad(float _Rad);
 
 	POINT ToWindowPOINT()
 	{
@@ -397,6 +402,7 @@ public:
 	}
 
 	float4 operator*(const class float4x4& _Other);
+	float4& operator*=(const class float4x4& _Other);
 
 	std::string ToString()
 	{
@@ -418,11 +424,6 @@ public:
 	static const int YCount = 4;
 	static const int XCount = 4;
 
-private:
-	float4x4(bool)
-	{
-		memset(Arr1D, 0, sizeof(float4x4));
-	}
 public:
 	union
 	{
@@ -451,9 +452,30 @@ public:
 		};
 	};
 
-	float4x4()
+	void PerspectiveFovLH(float _FovAngle, float _AspectRatio, float _NearZ = 0.1f, float _FarZ = 10000.0f)
 	{
 		Identity();
+
+		// 수직시야각이라면
+		float FOV = _FovAngle * GameEngineMath::DegToRad;
+		//  _FovAngle * _AspectRatio;// 수평시야각 구하는법
+
+		// [1] [] [] []
+		// [] [1] [] []
+		// [] [] [1][1]
+		// [] [] [?] [0]
+		Arr2D[2][3] = 1.0f; // z값을 옮겨놓기 위함
+		Arr2D[3][3] = 0.0f; 
+
+		Arr2D[0][0] = 1 / tanf(FOV / 2.0f) / _AspectRatio;
+
+		// y 300
+		// z 5000
+		Arr2D[1][1] = 1 / tanf(FOV / 2.0f); // y / z
+
+		Arr2D[2][2] = _FarZ / (_FarZ - _NearZ);
+							//1	100			100  1 
+		Arr2D[3][2] = -_NearZ* Arr2D[2][2];
 	}
 
 	void Identity()
@@ -464,6 +486,71 @@ public:
 		Arr2D[2][2] = 1.0f;
 		Arr2D[3][3] = 1.0f;
 	}
+
+	void LookAtLH(const float4& _EyePos, const float4& _EyeDir, const float4& _EyeUp)
+	{
+		Identity();
+
+
+		float4 EyePos = _EyePos;
+
+		// 합쳐져서 회전행렬이 된다.
+		float4 EyeDir = _EyeDir.NormalizeReturn();
+		float4 EyeUp = _EyeUp;
+		float4 Right = float4::Cross3DReturn(EyeUp, EyeDir);
+		Right.Normalize();
+
+		float4 UpVector = float4::Cross3DReturn(_EyeDir, Right);
+		Right.Normalize();
+
+		float4 NegEyePos = -_EyePos;
+
+		float D0Value = float4::DotProduct3D(Right, NegEyePos);
+		float D1Value = float4::DotProduct3D(UpVector, NegEyePos);
+		float D2Value = float4::DotProduct3D(EyeDir, NegEyePos);
+
+		// 여기서 내적을 사용합니다.
+
+		ArrVector[0] = { 1, 0, 0, 0 };
+		ArrVector[1] = { 0, 1, 0, 0 };
+		ArrVector[2] = { 0, 0, 1, 0 };
+		ArrVector[3] = { D0Value, D1Value, D2Value, 0 };
+
+
+		//역함수 or 역행렬이라 부름
+		ArrVector[0] = Right;
+		ArrVector[1] = UpVector;
+		ArrVector[2] = EyeDir;
+
+		Transpose();
+
+		ArrVector[3] = { D0Value, D1Value, D2Value, 0 };
+	}
+
+	// 전치 행렬
+	void Transpose()
+	{
+		// 0   , 0, -1
+		// 100 , 1,  0
+		// 1   , 0,  0
+
+		// 0 , 100,  1
+		// 0,    1,  0
+		// -1 ,  0,  0
+
+		//가운데를 기점으로 뒤집어버림
+
+		float4x4 This = *this;
+		Identity();
+		for (size_t y = 0; y < YCount; y++)
+		{
+			for (size_t x = 0; x < XCount; x++)
+			{
+				Arr2D[x][y] = This.Arr2D[y][x];
+			}
+		}
+	}
+
 	void Scale(const float4& _Value)
 	{
 		//100, 0 , 0 , 0
@@ -579,5 +666,18 @@ public:
 		}
 
 		return Return;
+	}
+
+	float4x4()
+	{
+		Identity();
+	}
+
+	float4x4(float4 _x, float4 _y, float4 _z, float4 _w)
+	{
+		ArrVector[0] = _x;
+		ArrVector[1] = _y;
+		ArrVector[2] = _z;
+		ArrVector[3] = _w;
 	}
 };

@@ -15,9 +15,21 @@ public:
 	GameEngineCamera& operator=(const GameEngineCamera& _Other) = delete;
 	GameEngineCamera& operator=(GameEngineCamera&& _Other) noexcept = delete;
 
+	inline float4x4 GetView()
+	{
+		return View;
+	}
+
 protected:
+	void Start() override;
+	void Update(float _DeltaTime) override;
 
 private:
+	bool FreeCamera = false;
 
+	float4x4 View;
+	float4x4 Projection;
+	float Near = 0.1f;
+	float Far = 10000.0f;
 };
 
