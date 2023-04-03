@@ -1,21 +1,23 @@
 #include "Player.h"
-#include <GameEngineBase/GameEngineMath.h>
 #include <GameEnginePlatform/GameEngineWindow.h>
 #include <GameEngineCore/GameEngineLevel.h>
 #include <GameEngineCore/GameEngineCamera.h>
 
-
-Player::Player() 
+Player::Player()
 {
 }
 
-Player::~Player() 
+Player::~Player()
 {
 }
+
 
 void Player::Update(float _Delta)
 {
+
 }
+
+
 
 void Player::Render(float _Delta)
 {
@@ -23,7 +25,7 @@ void Player::Render(float _Delta)
 
 	const int VertexCount = 24;
 
-	//float4 Pos = { 640, 360 };
+	// float4 Pos = {640, 360};
 
 	// 최초의 버텍스의 위치를 로컬공간이라고 부릅니다.
 	float4 ArrVertex[VertexCount];
@@ -34,7 +36,7 @@ void Player::Render(float _Delta)
 	ArrVertex[3] = { -0.5f, 0.5f,0.5f };
 
 	// 뒷면
-	ArrVertex[4] = ArrVertex[0].RotaitonXDegReturn(180.f);
+	ArrVertex[4] = ArrVertex[0].RotaitonXDegReturn(180.0f);
 	ArrVertex[5] = ArrVertex[1].RotaitonXDegReturn(180.0f);
 	ArrVertex[6] = ArrVertex[2].RotaitonXDegReturn(180.0f);
 	ArrVertex[7] = ArrVertex[3].RotaitonXDegReturn(180.0f);
@@ -65,29 +67,23 @@ void Player::Render(float _Delta)
 	POINT ArrPoint[VertexCount];
 
 	GetTransform().SetLocalScale({ 100, 100, 100 });
-	GetTransform().SetLocalPosition({ 100,100});
-	//GetTransform().AddLocalRotation({ _Delta * 100.0f, _Delta * 200.0f, _Delta * 300.0f });
+	// GetTransform().AddLocalRotation({ _Delta * 360.0f, _Delta * 360.0f, _Delta * 360.0f });
 
-	GetTransform().SetView(GetLevel()->GetMainCamera()->GetView());
+	GetTransform().SetCameraMatrix(GetLevel()->GetMainCamera()->GetView(), GetLevel()->GetMainCamera()->GetProjection());
 
-	// 크자이공부
-	// 크기
-	// 자전
-	// 이동
-	// 공전
-	// 부모
-
-	// 크기를 키우고
-	// 회전시킨다음
-	// 이동하고
-	// 공전시키고
-	// 부모의 변환을 적용시킨다.
-	// 공간변환의 순서.
-
+	// GetTransform().SetViewPort(GetLevel()->GetMainCamera()->GetViewPort());
 
 	for (size_t i = 0; i < VertexCount; i++)
 	{
 		ArrVertex[i] = ArrVertex[i] * GetTransform().GetWorldMatrixRef();
+		// 투영행렬의 핵심
+		ArrVertex[i] /= ArrVertex[i].w;
+
+		// TransformCoord
+		ArrVertex[i].w = 1.0f;
+
+		ArrVertex[i] *= GetLevel()->GetMainCamera()->GetViewPort();
+
 		ArrPoint[i] = ArrVertex[i].ToWindowPOINT();
 	}
 
@@ -103,7 +99,7 @@ void Player::Render(float _Delta)
 		float4 Dir1 = Vector1 - Vector2;
 
 		float4 Cross = float4::Cross3DReturn(Dir0, Dir1);
-		if (0 <= Cross.z)
+		if (0 >= Cross.z)
 		{
 			continue;
 		}

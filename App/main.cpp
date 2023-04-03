@@ -11,17 +11,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	_In_ LPWSTR    lpCmdLine,
 	_In_ int       nCmdShow)
 {
-	float4x4 Proj;
-	Proj.PerspectiveFovLH(60.0f, 1280.0f / 720.0f,1.f,10000.f);
-
-	float4 Test = { 0.0f, -500, 5000.0f };
-
-
-	Test *= Proj;
-
-	Test.x /= Test.w;
-	Test.y /= Test.w;
-	Test.z /= Test.w;
 
 	GameEngineCore::Start(hInstance,ContentsCore::GameStart,ContentsCore::GameEnd);
 }
