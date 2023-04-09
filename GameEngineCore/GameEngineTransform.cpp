@@ -13,7 +13,9 @@ GameEngineTransform::~GameEngineTransform()
 void GameEngineTransform::TransformUpdate()
 {
 	LocalScaleMatrix.Scale(LocalScale);
-	LocalRotationMatrix.RotationDeg(LocalRotation);
+	LocalRotation.w = 0.0f;
+	LocalQuaternion = LocalRotation.EulerDegToQuaternion();
+	LocalRotationMatrix = LocalQuaternion.QuaternionToRotationMatrix();
 	LocalPositionMatrix.Pos(LocalPosition);
 
 	LocalWorldMatrix = LocalScaleMatrix * LocalRotationMatrix * LocalPositionMatrix;
@@ -29,8 +31,11 @@ void GameEngineTransform::TransformUpdate()
 
 }
 
-//void GameEngineTransform::SetParent(class GameEngineObject* _Parent)
-//{
-//	Parent = _Parent;
-//	Parent->GetTransform().Child.push_back(Master);
-//}
+void GameEngineTransform::SetParent(GameEngineTransform* _Parent)
+{
+	Parent = _Parent;
+
+	// 내가 이미 다른 부모가 있다면
+
+	Parent->Child.push_back(this);
+}

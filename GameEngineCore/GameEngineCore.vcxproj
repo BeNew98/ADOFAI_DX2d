@@ -189,7 +189,15 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="GameEngineNameObject.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="GameEngineObject.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="GameEngineObjectBase.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -198,6 +206,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="GameEngineResource.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="GameEngineTexture.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -231,6 +243,7 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="GameEngineCore_Resources.cpp" />
     <ClCompile Include="GameEngineLevel.cpp">
       <SubType>
       </SubType>
@@ -239,7 +252,15 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="GameEngineNameObject.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="GameEngineObject.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="GameEngineObjectBase.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -248,6 +269,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="GameEngineResource.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="GameEngineTexture.cpp">
       <SubType>
       </SubType>
     </ClCompile>

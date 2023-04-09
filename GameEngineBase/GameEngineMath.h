@@ -152,6 +152,15 @@ public:
 
 	}
 
+	void RotationXRad(float _Rad);
+	void RotationYRad(float _Rad);
+	void RotationZRad(float _Rad);
+	float4 EulerDegToQuaternion();
+	class float4x4 QuaternionToRotationMatrix();
+
+	float4 QuaternionToEulerDeg();
+	float4 QuaternionToEulerRad();
+
 	int ix() const
 	{
 		return static_cast<int>(x);
@@ -232,45 +241,42 @@ public:
 
 	}
 
-	float4 RotaitonXDegReturn(float _Deg)
+	float4 RotationXDegReturn(float _Deg)
 	{
 		float4 ReturnValue = *this;
 		ReturnValue.RotationXRad(_Deg * GameEngineMath::DegToRad);
 		return ReturnValue;
 	}
 
-	float4 RotaitonYDegReturn(float _Deg)
+	float4 RotationYDegReturn(float _Deg)
 	{
 		float4 ReturnValue = *this;
 		ReturnValue.RotationYRad(_Deg * GameEngineMath::DegToRad);
 		return ReturnValue;
 	}
 
-	float4 RotaitonZDegReturn(float _Deg)
+	float4 RotationZDegReturn(float _Deg)
 	{
 		float4 ReturnValue = *this;
 		ReturnValue.RotationZRad(_Deg * GameEngineMath::DegToRad);
 		return ReturnValue;
 	}
 
-	void RotaitonXDeg(float _Deg)
+	void RotationXDeg(float _Deg)
 	{
 		RotationXRad(_Deg * GameEngineMath::DegToRad);
 	}
 
-	void RotaitonYDeg(float _Deg)
+	void RotationYDeg(float _Deg)
 	{
 		RotationYRad(_Deg * GameEngineMath::DegToRad);
 	}
 
-	void RotaitonZDeg(float _Deg)
+	void RotationZDeg(float _Deg)
 	{
 		RotationZRad(_Deg * GameEngineMath::DegToRad);
 	}
 
-	void RotationXRad(float _Rad);
-	void RotationYRad(float _Rad);
-	void RotationZRad(float _Rad);
 
 	POINT ToWindowPOINT()
 	{
@@ -473,6 +479,8 @@ public:
 };
 
 
+typedef float4 Quaternion;
+
 class float4x4
 {
 public:
@@ -565,7 +573,36 @@ public:
 		Arr2D[3][2] = _ZMax != 0.0f ? 0.0f : _ZMin / _ZMax;
 		Arr2D[3][3] = 1.0f;
 	}
-	
+
+	void Decompose(float4& _Scale, float4& _RotQuaternion, float4& _Pos)
+	{
+		DirectX::XMMatrixDecompose(&_Scale.DirectVector, &_RotQuaternion.DirectVector, &_Pos.DirectVector, DirectMatrix);
+	}
+
+	void DecomposeRotQuaternion(float4& _RotQuaternion)
+	{
+		float4 Temp0;
+		float4 Temp1;
+
+		DirectX::XMMatrixDecompose(&Temp0.DirectVector, &_RotQuaternion.DirectVector, &Temp1.DirectVector, DirectMatrix);
+	}
+
+	void DecomposePos(float4& _Pos)
+	{
+		float4 Temp0;
+		float4 Temp1;
+
+		DirectX::XMMatrixDecompose(&Temp0.DirectVector, &Temp1.DirectVector, &_Pos.DirectVector, DirectMatrix);
+	}
+
+	void DecomposeScale(float4& _Scale)
+	{
+		float4 Temp0;
+		float4 Temp1;
+
+		DirectX::XMMatrixDecompose(&_Scale.DirectVector, &Temp0.DirectVector, &Temp1.DirectVector, DirectMatrix);
+	}
+
 
 	void LookToLH(const float4& _EyePos, const float4& _EyeDir, const float4& _EyeUp)
 	{
@@ -676,6 +713,19 @@ public:
 		//Arr2D[3][2] = _Value.z;
 	}
 
+	void RotationDegToXYZ(const float4& _Deg)
+	{
+		float4 Rot = _Deg * GameEngineMath::DegToRad;
+
+		float4x4 RotX = DirectX::XMMatrixRotationX(Rot.x);
+		float4x4 RotY = DirectX::XMMatrixRotationY(Rot.y);
+		float4x4 RotZ = DirectX::XMMatrixRotationZ(Rot.z);
+
+		*this = RotX * RotY * RotZ;
+
+		// DirectMatrix = DirectX::XMMatrixRotationRollPitchYaw(Rot.x, Rot.y, Rot.z);
+	}
+
 	void RotationDeg(const float4& _Deg)
 	{
 		// 짐벌락 현상이라는 것이 있다.
@@ -695,7 +745,9 @@ public:
 
 		// *this = RotX * RotY * RotZ;
 
-		DirectMatrix = DirectX::XMMatrixRotationRollPitchYawFromVector(_Deg * GameEngineMath::DegToRad);
+		float4 Rot = _Deg * GameEngineMath::DegToRad;
+
+		DirectMatrix = DirectX::XMMatrixRotationRollPitchYaw(Rot.x, Rot.y, Rot.z);
 	}
 
 	void RotationXDeg(const float _Deg)

@@ -38,11 +38,16 @@ protected:
 	virtual void Render(float _DeltaTime) {}
 
 private:
-	class GameEngineLevel* Level;
+	class GameEngineLevel* Level = nullptr;
 
 	// 이걸 컴포넌트 구조
-	std::list<std::shared_ptr<class GameEngineComponent>> ComponentList;
+	std::list<std::shared_ptr<class GameEngineComponent>> ComponentsList;
 
 	void ComponentInit(std::shared_ptr<class GameEngineComponent> _Component);
+
+	void ComponentsUpdate(float _DeltaTime);
+
+	void ComponentsRender(float _DeltaTime);
+
 };
 
