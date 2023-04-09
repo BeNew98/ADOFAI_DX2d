@@ -25,7 +25,7 @@ public:
 	template<typename ComponentType>
 	std::shared_ptr<ComponentType> CreateComponent()
 	{
-		std::shared_ptr<class GameEngienComponent> NewComponent = std::make_shared<ComponentType>();
+		std::shared_ptr<class GameEngineComponent> NewComponent = std::make_shared<ComponentType>();
 
 		ComponentInit(NewComponent);
 

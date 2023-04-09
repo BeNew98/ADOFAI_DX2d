@@ -5,6 +5,7 @@
 #include <GameEnginePlatform\GameEngineSound.h>
 #include <GameEnginePlatform\GameEngineInput.h>
 #include <GameEngineBase\GameEngineTime.h>
+#include "GameEngineDevice.h"
 
 std::map<std::string, std::shared_ptr<GameEngineLevel>> GameEngineCore::LevelMap;
 std::shared_ptr<GameEngineLevel> GameEngineCore::MainLevel = nullptr;
@@ -20,6 +21,8 @@ GameEngineCore::~GameEngineCore()
 
 void GameEngineCore::EngineStart(std::function<void()> _ContentsStart)
 {
+	GameEngineDevice::Initialize();
+
 	CoreResourcesInit();
 
 	if (nullptr == _ContentsStart)
@@ -47,8 +50,12 @@ void GameEngineCore::EngineUpdate()
 	GameEngineInput::Update(TimeDeltaTime);
 
 	MainLevel->TimeEvent.Update(TimeDeltaTime);
-	MainLevel->Update(TimeDeltaTime);
+	MainLevel->Update(TimeDeltaTime);	
+
+	GameEngineDevice::RenderStart();
 	MainLevel->Render(TimeDeltaTime);
+	GameEngineDevice::RenderEnd();
+
 
 }
 
@@ -62,6 +69,8 @@ void GameEngineCore::EngineEnd(std::function<void()> _ContentsEnd)
 	_ContentsEnd();
 
 	LevelMap.clear();
+	CoreResourcesEnd();
+	GameEngineDevice::Release();
 }
 
 void GameEngineCore::Start(HINSTANCE _instance, std::function<void()> _Start, std::function<void()> _End, float4 _Pos, float4 _Size)
