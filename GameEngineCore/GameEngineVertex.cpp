@@ -1,10 +1,2 @@
+#include "PrecompileHeader.h"
 #include "GameEngineVertex.h"
-
-GameEngineVertex::GameEngineVertex() 
-{
-}
-
-GameEngineVertex::~GameEngineVertex() 
-{
-}
-

@@ -1,4 +1,5 @@
 #pragma once
+#include "GameEngineResource.h"
 
 // Ό³Έν :
 class GameEngineDirectBuffer
@@ -15,8 +16,9 @@ public:
 	GameEngineDirectBuffer& operator=(GameEngineDirectBuffer&& _Other) noexcept = delete;
 
 protected:
+	D3D11_BUFFER_DESC BufferInfo = { 0, };
+	ID3D11Buffer* Buffer = nullptr;
 
 private:
-
 };
 
