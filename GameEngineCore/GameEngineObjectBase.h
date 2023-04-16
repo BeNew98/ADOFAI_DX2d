@@ -43,6 +43,7 @@ public:
 		DeathValue = true;
 	}
 
+
 	void DebugOn()
 	{
 		DebugValue = true;
@@ -56,7 +57,6 @@ public:
 protected:
 
 private:
-	std::string Name = "";
 	bool ActiveValue = true; // 켜졌다 꺼졌다
 	bool DeathValue = false; // 죽었다 살았다
 	bool DebugValue = false;

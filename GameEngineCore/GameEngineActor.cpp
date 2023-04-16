@@ -2,11 +2,11 @@
 #include "GameEngineActor.h"
 #include "GameEngineComponent.h"
 
-GameEngineActor::GameEngineActor()
+GameEngineActor::GameEngineActor() 
 {
 }
 
-GameEngineActor::~GameEngineActor()
+GameEngineActor::~GameEngineActor() 
 {
 }
 

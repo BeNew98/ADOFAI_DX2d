@@ -4,33 +4,32 @@
 #include <string>
 
 // 설명 :
-
 class GameEngineWindow;
 class GameEngineInput
 {
 	friend GameEngineWindow;
 
 private:
-	class GameEngineKey
+	class GameEngineKey 
 	{
 		friend GameEngineInput;
 
-		bool Down = false;
-		bool Press = false;
+		bool Down = false; // 누른 한순간
+		bool Press = false; // 계속 누르고 있다.
+		bool Up = false; // 땐 한순간
+		bool Free = true; // 안눌리고 있다.
 
-		bool Up = false;
-		bool Free = true;
-
-		float PressTime;
+		float PressTime; // 몇초간 눌렀다.
 		int Key = -1;
 
-		bool KeyCheck()
+		bool KeyCheck() 
 		{
 			return 0 != GetAsyncKeyState(Key);
 		}
 
 		void Update(float _DeltaTime);
 	};
+
 public:
 
 	// delete Function
@@ -53,9 +52,7 @@ public:
 
 	static void MouseCursorOff();
 
-	static void MouseCursorOn();
-
-	static bool IsAnyKey()
+	static bool IsAnyKey() 
 	{
 		return IsAnyKeyValue;
 	}
@@ -63,15 +60,13 @@ public:
 protected:
 
 private:
-	static bool CursorSwitch;
-
 	// constrcuter destructer
 	GameEngineInput();
 	~GameEngineInput();
 
+	//      PlayerJump       A
 	static std::map<std::string, GameEngineKey> Keys;
 	static bool IsAnyKeyValue;
-	
 
 	static void IsAnyKeyOn()
 	{
@@ -82,6 +77,6 @@ private:
 	{
 		IsAnyKeyValue = false;
 	}
-
 };
+
 

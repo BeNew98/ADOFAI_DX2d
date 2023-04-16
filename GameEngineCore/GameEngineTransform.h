@@ -29,7 +29,7 @@ public:
 		{
 			LocalScale = WorldScale;
 		}
-		else
+		else 
 		{
 			LocalScale = WorldScale * Parent->GetWorldMatrixRef().InverseReturn();
 		}
@@ -46,16 +46,34 @@ public:
 		}
 
 		// 90 0 0 
+		// 여기에는 이미 최종값이 들어가 있다.
+		// 내가 어떤 과정을 거쳐서 여기로 들어온 것이다.
+
+		// 최종적으로 적용된 행렬이다.
 		WorldRotation = _Value;
+		// 부모가 적용됐기 때문에 나는 이상태가 된겁니다.
+
+		// RotationMatrix 이게 최종 나의 회전행렬이다.
+		// RotationMatrix <= 누구때문에 나는 이렇게 되었나?
+
 
 		if (nullptr == Parent)
 		{
 			LocalRotation = WorldRotation;
 		}
 		else
-		{
+		{                             
+			//float4 Quaternion = WorldRotation.EulerDegToQuaternion();
+			//float4x4 WorldRotationMatrix = WorldRotation.QuaternionToRotationMatrix();
+
+			//float4x4 LocalRotationMatrix;
+			//LocalRotationMatrix = Parent->GetWorldMatrixRef().InverseReturn() * WorldRotationMatrix;
+
+			//LocalRotationMatrix.DecomposeRotQuaternion(LocalQuaternion);
+
+			//LocalRotation = LocalQuaternion.QuaternionToEulerDeg();
+
 			float4 Rot = Parent->GetWorldRotation();
-			//   0, 0, 0    // 90,0,0       90 0 0 
 			LocalRotation = WorldRotation - Parent->GetWorldRotation();
 		}
 
@@ -80,7 +98,7 @@ public:
 		CalChild();
 	}
 
-	void SetLocalScale(const float4& _Value)
+	void SetLocalScale(const float4& _Value) 
 	{
 		LocalScale = _Value;
 
@@ -88,7 +106,7 @@ public:
 		{
 			WorldScale = LocalScale;
 		}
-		else
+		else 
 		{
 			WorldScale = LocalScale * Parent->GetWorldMatrixRef();
 		}
@@ -97,7 +115,7 @@ public:
 		CalChild();
 	}
 
-	void SetLocalRotation(const float4& _Value)
+	void SetLocalRotation(const float4& _Value) 
 	{
 		LocalRotation = _Value;
 
@@ -115,7 +133,7 @@ public:
 		CalChild();
 	}
 
-	void SetLocalPosition(const float4& _Value)
+	void SetLocalPosition(const float4& _Value) 
 	{
 		LocalPosition = _Value;
 
@@ -209,7 +227,7 @@ public:
 	}
 
 
-	float4x4 GetLocalWorldMatrix()
+	float4x4 GetLocalWorldMatrix() 
 	{
 		return LocalWorldMatrix;
 	}
@@ -252,7 +270,7 @@ public:
 		WorldViewProjectionMatrix *= ViewPort;
 	}
 
-	void CalChild()
+	void CalChild() 
 	{
 		for (GameEngineTransform* ChildTrans : Child)
 		{

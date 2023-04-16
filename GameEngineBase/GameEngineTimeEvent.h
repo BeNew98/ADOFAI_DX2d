@@ -6,7 +6,7 @@
 class GameEngineTimeEvent
 {
 public:
-	class TimeEvent
+	class TimeEvent 
 	{
 		friend GameEngineTimeEvent;
 
@@ -35,6 +35,9 @@ public:
 	void Update(float _DeltaTime);
 
 private:
+
+	// [event1][      ][event3]
+
 	std::list<TimeEvent> Events;
 };
 

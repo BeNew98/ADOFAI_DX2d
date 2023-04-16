@@ -20,7 +20,6 @@ protected:
 	virtual void Update(float _DeltaTime) {}
 	virtual void Render(float _DeltaTime) {}
 
-
 private:
 
 };

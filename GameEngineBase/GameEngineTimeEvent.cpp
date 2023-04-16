@@ -1,11 +1,11 @@
 #include "PrecompileHeader.h"
 #include "GameEngineTimeEvent.h"
 
-GameEngineTimeEvent::GameEngineTimeEvent()
+GameEngineTimeEvent::GameEngineTimeEvent() 
 {
 }
 
-GameEngineTimeEvent::~GameEngineTimeEvent()
+GameEngineTimeEvent::~GameEngineTimeEvent() 
 {
 }
 
@@ -22,6 +22,7 @@ void GameEngineTimeEvent::AddEvent(float _Time, std::function<void(TimeEvent&, G
 
 void GameEngineTimeEvent::Update(float _DeltaTime)
 {
+	// [1][2][4][5][6][7][]
 	std::list<TimeEvent>::iterator StartIter = Events.begin();
 	std::list<TimeEvent>::iterator EndIter = Events.end();
 

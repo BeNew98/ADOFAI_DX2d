@@ -1,13 +1,14 @@
 #pragma once
 #include <GameEnginePlatform/ThirdParty/FMOD/inc/fmod.hpp>
 #include <string_view>
+
 // 설명 :
+// 이녀석 자체가 사운드 파일 역할도 합니다.
 class GameEngineSound
 {
 public:
 	static void SoundUpdate();
 
-	// constrcuter destructer
 	GameEngineSound();
 	~GameEngineSound();
 
@@ -24,7 +25,6 @@ protected:
 
 private:
 	FMOD::Sound* FMODSound = nullptr;
-
 
 };
 

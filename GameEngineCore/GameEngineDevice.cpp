@@ -13,11 +13,15 @@ ID3D11DeviceContext* GameEngineDevice::Context = nullptr;
 IDXGISwapChain* GameEngineDevice::SwapChain = nullptr;
 std::shared_ptr<GameEngineRenderTarget> GameEngineDevice::BackBufferTarget = nullptr;
 
-GameEngineDevice::GameEngineDevice()
+//ID3D11Texture2D* GameEngineDevice::BackBufferTexture = nullptr;
+//ID3D11RenderTargetView* GameEngineDevice::RenderTarget = nullptr;
+
+
+GameEngineDevice::GameEngineDevice() 
 {
 }
 
-GameEngineDevice::~GameEngineDevice()
+GameEngineDevice::~GameEngineDevice() 
 {
 }
 
@@ -28,10 +32,9 @@ IDXGIAdapter* GameEngineDevice::GetHighPerformanceAdapter()
 	IDXGIFactory* Factory = nullptr;
 	IDXGIAdapter* Adapter = nullptr;
 
-	// c++에서 지원하는 클래스를 구분하기 위한 GUI를 얻어오는 코드
+	// c++에서 지원하는 클래스를 구분하기 위한 GUI를 얻어오는 
 	// 
 	// MIDL_INTERFACE("7b7166ec-21c7-44ae-b21a-c9ae321ae369")
-
 	HRESULT HR = CreateDXGIFactory(__uuidof(IDXGIFactory), (void**)&Factory);
 
 	if (nullptr == Factory)
@@ -81,7 +84,7 @@ void GameEngineDevice::CreateSwapChain()
 {
 	float4 ScreenSize = GameEngineWindow::GetScreenSize();
 
-	DXGI_SWAP_CHAIN_DESC SwapChainDesc = { 0, };
+	DXGI_SWAP_CHAIN_DESC SwapChainDesc = {0,};
 
 	// 기본정보
 	SwapChainDesc.BufferCount = 2;
@@ -96,29 +99,31 @@ void GameEngineDevice::CreateSwapChain()
 	// 그래픽이미지 포맷
 	SwapChainDesc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 	SwapChainDesc.BufferDesc.ScanlineOrdering = DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED;
-	
-	// 모름
+	// 뭐였지?
 	SwapChainDesc.BufferDesc.Scaling = DXGI_MODE_SCALING_UNSPECIFIED;
 
-	// 이 스왑체인은 단순히 DXGI_USAGE_RENDER_TARGET_OUTPUT 윈도우에 띄워주는 용도로 만들것이다.
+	// 이 스왑체인은 단순히 
+	// DXGI_USAGE_RENDER_TARGET_OUTPUT 윈도우에 띄워주는 용도로 만들것이다.
 	// 쉐이더에서도 이걸 사용할수 있게 하겠다.
 	SwapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT | DXGI_USAGE_SHADER_INPUT;
 
-	// 안티앨리어싱 퀄리티 1짜리를 자동으로 최대치로 
+	// 안티얼라이언싱 퀄리티 1짜리롤 
+	// 자동으로 최대치로 넣어달라는 겁니다.
 	SwapChainDesc.SampleDesc.Quality = 0;
 
-	// Msaa를 1개 켜겠다?
-	SwapChainDesc.SampleDesc.Count = 1;	// 켜기는 하겠다.
+	// Msaa가 1개 인지 켜겠다 였는지 기억이 안나요.
+	SwapChainDesc.SampleDesc.Count = 1;
+	// 켜기는 하겠다.
 
 	SwapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
 
 	// 큰의미는 없음 화면사이즈 조정가능을 생각한 옵션인데 무시
 	SwapChainDesc.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
 
-	// false면 전체화면
+	// false면 전체화면 입니다.
 	SwapChainDesc.Windowed = true;
 
-	IDXGIDevice* SwapDevice = nullptr;
+	IDXGIDevice*  SwapDevice = nullptr;
 	IDXGIAdapter* SwapAdapter = nullptr;
 	IDXGIFactory* SwapFactory = nullptr;
 
@@ -153,7 +158,7 @@ void GameEngineDevice::CreateSwapChain()
 	SwapAdapter->Release();
 	SwapFactory->Release();
 
-	// 랜더타겟은 DC같은 놈
+	// 랜더타겟은 DC의 라고 보시면 됩니다.
 
 	ID3D11Texture2D* SwapBackBufferTexture = nullptr;
 
@@ -165,18 +170,21 @@ void GameEngineDevice::CreateSwapChain()
 	}
 
 	std::shared_ptr<GameEngineTexture> BackBufferTexture = std::make_shared<GameEngineTexture>();
-	BackBufferTexture->Create(SwapBackBufferTexture);
+	BackBufferTexture->ResCreate(SwapBackBufferTexture);
 
-	BackBufferTarget = GameEngineRenderTarget::Create("MainBackBufferTarget", BackBufferTexture, { 0.0f, 0.0f, 1.0f, 1.0f });
+	BackBufferTarget = GameEngineRenderTarget::Create("MainBackBufferTarget", BackBufferTexture, {0.0f, 0.0f, 1.0f, 1.0f});
 
 }
 
-void GameEngineDevice::RenderStart()
+void GameEngineDevice::RenderStart() 
 {
 	BackBufferTarget->Clear();
+
+	// 
+	BackBufferTarget->Setting();
 }
 
-void GameEngineDevice::RenderEnd()
+void GameEngineDevice::RenderEnd() 
 {
 	HRESULT Result = SwapChain->Present(0, 0);
 	if (Result == DXGI_ERROR_DEVICE_REMOVED || Result == DXGI_ERROR_DEVICE_RESET)
@@ -185,17 +193,17 @@ void GameEngineDevice::RenderEnd()
 		MsgAssert("랜더타겟 생성에 실패했습니다.");
 		return;
 	}
-
+	
 }
 
-
-void GameEngineDevice::Initialize()
+void GameEngineDevice::Initialize() 
 {
-	// Com객체 9때는 
+	// Com객체라고 해요.
+	// 9때는 
 	// Device->TextureLoad();
 	// Device->DrawMesh();
 
-	if (nullptr == GameEngineWindow::GetHWnd())
+	if (nullptr ==  GameEngineWindow::GetHWnd())
 	{
 		MsgAssert("윈도우가 만들어지지 않았는데 디바이스를 초가화 할수는 없습니다.");
 		return;
@@ -204,7 +212,7 @@ void GameEngineDevice::Initialize()
 	int iFlag = 0;
 
 #ifdef _DEBUG
-	// 다이렉트x도 디버그 기능을 지원
+	// 다이렉트x도 디버그 기능을 지원하는데
 	iFlag = D3D11_CREATE_DEVICE_DEBUG;
 #endif
 
@@ -223,7 +231,7 @@ void GameEngineDevice::Initialize()
 	// CPU로 그려
 	// D3D_DRIVER_TYPE::D3D_DRIVER_TYPE_SOFTWARE
 
-	// 그래픽카드로 찾아서 그려
+	// 그래픽카드로 찾아서 그려줘.
 	// D3D_DRIVER_TYPE::D3D_DRIVER_TYPE_HARDWARE
 
 	// sdk 소프트웨어 디벨롭먼트 키트
@@ -232,12 +240,12 @@ void GameEngineDevice::Initialize()
 	// D3D11_SDK_VERSION 그냥 이 윈도우에서 지원하는 sdk 버전이 define
 
 	HRESULT Result = D3D11CreateDevice(
-		Adapter,
-		D3D_DRIVER_TYPE::D3D_DRIVER_TYPE_UNKNOWN,
+		Adapter, 
+		D3D_DRIVER_TYPE::D3D_DRIVER_TYPE_UNKNOWN, 
 		nullptr,
 		iFlag,
 		nullptr,
-		0,
+		0, 
 		D3D11_SDK_VERSION,
 		&Device,
 		&Level,
@@ -257,6 +265,7 @@ void GameEngineDevice::Initialize()
 	}
 
 	// 최종적으로 결정된 다이렉트 레벨이 여기로 넘어올 것이다.
+	// Level
 
 	if (Level != D3D_FEATURE_LEVEL_11_0)
 	{
@@ -265,7 +274,7 @@ void GameEngineDevice::Initialize()
 	}
 
 	// 윈도우와 연결하는 작업.
-	// 즉 백버퍼 만드는 작업
+	// 즉 백버퍼 만드는 작업을 하게 됩니다.
 	// 다이렉트 x에서 멀티쓰레드 관련 
 	Result = CoInitializeEx(nullptr, COINIT_MULTITHREADED);
 

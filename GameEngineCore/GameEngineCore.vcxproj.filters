@@ -8,25 +8,22 @@
     <ClInclude Include="GameEngineObject.h">
       <Filter>Object</Filter>
     </ClInclude>
-    <ClInclude Include="GameEngineResource.h">
-      <Filter>Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="GameEngineMesh.h">
-      <Filter>Resources</Filter>
+    <ClInclude Include="GameEngineActor.h">
+      <Filter>Object</Filter>
     </ClInclude>
     <ClInclude Include="GameEngineComponent.h">
       <Filter>Object</Filter>
     </ClInclude>
-    <ClInclude Include="GameEngineActor.h">
-      <Filter>Object</Filter>
+    <ClInclude Include="GameEngineMesh.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngineResource.h">
+      <Filter>Resources</Filter>
     </ClInclude>
     <ClInclude Include="GameEngineCamera.h">
       <Filter>Object\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="GameEngineTransform.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="GameEngineUpdateObject.h">
       <Filter>Object</Filter>
     </ClInclude>
     <ClInclude Include="GameEngineRenderer.h">
@@ -35,14 +32,17 @@
     <ClInclude Include="GameEngineCollision.h">
       <Filter>Object\Collision</Filter>
     </ClInclude>
+    <ClInclude Include="GameEngineUpdateObject.h">
+      <Filter>Object</Filter>
+    </ClInclude>
     <ClInclude Include="GameEngineObjectBase.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngineNameObject.h">
       <Filter>Object</Filter>
     </ClInclude>
     <ClInclude Include="GameEngineTexture.h">
       <Filter>Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="GameEngineNameObject.h">
-      <Filter>Object</Filter>
     </ClInclude>
     <ClInclude Include="GameEngineDevice.h">
       <Filter>Device</Filter>
@@ -51,13 +51,34 @@
       <Filter>Resources</Filter>
     </ClInclude>
     <ClInclude Include="PrecompileHeader.h" />
-    <ClInclude Include="GameEngineDirectBuffer.h">
-      <Filter>Resources</Filter>
-    </ClInclude>
     <ClInclude Include="GameEngineVertex.h">
       <Filter>Resources</Filter>
     </ClInclude>
     <ClInclude Include="GameEngineVertexBuffer.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngineDirectBuffer.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngineRenderingPipeLine.h">
+      <Filter>Object\Rendering\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngineShader.h">
+      <Filter>Resources\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngineVertexShader.h">
+      <Filter>Resources\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngineIndexBuffer.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngineRasterizer.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEnginePixelShader.h">
+      <Filter>Resources\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngineInputLayOut.h">
       <Filter>Resources</Filter>
     </ClInclude>
   </ItemGroup>
@@ -69,25 +90,22 @@
     <ClCompile Include="GameEngineObject.cpp">
       <Filter>Object</Filter>
     </ClCompile>
-    <ClCompile Include="GameEngineResource.cpp">
-      <Filter>Resources</Filter>
-    </ClCompile>
-    <ClCompile Include="GameEngineMesh.cpp">
-      <Filter>Resources</Filter>
+    <ClCompile Include="GameEngineActor.cpp">
+      <Filter>Object</Filter>
     </ClCompile>
     <ClCompile Include="GameEngineComponent.cpp">
       <Filter>Object</Filter>
     </ClCompile>
-    <ClCompile Include="GameEngineActor.cpp">
-      <Filter>Object</Filter>
+    <ClCompile Include="GameEngineMesh.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineResource.cpp">
+      <Filter>Resources</Filter>
     </ClCompile>
     <ClCompile Include="GameEngineCamera.cpp">
       <Filter>Object\Rendering</Filter>
     </ClCompile>
     <ClCompile Include="GameEngineTransform.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="GameEngineUpdateObject.cpp">
       <Filter>Object</Filter>
     </ClCompile>
     <ClCompile Include="GameEngineRenderer.cpp">
@@ -96,17 +114,20 @@
     <ClCompile Include="GameEngineCollision.cpp">
       <Filter>Object\Collision</Filter>
     </ClCompile>
-    <ClCompile Include="GameEngineObjectBase.cpp">
+    <ClCompile Include="GameEngineUpdateObject.cpp">
       <Filter>Object</Filter>
     </ClCompile>
-    <ClCompile Include="GameEngineTexture.cpp">
-      <Filter>Resources</Filter>
+    <ClCompile Include="GameEngineObjectBase.cpp">
+      <Filter>Object</Filter>
     </ClCompile>
     <ClCompile Include="GameEngineNameObject.cpp">
       <Filter>Object</Filter>
     </ClCompile>
     <ClCompile Include="GameEngineCore_Resources.cpp">
       <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineTexture.cpp">
+      <Filter>Resources</Filter>
     </ClCompile>
     <ClCompile Include="GameEngineDevice.cpp">
       <Filter>Device</Filter>
@@ -115,37 +136,61 @@
       <Filter>Resources</Filter>
     </ClCompile>
     <ClCompile Include="PrecompileHeader.cpp" />
-    <ClCompile Include="GameEngineDirectBuffer.cpp">
-      <Filter>Resources</Filter>
-    </ClCompile>
     <ClCompile Include="GameEngineVertex.cpp">
       <Filter>Resources</Filter>
     </ClCompile>
     <ClCompile Include="GameEngineVertexBuffer.cpp">
       <Filter>Resources</Filter>
     </ClCompile>
+    <ClCompile Include="GameEngineDirectBuffer.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineRenderingPipeLine.cpp">
+      <Filter>Object\Rendering\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineShader.cpp">
+      <Filter>Resources\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineVertexShader.cpp">
+      <Filter>Resources\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineIndexBuffer.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineRasterizer.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEnginePixelShader.cpp">
+      <Filter>Resources\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineInputLayOut.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="Manager">
-      <UniqueIdentifier>{b6876e9c-e150-4d68-9981-79444c06742d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Object">
-      <UniqueIdentifier>{8948ff9f-0b20-40b7-9431-b9a338c01fbf}</UniqueIdentifier>
+      <UniqueIdentifier>{1189cbc5-1179-4a91-a047-0f66642d14d2}</UniqueIdentifier>
     </Filter>
     <Filter Include="Resources">
-      <UniqueIdentifier>{48669c06-8421-4af8-a3b6-85fac25ce7d4}</UniqueIdentifier>
+      <UniqueIdentifier>{c16991ef-8e9a-49d8-b420-853cff2955d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager">
+      <UniqueIdentifier>{b420b215-6a8f-4fa5-bec3-c52265a46089}</UniqueIdentifier>
     </Filter>
     <Filter Include="Object\Rendering">
-      <UniqueIdentifier>{06bb3d7a-a1ef-4d4d-94de-cf7968f55d80}</UniqueIdentifier>
+      <UniqueIdentifier>{6e970db4-fd75-4e59-8a4d-7b21615522d4}</UniqueIdentifier>
     </Filter>
     <Filter Include="Object\Rendering\Component">
-      <UniqueIdentifier>{a2a9ec32-8bf0-4789-9d5f-ebdef4fd4c25}</UniqueIdentifier>
+      <UniqueIdentifier>{f3e34708-461c-4917-b95d-a8a102a5db52}</UniqueIdentifier>
     </Filter>
     <Filter Include="Object\Collision">
-      <UniqueIdentifier>{42762966-2233-4675-b734-c343eb252a56}</UniqueIdentifier>
+      <UniqueIdentifier>{3dbe9019-535c-4c9f-aa31-c8224e96e539}</UniqueIdentifier>
     </Filter>
     <Filter Include="Device">
-      <UniqueIdentifier>{0c51ae1d-379f-40b2-9276-fc161aa7cd15}</UniqueIdentifier>
+      <UniqueIdentifier>{912f4888-0107-43c1-a4a3-ed450b50069c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\Shader">
+      <UniqueIdentifier>{bde1d68e-2fec-4cf5-b959-c44aeb0fd9df}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

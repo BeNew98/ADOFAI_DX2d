@@ -6,10 +6,10 @@
       <Filter>Input</Filter>
     </ClInclude>
     <ClInclude Include="GameEngineImage.h">
-      <Filter>Resouces\Image</Filter>
+      <Filter>Resources\Image</Filter>
     </ClInclude>
     <ClInclude Include="GameEngineSound.h">
-      <Filter>Resouces\Sound</Filter>
+      <Filter>Resources\Sound</Filter>
     </ClInclude>
     <ClInclude Include="ThirdParty\FMOD\inc\fmod.h">
       <Filter>ThirdParty\FMOD\Header</Filter>
@@ -43,37 +43,37 @@
       <Filter>Input</Filter>
     </ClCompile>
     <ClCompile Include="GameEngineImage.cpp">
-      <Filter>Resouces\Image</Filter>
+      <Filter>Resources\Image</Filter>
     </ClCompile>
     <ClCompile Include="GameEngineSound.cpp">
-      <Filter>Resouces\Sound</Filter>
+      <Filter>Resources\Sound</Filter>
     </ClCompile>
     <ClCompile Include="PrecompileHeader.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="Resouces">
-      <UniqueIdentifier>{fc51ce87-fb99-4d0b-adc8-72c436b2586c}</UniqueIdentifier>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{d2314684-f88d-4599-9b84-cea1e0a2b067}</UniqueIdentifier>
     </Filter>
     <Filter Include="Input">
-      <UniqueIdentifier>{eae95942-364a-404a-b603-2f80b385ed7c}</UniqueIdentifier>
+      <UniqueIdentifier>{ce6b1d63-9200-4a26-8532-7b97964ae652}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resouces\Sound">
-      <UniqueIdentifier>{275f2ec1-2f11-4095-882e-a01920833f8f}</UniqueIdentifier>
+    <Filter Include="Resources\Sound">
+      <UniqueIdentifier>{839e8743-cc2b-4c9e-ba34-b1c48428f5b8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resouces\Image">
-      <UniqueIdentifier>{b83cdadd-03b2-44a7-b0b2-90a407d543cf}</UniqueIdentifier>
+    <Filter Include="Resources\Image">
+      <UniqueIdentifier>{2e17277b-f541-4ef1-b7ac-c241a09caaa8}</UniqueIdentifier>
     </Filter>
     <Filter Include="ThirdParty">
-      <UniqueIdentifier>{173dfc9c-4bac-412c-8816-984e3a66e9ba}</UniqueIdentifier>
+      <UniqueIdentifier>{52bb531e-19e2-4036-8e93-2dd1455c924b}</UniqueIdentifier>
     </Filter>
     <Filter Include="ThirdParty\FMOD">
-      <UniqueIdentifier>{1cf374b5-9139-47fa-bc87-98bee0d5be06}</UniqueIdentifier>
+      <UniqueIdentifier>{1d4b399d-dc8d-4858-83be-c1fbe81f69a0}</UniqueIdentifier>
     </Filter>
     <Filter Include="ThirdParty\FMOD\Header">
-      <UniqueIdentifier>{be8b3ef5-0169-40dd-937c-4499fdacc3a8}</UniqueIdentifier>
+      <UniqueIdentifier>{b4462e91-fa51-4f01-aac9-395d33b3ceca}</UniqueIdentifier>
     </Filter>
     <Filter Include="ThirdParty\FMOD\bin">
-      <UniqueIdentifier>{9b7d0445-d7d5-4706-8010-8f2e04114dcb}</UniqueIdentifier>
+      <UniqueIdentifier>{3eb608e5-2383-4cfb-b7a5-3b1572654fb1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -88,16 +88,18 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Library Include="ThirdParty\FMOD\lib\x64\fmod_vc.lib">
+      <Filter>ThirdParty\FMOD\bin</Filter>
+    </Library>
+    <Library Include="ThirdParty\FMOD\lib\x64\fmodL_vc.lib">
+      <Filter>ThirdParty\FMOD\bin</Filter>
+    </Library>
+  </ItemGroup>
+  <ItemGroup>
     <CopyFileToFolders Include="ThirdParty\FMOD\lib\x64\fmod.dll">
       <Filter>ThirdParty\FMOD\bin</Filter>
     </CopyFileToFolders>
-    <CopyFileToFolders Include="ThirdParty\FMOD\lib\x64\fmod_vc.lib">
-      <Filter>ThirdParty\FMOD\bin</Filter>
-    </CopyFileToFolders>
     <CopyFileToFolders Include="ThirdParty\FMOD\lib\x64\fmodL.dll">
-      <Filter>ThirdParty\FMOD\bin</Filter>
-    </CopyFileToFolders>
-    <CopyFileToFolders Include="ThirdParty\FMOD\lib\x64\fmodL_vc.lib">
       <Filter>ThirdParty\FMOD\bin</Filter>
     </CopyFileToFolders>
   </ItemGroup>

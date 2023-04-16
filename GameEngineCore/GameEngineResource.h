@@ -26,7 +26,7 @@ public:
 	GameEngineResource& operator=(const GameEngineResource& _Other) = delete;
 	GameEngineResource& operator=(GameEngineResource&& _Other) noexcept = delete;
 
-	std::string_view GetPath()
+	std::string_view GetPath() 
 	{
 		return Path.c_str();
 	}
@@ -46,7 +46,7 @@ public:
 		Name = _Value;
 	}
 
-	static std::shared_ptr<ResourcesType> Find(const std::string_view& _Name)
+	static std::shared_ptr<ResourcesType> Find(const std::string_view& _Name) 
 	{
 		std::string UpperName = GameEngineString::ToUpper(_Name);
 
@@ -55,9 +55,10 @@ public:
 			return nullptr;
 		}
 
-		return NamedResources[_Name];
+		return NamedResources[UpperName];
 	}
 
+	virtual void Setting() {}
 
 protected:
 	static std::shared_ptr<ResourcesType> Create(const std::string_view& _Name)
@@ -87,11 +88,12 @@ private:
 	static std::map<std::string, std::shared_ptr<ResourcesType>> NamedResources;
 	static std::list<std::shared_ptr<ResourcesType>> UnNamedRes;
 
-	static void ResourcesClear()
+	static void ResourcesClear() 
 	{
 		NamedResources.clear();
 		UnNamedRes.clear();
 	}
+
 };
 
 template<typename ResourcesType>

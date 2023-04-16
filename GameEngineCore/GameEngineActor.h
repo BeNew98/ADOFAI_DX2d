@@ -40,7 +40,7 @@ protected:
 private:
 	class GameEngineLevel* Level = nullptr;
 
-	// 이걸 컴포넌트 구조
+	//// 이걸 컴포넌트 구조라고 합니다.
 	std::list<std::shared_ptr<class GameEngineComponent>> ComponentsList;
 
 	void ComponentInit(std::shared_ptr<class GameEngineComponent> _Component);

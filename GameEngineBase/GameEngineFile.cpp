@@ -11,12 +11,11 @@ GameEngineFile::~GameEngineFile()
 }
 
 
-GameEngineFile::GameEngineFile(std::filesystem::path _Path)
+GameEngineFile::GameEngineFile(std::filesystem::path _Path) 
 	: Path(_Path)
 {
 
 }
-
 
 void GameEngineFile::SaveBin(const GameEngineSerializer& _Data)
 {
@@ -78,7 +77,7 @@ void GameEngineFile::LoadBin(GameEngineSerializer& _Data)
 	}
 
 	size_t FileSize = std::filesystem::file_size(Path.Path);
-
+	
 	fread_s(_Data.GetData(), _Data.GetBufferSize(), FileSize, 1, FilePtr);
 
 	if (nullptr != FilePtr)

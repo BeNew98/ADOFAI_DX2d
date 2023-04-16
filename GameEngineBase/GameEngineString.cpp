@@ -3,7 +3,7 @@
 #include <Windows.h>
 #include "GameEngineDebug.h"
 
-GameEngineString::GameEngineString()
+GameEngineString::GameEngineString() 
 {
 }
 
@@ -11,7 +11,8 @@ GameEngineString::~GameEngineString()
 {
 }
 
-std::string GameEngineString::ToUpper(const std::string_view& _Str)
+
+std::string GameEngineString::ToUpper(const std::string_view& _Str) 
 {
 	std::string Text = _Str.data();
 
@@ -19,6 +20,7 @@ std::string GameEngineString::ToUpper(const std::string_view& _Str)
 	{
 		Text[i] = toupper(Text[i]);
 	}
+
 	return Text;
 }
 
@@ -27,7 +29,8 @@ std::string GameEngineString::ToString(int Value)
 	return std::to_string(Value);
 }
 
-std::wstring GameEngineString::AnsiToUniCode(const std::string_view& _Text)
+
+std::wstring GameEngineString::AnsiToUniCode(const std::string_view& _Text) 
 {
 	// 2가지 역할이 있습니다.
 	// 직접 변환
@@ -81,7 +84,7 @@ std::string GameEngineString::UniCodeToAnsi(const std::wstring_view& _Text)
 	return Result;
 }
 
-std::string GameEngineString::UniCodeToUTF8(const std::wstring_view& _Text)
+std::string GameEngineString::UniCodeToUTF8(const std::wstring_view& _Text) 
 {
 	int Size = WideCharToMultiByte(CP_UTF8, 0, _Text.data(), static_cast<int>(_Text.size()), nullptr, 0, nullptr, nullptr);
 
@@ -106,7 +109,7 @@ std::string GameEngineString::UniCodeToUTF8(const std::wstring_view& _Text)
 
 }
 
-std::string GameEngineString::AnsiToUTF8(const std::string_view& _Text)
+std::string GameEngineString::AnsiToUTF8(const std::string_view& _Text) 
 {
 	std::wstring Unicode = AnsiToUniCode(_Text);
 	return UniCodeToUTF8(Unicode.c_str());

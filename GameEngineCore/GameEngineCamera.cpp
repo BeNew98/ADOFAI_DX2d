@@ -2,6 +2,7 @@
 #include "GameEngineCamera.h"
 #include <GameEnginePlatform/GameEngineInput.h>
 #include <GameEnginePlatform/GameEngineWindow.h>
+#include "GameEngineDevice.h"
 
 GameEngineCamera::GameEngineCamera()
 {
@@ -33,6 +34,15 @@ void GameEngineCamera::Start()
 		GameEngineInput::CreateKey("SpeedBoost", VK_LSHIFT);
 		GameEngineInput::CreateKey("FreeCameraSwitch", 'P');
 	}
+
+	// float _Width, float _Height, float _Left, float _Right, float _ZMin = 0.0f, float _ZMax = 1.0f
+
+	ViewPortData.TopLeftX = 0;
+	ViewPortData.TopLeftY = 0;
+	ViewPortData.Width = GameEngineWindow::GetScreenSize().x;
+	ViewPortData.Height = GameEngineWindow::GetScreenSize().y;
+	ViewPortData.MinDepth = 0.0f;
+	ViewPortData.MaxDepth = 1.0f;
 }
 
 void GameEngineCamera::Update(float _DeltaTime)
@@ -80,27 +90,27 @@ void GameEngineCamera::Update(float _DeltaTime)
 			GetTransform()->AddLocalPosition(float4::Back * Speed * _DeltaTime);
 		}
 
-		if (true == GameEngineInput::IsPress("RotY+"))
+		if (true == GameEngineInput::IsPress("RotY+")) 
 		{
-			GetTransform()->AddLocalRotation({ 0.0f, RotSpeed * _DeltaTime, 0.0f });
+			GetTransform()->AddLocalRotation({0.0f, RotSpeed * _DeltaTime, 0.0f });
 		}
-		if (true == GameEngineInput::IsPress("RotY-"))
+		if (true == GameEngineInput::IsPress("RotY-")) 
 		{
 			GetTransform()->AddLocalRotation({ 0.0f, -RotSpeed * _DeltaTime, 0.0f });
 		}
-		if (true == GameEngineInput::IsPress("RotZ+"))
+		if (true == GameEngineInput::IsPress("RotZ+")) 
 		{
 			GetTransform()->AddLocalRotation({ 0.0f, 0.0f, RotSpeed * _DeltaTime });
 		}
-		if (true == GameEngineInput::IsPress("RotZ-"))
+		if (true == GameEngineInput::IsPress("RotZ-")) 
 		{
 			GetTransform()->AddLocalRotation({ 0.0f, 0.0f, -RotSpeed * _DeltaTime });
 		}
-		if (true == GameEngineInput::IsPress("RotX+"))
+		if (true == GameEngineInput::IsPress("RotX+")) 
 		{
 			GetTransform()->AddLocalRotation({ RotSpeed * _DeltaTime, 0.0f, 0.0f });
 		}
-		if (true == GameEngineInput::IsPress("RotX-"))
+		if (true == GameEngineInput::IsPress("RotX-")) 
 		{
 			GetTransform()->AddLocalRotation({ -RotSpeed * _DeltaTime, 0.0f, 0.0f });
 		}
@@ -108,11 +118,18 @@ void GameEngineCamera::Update(float _DeltaTime)
 
 
 	// 뷰행렬을 만들기 위해서는 이 2개의 행렬이 필요하다.
-	float4 EyeDir = GetTransform()->GetLocalForwardVector(); //현재 관측자의 관측 방향
-	float4 EyeUp = GetTransform()->GetLocalUpVector();		 //현재 관측자의 방향의 위
-	float4 EyePos = GetTransform()->GetLocalPosition();		 //현재 관측자의 위치
+	float4 EyeDir = GetTransform()->GetLocalForwardVector();
+	float4 EyeUp = GetTransform()->GetLocalUpVector();
+	float4 EyePos = GetTransform()->GetLocalPosition();
 
 	View.LookToLH(EyePos, EyeDir, EyeUp);
 	Projection.PerspectiveFovLH(60.0f, GameEngineWindow::GetScreenSize().x / GameEngineWindow::GetScreenSize().y, Near, Far);
 	ViewPort.ViewPort(GameEngineWindow::GetScreenSize().x, GameEngineWindow::GetScreenSize().y, 0.0f, 0.0f);
+}
+
+
+void GameEngineCamera::Setting()
+{
+	// 랜더타겟 1개1개마다 뷰포트를 세팅해줄수 있다.
+	GameEngineDevice::GetContext()->RSSetViewports(1, &ViewPortData);
 }

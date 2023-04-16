@@ -2,11 +2,11 @@
 #include "GameEngineTransform.h"
 #include "GameEngineObject.h"
 
-GameEngineTransform::GameEngineTransform()
+GameEngineTransform::GameEngineTransform() 
 {
 }
 
-GameEngineTransform::~GameEngineTransform()
+GameEngineTransform::~GameEngineTransform() 
 {
 }
 
@@ -14,6 +14,7 @@ GameEngineTransform::~GameEngineTransform()
 void GameEngineTransform::TransformUpdate()
 {
 	LocalScaleMatrix.Scale(LocalScale);
+
 	LocalRotation.w = 0.0f;
 	LocalQuaternion = LocalRotation.EulerDegToQuaternion();
 	LocalRotationMatrix = LocalQuaternion.QuaternionToRotationMatrix();
@@ -25,11 +26,10 @@ void GameEngineTransform::TransformUpdate()
 	{
 		WorldMatrix = LocalWorldMatrix;
 	}
-	else
+	else 
 	{
 		WorldMatrix = LocalWorldMatrix * Parent->GetWorldMatrixRef();
 	}
-
 }
 
 void GameEngineTransform::SetParent(GameEngineTransform* _Parent)
@@ -40,3 +40,5 @@ void GameEngineTransform::SetParent(GameEngineTransform* _Parent)
 
 	Parent->Child.push_back(this);
 }
+
+

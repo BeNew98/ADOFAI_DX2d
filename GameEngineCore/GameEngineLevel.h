@@ -46,16 +46,14 @@ public:
 
 		ActorInit(NewActor, _Order, this);
 
-		Actors[_Order].push_back(NewActor);
 
 		return std::dynamic_pointer_cast<ActorType>(NewActor);
 	}
 
-	std::shared_ptr<class GameEngineCamera> GetMainCamera()
+	std::shared_ptr<class GameEngineCamera> GetMainCamera() 
 	{
 		return MainCamera;
 	}
-
 
 protected:
 	virtual void Start() = 0;
@@ -72,3 +70,4 @@ private:
 
 };
 
+ 
