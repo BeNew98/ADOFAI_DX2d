@@ -167,6 +167,14 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="Planet1.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="Planet2.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="Player.h">
       <SubType>
       </SubType>
@@ -183,6 +191,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DFICore.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Planet1.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Planet2.cpp">
       <SubType>
       </SubType>
     </ClCompile>

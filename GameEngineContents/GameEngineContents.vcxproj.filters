@@ -12,6 +12,12 @@
       <Filter>Object</Filter>
     </ClInclude>
     <ClInclude Include="PrecompileHeader.h" />
+    <ClInclude Include="Planet1.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Planet2.h">
+      <Filter>Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DFICore.cpp" />
@@ -25,6 +31,12 @@
       <Filter>Object</Filter>
     </ClCompile>
     <ClCompile Include="PrecompileHeader.cpp" />
+    <ClCompile Include="Planet1.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Planet2.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Levels">
