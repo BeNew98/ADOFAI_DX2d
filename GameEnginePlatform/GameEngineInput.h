@@ -57,6 +57,21 @@ public:
 		return IsAnyKeyValue;
 	}
 
+	static float4 GetMousePosition() 
+	{
+		return MousePos;
+	}
+
+	static float4 GetMouseDirection()
+	{
+		return MouseDirection;
+	}
+
+	static float4 GetMouseDirectionNormal()
+	{
+		return MouseDirection.NormalizeReturn();
+	}
+
 protected:
 
 private:
@@ -67,6 +82,10 @@ private:
 	//      PlayerJump       A
 	static std::map<std::string, GameEngineKey> Keys;
 	static bool IsAnyKeyValue;
+
+	static float4 MousePos;
+	static float4 PrevMousePos;
+	static float4 MouseDirection;
 
 	static void IsAnyKeyOn()
 	{

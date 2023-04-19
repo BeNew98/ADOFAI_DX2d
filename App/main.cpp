@@ -3,7 +3,7 @@
 #include <GameEngineBase\GameEngineFile.h>
 #include <GameEngineBase\GameEngineDirectory.h>
 #include <GameEngineCore\GameEngineCore.h>
-#include <GameEngineContents\DFICore.h>
+#include <GameEngineContents\ContentsCore.h>
 
 #pragma comment(lib, "GameEngineCore.lib")
 #pragma comment(lib, "GameEngineContents.lib")
@@ -34,8 +34,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 
 	GameEngineCore::Start(hInstance, 
-		DFICore::GameStart,
-		DFICore::GameEnd,
+		ContentsCore::GameStart, 
+		ContentsCore::GameEnd,
 		{2000, 0}
 	);
 }
