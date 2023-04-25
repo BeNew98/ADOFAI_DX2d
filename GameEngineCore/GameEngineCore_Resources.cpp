@@ -4,20 +4,22 @@
 #include <GameEnginePlatform\GameEngineWindow.h>
 #include <GameEnginePlatform\GameEngineSound.h>
 #include "GameEngineResource.h"
+#include "GameEngineShaderResHelper.h"
 
 #include "GameEngineVertex.h"
 
 #include "GameEngineMesh.h"
+#include "GameEngineBlend.h"
 #include "GameEngineTexture.h"
-#include "GameEngineRenderTarget.h"
-#include "GameEngineVertexBuffer.h"
-#include "GameEngineIndexBuffer.h"
-#include "GameEngineRenderingPipeLine.h"
 #include "GameEngineRasterizer.h"
+#include "GameEngineIndexBuffer.h"
 #include "GameEnginePixelShader.h"
-#include "GameEngineConstantBuffer.h"
-
 #include "GameEngineVertexShader.h"
+#include "GameEngineVertexBuffer.h"
+#include "GameEngineRenderTarget.h"
+#include "GameEngineConstantBuffer.h"
+#include "GameEngineRenderingPipeLine.h"
+
 
 
 void GameEngineCore::CoreResourcesInit()
@@ -40,6 +42,7 @@ void GameEngineCore::CoreResourcesInit()
 	// 버텍스 버퍼의 내용과 인풋 레이아웃의 내용이 더 중요하다.
 	GameEngineVertex::LayOut.AddInputLayOut("POSITION", DXGI_FORMAT_R32G32B32A32_FLOAT);
 	GameEngineVertex::LayOut.AddInputLayOut("TEXCOORD", DXGI_FORMAT_R32G32B32A32_FLOAT);
+	GameEngineVertex::LayOut.AddInputLayOut("NORMAL", DXGI_FORMAT_R32G32B32A32_FLOAT);
 
 	//typedef struct D3D11_INPUT_ELEMENT_DESC
 	//{
@@ -79,6 +82,25 @@ void GameEngineCore::CoreResourcesInit()
 	}
 
 	{
+		D3D11_SAMPLER_DESC SamperData = {};
+
+		// 
+
+		SamperData.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+		SamperData.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+		SamperData.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+		// 텍스처가 멀리있을때 뭉갤꺼냐
+		// 안뭉갠다.
+		SamperData.MipLODBias = 0.0f;
+		SamperData.MaxAnisotropy = 1;
+		SamperData.ComparisonFunc = D3D11_COMPARISON_ALWAYS;
+		SamperData.MinLOD = -FLT_MAX;
+		SamperData.MaxLOD = FLT_MAX;
+
+		GameEngineSampler::Create("WRAPSAMPLER", SamperData);
+	}
+
+	{
 		std::vector<GameEngineVertex> ArrVertex;
 		ArrVertex.resize(4);
 
@@ -95,6 +117,31 @@ void GameEngineCore::CoreResourcesInit()
 		GameEngineVertexBuffer::Create("Rect", ArrVertex);
 		GameEngineIndexBuffer::Create("Rect", ArrIndex);
 
+	}
+
+	{
+		// 블랜드
+		D3D11_BLEND_DESC Desc = {0,};
+
+		// 자동으로 알파부분을 제거해서 출력해주는 건데
+		// 졸라느립니다.
+		Desc.AlphaToCoverageEnable = false;
+		// 블랜드를 여러개 넣을거냐
+		// TRUE면 블랜드를 여러개 넣습니다.
+		// false면 몇개의 랜더타겟이 있건 0번에 세팅된 걸로 전부다 블랜드.
+		Desc.IndependentBlendEnable = false;
+
+		Desc.RenderTarget[0].BlendEnable = true;
+		Desc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+		Desc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
+		Desc.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
+		Desc.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
+
+		Desc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
+		Desc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_SRC_ALPHA;
+		Desc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_INV_SRC_ALPHA;
+
+		GameEngineBlend::Create("AlphaBlend", Desc);
 	}
 
 	{
@@ -146,7 +193,9 @@ void GameEngineCore::CoreResourcesInit()
 
 		std::vector<GameEngineFile> Files = NewDir.GetAllFile({ ".hlsl", ".fx"});
 
-		GameEngineVertexShader::Load(Files[0].GetFullPath(), "Texture_VS");
+		std::shared_ptr<GameEngineVertexShader> VertexShader = GameEngineVertexShader::Load(Files[0].GetFullPath(), "Texture_VS");
+
+
 		GameEnginePixelShader::Load(Files[0].GetFullPath(), "Texture_PS");
 
 		//for (size_t i = 0; i < Files.size(); i++)
@@ -192,11 +241,11 @@ void GameEngineCore::CoreResourcesInit()
 		// FALSE 인 경우에만 적용됩니다 . 이 멤버에 대한 자세한 내용은 비고를 참조하세요.
 
 		// 와이어 프레임은 선으로 표현하는 겁니다. 
-		Desc.FillMode = D3D11_FILL_MODE::D3D11_FILL_WIREFRAME;
-		Desc.CullMode = D3D11_CULL_MODE::D3D11_CULL_BACK;
+		// Desc.FillMode = D3D11_FILL_MODE::D3D11_FILL_WIREFRAME;
+		Desc.CullMode = D3D11_CULL_MODE::D3D11_CULL_NONE;
 		Desc.FrontCounterClockwise = FALSE;
 
-		std::shared_ptr<GameEngineRasterizer> Res = GameEngineRasterizer::Create("EngineBase", Desc);
+		std::shared_ptr<GameEngineRasterizer> Res = GameEngineRasterizer::Create("Engine2DBase", Desc);
 	}
 
 
@@ -207,22 +256,24 @@ void GameEngineCore::CoreResourcesInit()
 			Pipe->SetVertexBuffer("Rect");
 			Pipe->SetIndexBuffer("Rect");
 			Pipe->SetVertexShader("TextureShader.hlsl");
-			Pipe->SetRasterizer("EngineBase");
+			Pipe->SetRasterizer("Engine2DBase");
 			Pipe->SetPixelShader("TextureShader.hlsl");
-			// Pipe->SetFILL_MODE(D3D11_FILL_WIREFRAME);
+			Pipe->SetBlend("AlphaBlend");
 		}
 	}
 }
 
 void GameEngineCore::CoreResourcesEnd()
 {
-	GameEngineConstantBuffer::ResourcesClear();
-	GameEnginePixelShader::ResourcesClear();
-	GameEngineRasterizer::ResourcesClear();
-	GameEngineVertexShader::ResourcesClear();
-	GameEngineIndexBuffer::ResourcesClear();
-	GameEngineVertexBuffer::ResourcesClear();
 	GameEngineMesh::ResourcesClear();
+	GameEngineBlend::ResourcesClear();
 	GameEngineTexture::ResourcesClear();
+	GameEngineRasterizer::ResourcesClear();
+	GameEngineIndexBuffer::ResourcesClear();
+	GameEnginePixelShader::ResourcesClear();
+	GameEngineVertexShader::ResourcesClear();
+	GameEngineVertexBuffer::ResourcesClear();
 	GameEngineRenderTarget::ResourcesClear();
+	GameEngineConstantBuffer::ResourcesClear();
+	GameEngineRenderingPipeLine::ResourcesClear();
 }

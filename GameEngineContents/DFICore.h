@@ -14,6 +14,9 @@ public:
 	DFICore& operator=(const DFICore& _Other) = delete;
 	DFICore& operator=(DFICore&& _Other) noexcept = delete;
 
+	static void ContentsResourcesCreate();
+
+
 	static void GameStart();
 	static void GameEnd();
 

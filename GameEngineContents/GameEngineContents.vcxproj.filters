@@ -12,10 +12,10 @@
       <Filter>Object</Filter>
     </ClInclude>
     <ClInclude Include="PrecompileHeader.h" />
-    <ClInclude Include="Planet1.h">
+    <ClInclude Include="Planet.h">
       <Filter>Object</Filter>
     </ClInclude>
-    <ClInclude Include="Planet2.h">
+    <ClInclude Include="TestObject.h">
       <Filter>Object</Filter>
     </ClInclude>
   </ItemGroup>
@@ -31,10 +31,10 @@
       <Filter>Object</Filter>
     </ClCompile>
     <ClCompile Include="PrecompileHeader.cpp" />
-    <ClCompile Include="Planet1.cpp">
+    <ClCompile Include="Planet.cpp">
       <Filter>Object</Filter>
     </ClCompile>
-    <ClCompile Include="Planet2.cpp">
+    <ClCompile Include="TestObject.cpp">
       <Filter>Object</Filter>
     </ClCompile>
   </ItemGroup>
