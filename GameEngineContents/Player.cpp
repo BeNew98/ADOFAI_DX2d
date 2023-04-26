@@ -126,10 +126,10 @@ void Player::Update(float _DeltaTime)
 	float4 GetLocalPosition = Render0->GetTransform()->GetLocalPosition();
 	float4 GetWorldPosition = Render0->GetTransform()->GetWorldPosition();
 
-	if (5.0f <= Render0->GetLiveTime())
-	{
-		Render0->Off();
-	}
+	//if (5.0f <= Render0->GetLiveTime())
+	//{
+	//	Render0->Off();
+	//}
 }
 
 void Player::Start()
@@ -163,18 +163,18 @@ void Player::Start()
 
 	// 나는 스케일을 1로 고정해 놓는게 좋다.
 	Render0 = CreateComponent<GameEngineSpriteRenderer>();
-	Render0->SetTexture("Test.png");
+	Render0->SetTexture("AAAA.png");
 	Render0->GetTransform()->SetLocalScale({ 100.0f, 100.0f , 100.0f });
 
-	Render1 = CreateComponent<GameEngineSpriteRenderer>();
-	Render1->SetTexture("ballsprites_blue_sheet_grid_0_Sprite.png");
-	Render1->GetTransform()->SetLocalScale({ 100.0f, 100.0f , 100.0f });
-	Render1->GetTransform()->SetLocalPosition({ -200.0f, 0.0f, 0.0f });
+	m_pBlueBall = CreateComponent<GameEngineSpriteRenderer>();
+	m_pBlueBall->SetTexture("ballsprites_blue_sheet_grid_0_Sprite.png");
+	m_pBlueBall->GetTransform()->SetLocalScale({ 100.0f, 100.0f , 100.0f });
+	m_pBlueBall->GetTransform()->SetLocalPosition({ -200.0f, 0.0f, 0.0f });
 
-	Render2 = CreateComponent<GameEngineSpriteRenderer>();
-	Render2->SetTexture("ballsprites_red_sheet_grid_0_Sprite.png");
-	Render2->GetTransform()->SetLocalScale({ 100.0f, 100.0f , 100.0f });
-	Render2->GetTransform()->SetLocalPosition({ 200.0f, 0.0f, 0.0f });
+	m_pRedBall = CreateComponent<GameEngineSpriteRenderer>();
+	m_pRedBall->SetTexture("ballsprites_red_sheet_grid_0_Sprite.png");
+	m_pRedBall->GetTransform()->SetLocalScale({ 100.0f, 100.0f , 100.0f });
+	m_pRedBall->GetTransform()->SetLocalPosition({ 200.0f, 0.0f, 0.0f });
 
 	//Render1 = CreateComponent<GameEngineRenderer>();
 	//Render1->SetPipeLine("2DTexture");
