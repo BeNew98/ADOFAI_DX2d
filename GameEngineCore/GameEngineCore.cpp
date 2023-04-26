@@ -7,6 +7,7 @@
 #include <GameEnginePlatform\GameEngineInput.h>
 #include <GameEngineBase\GameEngineTime.h>
 #include "GameEngineDevice.h"
+#include "GameEngineVideo.h"
 
 std::map<std::string, std::shared_ptr<GameEngineLevel>> GameEngineCore::LevelMap;
 std::shared_ptr<GameEngineLevel> GameEngineCore::MainLevel = nullptr;
@@ -40,7 +41,20 @@ void GameEngineCore::EngineUpdate()
 {
 	if (nullptr != NextLevel)
 	{
+		if (nullptr != MainLevel)
+		{
+			MainLevel->LevelChangeEnd();
+		}
+
 		MainLevel = NextLevel;
+
+		if (nullptr != MainLevel)
+		{
+			MainLevel->LevelChangeStart();
+		}
+
+		NextLevel = nullptr;
+		GameEngineTime::GlobalTime.Reset();
 	}
 
 	if (nullptr == MainLevel)
@@ -50,15 +64,29 @@ void GameEngineCore::EngineUpdate()
 	}
 
 	float TimeDeltaTime = GameEngineTime::GlobalTime.TimeCheck();
+
+	// 별로 좋은건 아닙니다.
+	if (TimeDeltaTime > 1 / 30.0f)
+	{
+		TimeDeltaTime = 1 / 30.0f;
+	}
+
 	GameEngineInput::Update(TimeDeltaTime);
 	GameEngineSound::SoundUpdate();
 
 	MainLevel->TimeEvent.Update(TimeDeltaTime);
 	MainLevel->Update(TimeDeltaTime);
+	MainLevel->ActorUpdate(TimeDeltaTime);
 
-	GameEngineDevice::RenderStart();
-	MainLevel->Render(TimeDeltaTime);
-	GameEngineDevice::RenderEnd();
+	GameEngineVideo::VideoState State = GameEngineVideo::GetCurState();
+	if (State != GameEngineVideo::VideoState::Running)
+	{
+		GameEngineDevice::RenderStart();
+		MainLevel->Render(TimeDeltaTime);
+		MainLevel->ActorRender(TimeDeltaTime);
+		GameEngineDevice::RenderEnd();
+	}
+
 }
 
 void GameEngineCore::EngineEnd(std::function<void()> _ContentsEnd)
