@@ -86,7 +86,6 @@ void GameEngineCore::EngineUpdate()
 		MainLevel->ActorRender(TimeDeltaTime);
 		GameEngineDevice::RenderEnd();
 	}
-
 }
 
 void GameEngineCore::EngineEnd(std::function<void()> _ContentsEnd)

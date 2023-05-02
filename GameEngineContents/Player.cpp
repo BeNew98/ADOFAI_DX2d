@@ -16,6 +16,59 @@ Player::~Player()
 }
 
 
+void Player::Start()
+{
+	if (false == GameEngineInput::IsKey("PlayerMoveLeft"))
+	{
+		GameEngineInput::CreateKey("PlayerMoveLeft", 'A');
+		GameEngineInput::CreateKey("PlayerMoveRight", 'D');
+		GameEngineInput::CreateKey("PlayerMoveUp", 'Q');
+		GameEngineInput::CreateKey("PlayerMoveDown", 'E');
+		GameEngineInput::CreateKey("PlayerMoveForward", 'W');
+		GameEngineInput::CreateKey("PlayerMoveBack", 'S');
+
+		GameEngineInput::CreateKey("PlayerScaleY+", 'Y');
+		GameEngineInput::CreateKey("PlayerScaleY-", 'U');
+		GameEngineInput::CreateKey("PlayerScaleZ+", 'H');
+		GameEngineInput::CreateKey("PlayerScaleZ-", 'J');
+		GameEngineInput::CreateKey("PlayerScaleX+", 'N');
+		GameEngineInput::CreateKey("PlayerScaleX-", 'M');
+
+
+		GameEngineInput::CreateKey("PlayerRotY+", VK_NUMPAD1);
+		GameEngineInput::CreateKey("PlayerRotY-", VK_NUMPAD2);
+		GameEngineInput::CreateKey("PlayerRotZ+", VK_NUMPAD4);
+		GameEngineInput::CreateKey("PlayerRotZ-", VK_NUMPAD5);
+		GameEngineInput::CreateKey("PlayerRotX+", VK_NUMPAD7);
+		GameEngineInput::CreateKey("PlayerRotX-", VK_NUMPAD8);
+		GameEngineInput::CreateKey("PlayerSpeedBoost", VK_LSHIFT);
+	}
+
+
+	// 나는 스케일을 1로 고정해 놓는게 좋다.
+	Render0 = CreateComponent<GameEngineSpriteRenderer>();
+	Render0->SetTexture("AAAA.png");
+	Render0->GetTransform()->SetLocalScale({ 100.0f, 100.0f , 100.0f });
+
+	m_pBlueBall = CreateComponent<GameEngineSpriteRenderer>();
+	m_pBlueBall->SetTexture("ballsprites_blue_sheet_grid_0_Sprite.png");
+	m_pBlueBall->GetTransform()->SetLocalScale({ 100.0f, 100.0f , 100.0f });
+	m_pBlueBall->GetTransform()->SetLocalPosition({ -200.0f, 0.0f, 0.0f });
+
+	m_pRedBall = CreateComponent<GameEngineSpriteRenderer>();
+	m_pRedBall->SetTexture("ballsprites_red_sheet_grid_0_Sprite.png");
+	m_pRedBall->GetTransform()->SetLocalScale({ 100.0f, 100.0f , 100.0f });
+	m_pRedBall->GetTransform()->SetLocalPosition({ 200.0f, 0.0f, 0.0f });
+
+	//Render1 = CreateComponent<GameEngineRenderer>();
+	//Render1->SetPipeLine("2DTexture");
+	//Render1->GetTransform()->SetLocalPosition({ 200.0f, 0.0f , 0.0f });
+	//Render1->GetTransform()->SetLocalScale({ 100.0f, 100.0f , 100.0f });
+	// Render0->GetShaderResHelper().SetConstantBufferLink("TransformData", TestColor);
+
+	TestColor = { 0.0f, 0.0f, 0.0f, 1.0f };
+}
+
 void Player::Update(float _DeltaTime)
 {
 
@@ -126,63 +179,11 @@ void Player::Update(float _DeltaTime)
 	float4 GetLocalPosition = Render0->GetTransform()->GetLocalPosition();
 	float4 GetWorldPosition = Render0->GetTransform()->GetWorldPosition();
 
+	m_pRedBall->GetTransform()->AddLocalRotation();
 	//if (5.0f <= Render0->GetLiveTime())
 	//{
 	//	Render0->Off();
 	//}
-}
-
-void Player::Start()
-{
-	if (false == GameEngineInput::IsKey("PlayerMoveLeft"))
-	{
-		GameEngineInput::CreateKey("PlayerMoveLeft", 'A');
-		GameEngineInput::CreateKey("PlayerMoveRight", 'D');
-		GameEngineInput::CreateKey("PlayerMoveUp", 'Q');
-		GameEngineInput::CreateKey("PlayerMoveDown", 'E');
-		GameEngineInput::CreateKey("PlayerMoveForward", 'W');
-		GameEngineInput::CreateKey("PlayerMoveBack", 'S');
-
-		GameEngineInput::CreateKey("PlayerScaleY+", 'Y');
-		GameEngineInput::CreateKey("PlayerScaleY-", 'U');
-		GameEngineInput::CreateKey("PlayerScaleZ+", 'H');
-		GameEngineInput::CreateKey("PlayerScaleZ-", 'J');
-		GameEngineInput::CreateKey("PlayerScaleX+", 'N');
-		GameEngineInput::CreateKey("PlayerScaleX-", 'M');
-
-
-		GameEngineInput::CreateKey("PlayerRotY+", VK_NUMPAD1);
-		GameEngineInput::CreateKey("PlayerRotY-", VK_NUMPAD2);
-		GameEngineInput::CreateKey("PlayerRotZ+", VK_NUMPAD4);
-		GameEngineInput::CreateKey("PlayerRotZ-", VK_NUMPAD5);
-		GameEngineInput::CreateKey("PlayerRotX+", VK_NUMPAD7);
-		GameEngineInput::CreateKey("PlayerRotX-", VK_NUMPAD8);
-		GameEngineInput::CreateKey("PlayerSpeedBoost", VK_LSHIFT);
-	}
-
-
-	// 나는 스케일을 1로 고정해 놓는게 좋다.
-	Render0 = CreateComponent<GameEngineSpriteRenderer>();
-	Render0->SetTexture("AAAA.png");
-	Render0->GetTransform()->SetLocalScale({ 100.0f, 100.0f , 100.0f });
-
-	m_pBlueBall = CreateComponent<GameEngineSpriteRenderer>();
-	m_pBlueBall->SetTexture("ballsprites_blue_sheet_grid_0_Sprite.png");
-	m_pBlueBall->GetTransform()->SetLocalScale({ 100.0f, 100.0f , 100.0f });
-	m_pBlueBall->GetTransform()->SetLocalPosition({ -200.0f, 0.0f, 0.0f });
-
-	m_pRedBall = CreateComponent<GameEngineSpriteRenderer>();
-	m_pRedBall->SetTexture("ballsprites_red_sheet_grid_0_Sprite.png");
-	m_pRedBall->GetTransform()->SetLocalScale({ 100.0f, 100.0f , 100.0f });
-	m_pRedBall->GetTransform()->SetLocalPosition({ 200.0f, 0.0f, 0.0f });
-
-	//Render1 = CreateComponent<GameEngineRenderer>();
-	//Render1->SetPipeLine("2DTexture");
-	//Render1->GetTransform()->SetLocalPosition({ 200.0f, 0.0f , 0.0f });
-	//Render1->GetTransform()->SetLocalScale({ 100.0f, 100.0f , 100.0f });
-	// Render0->GetShaderResHelper().SetConstantBufferLink("TransformData", TestColor);
-
-	TestColor = { 0.0f, 0.0f, 0.0f, 1.0f };
 }
 
 // 이건 디버깅용도나 
