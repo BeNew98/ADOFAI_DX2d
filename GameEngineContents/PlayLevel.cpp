@@ -5,6 +5,7 @@
 #include <GameEngineCore/GameEngineCamera.h>
 #include <GameEngineCore/GameEngineTexture.h>
 #include <GameEngineCore/GameEngineVideo.h>
+#include <GameEngineCore/GameEngineCoreWindow.h>
 
 PlayLevel::PlayLevel()
 {
@@ -42,9 +43,19 @@ void PlayLevel::Start()
 
 
 
+	std::shared_ptr<GameEngineCoreWindow> Window = GameEngineGUI::FindGUIWindowConvert<GameEngineCoreWindow>("CoreWindow");
+
 	{
-		std::shared_ptr<Player> Object = CreateActor<Player>("Player");
+		if (nullptr == Window)
+		{
+			MsgAssert("윈도우 테스트 코드 미작동");
+		}
+
+		//Window->Test = std::bind(nullptr, this);
+
+		// std::shared_ptr<Player> Object = CreateActor<Player>(0);
 	}
+
 
 
 	{
