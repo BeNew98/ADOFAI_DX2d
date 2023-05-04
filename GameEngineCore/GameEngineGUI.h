@@ -1,24 +1,24 @@
 #pragma once
 #include <GameEngineBase/GameEngineString.h>
 #include <memory>
-#include "GameEngineNameObject.h"
+#include "GameEngineObject.h"
 #include <map>
 #include "imgui.h"
 #include "imgui_impl_win32.h"
 #include "imgui_impl_dx11.h"
 
-class GameEngineGUIWindow  : public GameEngineNameObject, public std::enable_shared_from_this<GameEngineGUIWindow>
+class GameEngineGUIWindow : public GameEngineObject, public std::enable_shared_from_this<GameEngineGUIWindow>
 {
 	friend class GameEngineGUI;
 
 private:
-	void Begin() 
+	void Begin()
 	{
-		std::string_view View = GetName(); 
+		std::string_view View = GetName();
 
 		ImGui::Begin(View.data());
 	}
-	void End() 
+	void End()
 	{
 		ImGui::End();
 	}
@@ -49,7 +49,7 @@ public:
 	static void Release();
 
 	template<typename WindowType>
-	static std::shared_ptr<GameEngineGUIWindow> GUIWindowCreate(const std::string_view& _Name) 
+	static std::shared_ptr<GameEngineGUIWindow> GUIWindowCreate(const std::string_view& _Name)
 	{
 		std::string UpperString = GameEngineString::ToUpper(_Name);
 
@@ -75,7 +75,7 @@ public:
 		return std::dynamic_pointer_cast<ConvertType>(Window);
 	}
 
-	static std::shared_ptr<GameEngineGUIWindow> FindGUIWindow(const std::string_view& _Name) 
+	static std::shared_ptr<GameEngineGUIWindow> FindGUIWindow(const std::string_view& _Name)
 	{
 		std::string UpperString = GameEngineString::ToUpper(_Name);
 

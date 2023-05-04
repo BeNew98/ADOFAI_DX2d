@@ -2,6 +2,7 @@
 #include <GameEngineCore/GameEngineActor.h>
 
 // Ό³Έν :
+class Planet;
 class Player : public GameEngineActor
 {
 public:
@@ -23,9 +24,9 @@ protected:
 	float4 TestColor;
 private:
 	float Angle = 0.0f;
-	std::shared_ptr<class GameEngineSpriteRenderer> Render0;
-	std::shared_ptr<class GameEngineSpriteRenderer> m_pBlueBall;
-	std::shared_ptr<class GameEngineSpriteRenderer> m_pRedBall;
+	std::shared_ptr<Planet> m_pRed;
+	std::shared_ptr<Planet> m_pYellow;
+
 
 };
 

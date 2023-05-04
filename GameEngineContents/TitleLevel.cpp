@@ -38,13 +38,17 @@ void TitleLevel::Start()
 	}
 
 
-
+	
 	GetMainCamera()->SetProjectionType(CameraType::Orthogonal);
 	GetMainCamera()->GetTransform()->SetLocalPosition({ 0, 0, -1000.0f });
 
 
-	std::shared_ptr<TitleLogo> Object = CreateActor<TitleLogo>(0);
-	Object->GetTransform()->SetLocalPosition({ 0.f,200.f,0.f });
+	std::shared_ptr<TitleLogo> pLogo = CreateActor<TitleLogo>(0);
+	pLogo->GetTransform()->SetLocalPosition({ 0.f,200.f,0.f });
+
+
+	std::shared_ptr<Player> pPlayer = CreateActor<Player>(0);
+	pPlayer->GetTransform()->SetLocalPosition({ 0.f,0.f,0.f });
 }
 
 void TitleLevel::LevelChangeStart()

@@ -21,7 +21,6 @@
     <ClInclude Include="Planet.h">
       <Filter>Object</Filter>
     </ClInclude>
-    <ClInclude Include="AClassDefaulttest.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DFICore.cpp" />
@@ -44,7 +43,6 @@
     <ClCompile Include="Planet.cpp">
       <Filter>Object</Filter>
     </ClCompile>
-    <ClCompile Include="AClassDefaulttest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Levels">

@@ -163,10 +163,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="AClassDefaulttest.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
     <ClInclude Include="DFICore.h">
       <SubType>
       </SubType>
@@ -198,10 +194,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AClassDefaulttest.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
     <ClCompile Include="DFICore.cpp">
       <SubType>
       </SubType>

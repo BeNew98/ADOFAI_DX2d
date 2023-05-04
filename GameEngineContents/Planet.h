@@ -16,8 +16,9 @@ public:
 	Planet& operator=(Planet&& _Other) noexcept = delete;
 
 protected:
+	void Start() override;
 
 private:
-
+	static int m_iUseCount;
 };
 
