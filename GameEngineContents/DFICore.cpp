@@ -27,7 +27,7 @@ void DFICore::GameStart()
 
 	new int();
 
-	GameEngineGUI::GUIWindowCreate<GameEngineCoreWindow>("CoreWindow");
+	//GameEngineGUI::GUIWindowCreate<GameEngineCoreWindow>("CoreWindow");
 
 
 	ContentsResourcesCreate();
@@ -36,7 +36,7 @@ void DFICore::GameStart()
 
 	GameEngineCore::CreateLevel<TitleLevel>();
 	GameEngineCore::CreateLevel<PlayLevel>();
-	GameEngineCore::ChangeLevel("PlayLevel");
+	GameEngineCore::ChangeLevel("TitleLevel");
 }
 
 void DFICore::GameEnd()
