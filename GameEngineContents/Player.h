@@ -24,8 +24,13 @@ protected:
 	float4 TestColor;
 private:
 	float Angle = 0.0f;
+	bool m_bTurn = false;
 	std::shared_ptr<Planet> m_pRed;
-	std::shared_ptr<Planet> m_pYellow;
+	std::shared_ptr<Planet> m_pWhite;
+	std::shared_ptr<Planet> m_pCenter;
+	std::shared_ptr<Planet> m_pTurn;
+
+
 
 
 };

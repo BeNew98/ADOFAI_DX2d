@@ -149,15 +149,17 @@ int GameEngineWindow::WindowLoop(
     {
         if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
         {
+
+            TranslateMessage(&msg);
+            DispatchMessage(&msg);
             if (nullptr != _Loop)
             {
                 _Loop();
             }
 
-            TranslateMessage(&msg);
-            DispatchMessage(&msg);
-
             GameEngineInput::IsAnyKeyOff();
+
+
             continue;
         } 
 

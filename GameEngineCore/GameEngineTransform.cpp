@@ -78,7 +78,21 @@ void GameEngineTransform::LocalDecompose()
 	TransData.LocalRotation = TransData.LocalQuaternion.QuaternionToEulerDeg();
 
 }
-void GameEngineTransform::WorldDecompose() 
+void GameEngineTransform::SwitchParent(GameEngineTransform* _Child)
+{
+	std::list<GameEngineTransform*>::iterator IterBegin = Child.begin();
+	std::list<GameEngineTransform*>::iterator IterEnd = Child.end();
+	for (;IterBegin != IterEnd ; ++IterBegin)
+	{
+		if (*IterBegin == _Child)
+		{
+			GameEngineTransform* Temp = Parent;
+			Parent = *IterBegin;
+			*IterBegin = Parent;
+		}
+	}
+}
+void GameEngineTransform::WorldDecompose()
 {
 	TransData.WorldMatrix.Decompose(TransData.WorldScale, TransData.WorldQuaternion, TransData.WorldPosition);
 	TransData.WorldRotation = TransData.WorldQuaternion.QuaternionToEulerDeg();

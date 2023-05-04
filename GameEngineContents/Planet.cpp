@@ -19,7 +19,7 @@ void Planet::Start()
 	{
 
 		std::shared_ptr<GameEngineSpriteRenderer> render = CreateComponent<GameEngineSpriteRenderer>();
-		render->SetScaleToTexture("ballsprites_gold_0_Sprite.png");
+		render->SetScaleToTexture("ballsprites_white_sheet_grid_0_Sprite.png");
 		m_iUseCount += render.use_count();
 	}
 	else

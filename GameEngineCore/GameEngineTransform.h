@@ -277,6 +277,8 @@ public:
 		TransData = _Data;
 	}
 
+	void SwitchParent(GameEngineTransform* _Child);
+
 protected:
 
 private:

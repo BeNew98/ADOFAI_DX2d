@@ -21,6 +21,9 @@
     <ClInclude Include="Planet.h">
       <Filter>Object</Filter>
     </ClInclude>
+    <ClInclude Include="TitleBackGround.h">
+      <Filter>Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DFICore.cpp" />
@@ -41,6 +44,9 @@
       <Filter>Object</Filter>
     </ClCompile>
     <ClCompile Include="Planet.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleBackGround.cpp">
       <Filter>Object</Filter>
     </ClCompile>
   </ItemGroup>
