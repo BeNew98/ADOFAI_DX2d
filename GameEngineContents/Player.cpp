@@ -37,6 +37,8 @@ void Player::Start()
 
 	GameEngineInput::CreateKey("R", 'R');
 
+	GameEngineInput::CreateKey("T", 'T');
+
 	GameEngineInput::CreateKey("W", 'W');
 	GameEngineInput::CreateKey("A", 'A');
 	GameEngineInput::CreateKey("S", 'S');
@@ -71,9 +73,16 @@ void Player::Update(float _DeltaTime)
 		//	m_pTurn = m_pBlue;
 		//	m_bTurn = false;
 		//}
-	
+
 		//m_pCenter->GetTransform()->SetParent(m_pTurn->GetTransform());
+		
 	}
+
+	if (true == GameEngineInput::IsDown("T"))
+	{
+		m_pTurn->GetTransform()->SetParent(m_pCenter->GetTransform());
+	}
+
 
 	if (true == GameEngineInput::IsPress("W"))
 	{

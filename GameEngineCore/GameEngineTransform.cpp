@@ -88,6 +88,7 @@ void GameEngineTransform::CutParent()
 {
 	if (nullptr == Parent)
 	{
+		return;
 		MsgAssert("이미 부모가 없습니다.");
 	}
 
@@ -131,6 +132,16 @@ void GameEngineTransform::SetParent(GameEngineTransform* _Parent)
 		int a = 0;
 	}
 
+	std::list<GameEngineTransform*>::iterator BeginIter = _Parent->Child.begin();
+
+	for (; BeginIter != _Parent->Child.end();)
+	{
+		if (*BeginIter == this)
+		{
+			return;
+		}
+		++BeginIter;
+	}
 	// 내가 원래 기존의 부모를 가지고 있다면
 	if (nullptr != Parent)
 	{
