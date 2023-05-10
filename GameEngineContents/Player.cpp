@@ -25,13 +25,13 @@ void Player::Start()
 	m_pRed = GetLevel()->CreateActor<Planet>();
 	m_pRed->GetTransform()->SetLocalPosition({ 0.f,0.f,0.f });
 
-	m_pWhite = GetLevel()->CreateActor<Planet>();
-	m_pWhite->GetTransform()->SetLocalPosition({ -200.f,0.f,0.f });
+	m_pBlue = GetLevel()->CreateActor<Planet>();
+	m_pBlue->GetTransform()->SetLocalPosition({ -200.f,0.f,0.f });
 
 	//m_pRed->GetTransform()->SetParent(m_pWhite->GetTransform());
 
 	m_pCenter = m_pRed;
-	m_pTurn = m_pWhite;
+	m_pTurn = m_pBlue;
 }
 
 void Player::Update(float _DeltaTime)

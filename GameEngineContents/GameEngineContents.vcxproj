@@ -163,6 +163,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="BlackScreen.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="DFICore.h">
       <SubType>
       </SubType>
@@ -184,10 +188,6 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="TitleBackGround.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
     <ClInclude Include="TitleLevel.h">
       <SubType>
       </SubType>
@@ -198,6 +198,10 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BlackScreen.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="DFICore.cpp">
       <SubType>
       </SubType>
@@ -221,10 +225,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="TestObject.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="TitleBackGround.cpp">
       <SubType>
       </SubType>
     </ClCompile>

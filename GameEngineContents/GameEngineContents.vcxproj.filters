@@ -21,7 +21,7 @@
     <ClInclude Include="Planet.h">
       <Filter>Object</Filter>
     </ClInclude>
-    <ClInclude Include="TitleBackGround.h">
+    <ClInclude Include="BlackScreen.h">
       <Filter>Object</Filter>
     </ClInclude>
   </ItemGroup>
@@ -46,7 +46,7 @@
     <ClCompile Include="Planet.cpp">
       <Filter>Object</Filter>
     </ClCompile>
-    <ClCompile Include="TitleBackGround.cpp">
+    <ClCompile Include="BlackScreen.cpp">
       <Filter>Object</Filter>
     </ClCompile>
   </ItemGroup>

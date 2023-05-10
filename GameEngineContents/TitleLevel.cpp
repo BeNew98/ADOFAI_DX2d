@@ -6,7 +6,10 @@
 #include <GameEngineCore/GameEngineTexture.h>
 #include <GameEngineCore/GameEngineVideo.h>
 #include <GameEngineCore/GameEngineCoreWindow.h>
+#include <GameEngineCore/GameEngineSpriteRenderer.h>
+
 #include "TitleLogo.h"
+#include "BlackScreen.h"
 
 TitleLevel::TitleLevel() 
 {
@@ -42,6 +45,14 @@ void TitleLevel::Start()
 	GetMainCamera()->SetProjectionType(CameraType::Orthogonal);
 	GetMainCamera()->GetTransform()->SetLocalPosition({ 0, 0, -1000.0f });
 
+	std::shared_ptr<BlackScreen> pBlackScreen = CreateActor<BlackScreen>(0);
+	pBlackScreen->GetTransform()->SetLocalPosition({ 0.f,0.f,0.f });
+
+	std::shared_ptr<GameEngineSpriteRenderer> pStar0 = pBlackScreen->CreateComponent<GameEngineSpriteRenderer>();
+	pStar0->SetScaleToTexture("starfields1.png");
+
+	std::shared_ptr<GameEngineSpriteRenderer> pStar1 = pBlackScreen->CreateComponent<GameEngineSpriteRenderer>();
+	pStar0->SetScaleToTexture("starfields2.png");
 
 	std::shared_ptr<TitleLogo> pLogo = CreateActor<TitleLogo>(0);
 	pLogo->GetTransform()->SetLocalPosition({ 0.f,200.f,0.f });
