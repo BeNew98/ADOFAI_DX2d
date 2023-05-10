@@ -52,7 +52,7 @@ void TitleLevel::Start()
 	pStar0->SetScaleToTexture("starfields1.png");
 
 	std::shared_ptr<GameEngineSpriteRenderer> pStar1 = pBlackScreen->CreateComponent<GameEngineSpriteRenderer>();
-	pStar0->SetScaleToTexture("starfields2.png");
+	pStar1->SetScaleToTexture("starfields2.png");
 
 	std::shared_ptr<TitleLogo> pLogo = CreateActor<TitleLogo>(0);
 	pLogo->GetTransform()->SetLocalPosition({ 0.f,200.f,0.f });
