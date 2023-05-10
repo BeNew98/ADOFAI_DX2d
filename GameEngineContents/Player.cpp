@@ -24,10 +24,11 @@ void Player::Start()
 {
 	m_pRed = GetLevel()->CreateActor<Planet>();
 	m_pRed->GetTransform()->SetLocalPosition({ 0.f,0.f,0.f });
+	m_pRed->SetName("Red");
 
 	m_pBlue = GetLevel()->CreateActor<Planet>();
 	m_pBlue->GetTransform()->SetLocalPosition({ -200.f,0.f,0.f });
-
+	m_pBlue->SetName("Blue");
 
 	m_pCenter = m_pRed;
 	m_pTurn = m_pBlue;
@@ -44,13 +45,26 @@ void Player::Start()
 
 void Player::Update(float _DeltaTime)
 {
+	TransformData red = m_pRed->GetTransform()->GetTransDataRef();
+	TransformData blue = m_pBlue->GetTransform()->GetTransDataRef();
+	int a = 0;
+
 	if (true == GameEngineInput::IsDown("R"))
 	{
 		m_pTurn->GetTransform()->CutParent();
-	
-		std::shared_ptr<Planet> pTemp = m_pCenter;
-		m_pCenter = m_pTurn;
-		m_pTurn = pTemp;
+
+		if (false==m_bTurn)
+		{
+			m_pCenter = m_pBlue;
+			m_pTurn = m_pRed;
+			m_bTurn = true;
+		}
+		else
+		{
+			m_pCenter = m_pRed;
+			m_pTurn = m_pBlue;
+			m_bTurn = false;
+		}
 	
 		m_pTurn->GetTransform()->SetParent(m_pCenter->GetTransform());
 	}
