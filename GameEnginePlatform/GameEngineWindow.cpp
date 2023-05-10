@@ -9,9 +9,9 @@
 std::function<LRESULT(HWND _hWnd, UINT _message, WPARAM _wParam, LPARAM _lParam)> GameEngineWindow::UserMessageFunction;
 HWND GameEngineWindow::HWnd = nullptr;
 HDC GameEngineWindow::WindowBackBufferHdc = nullptr;
-float4 GameEngineWindow::WindowSize = {1600, 900};
+float4 GameEngineWindow::WindowSize = {800, 600};
 float4 GameEngineWindow::WindowPos = { 100, 100 };
-float4 GameEngineWindow::ScreenSize = { 1600, 900 };
+float4 GameEngineWindow::ScreenSize = { 800, 600 };
 GameEngineImage* GameEngineWindow::BackBufferImage = nullptr;
 GameEngineImage* GameEngineWindow::DoubleBufferImage = nullptr;
 bool GameEngineWindow::IsWindowUpdate = true;
@@ -30,6 +30,16 @@ LRESULT CALLBACK GameEngineWindow::MessageFunction(HWND _hWnd, UINT _message, WP
 
     switch (_message)
     {
+    case WM_SETFOCUS:
+    {
+        GameEngineInput::IsFocusOn();
+        break;
+    }
+    case WM_KILLFOCUS:
+    {
+        GameEngineInput::IsFocusOff();
+        break;
+    }
     case WM_KEYDOWN:
     {
         GameEngineInput::IsAnyKeyOn();
@@ -150,16 +160,14 @@ int GameEngineWindow::WindowLoop(
         if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
         {
 
-            TranslateMessage(&msg);
-            DispatchMessage(&msg);
             if (nullptr != _Loop)
             {
                 _Loop();
+                GameEngineInput::IsAnyKeyOff();
             }
 
-            GameEngineInput::IsAnyKeyOff();
-
-
+            TranslateMessage(&msg);
+            DispatchMessage(&msg);
             continue;
         } 
 
@@ -168,9 +176,8 @@ int GameEngineWindow::WindowLoop(
         if (nullptr != _Loop)
         {
             _Loop();
+            GameEngineInput::IsAnyKeyOff();
         }
-
-        GameEngineInput::IsAnyKeyOff();
     }
 
     if (nullptr != _End)

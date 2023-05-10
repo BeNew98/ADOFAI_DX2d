@@ -30,39 +30,7 @@ void GameEngineTransform::TransformUpdate()
 	}
 	else // 차이
 	{
-		float4x4 ParentWorldMatrix = Parent->GetWorldMatrixRef();
-		float4 PScale, PRotation, PPosition;
-		ParentWorldMatrix.Decompose(PScale, PRotation, PPosition);
-
-
-		if (true == AbsoluteScale)
-		{
-			// 부모쪽 행렬의 스케일을 1
-			PScale = float4::One;
-		}
-		if (true == AbsoluteRotation)
-		{
-			// 부모의 회전 
-			PRotation = float4::Zero;
-			PRotation.EulerDegToQuaternion();
-		}
-		if (true == AbsolutePosition)
-		{
-			PPosition = float4::Zero;
-		}
-
-		float4x4 MatScale, MatRot, MatPos;
-
-		//scale
-		MatScale.Scale(PScale);
-
-		//rot
-		MatRot = PRotation.QuaternionToRotationMatrix();
-
-		//pos
-		MatPos.Pos(PPosition);
-
-		TransData.WorldMatrix = TransData.LocalWorldMatrix * (MatScale * MatRot * MatPos);
+		WorldCalculation();
 	}
 
 	WorldDecompose();
@@ -72,27 +40,50 @@ void GameEngineTransform::TransformUpdate()
 
 }
 
+void GameEngineTransform::WorldCalculation()
+{
+	float4x4 ParentWorldMatrix = Parent->GetWorldMatrixRef();
+	float4 PScale, PRotation, PPosition;
+	ParentWorldMatrix.Decompose(PScale, PRotation, PPosition);
+
+
+	if (true == AbsoluteScale)
+	{
+		// 부모쪽 행렬의 스케일을 1
+		PScale = float4::One;
+	}
+	if (true == AbsoluteRotation)
+	{
+		// 부모의 회전 
+		PRotation = float4::Zero;
+		PRotation.EulerDegToQuaternion();
+	}
+	if (true == AbsolutePosition)
+	{
+		PPosition = float4::Zero;
+	}
+
+	float4x4 MatScale, MatRot, MatPos;
+
+	//scale
+	MatScale.Scale(PScale);
+
+	//rot
+	MatRot = PRotation.QuaternionToRotationMatrix();
+
+	//pos
+	MatPos.Pos(PPosition);
+
+	TransData.WorldMatrix = TransData.LocalWorldMatrix * (MatScale * MatRot * MatPos);
+}
+
 void GameEngineTransform::LocalDecompose() 
 {
 	TransData.LocalWorldMatrix.Decompose(TransData.LocalScale, TransData.LocalQuaternion, TransData.LocalPosition);
 	TransData.LocalRotation = TransData.LocalQuaternion.QuaternionToEulerDeg();
 
 }
-void GameEngineTransform::SwitchParent(GameEngineTransform* _Child)
-{
-	std::list<GameEngineTransform*>::iterator IterBegin = Child.begin();
-	std::list<GameEngineTransform*>::iterator IterEnd = Child.end();
-	for (;IterBegin != IterEnd ; ++IterBegin)
-	{
-		if (*IterBegin == _Child)
-		{
-			GameEngineTransform* Temp = Parent;
-			Parent = *IterBegin;
-			*IterBegin = Parent;
-		}
-	}
-}
-void GameEngineTransform::WorldDecompose()
+void GameEngineTransform::WorldDecompose() 
 {
 	TransData.WorldMatrix.Decompose(TransData.WorldScale, TransData.WorldQuaternion, TransData.WorldPosition);
 	TransData.WorldRotation = TransData.WorldQuaternion.QuaternionToEulerDeg();
@@ -104,6 +95,12 @@ void GameEngineTransform::SetParent(GameEngineTransform* _Parent)
 	if (IsDebug())
 	{
 		int a = 0;
+	}
+
+	// 내가 원래 기존의 부모를 가지고 있다면
+	if (nullptr != Parent)
+	{
+		// 여기서 뭔가를 해서 
 	}
 
 	Parent = _Parent;
@@ -145,20 +142,8 @@ void GameEngineTransform::CalChild()
 {
 	for (GameEngineTransform* ChildTrans : Child)
 	{
-		if (false == ChildTrans->AbsoluteScale)
-		{
-			ChildTrans->SetLocalScale(ChildTrans->GetLocalScale());
-		}
-
-		if (false == ChildTrans->AbsoluteRotation)
-		{
-			ChildTrans->SetLocalRotation(ChildTrans->GetLocalRotation());
-		}
-
-		if (false == ChildTrans->AbsolutePosition)
-		{
-			ChildTrans->SetLocalPosition(ChildTrans->GetLocalPosition());
-		}
+		ChildTrans->WorldCalculation();
+		ChildTrans->CalChild();
 	}
 }
 
@@ -199,4 +184,115 @@ void GameEngineTransform::AbsoluteReset()
 	AbsoluteScale = false;
 	AbsoluteRotation = false;
 	AbsolutePosition = false;
+}
+
+void GameEngineTransform::SetMaster(GameEngineObject* _Master)
+{
+	Master = _Master;
+}
+
+void GameEngineTransform::AllAccTime(float _DeltaTime)
+{
+	if (nullptr == Master)
+	{
+		return;
+	}
+
+	if (false == Master->IsUpdate())
+	{
+		return;
+	}
+
+	Master->AccLiveTime(_DeltaTime);
+
+	for (GameEngineTransform* Trans : Child)
+	{
+		Trans->AllAccTime(_DeltaTime);
+	}
+}
+
+void GameEngineTransform::AllUpdate(float _DeltaTime) 
+{
+
+	if (nullptr == Master)
+	{
+		return;
+	}
+
+	if (false == Master->IsUpdate())
+	{
+		return;
+	}
+
+	Master->Update(_DeltaTime);
+
+	for (GameEngineTransform* Trans : Child)
+	{
+		Trans->AllUpdate(_DeltaTime);
+	}
+}
+
+
+void GameEngineTransform::AllRender(float _DeltaTime) 
+{
+	if (nullptr == Master)
+	{
+		return;
+	}
+
+	if (false == Master->IsUpdate())
+	{
+		return;
+	}
+
+	Master->Render(_DeltaTime);
+
+	for (GameEngineTransform* Trans : Child)
+	{
+		Trans->AllRender(_DeltaTime);
+	}
+}
+
+void GameEngineTransform::AllRelease()
+{
+	if (nullptr == Master)
+	{
+		return;
+	}
+
+	if (false == Master->IsUpdate())
+	{
+		return;
+	}
+
+	Master->Release();
+
+	for (GameEngineTransform* Trans : Child)
+	{
+		Trans->AllRelease();
+	}
+}
+
+void GameEngineTransform::ChildRelease()
+{
+	std::list<GameEngineTransform*>::iterator ReleaseStartIter = Child.begin();
+	std::list<GameEngineTransform*>::iterator ReleaseEndIter = Child.end();
+
+	for (; ReleaseStartIter != ReleaseEndIter; )
+	{
+		GameEngineTransform* Trans = *ReleaseStartIter;
+
+		if (nullptr == Trans->Master)
+		{
+			MsgAssert("몬가 잘못됨 도라에몽을 부르자.");
+		}
+
+		if (false == Trans->Master->IsDeath())
+		{
+			++ReleaseStartIter;
+			continue;
+		}
+
+		ReleaseStartIter = Child.erase(ReleaseStartIter);
+	}
 }

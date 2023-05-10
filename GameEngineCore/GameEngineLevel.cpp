@@ -24,18 +24,39 @@ void GameEngineLevel::Start()
 
 void GameEngineLevel::ActorUpdate(float _DeltaTime)
 {
-
-	for (std::pair<int, std::list<std::shared_ptr<GameEngineActor>>> OrderGroup : Actors)
 	{
-		std::list<std::shared_ptr<GameEngineActor>>& ActorList = OrderGroup.second;
+		std::map<int, std::list<std::shared_ptr<GameEngineActor>>>::iterator GroupStartIter = Actors.begin();
+		std::map<int, std::list<std::shared_ptr<GameEngineActor>>>::iterator GroupEndIter = Actors.end();
 
-		for (std::shared_ptr<GameEngineActor> Actor : ActorList)
+		for (; GroupStartIter != GroupEndIter; ++GroupStartIter)
 		{
-			if (false == Actor->IsUpdate())
+			std::list<std::shared_ptr<GameEngineActor>>& ActorList = GroupStartIter->second;
+
+			std::list<std::shared_ptr<GameEngineActor>>::iterator ActorStart = ActorList.begin();
+			std::list<std::shared_ptr<GameEngineActor>>::iterator ActorEnd = ActorList.end();
+
+			for (; ActorStart != ActorEnd; )
 			{
-				continue;
+				std::shared_ptr<GameEngineActor> CheckActor = (*ActorStart);
+				GameEngineTransform* ParentTransform = CheckActor->GetTransform()->Parent;
+
+				if (ParentTransform != nullptr)
+				{
+					GameEngineObject* Object = ParentTransform->GetMaster();
+
+					if (nullptr == Object)
+					{
+						MsgAssert("부모가 없는 트랜스폼을 Level에서 사용할수는 없습니다.");
+					}
+
+					// 자식을 이제부터 부모가 책임진다는 의미.
+					Object->Childs.push_back(CheckActor);
+					ActorStart = ActorList.erase(ActorStart);
+					continue;
+				}
+
+				++ActorStart;
 			}
-			Actor->AccLiveTime(_DeltaTime);
 		}
 	}
 
@@ -45,40 +66,67 @@ void GameEngineLevel::ActorUpdate(float _DeltaTime)
 		return;
 	}
 
-	for (std::pair<int, std::list<std::shared_ptr<GameEngineActor>>> OrderGroup : Actors)
 	{
-		std::list<std::shared_ptr<GameEngineActor>>& ActorList = OrderGroup.second;
+		// 이건 나중에 만들어질 랜더러의 랜더가 다 끝나고 되는 랜더가 될겁니다.
+		std::map<int, std::list<std::shared_ptr<GameEngineActor>>>::iterator GroupStartIter = Actors.begin();
+		std::map<int, std::list<std::shared_ptr<GameEngineActor>>>::iterator GroupEndIter = Actors.end();
 
-		// TimeScale;
-		// 추후에 적용하겠다.
-		for (std::shared_ptr<GameEngineActor> Actor : ActorList)
+		for (; GroupStartIter != GroupEndIter; ++GroupStartIter)
 		{
-			if (false == Actor->IsUpdate())
+			std::list<std::shared_ptr<GameEngineActor>>& ActorList = GroupStartIter->second;
+
+			std::list<std::shared_ptr<GameEngineActor>>::iterator ActorStart = ActorList.begin();
+			std::list<std::shared_ptr<GameEngineActor>>::iterator ActorEnd = ActorList.end();
+
+			for (; ActorStart != ActorEnd; ++ActorStart)
 			{
-				continue;
+				std::shared_ptr<GameEngineActor>& Actor = *ActorStart;
+
+				Actor->AllAccTime(_DeltaTime);
+				Actor->AllUpdate(_DeltaTime);
+
+				//if (false == Actor->IsUpdate())
+				//{
+				//	continue;
+				//}
+
+				//GameEngineTransform* Transform = Actor->GetTransform();
+				//Transform->AllAccTime(_DeltaTime);
+				//Transform->AllUpdate(_DeltaTime);
 			}
-			Actor->Update(_DeltaTime);
-			Actor->ComponentsUpdate(_DeltaTime);
 		}
 	}
 }
 
 void GameEngineLevel::ActorRender(float _DeltaTime)
 {
-
 	GetMainCamera()->Setting();
 
 	// 이건 나중에 만들어질 랜더러의 랜더가 다 끝나고 되는 랜더가 될겁니다.
-	for (std::pair<int, std::list<std::shared_ptr<GameEngineActor>>> OrderGroup : Actors)
-	{
-		std::list<std::shared_ptr<GameEngineActor>>& ActorList = OrderGroup.second;
+	std::map<int, std::list<std::shared_ptr<GameEngineActor>>>::iterator GroupStartIter = Actors.begin();
+	std::map<int, std::list<std::shared_ptr<GameEngineActor>>>::iterator GroupEndIter = Actors.end();
 
-		// TimeScale;
-		// 추후에 적용하겠다.
-		for (std::shared_ptr<GameEngineActor> Actor : ActorList)
+	for (; GroupStartIter != GroupEndIter; ++GroupStartIter)
+	{
+		std::list<std::shared_ptr<GameEngineActor>>& ActorList = GroupStartIter->second;
+
+		std::list<std::shared_ptr<GameEngineActor>>::iterator ActorStart = ActorList.begin();
+		std::list<std::shared_ptr<GameEngineActor>>::iterator ActorEnd = ActorList.end();
+
+		for (; ActorStart != ActorEnd; ++ActorStart)
 		{
-			Actor->Render(_DeltaTime);
-			Actor->ComponentsRender(_DeltaTime);
+			std::shared_ptr<GameEngineActor>& Actor = *ActorStart;
+
+			Actor->AllRender(_DeltaTime);
+
+
+			/*if (false == Actor->IsUpdate())
+			{
+				continue;
+			}
+
+			GameEngineTransform* Transform = Actor->GetTransform();
+			Transform->AllRender(_DeltaTime);*/
 		}
 	}
 
@@ -88,27 +136,31 @@ void GameEngineLevel::ActorRender(float _DeltaTime)
 
 void GameEngineLevel::ActorRelease()
 {
-	// 이건 나중에 만들어질 랜더러의 랜더가 다 끝나고 되는 랜더가 될겁니다.
+	std::map<int, std::list<std::shared_ptr<GameEngineActor>>>::iterator GroupStartIter = Actors.begin();
+	std::map<int, std::list<std::shared_ptr<GameEngineActor>>>::iterator GroupEndIter = Actors.end();
 
-	for (std::pair<int, std::list<std::shared_ptr<GameEngineActor>>> OrderGroup : Actors)
+	for (; GroupStartIter != GroupEndIter;++GroupStartIter)
 	{
-		std::list<std::shared_ptr<GameEngineActor>>& ActorList = OrderGroup.second;
+		std::list<std::shared_ptr<GameEngineActor>>& ActorList = GroupStartIter->second;
 
-		std::list<std::shared_ptr<GameEngineActor>>::iterator Start = ActorList.begin();
-		std::list<std::shared_ptr<GameEngineActor>>::iterator End = ActorList.end();
+		std::list<std::shared_ptr<GameEngineActor>>::iterator ActorStart = ActorList.begin();
+		std::list<std::shared_ptr<GameEngineActor>>::iterator ActorEnd = ActorList.end();
 
-		for (; Start != End; )
+		for (; ActorStart != ActorEnd; )
 		{
-			std::shared_ptr<GameEngineActor> RelaseActor = (*Start);
+			std::shared_ptr<GameEngineActor> RelaseActor = (*ActorStart);
 
 			if (nullptr != RelaseActor && false == RelaseActor->IsDeath())
 			{
-				++Start;
+				RelaseActor->AllRelease();
+				//GameEngineTransform* Transform = RelaseActor->GetTransform();
+				//Transform->AllRelease();
+				++ActorStart;
 				continue;
 			}
 
 			RelaseActor->Release();
-			Start = ActorList.erase(Start);
+			ActorStart = ActorList.erase(ActorStart);
 		}
 	}
 
