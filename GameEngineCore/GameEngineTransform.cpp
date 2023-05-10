@@ -44,7 +44,6 @@ void GameEngineTransform::WorldCalculation()
 {
 	float4x4 ParentWorldMatrix = Parent->GetWorldMatrixRef();
 	float4 PScale, PRotation, PPosition;
-	ParentWorldMatrix.Decompose(PScale, PRotation, PPosition);
 
 
 	if (true == AbsoluteScale)
@@ -56,12 +55,14 @@ void GameEngineTransform::WorldCalculation()
 	{
 		// 부모의 회전 
 		PRotation = float4::Zero;
-		PRotation.EulerDegToQuaternion();
+		//PRotation;//.EulerDegToQuaternion();
 	}
 	if (true == AbsolutePosition)
 	{
 		PPosition = float4::Zero;
 	}
+
+	ParentWorldMatrix.Decompose(PScale, PRotation, PPosition);
 
 	float4x4 MatScale, MatRot, MatPos;
 
@@ -136,8 +137,8 @@ void GameEngineTransform::SetParent(GameEngineTransform* _Parent)
 	{
 		//이미 자식으로 내가 추가되어있는데 또 하는 경우를 방지
 
-		std::list<GameEngineTransform*>::iterator BeginIter = Parent->Child.begin();
-		std::list<GameEngineTransform*>::iterator EndIter = Parent->Child.end();
+		std::list<GameEngineTransform*>::iterator BeginIter = _Parent->Child.begin();
+		std::list<GameEngineTransform*>::iterator EndIter = _Parent->Child.end();
 
 		for (; BeginIter != EndIter;)
 		{

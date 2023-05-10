@@ -18,19 +18,21 @@ public:
 
 protected:
 	void Start();
-	void Update(float _Delta) override;
-	void Render(float _Delta) override;
+	void Update(float _DeltaTime) override;
+	void Render(float _DeltaTime) override;
 
 	float4 TestColor;
 private:
 	float Angle = 0.0f;
 	bool m_bTurn = false;
+	bool m_bMoveControl = false;
 	std::shared_ptr<Planet> m_pRed;
 	std::shared_ptr<Planet> m_pBlue;
 	std::shared_ptr<Planet> m_pCenter;
 	std::shared_ptr<Planet> m_pTurn;
 
-
+	void LocalMove(float _DeltaTime);
+	void WorldMove(float _DeltaTime);
 
 
 };
