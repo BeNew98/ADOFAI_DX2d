@@ -111,7 +111,7 @@ void Player::Update(float _DeltaTime)
 		m_pBlue->GetTransform()->AddLocalPosition(float4::Right * 100.f * _DeltaTime);
 	}
 
-	m_pCenter->GetTransform()->AddWorldRotation({ 0.f,0.f,100.f * _DeltaTime });
+	m_pCenter->GetTransform()->AddLocalRotation({ 0.f,0.f,100.f * _DeltaTime });
 }
 
 // 이건 디버깅용도나 
