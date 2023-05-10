@@ -150,6 +150,7 @@ void GameEngineTransform::SetParent(GameEngineTransform* _Parent)
 			++BeginIter;
 		}
 
+		//부모의 순환을 방지
 		if (_Parent->Parent == this)
 		{
 			MsgAssert("넣어준 부모의 부모가 본인입니다.")
