@@ -93,8 +93,9 @@ void GameEngineTransform::CutParent()
 	}
 
 	std::list<GameEngineTransform*>::iterator BeginIter = Parent->Child.begin();
+	std::list<GameEngineTransform*>::iterator EndIter = Parent->Child.end();
 
-	for (; BeginIter != Parent->Child.end();)
+	for (; BeginIter != EndIter;)
 	{
 		if (*BeginIter == this)
 		{
@@ -132,16 +133,22 @@ void GameEngineTransform::SetParent(GameEngineTransform* _Parent)
 		int a = 0;
 	}
 
-	std::list<GameEngineTransform*>::iterator BeginIter = _Parent->Child.begin();
-
-	for (; BeginIter != _Parent->Child.end();)
 	{
-		if (*BeginIter == this)
+		//이미 자식으로 내가 추가되어있는데 또 하는 경우를 방지
+
+		std::list<GameEngineTransform*>::iterator BeginIter = Parent->Child.begin();
+		std::list<GameEngineTransform*>::iterator EndIter = Parent->Child.end();
+
+		for (; BeginIter != EndIter;)
 		{
-			return;
+			if (*BeginIter == this)
+			{
+				return;
+			}
+			++BeginIter;
 		}
-		++BeginIter;
 	}
+
 	// 내가 원래 기존의 부모를 가지고 있다면
 	if (nullptr != Parent)
 	{
