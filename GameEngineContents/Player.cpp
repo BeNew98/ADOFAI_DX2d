@@ -19,7 +19,6 @@ Player::~Player()
 {
 }
 
-std::shared_ptr<Planet>m_pBlue1 = nullptr;
 void Player::Start()
 {
 	m_pRed = GetLevel()->CreateActor<Planet>();
@@ -29,11 +28,6 @@ void Player::Start()
 	m_pBlue = GetLevel()->CreateActor<Planet>();
 	m_pBlue->GetTransform()->SetLocalPosition({ -200.f,0.f,0.f });
 	m_pBlue->SetName("Blue");
-
-
-	m_pBlue1 = GetLevel()->CreateActor<Planet>();
-	m_pBlue1->GetTransform()->SetLocalPosition({ -400.f,0.f,0.f });
-	m_pBlue1->SetName("Blue1");
 
 	m_pCenter = m_pRed;
 	m_pTurn = m_pBlue;
