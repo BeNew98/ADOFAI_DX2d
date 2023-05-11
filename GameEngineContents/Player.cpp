@@ -70,18 +70,18 @@ void Player::Update(float _DeltaTime)
 	{
 		m_pTurn->GetTransform()->CutParent();
 
-		//if (false==m_bTurn)
-		//{
-		//	m_pCenter = m_pBlue;
-		//	m_pTurn = m_pRed;
-		//	m_bTurn = true;
-		//}
-		//else
-		//{
-		//	m_pCenter = m_pRed;
-		//	m_pTurn = m_pBlue;
-		//	m_bTurn = false;
-		//}
+		if (false==m_bTurn)
+		{
+			m_pCenter = m_pBlue;
+			m_pTurn = m_pRed;
+			m_bTurn = true;
+		}
+		else
+		{
+			m_pCenter = m_pRed;
+			m_pTurn = m_pBlue;
+			m_bTurn = false;
+		}
 
 		m_pTurn->GetTransform()->SetParent(m_pBlue1->GetTransform());
 		
@@ -112,7 +112,7 @@ void Player::Update(float _DeltaTime)
 	}
 	
 
-	m_pCenter->GetTransform()->AddLocalRotation({ 0.f,0.f,100.f * _DeltaTime });
+	//m_pCenter->GetTransform()->AddLocalRotation({ 0.f,0.f,100.f * _DeltaTime });
 }
 
 // 이건 디버깅용도나 
@@ -141,20 +141,20 @@ void Player::LocalMove(float _DeltaTime)
 
 	if (true == GameEngineInput::IsPress("I"))
 	{
-		m_pBlue1->GetTransform()->AddLocalPosition(float4::Up * 100.f * _DeltaTime);
+		m_pBlue->GetTransform()->AddLocalPosition(float4::Up * 100.f * _DeltaTime);
 	}
 
 	if (true == GameEngineInput::IsPress("J"))
 	{
-		m_pBlue1->GetTransform()->AddLocalPosition(float4::Left * 100.f * _DeltaTime);
+		m_pBlue->GetTransform()->AddLocalPosition(float4::Left * 100.f * _DeltaTime);
 	}
 	if (true == GameEngineInput::IsPress("K"))
 	{
-		m_pBlue1->GetTransform()->AddLocalPosition(float4::Down * 100.f * _DeltaTime);
+		m_pBlue->GetTransform()->AddLocalPosition(float4::Down * 100.f * _DeltaTime);
 	}
 	if (true == GameEngineInput::IsPress("L"))
 	{
-		m_pBlue1->GetTransform()->AddLocalPosition(float4::Right * 100.f * _DeltaTime);
+		m_pBlue->GetTransform()->AddLocalPosition(float4::Right * 100.f * _DeltaTime);
 	}
 }
 void Player::WorldMove(float _DeltaTime)
@@ -179,20 +179,20 @@ void Player::WorldMove(float _DeltaTime)
 
 	if (true == GameEngineInput::IsPress("I"))
 	{
-		m_pBlue1->GetTransform()->AddWorldPosition(float4::Up * 100.f * _DeltaTime);
+		m_pBlue->GetTransform()->AddWorldPosition(float4::Up * 100.f * _DeltaTime);
 	}
 
 	if (true == GameEngineInput::IsPress("J"))
 	{
-		m_pBlue1->GetTransform()->AddWorldPosition(float4::Left * 100.f * _DeltaTime);
+		m_pBlue->GetTransform()->AddWorldPosition(float4::Left * 100.f * _DeltaTime);
 	}
 	if (true == GameEngineInput::IsPress("K"))
 	{
-		m_pBlue1->GetTransform()->AddWorldPosition(float4::Down * 100.f * _DeltaTime);
+		m_pBlue->GetTransform()->AddWorldPosition(float4::Down * 100.f * _DeltaTime);
 	}
 	if (true == GameEngineInput::IsPress("L"))
 	{
-		m_pBlue1->GetTransform()->AddWorldPosition(float4::Right * 100.f * _DeltaTime);
+		m_pBlue->GetTransform()->AddWorldPosition(float4::Right * 100.f * _DeltaTime);
 	}
 }
 ;

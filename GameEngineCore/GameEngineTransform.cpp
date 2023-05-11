@@ -33,9 +33,6 @@ void GameEngineTransform::TransformUpdate()
 		WorldCalculation();
 	}
 
-	WorldDecompose();
-
-	LocalDecompose();
 		// ParentWorldMatrix.Decompose(PScale, PRoatation, PPosition);
 
 }
@@ -43,8 +40,9 @@ void GameEngineTransform::TransformUpdate()
 void GameEngineTransform::WorldCalculation()
 {
 	float4x4 ParentWorldMatrix = Parent->GetWorldMatrixRef();
-	float4 PScale, PRotation, PPosition;
+	float4 PScale, PRotation, PPosition;	
 
+	ParentWorldMatrix.Decompose(PScale, PRotation, PPosition);
 
 	if (true == AbsoluteScale)
 	{
@@ -62,8 +60,6 @@ void GameEngineTransform::WorldCalculation()
 		PPosition = float4::Zero;
 	}
 
-	ParentWorldMatrix.Decompose(PScale, PRotation, PPosition);
-
 	float4x4 MatScale, MatRot, MatPos;
 
 	//scale
@@ -76,6 +72,11 @@ void GameEngineTransform::WorldCalculation()
 	MatPos.Pos(PPosition);
 
 	TransData.WorldMatrix = TransData.LocalWorldMatrix * (MatScale * MatRot * MatPos);
+
+
+	WorldDecompose();
+
+	LocalDecompose();
 }
 
 void GameEngineTransform::LocalDecompose() 
