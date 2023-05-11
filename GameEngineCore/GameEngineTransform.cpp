@@ -1,6 +1,8 @@
 #include "PrecompileHeader.h"
 #include "GameEngineTransform.h"
 #include "GameEngineObject.h"
+#include "GameEngineActor.h"
+#include "GameEngineLevel.h"
 
 GameEngineTransform::GameEngineTransform()
 {
@@ -33,6 +35,8 @@ void GameEngineTransform::TransformUpdate()
 		WorldCalculation();
 	}
 
+	WorldDecompose();
+	LocalDecompose();
 		// ParentWorldMatrix.Decompose(PScale, PRoatation, PPosition);
 
 }
@@ -40,9 +44,9 @@ void GameEngineTransform::TransformUpdate()
 void GameEngineTransform::WorldCalculation()
 {
 	float4x4 ParentWorldMatrix = Parent->GetWorldMatrixRef();
-	float4 PScale, PRotation, PPosition;	
-
+	float4 PScale, PRotation, PPosition;
 	ParentWorldMatrix.Decompose(PScale, PRotation, PPosition);
+
 
 	if (true == AbsoluteScale)
 	{
@@ -53,7 +57,7 @@ void GameEngineTransform::WorldCalculation()
 	{
 		// 부모의 회전 
 		PRotation = float4::Zero;
-		//PRotation;//.EulerDegToQuaternion();
+		PRotation.EulerDegToQuaternion();
 	}
 	if (true == AbsolutePosition)
 	{
@@ -72,11 +76,6 @@ void GameEngineTransform::WorldCalculation()
 	MatPos.Pos(PPosition);
 
 	TransData.WorldMatrix = TransData.LocalWorldMatrix * (MatScale * MatRot * MatPos);
-
-
-	WorldDecompose();
-
-	LocalDecompose();
 }
 
 void GameEngineTransform::LocalDecompose() 
@@ -85,43 +84,7 @@ void GameEngineTransform::LocalDecompose()
 	TransData.LocalRotation = TransData.LocalQuaternion.QuaternionToEulerDeg();
 
 }
-
-void GameEngineTransform::CutParent()
-{
-	if (nullptr == Parent)
-	{
-		return;
-		MsgAssert("이미 부모가 없습니다.");
-	}
-
-	std::list<GameEngineTransform*>::iterator BeginIter = Parent->Child.begin();
-	std::list<GameEngineTransform*>::iterator EndIter = Parent->Child.end();
-
-	for (; BeginIter != EndIter;)
-	{
-		if (*BeginIter == this)
-		{			
-			Parent->Child.erase(BeginIter);
-			break;
-		}
-		++BeginIter;
-	}
-
-	Parent = nullptr;
-
-	AbsoluteReset();
-
-	TransData.LocalWorldMatrix = TransData.WorldMatrix;
-
-	LocalDecompose();
-	
-	TransData.Position = TransData.LocalPosition;
-	TransData.Rotation = TransData.LocalRotation;
-	TransData.Scale = TransData.LocalScale;	
-
-	TransformUpdate();
-}
-void GameEngineTransform::WorldDecompose()
+void GameEngineTransform::WorldDecompose() 
 {
 	TransData.WorldMatrix.Decompose(TransData.WorldScale, TransData.WorldQuaternion, TransData.WorldPosition);
 	TransData.WorldRotation = TransData.WorldQuaternion.QuaternionToEulerDeg();
@@ -135,35 +98,44 @@ void GameEngineTransform::SetParent(GameEngineTransform* _Parent)
 		int a = 0;
 	}
 
+	if (nullptr == _Parent && nullptr == Master)
 	{
-		//이미 부모의 자식으로 내가 추가되어있는데 또 하는 경우를 방지
-
-		std::list<GameEngineTransform*>::iterator BeginIter = _Parent->Child.begin();
-		std::list<GameEngineTransform*>::iterator EndIter = _Parent->Child.end();
-
-		for (; BeginIter != EndIter;)
+		if (nullptr == dynamic_cast<GameEngineActor*>(Master))
 		{
-			if (*BeginIter == this)
-			{
-				MsgAssert("이미 본인이 자식입니다.")
-				return;
-			}
-			++BeginIter;
-		}
-
-		//부모의 순환을 방지
-		if (_Parent->Parent == this)
-		{
-			MsgAssert("넣어준 부모의 부모가 본인입니다.")
+			MsgAssert("액터만이 루트 리스트에 추가될수 있습니다.");
 			return;
 		}
+	}
+
+	if (nullptr == Parent && nullptr == _Parent)
+	{
+		return;
 	}
 
 	// 내가 원래 기존의 부모를 가지고 있다면
 	if (nullptr != Parent)
 	{
-		//CutParent();
+		Parent->Child.remove(this);
+		GameEngineObject* ParentMaster = Parent->Master;
+
+		if (nullptr == ParentMaster)
+		{
+			MsgAssert("존재할수 없는 상황입니다 Master가 nullptr입니다");
+			return;
+		}
+
+		std::shared_ptr<GameEngineObject> MasterPtr = Master->shared_from_this();
+		ParentMaster->Childs.remove(MasterPtr);
+		Parent = nullptr;
+
+		GameEngineLevel* Level = Master->GetLevel();
+
+		Level->Actors[MasterPtr->GetOrder()].push_back(std::dynamic_pointer_cast<GameEngineActor>(MasterPtr));
 	}
+
+
+
+
 
 	Parent = _Parent;
 
@@ -179,22 +151,36 @@ void GameEngineTransform::SetParent(GameEngineTransform* _Parent)
 	//ChildData.WorldMatrix;
 	//float4x4 NewWorld = ChildData.WorldMatrix * ParentData.WorldMatrix.InverseReturn();
 
-	TransData.LocalWorldMatrix = TransData.WorldMatrix * Parent->TransData.WorldMatrix.InverseReturn();
-	LocalDecompose();
+	if (nullptr != Parent)
+	{
+		TransData.LocalWorldMatrix = TransData.WorldMatrix * Parent->TransData.WorldMatrix.InverseReturn();
 
-	TransData.Position = TransData.LocalPosition;
-	TransData.Rotation = TransData.LocalRotation;
-	TransData.Scale = TransData.LocalScale;
+		LocalDecompose();
 
-	TransformUpdate();
+		TransData.Position = TransData.LocalPosition;
+		TransData.Rotation = TransData.LocalRotation;
+		TransData.Scale = TransData.LocalScale;
 
-	AbsoluteReset();
+		TransformUpdate();
 
-	// 나의 로컬포지션 나의 로컬 이런것들이 있었는데.
-	// 나는 새로운 부모가 생겼고
-	// 내가 이미 다른 부모가 있다면
+		AbsoluteReset();
 
-	Parent->Child.push_back(this);
+		// 나의 로컬포지션 나의 로컬 이런것들이 있었는데.
+		// 나는 새로운 부모가 생겼고
+		// 내가 이미 다른 부모가 있다면
+
+		Parent->Child.push_back(this);
+	}
+	else 
+	{
+		WorldDecompose();
+
+		TransData.Position = TransData.WorldPosition;
+		TransData.Rotation = TransData.WorldRotation;
+		TransData.Scale = TransData.WorldScale;
+		TransformUpdate();
+		AbsoluteReset();
+	}
 }
 
 
@@ -205,6 +191,7 @@ void GameEngineTransform::CalChild()
 	for (GameEngineTransform* ChildTrans : Child)
 	{
 		ChildTrans->WorldCalculation();
+		ChildTrans->WorldDecompose();
 		ChildTrans->CalChild();
 	}
 }

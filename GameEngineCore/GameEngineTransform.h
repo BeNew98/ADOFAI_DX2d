@@ -280,9 +280,6 @@ public:
 		TransData = _Data;
 	}
 
-	void CutParent();
-
-
 protected:
 
 private:

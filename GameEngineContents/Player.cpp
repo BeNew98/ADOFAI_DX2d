@@ -68,8 +68,7 @@ void Player::Update(float _DeltaTime)
 
 	if (true == GameEngineInput::IsDown("R"))
 	{
-		m_pTurn->GetTransform()->CutParent();
-
+		m_pTurn->GetTransform()->SetParent(nullptr);
 		if (false==m_bTurn)
 		{
 			m_pCenter = m_pBlue;
@@ -83,16 +82,10 @@ void Player::Update(float _DeltaTime)
 			m_bTurn = false;
 		}
 
-		m_pTurn->GetTransform()->SetParent(m_pBlue1->GetTransform());
-		
+		m_pTurn->GetTransform()->SetParent(m_pCenter->GetTransform());		
 	}
 
-	if (true == GameEngineInput::IsDown("T"))
-	{
-		m_pTurn->GetTransform()->CutParent();
-
-		m_pTurn->GetTransform()->SetParent(m_pCenter->GetTransform());
-	}
+	
 	if (true == GameEngineInput::IsDown("1"))
 	{
 		m_bMoveControl = false;
@@ -112,7 +105,7 @@ void Player::Update(float _DeltaTime)
 	}
 	
 
-	//m_pCenter->GetTransform()->AddLocalRotation({ 0.f,0.f,100.f * _DeltaTime });
+	m_pCenter->GetTransform()->AddLocalRotation({ 0.f,0.f,100.f * _DeltaTime });
 }
 
 // 이건 디버깅용도나 
