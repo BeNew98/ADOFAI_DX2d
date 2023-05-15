@@ -2,69 +2,103 @@
 #include "GameEngineSpriteRenderer.h"
 #include "GameEngineSprite.h"
 
-std::shared_ptr<GameEngineTexture> AnimationInfo::CurFrameTexture() 
+const SpriteInfo& AnimationInfo::CurSpriteInfo()
 {
-	const SpriteInfo& Info = Sprite->GetSpriteInfo(CurFrame);
-	return Info.Texture;
+	const SpriteInfo& Info = Sprite->GetSpriteInfo(FrameIndex[CurFrame]);
+	return Info;
 }
 
-bool AnimationInfo::IsEnd() 
+bool AnimationInfo::IsEnd()
 {
 	return IsEndValue;
 }
 
-void AnimationInfo::Reset() 
+void AnimationInfo::Reset()
 {
-	CurFrame = StartFrame;
-	CurTime = 0.0f;
+	CurFrame = 0;
+	CurTime = FrameTime[0];
 	IsEndValue = false;
+	IsPauseValue = false;
 }
 
 void AnimationInfo::Update(float _DeltaTime)
 {
 	IsEndValue = false;
+
+	// 1;
+	// 
+
+	if (true == IsPauseValue)
+	{
+		return;
+	}
+
+	size_t CurFrameIndex = FrameIndex[CurFrame];
+
+
+	if (UpdateEventFunction.end() != UpdateEventFunction.find(CurFrameIndex))
+	{
+		UpdateEventFunction[CurFrameIndex]();
+	}
+
 	CurTime -= _DeltaTime;
 
 	if (0.0f >= CurTime)
 	{
 		++CurFrame;
-		CurTime = Inter;
 
-		// 0 ~ 9
 
-		// 9
-		if (CurFrame > EndFrame)
+		if (StartEventFunction.end() != StartEventFunction.find(CurFrameIndex))
+		{
+			StartEventFunction[CurFrameIndex]();
+		}
+
+		if (FrameIndex.size() <= CurFrame)
 		{
 			IsEndValue = true;
 
 			if (true == Loop)
 			{
-				CurFrame = StartFrame;
+				CurFrame = 0;
 			}
-			else 
+			else
 			{
 				--CurFrame;
 			}
 		}
+		CurTime += FrameTime[CurFrame];
+
+		// 0 ~ 9
+
+		// 9
 	}
 }
 
 // SpriteRenderer
 
-GameEngineSpriteRenderer::GameEngineSpriteRenderer() 
+GameEngineSpriteRenderer::GameEngineSpriteRenderer()
 {
 }
 
-GameEngineSpriteRenderer::~GameEngineSpriteRenderer() 
+GameEngineSpriteRenderer::~GameEngineSpriteRenderer()
 {
 }
 
 
-void GameEngineSpriteRenderer::Start() 
+void GameEngineSpriteRenderer::Start()
 {
 	GameEngineRenderer::Start();
 
 	SetPipeLine("2DTexture");
+
+	AtlasData.x = 0.0f;
+	AtlasData.y = 0.0f;
+	AtlasData.z = 1.0f;
+	AtlasData.w = 1.0f;
+
+	GetShaderResHelper().SetConstantBufferLink("AtlasData", AtlasData);
+
+	// AtlasData
 }
 
 void GameEngineSpriteRenderer::SetTexture(const std::string_view& _Name)
@@ -101,6 +135,25 @@ void GameEngineSpriteRenderer::SetScaleToTexture(const std::string_view& _Name)
 	GetTransform()->SetLocalScale(Scale);
 }
 
+void GameEngineSpriteRenderer::SetSprite(const std::string_view& _SpriteName, size_t _Frame/* = 0*/)
+{
+	Sprite = GameEngineSprite::Find(_SpriteName);
+	Frame = _Frame;
+
+	const SpriteInfo& Info = Sprite->GetSpriteInfo(Frame);
+	GetShaderResHelper().SetTexture("DiffuseTex", Info.Texture);
+	AtlasData = Info.CutData;
+}
+
+void GameEngineSpriteRenderer::SetFrame(size_t _Frame)
+{
+	Frame = _Frame;
+
+	const SpriteInfo& Info = Sprite->GetSpriteInfo(Frame);
+	GetShaderResHelper().SetTexture("DiffuseTex", Info.Texture);
+	AtlasData = Info.CutData;
+}
+
 std::shared_ptr<AnimationInfo> GameEngineSpriteRenderer::FindAnimation(const std::string_view& _Name)
 {
 	std::map<std::string, std::shared_ptr<AnimationInfo>>::iterator FindIter = Animations.find(_Name.data());
@@ -113,66 +166,102 @@ std::shared_ptr<AnimationInfo> GameEngineSpriteRenderer::FindAnimation(const std
 	return FindIter->second;
 }
 
-std::shared_ptr<AnimationInfo> GameEngineSpriteRenderer::CreateAnimation(const std::string_view& _Name,
-	const std::string_view& _SpriteName,
-	float _FrameInter /*= 0.1f*/,
-	int _Start /*= -1*/,
-	int _End /*= -1*/,
-	bool _Loop /*= true*/,
-	bool _ScaleToImage)
+std::shared_ptr<AnimationInfo> GameEngineSpriteRenderer::CreateAnimation(const AnimationParameter& _Paramter)
 {
-	if (nullptr != FindAnimation(_Name))
+	if (nullptr != FindAnimation(_Paramter.AnimationName))
 	{
-		MsgAssert("이미 존재하는 이름의 애니메이션을 또 만들려고 했습니다." + std::string(_Name));
+		MsgAssert("이미 존재하는 이름의 애니메이션을 또 만들려고 했습니다." + std::string(_Paramter.AnimationName));
 		return nullptr;
 	}
 
-	std::shared_ptr<GameEngineSprite> Sprite = GameEngineSprite::Find(_SpriteName);
+	std::shared_ptr<GameEngineSprite> Sprite = GameEngineSprite::Find(_Paramter.SpriteName);
 
 	if (nullptr == Sprite)
 	{
-		MsgAssert("존재하지 않는 스프라이트로 애니메이션을 만들려고 했습니다." + std::string(_Name));
+		MsgAssert("존재하지 않는 스프라이트로 애니메이션을 만들려고 했습니다." + std::string(_Paramter.AnimationName));
 		return nullptr;
 	}
 
 	std::shared_ptr<AnimationInfo> NewAnimation = std::make_shared<AnimationInfo>();
-	Animations[_Name.data()] = NewAnimation;
+	Animations[_Paramter.AnimationName.data()] = NewAnimation;
 
-	if (-1 != _Start)
+	if (0 != _Paramter.FrameIndex.size())
 	{
-		if (_Start < 0)
-		{
-			MsgAssert("스프라이트 범위를 초과하는 인덱스로 애니메이션을 마들려고 했습니다." + std::string(_Name));
-			return nullptr;
-		}
+		// 프레임 인덱스 입력시
+		NewAnimation->FrameIndex = _Paramter.FrameIndex;
 
-		NewAnimation->StartFrame = _Start;
-	}
-	else 
-	{
-		NewAnimation->StartFrame = 0;
-	}
-
-	if (-1 != _End)
-	{
-		if (_End >= Sprite->GetSpriteCount())
-		{
-			MsgAssert("스프라이트 범위를 초과하는 인덱스로 애니메이션을 마들려고 했습니다." + std::string(_Name));
-			return nullptr;
-		}
-
-		NewAnimation->EndFrame = _End;
 	}
 	else
 	{
-		NewAnimation->EndFrame = Sprite->GetSpriteCount() - 1;
+		// 프레임 인덱스 미 입력시
+
+		// 시작 프레임 지정
+		if (-1 != _Paramter.Start)
+		{
+			if (_Paramter.Start < 0)
+			{
+				MsgAssert("스프라이트 범위를 초과하는 인덱스로 애니메이션을 마들려고 했습니다." + std::string(_Paramter.AnimationName));
+				return nullptr;
+			}
+
+			NewAnimation->StartFrame = _Paramter.Start;
+		}
+		else
+		{
+			// -1 입력시 시작프레임 0
+			NewAnimation->StartFrame = 0;
+		}
+		// 끝 프레임 지정
+		if (-1 != _Paramter.End)
+		{
+			if (_Paramter.End >= Sprite->GetSpriteCount())
+			{
+				MsgAssert("스프라이트 범위를 초과하는 인덱스로 애니메이션을 마들려고 했습니다." + std::string(_Paramter.AnimationName));
+				return nullptr;
+			}
+
+			NewAnimation->EndFrame = _Paramter.End;
+		}
+		else
+		{
+			// -1 입력시 끝프레임은 마지막
+			NewAnimation->EndFrame = Sprite->GetSpriteCount() - 1;
+		}
+
+		if (NewAnimation->EndFrame < NewAnimation->StartFrame)
+		{
+			MsgAssert("애니메이션을 생성할때 End가 Start보다 클 수 없습니다");
+			return nullptr;
+		}
+		NewAnimation->FrameIndex.reserve(NewAnimation->EndFrame - NewAnimation->StartFrame + 1);
+
+		// StartFrame 부터 EndFrame까지 순서대로 FrameIndex에 푸시
+		for (size_t i = NewAnimation->StartFrame; i <= NewAnimation->EndFrame; ++i)
+		{
+			NewAnimation->FrameIndex.push_back(i);
+		}
 	}
+
+	// 타임 데이터가 있다면
+	if (0 != _Paramter.FrameTime.size())
+	{
+		NewAnimation->FrameTime = _Paramter.FrameTime;
+
+	}
+	else
+	{
+		for (size_t i = 0; i < NewAnimation->FrameIndex.size(); ++i)
+		{
+			NewAnimation->FrameTime.push_back(_Paramter.FrameInter);
+		}
+	}
+
+
 
 	NewAnimation->Sprite = Sprite;
 	NewAnimation->Parent = this;
-	NewAnimation->Loop = _Loop;
-	NewAnimation->Inter = _FrameInter;
-	NewAnimation->ScaleToImage = _ScaleToImage;
+	NewAnimation->Loop = _Paramter.Loop;
+	NewAnimation->ScaleToTexture = _Paramter.ScaleToTexture;
 
 	return NewAnimation;
 }
@@ -181,6 +270,12 @@ std::shared_ptr<AnimationInfo> GameEngineSpriteRenderer::CreateAnimation(const s
 void GameEngineSpriteRenderer::ChangeAnimation(const std::string_view& _Name, size_t _Frame, bool _Force)
 {
 	std::shared_ptr<AnimationInfo> Find = FindAnimation(_Name);
+
+	if (nullptr == Find)
+	{
+		MsgAssert("이러한 이름의 애니메이션은 존재하지 않습니다" + std::string(_Name));
+		return;
+	}
 
 	if (CurAnimation == Find && false == _Force)
 	{
@@ -197,19 +292,62 @@ void GameEngineSpriteRenderer::ChangeAnimation(const std::string_view& _Name, si
 
 }
 
-void GameEngineSpriteRenderer::Render(float _Delta)
+void GameEngineSpriteRenderer::Update(float _Delta)
 {
 	if (nullptr != CurAnimation)
 	{
 		CurAnimation->Update(_Delta);
-		GetShaderResHelper().SetTexture("DiffuseTex", CurAnimation->CurFrameTexture());
-		if (true == CurAnimation->ScaleToImage)
+	}
+}
+
+void GameEngineSpriteRenderer::Render(float _Delta)
+{
+	if (nullptr != CurAnimation)
+	{
+		const SpriteInfo& Info = CurAnimation->CurSpriteInfo();
+
+		GetShaderResHelper().SetTexture("DiffuseTex", Info.Texture);
+		AtlasData = Info.CutData;
+
+		if (true == CurAnimation->ScaleToTexture)
 		{
-			float4 Scale = float4(static_cast<float>(CurAnimation->CurFrameTexture()->GetWidth()), static_cast<float>(CurAnimation->CurFrameTexture()->GetHeight()), 1);
+			std::shared_ptr<GameEngineTexture> Texture = Info.Texture;
+
+			float4 Scale = Texture->GetScale();
+
+			Scale.x *= Info.CutData.SizeX;
+			Scale.y *= Info.CutData.SizeY;
+			Scale.z = 1.0f;
+
+			Scale *= ScaleRatio;
+
 			GetTransform()->SetLocalScale(Scale);
 		}
 
 	}
-
 	GameEngineRenderer::Render(_Delta);
+}
+
+void GameEngineSpriteRenderer::SetAnimationUpdateEvent(const std::string_view& _AnimationName, size_t _Frame, std::function<void()> _Event) 
+{
+	std::shared_ptr<AnimationInfo>  Info =  FindAnimation(_AnimationName);
+
+	if (nullptr == Info)
+	{
+		MsgAssert("존재하지 않는 애니메이션에 이벤트 세팅을 하려고 했습니다.");
+	}
+
+	Info->UpdateEventFunction[_Frame] = _Event;
+}
+
+void GameEngineSpriteRenderer::SetAnimationStartEvent(const std::string_view& _AnimationName, size_t _Frame, std::function<void()> _Event)
+{
+	std::shared_ptr<AnimationInfo>  Info = FindAnimation(_AnimationName);
+
+	if (nullptr == Info)
+	{
+		MsgAssert("존재하지 않는 애니메이션에 이벤트 세팅을 하려고 했습니다.");
+	}
+
+	Info->StartEventFunction[_Frame] = _Event;
 }

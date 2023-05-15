@@ -11,6 +11,8 @@ class GameEngineObject :
 	public std::enable_shared_from_this<GameEngineObject>
 	// 침습형이 된겁니다.
 {
+	friend class GameEngineComponent;
+	friend class GameEngineActor;
 	friend class GameEngineTransform;
 	friend class GameEngineLevel;
 
@@ -35,7 +37,7 @@ public:
 	}
 
 	template<typename PtrType>
-	std::shared_ptr<PtrType> Shared_This_dynamic_pointer()
+	std::shared_ptr<PtrType> DynamicThis()
 	{
 		return std::dynamic_pointer_cast<PtrType>(std::enable_shared_from_this<GameEngineObject>::shared_from_this());
 	}
@@ -57,6 +59,12 @@ public:
 	}
 
 
+	inline class GameEngineLevel* GetLevel() const
+	{
+		return Level;
+	}
+
+
 protected:
 	virtual void Start() {}
 	virtual void Update(float _DeltaTime) {}
@@ -71,6 +79,8 @@ protected:
 private:
 	float LiveTime = 0.0f;
 	GameEngineTransform Transform;
+
+	class GameEngineLevel* Level;
 
 	std::list<std::shared_ptr<GameEngineObject>> Childs;
 
