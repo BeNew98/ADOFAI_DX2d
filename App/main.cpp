@@ -1,7 +1,6 @@
 #include "PrecompileHeader.h"
 #include <Windows.h>
-#include <GameEngineBase\GameEngineFile.h>
-#include <GameEngineBase\GameEngineDirectory.h>
+#include <GameEnginePlatform/GameEngineWindow.h>
 #include <GameEngineCore\GameEngineCore.h>
 #include <GameEngineContents\DFICore.h>
 
@@ -17,6 +16,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	GameEngineCore::Start(hInstance, 
 		DFICore::GameStart,
 		DFICore::GameEnd,
-		{200, 200}
+		{100, 100},
+		{1600,900}
 	);
+
 }

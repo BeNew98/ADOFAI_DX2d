@@ -98,7 +98,7 @@ void GameEngineTransform::SetParent(GameEngineTransform* _Parent)
 		int a = 0;
 	}
 
-	if (nullptr == _Parent && nullptr == Master)
+	if (nullptr == _Parent && nullptr != Master)
 	{
 		if (nullptr == dynamic_cast<GameEngineActor*>(Master))
 		{
