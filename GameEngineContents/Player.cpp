@@ -19,30 +19,33 @@ Player::~Player()
 {
 }
 
-std::shared_ptr<Planet>m_pBlue1 = nullptr;
 void Player::Start()
 {
+	std::shared_ptr<GameEngineSpriteRenderer> render = CreateComponent<GameEngineSpriteRenderer>();
+	render->SetScaleToTexture("bottomglow_E2.png");
+	render->SetOrder(static_cast<int>(OrderNum::EFFECT));
+	//render->GetTransform()->SetLocalPosition(m_pCenter->GetTransform()->GetWorldPosition());
+
 	m_pRed = GetLevel()->CreateActor<Planet>();
+	m_pRed->SetOrder(static_cast<int>(OrderNum::PLANET));
 	m_pRed->GetTransform()->SetLocalPosition({ 0.f,0.f,0.f });
 	m_pRed->SetName("Red");
 
 	m_pBlue = GetLevel()->CreateActor<Planet>();
-	m_pBlue->GetTransform()->SetLocalPosition({ -200.f,0.f,0.f });
+	m_pBlue->SetOrder(static_cast<int>(OrderNum::PLANET));
+	m_pBlue->GetTransform()->SetLocalPosition({ -100.f,0.f,0.f });
 	m_pBlue->SetName("Blue");
-
-
-	m_pBlue1 = GetLevel()->CreateActor<Planet>();
-	m_pBlue1->GetTransform()->SetLocalPosition({ -400.f,0.f,0.f });
-	m_pBlue1->SetName("Blue1");
 
 	m_pCenter = m_pRed;
 	m_pTurn = m_pBlue;
 
 	m_pTurn->GetTransform()->SetParent(m_pCenter->GetTransform());
 
+
+
+
 	GameEngineInput::CreateKey("R", 'R');
 
-	GameEngineInput::CreateKey("T", 'T');
 
 
 	GameEngineInput::CreateKey("1", '1');
@@ -66,10 +69,13 @@ void Player::Update(float _DeltaTime)
 	TransformData blue = m_pBlue->GetTransform()->GetTransDataRef();
 	int a = 0;
 
-	if (true == GameEngineInput::IsDown("R"))
+	if (true == GameEngineInput::IsAnyKey())
 	{
-		m_pTurn->GetTransform()->CutParent();
-
+		std::shared_ptr<GameEngineSpriteRenderer> render = CreateComponent<GameEngineSpriteRenderer>();
+		render->SetScaleToTexture("bottomglow_E2.png");
+		render->SetOrder(static_cast<int>(OrderNum::EFFECT));
+		render->GetTransform()->SetLocalPosition(m_pTurn->GetTransform()->GetWorldPosition());
+		m_pTurn->GetTransform()->SetParent(nullptr);
 		if (false==m_bTurn)
 		{
 			m_pCenter = m_pBlue;
@@ -83,16 +89,10 @@ void Player::Update(float _DeltaTime)
 			m_bTurn = false;
 		}
 
-		m_pTurn->GetTransform()->SetParent(m_pBlue1->GetTransform());
-		
+		m_pTurn->GetTransform()->SetParent(m_pCenter->GetTransform());		
 	}
 
-	if (true == GameEngineInput::IsDown("T"))
-	{
-		m_pTurn->GetTransform()->CutParent();
-
-		m_pTurn->GetTransform()->SetParent(m_pCenter->GetTransform());
-	}
+	
 	if (true == GameEngineInput::IsDown("1"))
 	{
 		m_bMoveControl = false;
@@ -112,7 +112,7 @@ void Player::Update(float _DeltaTime)
 	}
 	
 
-	//m_pCenter->GetTransform()->AddLocalRotation({ 0.f,0.f,100.f * _DeltaTime });
+	m_pCenter->GetTransform()->AddLocalRotation({ 0.f,0.f,300.f * _DeltaTime });
 }
 
 // 이건 디버깅용도나 

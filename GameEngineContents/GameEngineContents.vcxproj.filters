@@ -24,6 +24,7 @@
     <ClInclude Include="BlackScreen.h">
       <Filter>Object</Filter>
     </ClInclude>
+    <ClInclude Include="ContentsEnum.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DFICore.cpp" />
