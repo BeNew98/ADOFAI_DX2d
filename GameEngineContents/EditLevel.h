@@ -1,7 +1,8 @@
 #pragma once
+#include <GameEngineCore\GameEngineLevel.h>
 
 // Ό³Έν :
-class EditLevel
+class EditLevel : public GameEngineLevel
 {
 public:
 	// constrcuter destructer
@@ -15,6 +16,8 @@ public:
 	EditLevel& operator=(EditLevel&& _Other) noexcept = delete;
 
 protected:
+	void Start() override;
+	void Update(float _Deltatime) override;
 
 private:
 
