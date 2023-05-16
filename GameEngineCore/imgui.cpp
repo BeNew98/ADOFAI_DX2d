@@ -14958,6 +14958,7 @@ void ImGui::DockContextNewFrameUpdateUndocking(ImGuiContext* ctx)
         if (dc->Nodes.Data.Size > 0 || dc->Requests.Size > 0)
             DockContextClearNodes(ctx, 0, true);
         return;
+
     }
 
     // Setting NoSplit at runtime merges all nodes
