@@ -89,7 +89,7 @@ void Player::Update(float _DeltaTime)
 			m_bTurn = false;
 		}
 
-		GetTransform()->AddLocalPosition(float4::LerpClamp(m_pTurn->GetTransform()->GetWorldPosition(),m_pCenter->GetTransform()->GetWorldPosition(), _DeltaTime));
+		//GetTransform()->AddLocalPosition(float4::LerpClamp(m_pTurn->GetTransform()->GetWorldPosition(),m_pCenter->GetTransform()->GetWorldPosition(), _DeltaTime));
 		m_pTurn->GetTransform()->SetParent(m_pCenter->GetTransform());		
 	}
 
