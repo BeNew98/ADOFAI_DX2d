@@ -89,6 +89,7 @@ void Player::Update(float _DeltaTime)
 			m_bTurn = false;
 		}
 
+		GetTransform()->AddLocalPosition(float4::LerpClamp(m_pTurn->GetTransform()->GetWorldPosition(),m_pCenter->GetTransform()->GetWorldPosition(), _DeltaTime));
 		m_pTurn->GetTransform()->SetParent(m_pCenter->GetTransform());		
 	}
 
@@ -111,8 +112,7 @@ void Player::Update(float _DeltaTime)
 		WorldMove(_DeltaTime);
 	}
 	
-
-	m_pCenter->GetTransform()->AddLocalRotation({ 0.f,0.f,300.f * _DeltaTime });
+	m_pCenter->GetTransform()->AddLocalRotation({ 0.f,0.f,-300.f * _DeltaTime });
 }
 
 // 이건 디버깅용도나 
