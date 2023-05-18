@@ -10,16 +10,16 @@
 #include "GameEnginePixelShader.h"
 #include "GameEngineShaderResHelper.h"
 
-GameEngineRenderer::GameEngineRenderer() 
+GameEngineRenderer::GameEngineRenderer()
 {
 }
 
-GameEngineRenderer::~GameEngineRenderer() 
+GameEngineRenderer::~GameEngineRenderer()
 {
 }
 
 
-void GameEngineRenderer::Render(float _Delta) 
+void GameEngineRenderer::Render(float _Delta)
 {
 	std::shared_ptr<GameEngineCamera> MainCamera = GetLevel()->GetMainCamera();
 

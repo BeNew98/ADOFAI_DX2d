@@ -5,12 +5,12 @@
 #include "GameEngineGUI.h"
 #include "GameEngineCollision.h"
 
-GameEngineLevel::GameEngineLevel() 
+GameEngineLevel::GameEngineLevel()
 {
 	MainCamera = CreateActor<GameEngineCamera>();
 }
 
-GameEngineLevel::~GameEngineLevel() 
+GameEngineLevel::~GameEngineLevel()
 {
 }
 
@@ -122,18 +122,16 @@ void GameEngineLevel::ActorRelease()
 
 				if (nullptr != RelaseObject && false == RelaseObject->IsDeath())
 				{
-					RelaseObject->AllRelease();
 					++ObjectStart;
 					continue;
 				}
 
-				RelaseObject->Release();
 				ObjectStart = ObjectList.erase(ObjectStart);
 			}
 		}
 	}
 
-	
+
 	{
 		std::map<int, std::list<std::shared_ptr<GameEngineActor>>>::iterator GroupStartIter = Actors.begin();
 		std::map<int, std::list<std::shared_ptr<GameEngineActor>>>::iterator GroupEndIter = Actors.end();
@@ -164,12 +162,12 @@ void GameEngineLevel::ActorRelease()
 
 }
 
-void GameEngineLevel::Update(float _DeltaTime) 
+void GameEngineLevel::Update(float _DeltaTime)
 {
 
 }
 
-void GameEngineLevel::Render(float _DeltaTime) 
+void GameEngineLevel::Render(float _DeltaTime)
 {
 }
 
@@ -187,11 +185,11 @@ void GameEngineLevel::PushCollision(std::shared_ptr<GameEngineCollision> _Collis
 	Collisions[_Collision->GetOrder()].push_back(_Collision);
 }
 
-void GameEngineLevel::LevelChangeStart() 
+void GameEngineLevel::LevelChangeStart()
 {
 
 }
-void GameEngineLevel::LevelChangeEnd() 
+void GameEngineLevel::LevelChangeEnd()
 {
 
 }

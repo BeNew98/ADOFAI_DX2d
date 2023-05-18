@@ -1,11 +1,11 @@
 #include "PrecompileHeader.h"
 #include "GameEngineRenderTarget.h"
 
-GameEngineRenderTarget::GameEngineRenderTarget() 
+GameEngineRenderTarget::GameEngineRenderTarget()
 {
 }
 
-GameEngineRenderTarget::~GameEngineRenderTarget() 
+GameEngineRenderTarget::~GameEngineRenderTarget()
 {
 	DepthTexture = nullptr;
 }
@@ -38,7 +38,7 @@ void GameEngineRenderTarget::Clear()
 	}
 }
 
-void GameEngineRenderTarget::Setting() 
+void GameEngineRenderTarget::Setting()
 {
 	ID3D11RenderTargetView* RTV = Texture->GetRTV();
 
@@ -47,7 +47,7 @@ void GameEngineRenderTarget::Setting()
 		MsgAssert("랜더타겟 뷰가 존재하지 않아서 클리어가 불가능합니다.");
 	}
 
-	ID3D11DepthStencilView* DSV 
+	ID3D11DepthStencilView* DSV
 		= DepthTexture != nullptr ? DepthTexture->GetDSV() : nullptr;
 
 	// 지금 당장은 z값을 쓰지 않겠습니다.
@@ -56,14 +56,14 @@ void GameEngineRenderTarget::Setting()
 
 void GameEngineRenderTarget::Reset()
 {
-	ID3D11RenderTargetView* RTV[8] = {nullptr};
+	ID3D11RenderTargetView* RTV[8] = { nullptr };
 
 	GameEngineDevice::GetContext()->OMSetRenderTargets(8, RTV, nullptr);
 }
 
 void GameEngineRenderTarget::CreateDepthTexture()
 {
-	D3D11_TEXTURE2D_DESC Desc = {0,};
+	D3D11_TEXTURE2D_DESC Desc = { 0, };
 
 	Desc.ArraySize = 1;
 	Desc.Width = Texture->GetWidth();

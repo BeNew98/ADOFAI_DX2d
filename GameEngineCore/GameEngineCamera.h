@@ -38,7 +38,7 @@ public:
 		ProjectionType = _Type;
 	}
 
-	inline bool IsFreeCamera() 
+	inline bool IsFreeCamera()
 	{
 		return FreeCamera;
 	}
