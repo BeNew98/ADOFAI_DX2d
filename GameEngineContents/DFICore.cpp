@@ -40,7 +40,7 @@ void DFICore::GameStart()
 	GameEngineCore::CreateLevel<TitleLevel>();
 	GameEngineCore::CreateLevel<PlayLevel>();
 	GameEngineCore::CreateLevel<CenterLevel>();
-	GameEngineCore::ChangeLevel("CenterLevel");
+	GameEngineCore::ChangeLevel("EditLevel");
 }
 
 void DFICore::GameEnd()
