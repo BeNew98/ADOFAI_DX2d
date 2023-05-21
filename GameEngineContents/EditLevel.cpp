@@ -6,6 +6,7 @@
 #include <GameEngineCore/GameEngineCore.h>
 #include <GameEngineCore/GameEngineCamera.h>
 
+#include "Tiles.h"
 EditLevel::EditLevel() 
 {
 }
@@ -16,6 +17,7 @@ EditLevel::~EditLevel()
 
 void EditLevel::Start()
 {
+	std::shared_ptr<Tiles> TileEdit = CreateActor<Tiles>();
 	GetMainCamera()->SetProjectionType(CameraType::Orthogonal);
 	GetMainCamera()->GetTransform()->SetLocalPosition({ 0, 0, -1000.0f });
 }

@@ -22,6 +22,11 @@ protected:
 
 private:
 	int LevelSize = 1;
+	int CurDegree = 180;
 	std::vector<StageInfo> AllStage;
+
+	std::shared_ptr<GameEngineSpriteRenderer> m_Start;
+
+	void CreateTile(TileDeg _Deg);
 };
 

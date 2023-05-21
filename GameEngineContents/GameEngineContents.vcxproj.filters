@@ -37,6 +37,9 @@
     <ClInclude Include="CenterLevel.h">
       <Filter>Levels\CenterLevel</Filter>
     </ClInclude>
+    <ClInclude Include="Tiles.h">
+      <Filter>Levels\EditLevel\Obj</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DFICore.cpp" />
@@ -70,6 +73,9 @@
     </ClCompile>
     <ClCompile Include="CenterLevel.cpp">
       <Filter>Levels\CenterLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="Tiles.cpp">
+      <Filter>Levels\EditLevel\Obj</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
