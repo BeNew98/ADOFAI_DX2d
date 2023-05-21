@@ -1,8 +1,12 @@
 #include "PrecompileHeader.h"
 #include "EditGui.h"
-#include "Tiles.h"
+
+#include <GameEngineBase/GameEngineString.h>
 #include <GameEngineCore/GameEngineLevel.h>
 #include <GameEngineCore/GameEngineSpriteRenderer.h>
+
+#include "Tiles.h"
+#include "EditLevel.h"
 
 EditGui::EditGui() 
 {
@@ -19,52 +23,41 @@ void EditGui::Start()
 
 void EditGui::OnGUI(std::shared_ptr<class GameEngineLevel> Level, float _DeltaTime)
 {
+	if (Tile = nullptr)
+	{
+		Tile = Level->CreateActor<Tiles>();
+	}
+
+
+	ImGui::BeginListBox("test", ImVec2(100, 0));
+	for (int i = 0; i < LevelSize; i++)
+	{	
+		std::string text ="Level " + GameEngineString::ToString(i+1);
+		if (ImGui::Button(text.c_str()))
+		{
+		}
+	}
+	ImGui::EndListBox();
+
+
+
 	if (ImGui::Button("Start"))
 	{
 	}
+	ImGui::SameLine();
+	if (ImGui::Button("180"))
+	{
+	}
+	ImGui::SameLine();
+	if (ImGui::Button("90"))
+	{
+	}
+	ImGui::SameLine();
+	if (ImGui::Button("270"))
+	{
+	}
+
+
 	
 }
 
-void EditGui::CreateTile(TileDeg _Deg)
-{
-		switch (_Deg)
-		{
-		case TileDeg::Start:
-		{
-
-			std::shared_ptr<GameEngineSpriteRenderer> m_Start = CreateComponent<GameEngineSpriteRenderer>();
-			m_Start->SetScaleToTexture("tiles_editor_basic_12.png");
-			m_Start->SetFlipX();
-			break;
-		}
-		case TileDeg::Deg90:
-		{
-			std::shared_ptr<GameEngineSpriteRenderer>m_90 = CreateComponent<GameEngineSpriteRenderer>();
-			m_90->SetScaleToTexture("tiles_editor_basic_0.png");
-			break;
-		}
-		case TileDeg::Deg180:
-		{
-			std::shared_ptr<GameEngineSpriteRenderer>m_180 = CreateComponent<GameEngineSpriteRenderer>();
-			m_180->SetScaleToTexture("tiles_editor_basic_4.png");
-			break;
-		}
-		case TileDeg::Deg270:
-		{
-			std::shared_ptr<GameEngineSpriteRenderer>m_270 = CreateComponent<GameEngineSpriteRenderer>();
-			m_270->SetScaleToTexture("tiles_editor_basic_0.png");
-			m_270->SetFlipY();
-			break;
-		}
-		case TileDeg::End:
-		{
-			std::shared_ptr<GameEngineSpriteRenderer> m_End = CreateComponent<GameEngineSpriteRenderer>();
-			m_End->SetScaleToTexture("tiles_editor_basic_12.png");
-			m_End->SetFlipX();
-			break;
-		}
-		default:
-			break;
-		}
-	
-}

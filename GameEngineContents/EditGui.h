@@ -2,6 +2,22 @@
 #include <GameEngineCore/GameEngineGUI.h>
 #include "MapSettingStruct.h"
 
+struct TileInfo
+{
+	float NextRatio = 0;
+	bool Slow = false;
+	bool Fast = false;
+	bool EndTile = false;
+};
+
+struct StageInfo
+{
+	std::vector<TileInfo> AllTile;
+	int TileSize = 0;
+	int BPM = 0;
+	float fitch = 0.f;
+};
+
 // Ό³Έν :
 class EditGui : public GameEngineGUIWindow
 {
@@ -21,12 +37,10 @@ protected:
 	void OnGUI(std::shared_ptr<class GameEngineLevel> Level, float _DeltaTime) override;
 
 private:
-	int LevelSize = 1;
+	int LevelSize = 3;
 	int CurDegree = 180;
 	std::vector<StageInfo> AllStage;
+	std::shared_ptr<class Tiles> Tile = nullptr;
 
-	std::shared_ptr<GameEngineSpriteRenderer> m_Start;
-
-	void CreateTile(TileDeg _Deg);
 };
 

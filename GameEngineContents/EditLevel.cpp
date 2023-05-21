@@ -42,7 +42,7 @@ void EditLevel::Update(float _Deltatime)
 
 void EditLevel::LevelChangeStart()
 {
-	if (nullptr == GameEngineGUI::FindGUIWindow("StageEditor"))
+	if (nullptr == GameEngineGUI::FindGUIWindow("LevelEdit"))
 	{
 		std::shared_ptr<GameEngineGUIWindow> NewWindow = GameEngineGUI::GUIWindowCreate<EditGui>("LevelEdit");
 		m_pEditor = std::dynamic_pointer_cast<EditGui>(NewWindow);

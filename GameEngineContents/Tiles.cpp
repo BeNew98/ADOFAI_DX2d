@@ -4,14 +4,12 @@
 
 Tiles::Tiles() 
 {
-	Tile = this;
 }
 
 Tiles::~Tiles() 
 {
 }
 
-Tiles* Tiles::Tile = nullptr;
 
 void Tiles::CreateTile(TileDeg _TileDeg)
 {

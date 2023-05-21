@@ -15,7 +15,6 @@ public:
 	Tiles& operator=(const Tiles& _Other) = delete;
 	Tiles& operator=(Tiles&& _Other) noexcept = delete;
 
-	static Tiles* Tile;
 
 	void CreateTile(TileDeg _TileDeg);
 
