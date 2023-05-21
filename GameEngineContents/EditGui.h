@@ -1,7 +1,9 @@
 #pragma once
+#include <GameEngineCore/GameEngineGUI.h>
+#include "MapSettingStruct.h"
 
 // Ό³Έν :
-class EditGui
+class EditGui : public GameEngineGUIWindow
 {
 public:
 	// constrcuter destructer
@@ -15,8 +17,11 @@ public:
 	EditGui& operator=(EditGui&& _Other) noexcept = delete;
 
 protected:
+	void Start() override; 
+	void OnGUI(std::shared_ptr<class GameEngineLevel> Level, float _DeltaTime) override;
 
 private:
-
+	int LevelSize = 1;
+	std::vector<StageInfo> AllStage;
 };
 

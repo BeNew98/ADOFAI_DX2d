@@ -22,8 +22,8 @@ void PlayLevel::Update(float _DeltaTime)
 
 void PlayLevel::Start()
 {
-
-
+	GetMainCamera()->SetProjectionType(CameraType::Orthogonal);
+	GetMainCamera()->GetTransform()->SetLocalPosition({ 0, 0, -1000.0f });
 }
 void PlayLevel::LevelChangeStart()
 {

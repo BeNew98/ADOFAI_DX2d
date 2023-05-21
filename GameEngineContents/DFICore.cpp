@@ -1,9 +1,12 @@
 #include "PrecompileHeader.h"
 #include "DFICore.h"
 #include <GameEngineCore\GameEngineCore.h>
+#include <GameEngineCore/GameEngineCoreWindow.h>
+
 #include "PlayLevel.h"
 #include "TitleLevel.h"
-#include <GameEngineCore/GameEngineCoreWindow.h>
+#include "EditLevel.h"
+#include "CenterLevel.h"
 
 DFICore::DFICore()
 {
@@ -27,16 +30,17 @@ void DFICore::GameStart()
 
 	new int();
 
-	GameEngineGUI::GUIWindowCreate<GameEngineCoreWindow>("CoreWindow");
+	//GameEngineGUI::GUIWindowCreate<GameEngineCoreWindow>("CoreWindow");
 
 
 	ContentsResourcesCreate();
 
 
-
+	GameEngineCore::CreateLevel<EditLevel>();
 	GameEngineCore::CreateLevel<TitleLevel>();
 	GameEngineCore::CreateLevel<PlayLevel>();
-	GameEngineCore::ChangeLevel("TitleLevel");
+	GameEngineCore::CreateLevel<CenterLevel>();
+	GameEngineCore::ChangeLevel("CenterLevel");
 }
 
 void DFICore::GameEnd()

@@ -2,73 +2,103 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClInclude Include="DFICore.h" />
-    <ClInclude Include="TitleLevel.h">
-      <Filter>Levels</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayLevel.h">
-      <Filter>Levels</Filter>
-    </ClInclude>
     <ClInclude Include="Player.h">
-      <Filter>Object</Filter>
+      <Filter>PublicObject</Filter>
     </ClInclude>
     <ClInclude Include="PrecompileHeader.h" />
     <ClInclude Include="TestObject.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="TitleLogo.h">
-      <Filter>Object</Filter>
+      <Filter>PublicObject</Filter>
     </ClInclude>
     <ClInclude Include="Planet.h">
-      <Filter>Object</Filter>
+      <Filter>PublicObject</Filter>
     </ClInclude>
     <ClInclude Include="BlackScreen.h">
-      <Filter>Object</Filter>
+      <Filter>PublicObject</Filter>
     </ClInclude>
     <ClInclude Include="ContentsEnum.h" />
     <ClInclude Include="EditLevel.h">
-      <Filter>Levels</Filter>
+      <Filter>Levels\EditLevel</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayLevel.h">
+      <Filter>Levels\PlayLevel</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleLevel.h">
+      <Filter>Levels\TitleLevel</Filter>
     </ClInclude>
     <ClInclude Include="EditGui.h">
-      <Filter>Object</Filter>
+      <Filter>Levels\EditLevel\Obj</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleLogo.h">
+      <Filter>Levels\TitleLevel\Obj</Filter>
+    </ClInclude>
+    <ClInclude Include="MapSettingStruct.h">
+      <Filter>Levels\EditLevel\Obj</Filter>
+    </ClInclude>
+    <ClInclude Include="CenterLevel.h">
+      <Filter>Levels\CenterLevel</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DFICore.cpp" />
-    <ClCompile Include="TitleLevel.cpp">
-      <Filter>Levels</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayLevel.cpp">
-      <Filter>Levels</Filter>
-    </ClCompile>
     <ClCompile Include="Player.cpp">
-      <Filter>Object</Filter>
+      <Filter>PublicObject</Filter>
     </ClCompile>
     <ClCompile Include="PrecompileHeader.cpp" />
     <ClCompile Include="TestObject.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="TitleLogo.cpp">
-      <Filter>Object</Filter>
+      <Filter>PublicObject</Filter>
     </ClCompile>
     <ClCompile Include="Planet.cpp">
-      <Filter>Object</Filter>
+      <Filter>PublicObject</Filter>
     </ClCompile>
     <ClCompile Include="BlackScreen.cpp">
-      <Filter>Object</Filter>
+      <Filter>PublicObject</Filter>
     </ClCompile>
     <ClCompile Include="EditLevel.cpp">
-      <Filter>Levels</Filter>
+      <Filter>Levels\EditLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayLevel.cpp">
+      <Filter>Levels\PlayLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleLevel.cpp">
+      <Filter>Levels\TitleLevel</Filter>
     </ClCompile>
     <ClCompile Include="EditGui.cpp">
-      <Filter>Object</Filter>
+      <Filter>Levels\EditLevel\Obj</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleLogo.cpp">
+      <Filter>Levels\TitleLevel\Obj</Filter>
+    </ClCompile>
+    <ClCompile Include="CenterLevel.cpp">
+      <Filter>Levels\CenterLevel</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Levels">
       <UniqueIdentifier>{3d17108a-64cc-412c-add8-c9f82f90c9e4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Object">
+    <Filter Include="Levels\TitleLevel">
+      <UniqueIdentifier>{8ae0dcca-1833-46a7-9dcc-b445f0e2d604}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Levels\EditLevel">
+      <UniqueIdentifier>{de0ad5ce-e0ed-419d-8f8b-e3758e022dbe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Levels\PlayLevel">
+      <UniqueIdentifier>{1e2f6a92-9908-485c-9bf6-1860a8918092}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Levels\EditLevel\Obj">
+      <UniqueIdentifier>{4630cd3e-d237-4511-b785-74950fe238c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Levels\PlayLevel\Obj">
+      <UniqueIdentifier>{40a949fb-3b70-4016-9b67-71eff8e2879b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Levels\TitleLevel\Obj">
+      <UniqueIdentifier>{f98e0613-0c63-4e84-bed4-380c95a6b41a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PublicObject">
       <UniqueIdentifier>{df11f953-5c45-4952-85fb-a35bec5d2a60}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Levels\CenterLevel">
+      <UniqueIdentifier>{b9cbe269-9b4d-482a-bca6-90b7d293f58a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
