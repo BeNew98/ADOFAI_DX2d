@@ -13,7 +13,7 @@ BlackScreen::~BlackScreen()
 
 void BlackScreen::Start()
 {
-	std::shared_ptr<GameEngineSpriteRenderer> render = CreateComponent<GameEngineSpriteRenderer>();
+	std::shared_ptr<GameEngineSpriteRenderer> render = CreateComponent<GameEngineSpriteRenderer>(OrderNum::BACKGROUND);
 	render->SetScaleToTexture("BlackScreen.png");
 }
 
