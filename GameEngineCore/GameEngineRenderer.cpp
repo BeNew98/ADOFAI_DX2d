@@ -10,7 +10,7 @@
 #include "GameEnginePixelShader.h"
 #include "GameEngineShaderResHelper.h"
 
-void GameEngineRenderUnit::SetPipeLine(const std::string_view& _Name) 
+void GameEngineRenderUnit::SetPipeLine(const std::string_view& _Name)
 {
 	Pipe = GameEngineRenderingPipeLine::Find(_Name);
 
@@ -32,11 +32,11 @@ void GameEngineRenderUnit::Render(float _DeltaTime)
 	Pipe->Render();
 }
 
-GameEngineRenderer::GameEngineRenderer() 
+GameEngineRenderer::GameEngineRenderer()
 {
 }
 
-GameEngineRenderer::~GameEngineRenderer() 
+GameEngineRenderer::~GameEngineRenderer()
 {
 }
 
@@ -56,7 +56,7 @@ void GameEngineRenderer::RenderTransformUpdate(GameEngineCamera* _Camera)
 	GetTransform()->SetCameraMatrix(_Camera->GetView(), _Camera->GetProjection());
 }
 
-void GameEngineRenderer::Render(float _Delta) 
+void GameEngineRenderer::Render(float _Delta)
 {
 	// GameEngineDevice::GetContext()->VSSetConstantBuffers();
 	// GameEngineDevice::GetContext()->PSSetConstantBuffers();
@@ -98,4 +98,9 @@ void GameEngineRenderer::SetPipeLine(const std::string_view& _Name)
 void GameEngineRenderer::PushCameraRender(int _CameraOrder)
 {
 	GetLevel()->PushCameraRenderer(DynamicThis<GameEngineRenderer>(), _CameraOrder);
+}
+
+void GameEngineRenderer::CalSortZ(GameEngineCamera* _Camera)
+{
+	CalZ = (_Camera->GetTransform()->GetWorldPosition() - GetTransform()->GetWorldPosition()).Size();
 }

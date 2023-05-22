@@ -2,7 +2,7 @@
 #include "GameEngineComponent.h"
 #include "GameEngineShader.h"
 
-class GameEngineRenderUnit 
+class GameEngineRenderUnit
 {
 public:
 	std::shared_ptr<class GameEngineRenderingPipeLine > Pipe;
@@ -36,15 +36,17 @@ public:
 	// 어떤 샘플러 어떤 상수버퍼를 사용했는지를 알아야 한다.
 	void SetPipeLine(const std::string_view& _Name);
 
-	inline GameEngineShaderResHelper& GetShaderResHelper() 
+	inline GameEngineShaderResHelper& GetShaderResHelper()
 	{
 		return ShaderResHelper;
 	}
 
-	void CameraCullingOn() 
+	void CameraCullingOn()
 	{
 		IsCameraCulling = true;
 	}
+
+	void CalSortZ(class GameEngineCamera* _Camera);
 
 
 	// 업데이트에서 할것이기 때문에 그냥 하겠습니다. 
@@ -59,6 +61,8 @@ protected:
 
 private:
 	bool IsCameraCulling = false;
+
+	float CalZ = 0.0f;
 
 	// Pipe와
 	// GameEngineShaderResHelper 가 합쳐져야 랜더링 이 되는 식이 됩니다.

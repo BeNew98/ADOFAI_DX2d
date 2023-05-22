@@ -100,7 +100,7 @@ void GameEngineCamera::Update(float _DeltaTime)
 
 		if (true == GameEngineInput::IsPress("CamMoveLeft"))
 		{
-			GetTransform()->AddLocalPosition(GetTransform()->GetWorldLeftVector()* Speed * _DeltaTime);
+			GetTransform()->AddLocalPosition(GetTransform()->GetWorldLeftVector() * Speed * _DeltaTime);
 		}
 		if (true == GameEngineInput::IsPress("CamMoveRight"))
 		{
@@ -152,9 +152,31 @@ void GameEngineCamera::Render(float _DeltaTime)
 	std::map<int, std::list<std::shared_ptr<GameEngineRenderer>>>::iterator RenderGroupStartIter = Renderers.begin();
 	std::map<int, std::list<std::shared_ptr<GameEngineRenderer>>>::iterator RenderGroupEndIter = Renderers.end();
 
-	for (;RenderGroupStartIter != RenderGroupEndIter; ++RenderGroupStartIter)
+	for (; RenderGroupStartIter != RenderGroupEndIter; ++RenderGroupStartIter)
 	{
 		std::list<std::shared_ptr<GameEngineRenderer>>& RenderGroup = RenderGroupStartIter->second;
+
+		int Order = RenderGroupStartIter->first;
+		std::map<int, SortType>::iterator SortIter = SortValues.find(Order);
+
+		if (SortIter != SortValues.end() && SortIter->second != SortType::None)
+		{
+			if (SortIter->second == SortType::ZSort)
+			{
+				for (std::shared_ptr<GameEngineRenderer>& Render : RenderGroup)
+				{
+					Render->CalSortZ(this);
+				}
+
+				// 퀵소트 내일
+				RenderGroup.sort([](std::shared_ptr<GameEngineRenderer>& _Left, std::shared_ptr<GameEngineRenderer>& _Right)
+					{
+						return _Left->CalZ > _Right->CalZ;
+					});
+			}
+
+			// 정렬을 하겠다는 뜻으로 본다.
+		}
 
 		std::list<std::shared_ptr<GameEngineRenderer>>::iterator StartRenderer = RenderGroup.begin();
 		std::list<std::shared_ptr<GameEngineRenderer>>::iterator EndRenderer = RenderGroup.end();
@@ -233,6 +255,11 @@ void GameEngineCamera::PushRenderer(std::shared_ptr<GameEngineRenderer> _Render)
 
 bool GameEngineCamera::IsView(const TransformData& _TransData)
 {
+	if (true == IsFreeCamera())
+	{
+		return true;
+	}
+
 	// Width, Height, Near, Far;
 
 	switch (ProjectionType)

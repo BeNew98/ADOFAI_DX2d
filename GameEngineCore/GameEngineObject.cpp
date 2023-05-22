@@ -1,17 +1,17 @@
 #include "PrecompileHeader.h"
 #include "GameEngineObject.h"
 
-GameEngineObject::GameEngineObject() 
+GameEngineObject::GameEngineObject()
 {
 	Transform.SetMaster(this);
 }
 
-GameEngineObject::~GameEngineObject() 
+GameEngineObject::~GameEngineObject()
 {
 }
 
 
-void GameEngineObject::Release() 
+void GameEngineObject::Release()
 {
 	Transform.ChildRelease();
 
@@ -47,7 +47,7 @@ void GameEngineObject::AllAccTime(float _DeltaTime)
 	}
 }
 
-void GameEngineObject::AllUpdate(float _DeltaTime) 
+void GameEngineObject::AllUpdate(float _DeltaTime)
 {
 	if (false == IsUpdate())
 	{
@@ -61,7 +61,7 @@ void GameEngineObject::AllUpdate(float _DeltaTime)
 		Object->AllUpdate(_DeltaTime);
 	}
 }
-void GameEngineObject::AllRender(float _DeltaTime) 
+void GameEngineObject::AllRender(float _DeltaTime)
 {
 	if (false == IsUpdate())
 	{
@@ -76,7 +76,7 @@ void GameEngineObject::AllRender(float _DeltaTime)
 	}
 
 }
-void GameEngineObject::AllRelease() 
+void GameEngineObject::AllRelease()
 {
 	if (true == IsDeath())
 	{
@@ -91,7 +91,7 @@ void GameEngineObject::AllRelease()
 	}
 
 }
-bool GameEngineObject::IsDeath() 
+bool GameEngineObject::IsDeath()
 {
 	GameEngineTransform* Trans = GetTransform()->GetParent();
 
@@ -117,4 +117,23 @@ bool GameEngineObject::IsUpdate()
 	}
 
 	return GameEngineObjectBase::IsUpdate();
+}
+
+void GameEngineObject::AllLevelChangeStart()
+{
+	LevelChangeStart();
+
+	for (std::shared_ptr<GameEngineObject> Object : Childs)
+	{
+		Object->AllLevelChangeStart();
+	}
+}
+void GameEngineObject::AllLevelChangeEnd()
+{
+	LevelChangeEnd();
+
+	for (std::shared_ptr<GameEngineObject> Object : Childs)
+	{
+		Object->AllLevelChangeEnd();
+	}
 }

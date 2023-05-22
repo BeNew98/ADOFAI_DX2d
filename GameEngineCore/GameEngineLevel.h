@@ -63,7 +63,7 @@ public:
 		return std::dynamic_pointer_cast<ActorType>(NewActor);
 	}
 
-	std::shared_ptr<class GameEngineCamera> GetMainCamera() 
+	std::shared_ptr<class GameEngineCamera> GetMainCamera()
 	{
 		return MainCamera;
 	}
@@ -102,7 +102,8 @@ private:
 	void ActorUpdate(float _DeltaTime);
 	void ActorRender(float _DeltaTime);
 	void ActorRelease();
+	void ActorLevelChangeStart();
+	void ActorLevelChangeEnd();
 
 };
 
- 
