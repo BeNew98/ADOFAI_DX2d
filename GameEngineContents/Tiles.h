@@ -15,7 +15,7 @@ public:
 	Tiles& operator=(const Tiles& _Other) = delete;
 	Tiles& operator=(Tiles&& _Other) noexcept = delete;
 
-
+	
 	void CreateTile(TileDeg _TileDeg);
 
 protected:

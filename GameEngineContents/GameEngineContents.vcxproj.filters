@@ -40,6 +40,9 @@
     <ClInclude Include="Tiles.h">
       <Filter>Levels\EditLevel\Obj</Filter>
     </ClInclude>
+    <ClInclude Include="MyMouse.h">
+      <Filter>PublicObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DFICore.cpp" />
@@ -76,6 +79,9 @@
     </ClCompile>
     <ClCompile Include="Tiles.cpp">
       <Filter>Levels\EditLevel\Obj</Filter>
+    </ClCompile>
+    <ClCompile Include="MyMouse.cpp">
+      <Filter>PublicObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

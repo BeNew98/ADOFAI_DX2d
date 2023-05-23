@@ -43,5 +43,7 @@ private:
 	std::vector<StageInfo> AllStage;
 	std::shared_ptr<class Tiles> Tile = nullptr;
 
+	void CreateTile(std::shared_ptr<class GameEngineLevel> Level, TileDeg _Deg);
+
 };
 

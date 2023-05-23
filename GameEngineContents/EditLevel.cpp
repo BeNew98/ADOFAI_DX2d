@@ -7,6 +7,8 @@
 #include <GameEngineCore/GameEngineCamera.h>
 
 #include "Tiles.h"
+#include "MyMouse.h"
+
 EditLevel::EditLevel() 
 {
 }
@@ -17,7 +19,6 @@ EditLevel::~EditLevel()
 
 void EditLevel::Start()
 {
-	std::shared_ptr<Tiles> TileEdit = CreateActor<Tiles>();
 	GetMainCamera()->SetProjectionType(CameraType::Orthogonal);
 	GetMainCamera()->GetTransform()->SetLocalPosition({ 0, 0, -1000.0f });
 }
@@ -38,10 +39,27 @@ void EditLevel::Update(float _Deltatime)
 	{
 		GameEngineCore::ChangeLevel("CenterLevel");
 	}
+
+	m_pMouse->GetTransform()->Collision();
 }
 
 void EditLevel::LevelChangeStart()
 {
+	{
+		GameEngineDirectory NewDir;
+		NewDir.MoveParentToDirectory("ContentResources");
+		NewDir.Move("ContentResources");
+
+
+		std::vector<GameEngineFile> File = NewDir.GetAllFile({ ".Png", });
+
+
+		for (size_t i = 0; i < File.size(); i++)
+		{
+			GameEngineTexture::Load(File[i].GetFullPath());
+		}
+	}
+
 	if (nullptr == GameEngineGUI::FindGUIWindow("LevelEdit"))
 	{
 		std::shared_ptr<GameEngineGUIWindow> NewWindow = GameEngineGUI::GUIWindowCreate<EditGui>("LevelEdit");
@@ -49,6 +67,8 @@ void EditLevel::LevelChangeStart()
 	}
 
 	m_pEditor->On();
+
+	m_pMouse = CreateActor<MyMouse>();
 }
 
 void EditLevel::LevelChangeEnd()

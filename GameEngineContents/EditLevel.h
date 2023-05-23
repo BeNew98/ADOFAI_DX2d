@@ -25,6 +25,7 @@ protected:
 	void LevelChangeEnd() override;
 
 private:
-	std::shared_ptr<class EditGui> m_pEditor;
+	std::shared_ptr<class EditGui> m_pEditor = nullptr;
+	std::shared_ptr<class MyMouse> m_pMouse = nullptr;
 };
 
