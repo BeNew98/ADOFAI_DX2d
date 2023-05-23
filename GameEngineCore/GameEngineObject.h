@@ -5,8 +5,8 @@
 #include <GameEngineCore/GameEngineNameObject.h>
 
 // 설명 :
-class GameEngineObject :
-	public GameEngineObjectBase,
+class GameEngineObject : 
+	public GameEngineObjectBase, 
 	public GameEngineNameObject,
 	public std::enable_shared_from_this<GameEngineObject>
 	// 침습형이 된겁니다.

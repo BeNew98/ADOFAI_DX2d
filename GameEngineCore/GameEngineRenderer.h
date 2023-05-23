@@ -2,7 +2,7 @@
 #include "GameEngineComponent.h"
 #include "GameEngineShader.h"
 
-class GameEngineRenderUnit
+class GameEngineRenderUnit 
 {
 public:
 	std::shared_ptr<class GameEngineRenderingPipeLine > Pipe;
@@ -36,12 +36,12 @@ public:
 	// 어떤 샘플러 어떤 상수버퍼를 사용했는지를 알아야 한다.
 	void SetPipeLine(const std::string_view& _Name);
 
-	inline GameEngineShaderResHelper& GetShaderResHelper()
+	inline GameEngineShaderResHelper& GetShaderResHelper() 
 	{
 		return ShaderResHelper;
 	}
 
-	void CameraCullingOn()
+	void CameraCullingOn() 
 	{
 		IsCameraCulling = true;
 	}

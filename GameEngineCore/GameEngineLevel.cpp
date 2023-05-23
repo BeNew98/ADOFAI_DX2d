@@ -5,7 +5,7 @@
 #include "GameEngineGUI.h"
 #include "GameEngineCollision.h"
 
-GameEngineLevel::GameEngineLevel()
+GameEngineLevel::GameEngineLevel() 
 {
 	MainCamera = CreateActor<GameEngineCamera>();
 
@@ -17,7 +17,7 @@ GameEngineLevel::GameEngineLevel()
 	Cameras.insert(std::make_pair(100, UICamera));
 }
 
-GameEngineLevel::~GameEngineLevel()
+GameEngineLevel::~GameEngineLevel() 
 {
 }
 
@@ -198,7 +198,7 @@ void GameEngineLevel::ActorRelease()
 		}
 	}
 
-
+	
 	{
 		std::map<int, std::list<std::shared_ptr<GameEngineActor>>>::iterator GroupStartIter = Actors.begin();
 		std::map<int, std::list<std::shared_ptr<GameEngineActor>>>::iterator GroupEndIter = Actors.end();
@@ -229,12 +229,12 @@ void GameEngineLevel::ActorRelease()
 
 }
 
-void GameEngineLevel::Update(float _DeltaTime)
+void GameEngineLevel::Update(float _DeltaTime) 
 {
 
 }
 
-void GameEngineLevel::Render(float _DeltaTime)
+void GameEngineLevel::Render(float _DeltaTime) 
 {
 }
 
@@ -252,11 +252,11 @@ void GameEngineLevel::PushCollision(std::shared_ptr<GameEngineCollision> _Collis
 	Collisions[_Collision->GetOrder()].push_back(_Collision);
 }
 
-void GameEngineLevel::LevelChangeStart()
+void GameEngineLevel::LevelChangeStart() 
 {
 
 }
-void GameEngineLevel::LevelChangeEnd()
+void GameEngineLevel::LevelChangeEnd() 
 {
 
 }
@@ -275,7 +275,7 @@ void GameEngineLevel::PushCameraRenderer(std::shared_ptr<GameEngineRenderer> _Re
 	FindCamera->PushRenderer(_Renderer);
 }
 
-std::shared_ptr<GameEngineCamera> GameEngineLevel::GetCamera(int _CameraOrder)
+std::shared_ptr<GameEngineCamera> GameEngineLevel::GetCamera(int _CameraOrder) 
 {
 	std::map<int, std::shared_ptr<GameEngineCamera>>::iterator FindIter = Cameras.find(_CameraOrder);
 
