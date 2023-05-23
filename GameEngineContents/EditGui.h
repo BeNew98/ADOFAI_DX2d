@@ -4,6 +4,7 @@
 
 struct TileInfo
 {
+	float4 Position = float4::Zero;
 	float NextRatio = 0;
 	bool Slow = false;
 	bool Fast = false;
