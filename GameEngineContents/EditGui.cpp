@@ -30,7 +30,6 @@ void EditGui::Start()
 void EditGui::OnGUI(std::shared_ptr<class GameEngineLevel> Level, float _DeltaTime)
 {
 
-
 	ImGui::BeginListBox("LevelSelect",ImVec2(80,90));
 	for (int i = 0; i < m_LevelSize; i++)
 	{	

@@ -40,7 +40,7 @@ protected:
 	void OnGUI(std::shared_ptr<class GameEngineLevel> Level, float _DeltaTime) override;
 
 private:
-	int m_LevelSize = 3;
+	int m_LevelSize = 1;
 	int m_CurLevel = 0;
 	int m_CurDegree = 0;
 	std::vector<StageInfo> AllStage;
