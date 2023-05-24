@@ -19,23 +19,23 @@ void Tiles::CreateTile(TileDeg _TileDeg)
 	case TileDeg::Deg0:
 	{
 		m_pRender = CreateComponent<GameEngineSpriteRenderer>();
-		m_pRender->SetScaleToTexture("tiles_new_world1_b_4_Sprite.png");
+		m_pRender->SetScaleToTexture("tiles_new_world1_b_4_Sprite_Test.png");
 		std::shared_ptr<GameEngineCollision> Collision = CreateComponent<GameEngineCollision>(OrderNum::MAP);
 		break;
 	}
 	case TileDeg::Deg90:
 	{
 		m_pRender = CreateComponent<GameEngineSpriteRenderer>();
-		m_pRender->SetScaleToTexture("tiles_new_world1_b_0_Sprite.png");
+		m_pRender->SetScaleToTexture("tiles_new_world1_b_0_Sprite_Test.png");
 		std::shared_ptr<GameEngineCollision> Collision = CreateComponent<GameEngineCollision>(OrderNum::MAP);
 		break;
 	}
 	case TileDeg::Deg270:
 	{
 		m_pRender = CreateComponent<GameEngineSpriteRenderer>();
-		m_pRender->SetScaleToTexture("tiles_new_world1_b_0_Sprite.png");
-		m_pRender->GetTransform()->AddLocalRotation({ 0.f, 0.f, 90.f });
-		//m_pRender->SetFlipY();
+		m_pRender->SetScaleToTexture("tiles_new_world1_b_0_Sprite_Test.png");
+		//m_pRender->GetTransform()->AddLocalRotation({ 0.f, 0.f, 90.f });
+		m_pRender->SetFlipY();
 		std::shared_ptr<GameEngineCollision> Collision = CreateComponent<GameEngineCollision>(OrderNum::MAP);
 		break;
 	}

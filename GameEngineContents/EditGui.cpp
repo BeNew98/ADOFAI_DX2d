@@ -74,26 +74,26 @@ void EditGui::CreateTile(std::shared_ptr<class GameEngineLevel> Level, TileDeg _
 		std::shared_ptr<Tiles> PrevTile = AllStage[m_CurLevel].AllTile[m_CurTileSize - 1].Tile;
 		
 
-		float4 PrevTileScale = PrevTile->GetRender()->GetTransform()->GetLocalScale().half();
-		float4 CurTileScale = pTile->GetRender()->GetTransform()->GetLocalScale().half();
-		float4 AddScale = PrevTileScale + CurTileScale;
+		float PrevTileScale = PrevTile->GetRender()->GetTransform()->GetLocalScale().hx();
+		float CurTileScale = pTile->GetRender()->GetTransform()->GetLocalScale().hx();
+		float AddScale = fabs(PrevTileScale) + fabs(CurTileScale);
 
 		pTile->GetTransform()->SetLocalPosition(AllStage[m_CurLevel].AllTile[m_CurTileSize - 1].Position);
 		pTile->GetTransform()->SetLocalRotation({ 0.f,0.f,static_cast<float>(m_CurDegree) });
 		switch (m_CurDegree)
 		{
 		case 0:
-			pTile->GetTransform()->AddLocalPosition(float4{ AddScale.x, 0.f ,0.f });
+			pTile->GetTransform()->AddLocalPosition(float4{ AddScale, 0.f ,0.f });
 			break;
 		case 90:
 
-			pTile->GetTransform()->AddLocalPosition(float4{ 0.f,  AddScale.x,0.f });
+			pTile->GetTransform()->AddLocalPosition(float4{ 0.f,  AddScale,0.f });
 			break;
 		case 180:
-			pTile->GetTransform()->AddLocalPosition(float4{ -AddScale.x, 0.f ,0.f });
+			pTile->GetTransform()->AddLocalPosition(float4{ -AddScale, 0.f ,0.f });
 			break;
 		case 270:
-			pTile->GetTransform()->AddLocalPosition(float4{ 0.f,  -AddScale.x,0.f });
+			pTile->GetTransform()->AddLocalPosition(float4{ 0.f,  -AddScale,0.f });
 			break;
 		default:
 			break;
