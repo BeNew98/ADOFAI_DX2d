@@ -40,8 +40,12 @@ void EditGui::OnGUI(std::shared_ptr<class GameEngineLevel> Level, float _DeltaTi
 		}
 	}
 	ImGui::EndListBox();
-	
-	
+
+
+	{
+		std::string text ="CurDegree "+ GameEngineString::ToString(m_CurDegree);
+			ImGui::Text(text.c_str());
+	}
 	if (ImGui::Button("0"))
 	{
 		CreateTile(Level, TileDeg::Deg0);
