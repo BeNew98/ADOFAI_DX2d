@@ -40,7 +40,7 @@ void EditLevel::Update(float _Deltatime)
 		GameEngineCore::ChangeLevel("CenterLevel");
 	}
 
-	m_pMouse->GetTransform()->Collision();
+	//m_pMouse->GetTransform()->Collision({._OtherTrans = });
 }
 
 void EditLevel::LevelChangeStart()

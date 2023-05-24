@@ -16,42 +16,26 @@ void Tiles::CreateTile(TileDeg _TileDeg)
 {
 	switch (_TileDeg)
 	{
-	case TileDeg::Start:
+	case TileDeg::Deg0:
 	{
-
-		std::shared_ptr<GameEngineSpriteRenderer> m_Start = CreateComponent<GameEngineSpriteRenderer>();
-		m_Start->SetScaleToTexture("tiles_editor_basic_12_Sprite.png");
-		m_Start->SetFlipX();
+		m_pRender = CreateComponent<GameEngineSpriteRenderer>();
+		m_pRender->SetScaleToTexture("tiles_new_world1_b_4_Sprite.png");
 		std::shared_ptr<GameEngineCollision> Collision = CreateComponent<GameEngineCollision>(OrderNum::MAP);
 		break;
 	}
 	case TileDeg::Deg90:
 	{
-		std::shared_ptr<GameEngineSpriteRenderer>m_90 = CreateComponent<GameEngineSpriteRenderer>();
-		m_90->SetScaleToTexture("tiles_editor_basic_0_Sprite.png");
-		std::shared_ptr<GameEngineCollision> Collision = CreateComponent<GameEngineCollision>(OrderNum::MAP);
-		break;
-	}
-	case TileDeg::Deg180:
-	{
-		std::shared_ptr<GameEngineSpriteRenderer>m_180 = CreateComponent<GameEngineSpriteRenderer>();
-		m_180->SetScaleToTexture("tiles_editor_basic_4_Sprite.png");
+		m_pRender = CreateComponent<GameEngineSpriteRenderer>();
+		m_pRender->SetScaleToTexture("tiles_new_world1_b_0_Sprite.png");
 		std::shared_ptr<GameEngineCollision> Collision = CreateComponent<GameEngineCollision>(OrderNum::MAP);
 		break;
 	}
 	case TileDeg::Deg270:
 	{
-		std::shared_ptr<GameEngineSpriteRenderer>m_270 = CreateComponent<GameEngineSpriteRenderer>();
-		m_270->SetScaleToTexture("tiles_editor_basic_0_Sprite.png");
-		m_270->SetFlipY();
-		std::shared_ptr<GameEngineCollision> Collision = CreateComponent<GameEngineCollision>(OrderNum::MAP);
-		break;
-	}
-	case TileDeg::End:
-	{
-		std::shared_ptr<GameEngineSpriteRenderer> m_End = CreateComponent<GameEngineSpriteRenderer>();
-		m_End->SetScaleToTexture("tiles_editor_basic_12_Sprite.png");
-		m_End->SetFlipX();
+		m_pRender = CreateComponent<GameEngineSpriteRenderer>();
+		m_pRender->SetScaleToTexture("tiles_new_world1_b_0_Sprite.png");
+		m_pRender->GetTransform()->AddLocalRotation({ 0.f, 0.f, 90.f });
+		//m_pRender->SetFlipY();
 		std::shared_ptr<GameEngineCollision> Collision = CreateComponent<GameEngineCollision>(OrderNum::MAP);
 		break;
 	}

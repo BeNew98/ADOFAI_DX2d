@@ -17,11 +17,16 @@ public:
 
 	
 	void CreateTile(TileDeg _TileDeg);
+	std::shared_ptr<class GameEngineSpriteRenderer> GetRender()
+	{
+		return m_pRender;
+	}
 
 protected:
 	void Start() override;
 
 private:
+	std::shared_ptr<GameEngineSpriteRenderer> m_pRender = nullptr;
 
 };
 

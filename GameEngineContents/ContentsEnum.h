@@ -11,9 +11,7 @@ enum class OrderNum
 
 enum class TileDeg
 {
-	Start,
-	Deg90,
-	Deg180,
-	Deg270,
-	End,
+	Deg0 = 0,
+	Deg90 = 90,
+	Deg270 = 270,
 };

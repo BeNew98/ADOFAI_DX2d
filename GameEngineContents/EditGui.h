@@ -4,6 +4,7 @@
 
 struct TileInfo
 {
+	std::shared_ptr<class Tiles> Tile;
 	float4 Position = float4::Zero;
 	float NextRatio = 0;
 	bool Slow = false;
@@ -22,6 +23,7 @@ struct StageInfo
 // Ό³Έν :
 class EditGui : public GameEngineGUIWindow
 {
+	friend class EditLevel;
 public:
 	// constrcuter destructer
 	EditGui();
@@ -38,10 +40,10 @@ protected:
 	void OnGUI(std::shared_ptr<class GameEngineLevel> Level, float _DeltaTime) override;
 
 private:
-	int LevelSize = 3;
-	int CurDegree = 180;
+	int m_LevelSize = 3;
+	int m_CurLevel = 0;
+	int m_CurDegree = 0;
 	std::vector<StageInfo> AllStage;
-	std::shared_ptr<class Tiles> Tile = nullptr;
 
 	void CreateTile(std::shared_ptr<class GameEngineLevel> Level, TileDeg _Deg);
 

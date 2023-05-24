@@ -19,9 +19,11 @@ EditGui::~EditGui()
 
 void EditGui::Start()
 {
-	AllStage.resize(LevelSize);
-
-	CreateTile(GameEngineCore::GetCurLevel(), TileDeg::Start);
+	AllStage.resize(m_LevelSize);
+	for (size_t i = 0; i < AllStage.size(); i++)
+	{
+		AllStage[i].AllTile.resize(200);
+	}
 	
 }
 
@@ -30,24 +32,20 @@ void EditGui::OnGUI(std::shared_ptr<class GameEngineLevel> Level, float _DeltaTi
 
 
 	ImGui::BeginListBox("LevelSelect",ImVec2(80,90));
-	for (int i = 0; i < LevelSize; i++)
+	for (int i = 0; i < m_LevelSize; i++)
 	{	
 		std::string text ="Level " + GameEngineString::ToString(i+1);
 		if (ImGui::Button(text.c_str()))
 		{
+			m_CurLevel = i;
 		}
 	}
 	ImGui::EndListBox();
 	
 	
-	
-	if (ImGui::Button("Start"))
+	if (ImGui::Button("0"))
 	{
-	}
-	ImGui::SameLine();
-	if (ImGui::Button("180"))
-	{
-		CreateTile(Level, TileDeg::Deg180);
+		CreateTile(Level, TileDeg::Deg0);
 	}
 	ImGui::SameLine();
 	if (ImGui::Button("90"))
@@ -66,8 +64,53 @@ void EditGui::OnGUI(std::shared_ptr<class GameEngineLevel> Level, float _DeltaTi
 
 void EditGui::CreateTile(std::shared_ptr<class GameEngineLevel> Level, TileDeg _Deg)
 {
-	std::shared_ptr<Tiles> Tile = Level->CreateActor<Tiles>();
-	Tile->CreateTile(_Deg);
-	//Tile->GetTransform()->SetLocalPosition(GameEngineInput::GetMousePosition());
+	std::shared_ptr<Tiles> pTile = Level->CreateActor<Tiles>();
+	pTile->CreateTile(_Deg);
+	int iDeg = static_cast<int>(_Deg);
+
+	int m_CurTileSize = AllStage[m_CurLevel].TileSize;
+	if (m_CurTileSize != 0)
+	{
+		std::shared_ptr<Tiles> PrevTile = AllStage[m_CurLevel].AllTile[m_CurTileSize - 1].Tile;
+		
+
+		float4 PrevTileScale = PrevTile->GetRender()->GetTransform()->GetLocalScale().half();
+		float4 CurTileScale = pTile->GetRender()->GetTransform()->GetLocalScale().half();
+		float4 AddScale = PrevTileScale + CurTileScale;
+
+		pTile->GetTransform()->SetLocalPosition(AllStage[m_CurLevel].AllTile[m_CurTileSize - 1].Position);
+		pTile->GetTransform()->SetLocalRotation({ 0.f,0.f,static_cast<float>(m_CurDegree) });
+		switch (m_CurDegree)
+		{
+		case 0:
+			pTile->GetTransform()->AddLocalPosition(float4{ AddScale.x, 0.f ,0.f });
+			break;
+		case 90:
+
+			pTile->GetTransform()->AddLocalPosition(float4{ 0.f,  AddScale.x,0.f });
+			break;
+		case 180:
+			pTile->GetTransform()->AddLocalPosition(float4{ -AddScale.x, 0.f ,0.f });
+			break;
+		case 270:
+			pTile->GetTransform()->AddLocalPosition(float4{ 0.f,  -AddScale.x,0.f });
+			break;
+		default:
+			break;
+		}
+
+		m_CurDegree += iDeg;
+
+		if (m_CurDegree >=360)
+		{
+			m_CurDegree -= 360;
+		}
+	}
+
+	AllStage[m_CurLevel].AllTile[m_CurTileSize].NextRatio = static_cast<float>(iDeg);
+
+	AllStage[m_CurLevel].AllTile[m_CurTileSize].Tile = pTile;
+	AllStage[m_CurLevel].AllTile[m_CurTileSize].Position = pTile->GetTransform()->GetWorldPosition();
+	++AllStage[m_CurLevel].TileSize;
 }
 
