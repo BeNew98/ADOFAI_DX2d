@@ -52,7 +52,7 @@ public:
 		ProjectionType = _Type;
 	}
 
-	inline bool IsFreeCamera()
+	inline bool IsFreeCamera() 
 	{
 		return FreeCamera;
 	}
@@ -62,7 +62,7 @@ public:
 
 	void CameraTransformUpdate();
 
-	std::shared_ptr<GameEngineRenderTarget> GetCamTarget()
+	std::shared_ptr<GameEngineRenderTarget> GetCamTarget() 
 	{
 		return CamTarget;
 	}
@@ -70,7 +70,7 @@ public:
 	bool IsView(const TransformData& _TransData);
 
 	template<typename EnumType>
-	void SetSortType(EnumType _Index, SortType _Sort)
+	void SetSortType(EnumType _Index, SortType _Sort) 
 	{
 		SetSortType(static_cast<int>(_Index), _Sort);
 	}
@@ -79,7 +79,6 @@ public:
 	{
 		SortValues[_Index] = _Sort;
 	}
-
 
 protected:
 	void Start() override;
