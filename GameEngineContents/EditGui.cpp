@@ -30,7 +30,7 @@ void EditGui::Start()
 void EditGui::OnGUI(std::shared_ptr<class GameEngineLevel> Level, float _DeltaTime)
 {
 
-	ImGui::BeginListBox("LevelSelect",ImVec2(60, m_LevelSize*30));
+	ImGui::BeginListBox("LevelSelect", ImVec2(60, static_cast<float>(m_LevelSize * 30)));
 	for (int i = 0; i < m_LevelSize; i++)
 	{	
 		std::string text ="Level " + GameEngineString::ToString(i+1);
@@ -46,19 +46,50 @@ void EditGui::OnGUI(std::shared_ptr<class GameEngineLevel> Level, float _DeltaTi
 		std::string text ="CurDegree "+ GameEngineString::ToString(m_CurDegree);
 			ImGui::Text(text.c_str());
 	}
+
 	if (ImGui::Button("0"))
 	{
 		CreateTile(Level, TileDeg::Deg0);
 	}
-	ImGui::SameLine();
+	if (ImGui::Button("45"))
+	{
+		CreateTile(Level, TileDeg::Deg45);
+	}
+	if (ImGui::Button("60"))
+	{
+		CreateTile(Level, TileDeg::Deg60);
+	}
 	if (ImGui::Button("90"))
 	{
 		CreateTile(Level, TileDeg::Deg90);
 	}
-	ImGui::SameLine();
+	if (ImGui::Button("120"))
+	{
+		CreateTile(Level, TileDeg::Deg120);
+	}
+	if (ImGui::Button("135"))
+	{
+		CreateTile(Level, TileDeg::Deg135);
+	}
+	if (ImGui::Button("225"))
+	{
+		CreateTile(Level, TileDeg::Deg225);
+	}
+	if (ImGui::Button("240"))
+	{
+		CreateTile(Level, TileDeg::Deg240);
+	}
 	if (ImGui::Button("270"))
 	{
 		CreateTile(Level, TileDeg::Deg270);
+	}
+	if (ImGui::Button("300"))
+	{
+		CreateTile(Level, TileDeg::Deg300);
+	}
+	if (ImGui::Button("310"))
+	{
+		CreateTile(Level, TileDeg::Deg315);
 	}
 
 
@@ -74,34 +105,27 @@ void EditGui::CreateTile(std::shared_ptr<class GameEngineLevel> Level, TileDeg _
 	int m_CurTileSize = AllStage[m_CurLevel].TileSize;
 	if (m_CurTileSize != 0)
 	{
+		//이전 타일
 		std::shared_ptr<Tiles> PrevTile = AllStage[m_CurLevel].AllTile[m_CurTileSize - 1].Tile;
-		
 
+		float4 PrevTilePos = AllStage[m_CurLevel].AllTile[m_CurTileSize - 1].Position;
 		float PrevTileScale = PrevTile->GetRender()->GetTransform()->GetLocalScale().hx();
 		float CurTileScale = pTile->GetRender()->GetTransform()->GetLocalScale().hx();
 		float AddScale = fabs(PrevTileScale) + fabs(CurTileScale);
 
-		pTile->GetTransform()->SetLocalPosition(AllStage[m_CurLevel].AllTile[m_CurTileSize - 1].Position);
+		//현재 타일을 이전타일의 위치로 이동
+		pTile->GetTransform()->SetLocalPosition(PrevTilePos);
+		//현재까지의 각도로 회전
 		pTile->GetTransform()->SetLocalRotation({ 0.f,0.f,static_cast<float>(m_CurDegree) });
-		switch (m_CurDegree)
+
 		{
-		case 0:
-			pTile->GetTransform()->AddLocalPosition(float4{ AddScale, 0.f ,0.f });
-			break;
-		case 90:
-
-			pTile->GetTransform()->AddLocalPosition(float4{ 0.f,  AddScale,0.f });
-			break;
-		case 180:
-			pTile->GetTransform()->AddLocalPosition(float4{ -AddScale, 0.f ,0.f });
-			break;
-		case 270:
-			pTile->GetTransform()->AddLocalPosition(float4{ 0.f,  -AddScale,0.f });
-			break;
-		default:
-			break;
+			//현재 타일의 세팅 위치를 가져오기
+			float4 CurSettingPos = float4{ static_cast<float>(AddScale),0.f,0.f,1.f };
+			CurSettingPos.RotaitonZDeg(m_CurDegree);
+			pTile->GetTransform()->AddLocalPosition(CurSettingPos);
 		}
-
+		
+		
 		m_CurDegree += iDeg;
 
 		if (m_CurDegree >=360)
@@ -115,5 +139,6 @@ void EditGui::CreateTile(std::shared_ptr<class GameEngineLevel> Level, TileDeg _
 	AllStage[m_CurLevel].AllTile[m_CurTileSize].Tile = pTile;
 	AllStage[m_CurLevel].AllTile[m_CurTileSize].Position = pTile->GetTransform()->GetWorldPosition();
 	++AllStage[m_CurLevel].TileSize;
+	Level->GetMainCamera()->GetTransform()->SetWorldPosition(pTile->GetTransform()->GetWorldPosition());
 }
 

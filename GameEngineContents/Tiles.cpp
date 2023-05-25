@@ -42,6 +42,93 @@ void Tiles::CreateTile(TileDeg _TileDeg)
 	default:
 		break;
 	}
+	switch (_TileDeg)
+	{
+	case TileDeg::Deg0:
+	{
+		m_pRender = CreateComponent<GameEngineSpriteRenderer>();
+		m_pRender->SetScaleToTexture("tiles_new_world1_b_4_Sprite_Test.png");
+		std::shared_ptr<GameEngineCollision> Collision = CreateComponent<GameEngineCollision>(OrderNum::MAP);
+		break;
+	}
+	case TileDeg::Deg45:
+	{
+		m_pRender = CreateComponent<GameEngineSpriteRenderer>();
+		m_pRender->SetScaleToTexture("tiles_new_world1_b_45_Sprite_Test.png");
+		std::shared_ptr<GameEngineCollision> Collision = CreateComponent<GameEngineCollision>(OrderNum::MAP);
+		break;
+	}
+	case TileDeg::Deg60:
+	{
+		m_pRender = CreateComponent<GameEngineSpriteRenderer>();
+		m_pRender->SetScaleToTexture("tiles_new_world1_b_60_Sprite.png");
+		std::shared_ptr<GameEngineCollision> Collision = CreateComponent<GameEngineCollision>(OrderNum::MAP);
+		break;
+	}
+	case TileDeg::Deg90:
+	{
+		m_pRender = CreateComponent<GameEngineSpriteRenderer>();
+		m_pRender->SetScaleToTexture("tiles_new_world1_b_0_Sprite_Test.png");
+		std::shared_ptr<GameEngineCollision> Collision = CreateComponent<GameEngineCollision>(OrderNum::MAP);
+		break;
+	}
+	case TileDeg::Deg120:
+	{
+		m_pRender = CreateComponent<GameEngineSpriteRenderer>();
+		m_pRender->SetScaleToTexture("tiles_new_world1_b_120_Sprite.png");
+		std::shared_ptr<GameEngineCollision> Collision = CreateComponent<GameEngineCollision>(OrderNum::MAP);
+		break;
+	}
+	case TileDeg::Deg135:
+	{
+		m_pRender = CreateComponent<GameEngineSpriteRenderer>();
+		m_pRender->SetScaleToTexture("tiles_new_world1_b_140_Sprite.png");
+		std::shared_ptr<GameEngineCollision> Collision = CreateComponent<GameEngineCollision>(OrderNum::MAP);
+		break;
+	}
+	case TileDeg::Deg225:
+	{
+		m_pRender = CreateComponent<GameEngineSpriteRenderer>();
+		m_pRender->SetScaleToTexture("tiles_new_world1_b_140_Sprite.png");
+		std::shared_ptr<GameEngineCollision> Collision = CreateComponent<GameEngineCollision>(OrderNum::MAP);
+		m_pRender->SetFlipY();
+		break;
+	}
+	case TileDeg::Deg240:
+	{
+		m_pRender = CreateComponent<GameEngineSpriteRenderer>();
+		m_pRender->SetScaleToTexture("tiles_new_world1_b_120_Sprite.png");
+		std::shared_ptr<GameEngineCollision> Collision = CreateComponent<GameEngineCollision>(OrderNum::MAP);
+		m_pRender->SetFlipY();
+		break;
+	}
+	case TileDeg::Deg270:
+	{
+		m_pRender = CreateComponent<GameEngineSpriteRenderer>();
+		m_pRender->SetScaleToTexture("tiles_new_world1_b_0_Sprite_Test.png");
+		std::shared_ptr<GameEngineCollision> Collision = CreateComponent<GameEngineCollision>(OrderNum::MAP);
+		m_pRender->SetFlipY();
+		break;
+	}
+	case TileDeg::Deg300:
+	{
+		m_pRender = CreateComponent<GameEngineSpriteRenderer>();
+		m_pRender->SetScaleToTexture("tiles_new_world1_b_60_Sprite.png");
+		std::shared_ptr<GameEngineCollision> Collision = CreateComponent<GameEngineCollision>(OrderNum::MAP);
+		m_pRender->SetFlipY();
+		break;
+	}
+	case TileDeg::Deg315:
+	{
+		m_pRender = CreateComponent<GameEngineSpriteRenderer>();
+		m_pRender->SetScaleToTexture("tiles_new_world1_b_45_Sprite_Test.png");
+		std::shared_ptr<GameEngineCollision> Collision = CreateComponent<GameEngineCollision>(OrderNum::MAP);
+		m_pRender->SetFlipY();
+		break;
+	}
+	default:
+		break;
+	}
 }
 
 void Tiles::Start()
