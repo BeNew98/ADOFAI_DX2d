@@ -31,7 +31,7 @@ public:
 
 	// delete Function
 	EditGui(const EditGui& _Other) = delete;
-	EditGui(EditGui&& _Other) noexcept = delete;
+	EditGui(EditGui&& _OLevelther) noexcept = delete;
 	EditGui& operator=(const EditGui& _Other) = delete;
 	EditGui& operator=(EditGui&& _Other) noexcept = delete;
 
