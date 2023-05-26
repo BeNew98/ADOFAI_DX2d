@@ -24,7 +24,6 @@ void Tiles::Start()
 void Tiles::CreateTile(TileDeg _TileDeg)
 {
 
-	float4 XCal = { 0.f,41.f };
 	switch (_TileDeg)
 	{
 	case TileDeg::Deg0:
@@ -136,6 +135,7 @@ void Tiles::CreateTile(TileDeg _TileDeg)
 	}
 	m_fEndCal.RotaitonZDegReturn(static_cast<float>(_TileDeg));
 
+	float4 XCal = { 0.f,41.f };
 	float4 YCal = XCal.RotaitonZDegReturn(360.f - static_cast<float>(_TileDeg));
 	m_fStartCal += XCal;
 	m_fEndCal += YCal;
