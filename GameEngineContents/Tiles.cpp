@@ -16,7 +16,7 @@ void Tiles::Start()
 	m_pStartPivot = CreateComponent<GameEngineSpriteRenderer>();
 	m_pStartPivot->GetTransform()->SetLocalScale(float4(10.f, 10.f));
 	m_pEndPivot = CreateComponent<GameEngineSpriteRenderer>();
-	m_pEndPivot->GetTransform()->SetLocalScale(float4(10.f, 10.f));
+	m_pEndPivot->GetTransform()->SetLocalScale(float4(20.f, 20.f));
 }
 
 
@@ -125,23 +125,27 @@ void Tiles::CreateTile(TileDeg _TileDeg)
 	m_fStartBetPos = GetTransform()->GetLocalPosition() - m_pRender->GetTransform()->GetLocalScale().half() + m_fStartCal;
 	m_fStartBetPos.y = -m_fStartBetPos.y;
 	m_pStartPivot->GetTransform()->SetLocalPosition(m_fStartBetPos);
+
+	m_fEndBetPos = m_fEndCal- m_fStartCal;
+	m_fEndBetPos.y = -m_fEndBetPos.y;
 }
 
 
-void Tiles::CalPosition()
+void Tiles::CalPosition(int _Deg)
 {
 	
 	float4 StartPivotPos = m_pStartPivot->GetTransform()->GetLocalPosition();
 	GetTransform()->SetLocalPosition(StartPivotPos);
+	//m_fStartBetPos.RotaitonZDeg(static_cast<float>(_Deg));
 	GetTransform()->AddLocalPosition(m_fStartBetPos);
 
-	m_fEndBetPos = m_pRender->GetTransform()->GetLocalScale().half()- (m_pRender->GetTransform()->GetLocalScale() - m_fEndCal);
-
-	m_pEndPivot->GetTransform()->SetLocalPosition(GetTransform()->GetLocalPosition()+m_fEndBetPos);
+	m_pEndPivot->GetTransform()->SetLocalPosition(StartPivotPos);
+	m_fEndBetPos.RotaitonZDeg(static_cast<float>(_Deg));
+	m_pEndPivot->GetTransform()->AddLocalPosition(m_fEndBetPos);
 	//m_pStartPivot->Death();
 }
 
 void Tiles::SetStartPivotPos(float4 _EndPivotPos )
 {
-	m_pStartPivot->GetTransform()->SetLocalPosition(_EndPivotPos);
+	m_pStartPivot->GetTransform()->SetWorldPosition(_EndPivotPos);
 }

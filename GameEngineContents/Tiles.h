@@ -24,7 +24,7 @@ public:
 		return m_pRender;
 	}
 
-	void CalPosition();
+	void CalPosition(int _Deg);
 	void SetStartPivotPos(float4 _EndPivotPos);
 
 

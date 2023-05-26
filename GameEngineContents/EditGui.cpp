@@ -129,7 +129,7 @@ void EditGui::CreateTile(std::shared_ptr<class GameEngineLevel> Level, TileDeg _
 
 		pTile->GetTransform()->SetLocalRotation({ 0.f,0.f,static_cast<float>(m_CurDegree) });
 		pTile->SetStartPivotPos(PrevTilesEndPivotPos);
-
+		pTile->CalPosition(m_CurDegree);
 		m_CurDegree += iDeg;
 
 		if (m_CurDegree >=360)
@@ -137,8 +137,12 @@ void EditGui::CreateTile(std::shared_ptr<class GameEngineLevel> Level, TileDeg _
 			m_CurDegree -= 360;
 		}
 	}
+	else
+	{
+		pTile->CalPosition(m_CurDegree);
+	}
 
-	pTile->CalPosition();
+	
 
 	AllStage[m_CurLevel].AllTile[m_CurTileSize].NextRatio = static_cast<float>(iDeg);
 
