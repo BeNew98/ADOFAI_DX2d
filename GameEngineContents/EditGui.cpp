@@ -109,7 +109,7 @@ void EditGui::CreateTile(std::shared_ptr<class GameEngineLevel> Level, TileDeg _
 		std::shared_ptr<Tiles> PrevTile = AllStage[m_CurLevel].AllTile[m_CurTileSize - 1].Tile;
 
 		{
-			float4 PrevTilePos = AllStage[m_CurLevel].AllTile[m_CurTileSize - 1].Position;
+			//float4 PrevTilePos = AllStage[m_CurLevel].AllTile[m_CurTileSize - 1].Position;
 			//float PrevTileScale = PrevTile->GetRender()->GetTransform()->GetLocalScale().hx();
 			//float CurTileScale = pTile->GetRender()->GetTransform()->GetLocalScale().hx();
 			//float AddScale = fabs(PrevTileScale) + fabs(CurTileScale);
@@ -117,7 +117,7 @@ void EditGui::CreateTile(std::shared_ptr<class GameEngineLevel> Level, TileDeg _
 			//현재 타일을 이전타일의 위치로 이동
 			//pTile->GetTransform()->SetLocalPosition(PrevTilePos);
 			//현재까지의 각도로 회전
-			pTile->GetTransform()->SetLocalRotation({ 0.f,0.f,static_cast<float>(m_CurDegree) });
+			//pTile->GetTransform()->SetLocalRotation({ 0.f,0.f,static_cast<float>(m_CurDegree) });
 
 		
 			//현재 타일의 세팅 위치를 가져오기
@@ -125,18 +125,11 @@ void EditGui::CreateTile(std::shared_ptr<class GameEngineLevel> Level, TileDeg _
 			//CurSettingPos.RotaitonZDeg(m_CurDegree);
 			//pTile->GetTransform()->AddLocalPosition(CurSettingPos);
 		}
-		float4 PrevEndPivot = PrevTile->m_fEndPivot;
-		float4 CurStartPivot = pTile->m_fStartPivot;
-		float4 CurBetweenPivot = pTile->m_fEndPivot- pTile->m_fStartPivot;
+		float4 PrevTilesEndPivotPos = PrevTile->GetEndPivotPos();
 
-		pTile->m_fStartPivot = PrevEndPivot;
+		pTile->GetTransform()->SetLocalRotation({ 0.f,0.f,static_cast<float>(m_CurDegree) });
+		pTile->SetStartPivotPos(PrevTilesEndPivotPos);
 
-		float4 PivotDistance = pTile->m_fStartPivot - CurStartPivot;
-
-
-
-		pTile->m_fEndPivot = (pTile->m_fStartPivot + CurBetweenPivot).RotaitonZDegReturn(m_CurDegree);
-		pTile->GetTransform()->SetLocalPosition(PivotDistance);
 		m_CurDegree += iDeg;
 
 		if (m_CurDegree >=360)
@@ -144,6 +137,8 @@ void EditGui::CreateTile(std::shared_ptr<class GameEngineLevel> Level, TileDeg _
 			m_CurDegree -= 360;
 		}
 	}
+
+	pTile->CalPosition();
 
 	AllStage[m_CurLevel].AllTile[m_CurTileSize].NextRatio = static_cast<float>(iDeg);
 

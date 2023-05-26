@@ -179,7 +179,7 @@ void GameEngineLevel::ActorRender(float _DeltaTime)
 
 	if (true == GUIRender)
 	{
-		// GameEngineGUI::Render(GetSharedThis(), _DeltaTime);
+		GameEngineGUI::Render(GetSharedThis(), _DeltaTime);
 	}
 
 }

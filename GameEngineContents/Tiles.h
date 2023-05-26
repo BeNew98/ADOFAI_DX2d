@@ -1,5 +1,6 @@
 #pragma once
 #include <GameEngineCore/GameEngineActor.h>
+#include <GameEngineCore/GameEngineSpriteRenderer.h>
 
 // Ό³Έν :
 class Tiles : public GameEngineActor
@@ -17,19 +18,41 @@ public:
 
 	
 	void CreateTile(TileDeg _TileDeg);
+
 	std::shared_ptr<class GameEngineSpriteRenderer> GetRender()
 	{
 		return m_pRender;
 	}
 
-	float4 m_fStartPivot = float4::Zero;
-	float4 m_fEndPivot = float4::Zero;
+	void CalPosition();
+	void SetStartPivotPos(float4 _EndPivotPos);
+
+
+	float4 GetEndPivotPos()
+	{
+		return m_pEndPivot->GetTransform()->GetLocalPosition();
+	}
+	
+	void DeathEndPivot()
+	{
+		m_pEndPivot->Death();
+	}
+
 
 protected:
 	void Start() override;
 
 private:
 	std::shared_ptr<GameEngineSpriteRenderer> m_pRender = nullptr;
+	std::shared_ptr<GameEngineSpriteRenderer> m_pStartPivot = nullptr;
+	std::shared_ptr<GameEngineSpriteRenderer> m_pEndPivot = nullptr;
+	
+	float4 m_fStartBetPos = float4::Zero;
+	float4 m_fEndBetPos = float4::Zero;
+
+
+	float4 m_fStartCal	= float4::Zero;
+	float4 m_fEndCal	= float4::Zero;
 
 };
 
