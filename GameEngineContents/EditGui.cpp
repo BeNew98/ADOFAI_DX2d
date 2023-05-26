@@ -146,7 +146,9 @@ void EditGui::CreateTile(std::shared_ptr<class GameEngineLevel> Level, TileDeg _
 		
 		pTile->GetTransform()->SetLocalRotation({ 0.f,0.f,static_cast<float>(m_CurDegree) });
 		float4 StartBetPos = pTile->GetStartBetPos();
-		StartBetPos.RotaitonZDeg(m_CurDegree);
+		StartBetPos.RotaitonZDeg(static_cast<float>(m_CurDegree));
+
+		
 		float4 CurSettingPos = PrevTilesEndPivotPos - StartBetPos;
 		
 		pTile->GetTransform()->SetLocalPosition(CurSettingPos);
