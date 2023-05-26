@@ -51,7 +51,7 @@ void AnimationInfo::Update(float _DeltaTime)
 		++CurFrame;
 
 
-		
+
 
 		if (FrameIndex.size() <= CurFrame)
 		{
@@ -304,13 +304,7 @@ void GameEngineSpriteRenderer::Update(float _Delta)
 	if (nullptr != CurAnimation)
 	{
 		CurAnimation->Update(_Delta);
-	}
-}
 
-void GameEngineSpriteRenderer::Render(float _Delta)
-{
-	if (nullptr != CurAnimation)
-	{
 		const SpriteInfo& Info = CurAnimation->CurSpriteInfo();
 
 		GetShaderResHelper().SetTexture("DiffuseTex", Info.Texture);
@@ -330,14 +324,18 @@ void GameEngineSpriteRenderer::Render(float _Delta)
 
 			GetTransform()->SetLocalScale(Scale);
 		}
-
 	}
+}
+
+void GameEngineSpriteRenderer::Render(float _Delta)
+{
+
 	GameEngineRenderer::Render(_Delta);
 }
 
-void GameEngineSpriteRenderer::SetAnimationUpdateEvent(const std::string_view& _AnimationName, size_t _Frame, std::function<void()> _Event) 
+void GameEngineSpriteRenderer::SetAnimationUpdateEvent(const std::string_view& _AnimationName, size_t _Frame, std::function<void()> _Event)
 {
-	std::shared_ptr<AnimationInfo>  Info =  FindAnimation(_AnimationName);
+	std::shared_ptr<AnimationInfo>  Info = FindAnimation(_AnimationName);
 
 	if (nullptr == Info)
 	{
@@ -346,6 +344,7 @@ void GameEngineSpriteRenderer::SetAnimationUpdateEvent(const std::string_view& _
 
 	Info->UpdateEventFunction[_Frame] = _Event;
 }
+
 
 void GameEngineSpriteRenderer::SetAnimationStartEvent(const std::string_view& _AnimationName, size_t _Frame, std::function<void()> _Event)
 {
