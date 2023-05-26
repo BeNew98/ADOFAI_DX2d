@@ -22,6 +22,9 @@ public:
 		return m_pRender;
 	}
 
+	float4 m_fStartPivot = float4::Zero;
+	float4 m_fEndPivot = float4::Zero;
+
 protected:
 	void Start() override;
 
