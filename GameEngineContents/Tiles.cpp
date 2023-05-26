@@ -122,8 +122,9 @@ void Tiles::CreateTile(TileDeg _TileDeg)
 	default:
 		break;
 	}
-m_fStartBetPos = -(m_pRender->GetTransform()->GetLocalScale().half()) + m_fStartCal;
-	m_pStartPivot->GetTransform()->AddLocalPosition(-m_fStartBetPos);
+	m_fStartBetPos = GetTransform()->GetLocalPosition() - m_pRender->GetTransform()->GetLocalScale().half() + m_fStartCal;
+	m_fStartBetPos.y = -m_fStartBetPos.y;
+	m_pStartPivot->GetTransform()->SetLocalPosition(m_fStartBetPos);
 }
 
 
@@ -134,10 +135,10 @@ void Tiles::CalPosition()
 	GetTransform()->SetLocalPosition(StartPivotPos);
 	GetTransform()->AddLocalPosition(m_fStartBetPos);
 
-	m_fEndBetPos = m_pRender->GetTransform()->GetLocalScale() - m_fEndCal + m_pRender->GetTransform()->GetLocalScale().half();
+	m_fEndBetPos = m_pRender->GetTransform()->GetLocalScale().half()- (m_pRender->GetTransform()->GetLocalScale() - m_fEndCal);
 
-	m_pEndPivot->GetTransform()->AddLocalPosition(GetTransform()->GetLocalPosition()+m_fEndBetPos);
-	m_pStartPivot->Death();
+	m_pEndPivot->GetTransform()->SetLocalPosition(GetTransform()->GetLocalPosition()+m_fEndBetPos);
+	//m_pStartPivot->Death();
 }
 
 void Tiles::SetStartPivotPos(float4 _EndPivotPos )
