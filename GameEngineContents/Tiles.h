@@ -24,13 +24,23 @@ public:
 		return m_pRender;
 	}
 
-	void CalPosition(int _Deg);
-	void SetStartPivotPos(float4 _EndPivotPos);
 
-
+	float4 GetStartPivotPos()
+	{
+		return m_pStartPivot->GetTransform()->GetWorldPosition();
+	}
 	float4 GetEndPivotPos()
 	{
-		return m_pEndPivot->GetTransform()->GetLocalPosition();
+		return m_pEndPivot->GetTransform()->GetWorldPosition();
+	}
+
+	float4 GetStartBetPos()
+	{
+		return m_fStartBetPos;
+	}
+	float4 GetEndBetPos()
+	{
+		return m_fEndBetPos;
 	}
 	
 	void DeathEndPivot()

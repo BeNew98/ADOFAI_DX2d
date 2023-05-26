@@ -25,6 +25,7 @@ void EditGui::Start()
 		AllStage[i].AllTile.resize(200);
 	}
 	
+	CreateTile(GameEngineCore::GetCurLevel(), TileDeg::Deg0);
 }
 
 void EditGui::OnGUI(std::shared_ptr<class GameEngineLevel> Level, float _DeltaTime)
@@ -45,6 +46,21 @@ void EditGui::OnGUI(std::shared_ptr<class GameEngineLevel> Level, float _DeltaTi
 	{
 		std::string text ="CurDegree "+ GameEngineString::ToString(m_CurDegree);
 			ImGui::Text(text.c_str());
+	}
+	{
+		std::string text = "PrevTile Pos " +
+			AllStage[m_CurLevel].AllTile[AllStage[m_CurLevel].TileSize - 1].Position.ToString();
+		ImGui::Text(text.c_str());
+	}
+	{
+		std::string text = "PrevTile StartPivotPos " +
+			AllStage[m_CurLevel].AllTile[AllStage[m_CurLevel].TileSize - 1].Tile->GetStartPivotPos().ToString();
+		ImGui::Text(text.c_str());
+	}
+	{
+		std::string text = "PrevTile EndPivotPos " +
+			AllStage[m_CurLevel].AllTile[AllStage[m_CurLevel].TileSize - 1].Tile->GetEndPivotPos().ToString();
+		ImGui::Text(text.c_str());
 	}
 
 	if (ImGui::Button("0"))
@@ -113,33 +129,35 @@ void EditGui::CreateTile(std::shared_ptr<class GameEngineLevel> Level, TileDeg _
 			//float PrevTileScale = PrevTile->GetRender()->GetTransform()->GetLocalScale().hx();
 			//float CurTileScale = pTile->GetRender()->GetTransform()->GetLocalScale().hx();
 			//float AddScale = fabs(PrevTileScale) + fabs(CurTileScale);
-
-			//현재 타일을 이전타일의 위치로 이동
+			//
+			////현재 타일을 이전타일의 위치로 이동
 			//pTile->GetTransform()->SetLocalPosition(PrevTilePos);
-			//현재까지의 각도로 회전
+			////현재까지의 각도로 회전
 			//pTile->GetTransform()->SetLocalRotation({ 0.f,0.f,static_cast<float>(m_CurDegree) });
-
-		
-			//현재 타일의 세팅 위치를 가져오기
+			//
+			//
+			////현재 타일의 세팅 위치를 가져오기
 			//float4 CurSettingPos = float4{ static_cast<float>(AddScale),0.f,0.f,1.f };
 			//CurSettingPos.RotaitonZDeg(m_CurDegree);
 			//pTile->GetTransform()->AddLocalPosition(CurSettingPos);
 		}
-		float4 PrevTilesEndPivotPos = PrevTile->GetEndPivotPos();
 
+		float4 PrevTilesEndPivotPos = PrevTile->GetEndPivotPos();
+		
 		pTile->GetTransform()->SetLocalRotation({ 0.f,0.f,static_cast<float>(m_CurDegree) });
-		pTile->SetStartPivotPos(PrevTilesEndPivotPos);
-		pTile->CalPosition(m_CurDegree);
+		float4 StartBetPos = pTile->GetStartBetPos();
+		StartBetPos.RotaitonZDeg(m_CurDegree);
+		float4 CurSettingPos = PrevTilesEndPivotPos - StartBetPos;
+		
+		pTile->GetTransform()->SetLocalPosition(CurSettingPos);
+		
+		
 		m_CurDegree += iDeg;
 
 		if (m_CurDegree >=360)
 		{
 			m_CurDegree -= 360;
 		}
-	}
-	else
-	{
-		pTile->CalPosition(m_CurDegree);
 	}
 
 	
@@ -149,6 +167,8 @@ void EditGui::CreateTile(std::shared_ptr<class GameEngineLevel> Level, TileDeg _
 	AllStage[m_CurLevel].AllTile[m_CurTileSize].Tile = pTile;
 	AllStage[m_CurLevel].AllTile[m_CurTileSize].Position = pTile->GetTransform()->GetWorldPosition();
 	++AllStage[m_CurLevel].TileSize;
+
+
 	Level->GetMainCamera()->GetTransform()->SetWorldPosition(pTile->GetTransform()->GetWorldPosition());
 }
 
