@@ -40,7 +40,12 @@ void EditLevel::Update(float _Deltatime)
 		GameEngineCore::ChangeLevel("CenterLevel");
 	}
 
-	//m_pMouse->GetTransform()->Collision({._OtherTrans = });
+	if (ImGui::IsMouseDragging(1))
+	{
+		float4 CurMousePos = GameEngineInput::GetMouseDirection();
+		CurMousePos.y = -CurMousePos.y;
+		GetMainCamera()->GetTransform()->AddWorldPosition(-CurMousePos);
+	}
 }
 
 void EditLevel::LevelChangeStart()

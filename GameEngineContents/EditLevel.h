@@ -27,5 +27,6 @@ protected:
 private:
 	std::shared_ptr<class EditGui> m_pEditor = nullptr;
 	std::shared_ptr<class MyMouse> m_pMouse = nullptr;
+
 };
 
