@@ -70,49 +70,56 @@ void EditGui::OnGUI(std::shared_ptr<class GameEngineLevel> Level, float _DeltaTi
 	{
 		CreateTile(Level, TileDeg::Deg0);
 	}
+	ImGui::SameLine();
 	if (ImGui::Button("45"))
 	{
 		CreateTile(Level, TileDeg::Deg45);
 	}
+	ImGui::SameLine();
 	if (ImGui::Button("60"))
 	{
 		CreateTile(Level, TileDeg::Deg60);
 	}
+	ImGui::SameLine();
 	if (ImGui::Button("90"))
 	{
 		CreateTile(Level, TileDeg::Deg90);
 	}
+	ImGui::SameLine();
 	if (ImGui::Button("120"))
 	{
 		CreateTile(Level, TileDeg::Deg120);
 	}
+	ImGui::SameLine();
 	if (ImGui::Button("135"))
 	{
 		CreateTile(Level, TileDeg::Deg135);
 	}
+
 	if (ImGui::Button("225"))
 	{
 		CreateTile(Level, TileDeg::Deg225);
 	}
+	ImGui::SameLine();
 	if (ImGui::Button("240"))
 	{
 		CreateTile(Level, TileDeg::Deg240);
 	}
+	ImGui::SameLine();
 	if (ImGui::Button("270"))
 	{
 		CreateTile(Level, TileDeg::Deg270);
 	}
+	ImGui::SameLine();
 	if (ImGui::Button("300"))
 	{
 		CreateTile(Level, TileDeg::Deg300);
 	}
+	ImGui::SameLine();
 	if (ImGui::Button("310"))
 	{
 		CreateTile(Level, TileDeg::Deg315);
-	}
-
-
-	
+	}	
 }
 
 void EditGui::CreateTile(std::shared_ptr<class GameEngineLevel> Level, TileDeg _Deg)
