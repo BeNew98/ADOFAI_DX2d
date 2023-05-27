@@ -86,7 +86,7 @@ void Tiles::CreateTile(TileDeg _TileDeg)
 		m_pRender = CreateComponent<GameEngineSpriteRenderer>();
 		m_pRender->SetScaleToTexture("tiles_new_world1_b_135_Sprite.png");
 		std::shared_ptr<GameEngineCollision> Collision = CreateComponent<GameEngineCollision>(OrderNum::MAP);
-		m_pRender->SetFlipY();
+		//m_pRender->SetFlipY();
 		m_fStartCal = float4{ 9.f,27.f };
 		m_fEndCal = float4{ 59.f,148.f };
 		break;
@@ -96,7 +96,7 @@ void Tiles::CreateTile(TileDeg _TileDeg)
 		m_pRender = CreateComponent<GameEngineSpriteRenderer>();
 		m_pRender->SetScaleToTexture("tiles_new_world1_b_120_Sprite.png");
 		std::shared_ptr<GameEngineCollision> Collision = CreateComponent<GameEngineCollision>(OrderNum::MAP);
-		m_pRender->SetFlipY();
+		//m_pRender->SetFlipY();
 		m_fStartCal = float4{ 3.f,27.f };
 		m_fEndCal = float4{ 75.f,151.f };
 		break;
@@ -106,7 +106,7 @@ void Tiles::CreateTile(TileDeg _TileDeg)
 		m_pRender = CreateComponent<GameEngineSpriteRenderer>();
 		m_pRender->SetScaleToTexture("tiles_new_world1_b_90_Sprite.png");
 		std::shared_ptr<GameEngineCollision> Collision = CreateComponent<GameEngineCollision>(OrderNum::MAP);
-		m_pRender->SetFlipY();
+		//m_pRender->SetFlipY();
 		m_fStartCal = float4{ 3.f,27.f };
 		m_fEndCal = float4{ 117.f,142.f };
 		break;
@@ -116,7 +116,7 @@ void Tiles::CreateTile(TileDeg _TileDeg)
 		m_pRender = CreateComponent<GameEngineSpriteRenderer>();
 		m_pRender->SetScaleToTexture("tiles_new_world1_b_60_Sprite.png");
 		std::shared_ptr<GameEngineCollision> Collision = CreateComponent<GameEngineCollision>(OrderNum::MAP);
-		m_pRender->SetFlipY();
+		//m_pRender->SetFlipY();
 		m_fStartCal = float4{ 3.f,60.f };
 		m_fEndCal = float4{ 149,145.f };
 		break;
@@ -126,7 +126,7 @@ void Tiles::CreateTile(TileDeg _TileDeg)
 		m_pRender = CreateComponent<GameEngineSpriteRenderer>();
 		m_pRender->SetScaleToTexture("tiles_new_world1_b_45_Sprite.png");
 		std::shared_ptr<GameEngineCollision> Collision = CreateComponent<GameEngineCollision>(OrderNum::MAP);
-		m_pRender->SetFlipY();
+		//m_pRender->SetFlipY();
 		m_fStartCal = { 3.f,27.f };
 		m_fEndCal = { 158.f,92.5f };
 		break;
@@ -141,6 +141,11 @@ void Tiles::CreateTile(TileDeg _TileDeg)
 
 void Tiles::PivotCal(float _Deg)
 {
+	if (_Deg >= 225)
+	{
+		m_pRender->GetTransform()->SetLocalRotation({ 180.f,0.f });
+	}
+
 	m_fEndCal.RotaitonZDegReturn(_Deg);
 
 	//float4 XCal = { 0.f,41.f };
