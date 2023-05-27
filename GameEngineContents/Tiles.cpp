@@ -143,10 +143,10 @@ void Tiles::PivotCal(float _Deg)
 {
 	m_fEndCal.RotaitonZDegReturn(_Deg);
 
-	float4 XCal = { 0.f,41.f };
-	float4 YCal = XCal.RotaitonZDegReturn(360.f - static_cast<float>(_Deg));
-	m_fStartCal += XCal;
-	m_fEndCal += YCal;
+	//float4 XCal = { 0.f,41.f };
+	//float4 YCal = XCal.RotaitonZDegReturn(360.f - static_cast<float>(_Deg));
+	//m_fStartCal += XCal;
+	//m_fEndCal += YCal;
 
 	float fabsRenderScaleX = fabs(m_pRender->GetTransform()->GetLocalScale().hx());
 	float fabsRenderScaleY = fabs(m_pRender->GetTransform()->GetLocalScale().hy());
