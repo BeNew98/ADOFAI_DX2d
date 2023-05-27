@@ -42,26 +42,29 @@ void EditGui::OnGUI(std::shared_ptr<class GameEngineLevel> Level, float _DeltaTi
 	}
 	ImGui::EndListBox();
 
+	
 
+	TileInfo CurTileInfo = AllStage[m_CurLevel].AllTile[AllStage[m_CurLevel].TileSize - 1];
 	{
 		std::string text ="CurDegree "+ GameEngineString::ToString(m_CurDegree);
 			ImGui::Text(text.c_str());
 	}
 	{
-		std::string text = "PrevTile Pos " +
-			AllStage[m_CurLevel].AllTile[AllStage[m_CurLevel].TileSize - 1].Position.ToString();
+		std::string text = "CurTile Pos " +
+			CurTileInfo.Position.ToString();
 		ImGui::Text(text.c_str());
 	}
 	{
-		std::string text = "PrevTile StartPivotPos " +
-			AllStage[m_CurLevel].AllTile[AllStage[m_CurLevel].TileSize - 1].Tile->GetStartPivotPos().ToString();
+		std::string text = "CurTile StartPivotPos " +
+			CurTileInfo.Tile->GetStartPivotPos().ToString();
 		ImGui::Text(text.c_str());
 	}
 	{
-		std::string text = "PrevTile EndPivotPos " +
-			AllStage[m_CurLevel].AllTile[AllStage[m_CurLevel].TileSize - 1].Tile->GetEndPivotPos().ToString();
+		std::string text = "CurTile EndPivotPos " +
+			CurTileInfo.Tile->GetEndPivotPos().ToString();
 		ImGui::Text(text.c_str());
 	}
+	
 
 	if (ImGui::Button("0"))
 	{
@@ -119,28 +122,11 @@ void EditGui::CreateTile(std::shared_ptr<class GameEngineLevel> Level, TileDeg _
 	int iDeg = static_cast<int>(_Deg);
 
 	int m_CurTileSize = AllStage[m_CurLevel].TileSize;
+
 	if (m_CurTileSize != 0)
 	{
 		//이전 타일
-		std::shared_ptr<Tiles> PrevTile = AllStage[m_CurLevel].AllTile[m_CurTileSize - 1].Tile;
-
-		{
-			//float4 PrevTilePos = AllStage[m_CurLevel].AllTile[m_CurTileSize - 1].Position;
-			//float PrevTileScale = PrevTile->GetRender()->GetTransform()->GetLocalScale().hx();
-			//float CurTileScale = pTile->GetRender()->GetTransform()->GetLocalScale().hx();
-			//float AddScale = fabs(PrevTileScale) + fabs(CurTileScale);
-			//
-			////현재 타일을 이전타일의 위치로 이동
-			//pTile->GetTransform()->SetLocalPosition(PrevTilePos);
-			////현재까지의 각도로 회전
-			//pTile->GetTransform()->SetLocalRotation({ 0.f,0.f,static_cast<float>(m_CurDegree) });
-			//
-			//
-			////현재 타일의 세팅 위치를 가져오기
-			//float4 CurSettingPos = float4{ static_cast<float>(AddScale),0.f,0.f,1.f };
-			//CurSettingPos.RotaitonZDeg(m_CurDegree);
-			//pTile->GetTransform()->AddLocalPosition(CurSettingPos);
-		}
+		std::shared_ptr<Tiles> PrevTile = AllStage[m_CurLevel].AllTile[m_CurTileSize - 1].Tile;		
 
 		float4 PrevTilesEndPivotPos = PrevTile->GetEndPivotPos();
 		

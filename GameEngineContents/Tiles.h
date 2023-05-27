@@ -48,6 +48,7 @@ public:
 		m_pEndPivot->Death();
 	}
 
+	void PivotCal(float _Deg);
 
 protected:
 	void Start() override;
@@ -63,6 +64,7 @@ private:
 
 	float4 m_fStartCal	= float4::Zero;
 	float4 m_fEndCal	= float4::Zero;
+
 
 };
 
