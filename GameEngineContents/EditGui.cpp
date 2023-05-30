@@ -22,10 +22,6 @@ EditGui::~EditGui()
 void EditGui::Start()
 {
 	AllStage.resize(m_LevelSize);
-	for (size_t i = 0; i < AllStage.size(); i++)
-	{
-		//AllStage[i].AllTile.resize(200);
-	}
 	
 	CreateTile(GameEngineCore::GetCurLevel(), TileDeg::Deg0);
 }
@@ -106,7 +102,7 @@ void EditGui::CreateTile(std::shared_ptr<class GameEngineLevel> Level, TileDeg _
 	pTile->CreateTile(_Deg);
 	int iDeg = static_cast<int>(_Deg);
 
-	int m_CurTileSize = AllStage[m_CurLevel].TileSize;
+	int m_CurTileSize = static_cast<int>(AllStage[m_CurLevel].AllTile.size());
 
 	if (m_CurTileSize != 0)
 	{
@@ -243,26 +239,23 @@ void EditGui::Load()
 	file.LoadBin(Ser);
 	float fRatio = 0.f;
 	TileInfo Info = {};
+
 	for (size_t i = 0; i < AllStage[m_CurLevel].AllTile.size(); i++)
 	{
 		AllStage[m_CurLevel].AllTile[i].Tile->Death();
 	}
-	AllStage[m_CurLevel].AllTile.clear();
+
+	size_t TileSize = file.GetFileSize() / sizeof(float);
 	
-	for (size_t i = 0; i < file.GetFileSize(); i++)
+	for (size_t i = 0; i < TileSize; i++)
 	{
-		Ser.Read(&Info.NextRatio, sizeof(float));
+		Ser.Read(&fRatio, sizeof(float));
 		if (i == 0)
 		{
 			m_CurDegree = 0;
-			AllStage[m_CurLevel].AllTile.reserve(file.GetFileSize());
-			CreateTile(GameEngineCore::GetCurLevel(), static_cast<TileDeg>(Info.NextRatio));
-			continue;
 		}
-		CreateTile(GameEngineCore::GetCurLevel(), static_cast<TileDeg>(Info.NextRatio));
+		CreateTile(GameEngineCore::GetCurLevel(), static_cast<TileDeg>(fRatio));
 	}
-
-	int a = 0;
 }
 
 void EditGui::DeleteCurTile()
