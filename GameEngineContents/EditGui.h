@@ -46,6 +46,8 @@ private:
 	std::vector<StageInfo> AllStage;
 
 	void CreateTile(std::shared_ptr<class GameEngineLevel> Level, TileDeg _Deg);
-
+	void Save();
+	void Load();
+	void DeleteCurTile();
 };
 

@@ -31,95 +31,71 @@ void EditGui::Start()
 void EditGui::OnGUI(std::shared_ptr<class GameEngineLevel> Level, float _DeltaTime)
 {
 
-	ImGui::BeginListBox("LevelSelect", ImVec2(60, static_cast<float>(m_LevelSize * 30)));
-	for (int i = 0; i < m_LevelSize; i++)
-	{	
-		std::string text ="Level " + GameEngineString::ToString(i+1);
-		if (ImGui::Button(text.c_str()))
-		{
-			m_CurLevel = i;
-		}
-	}
-	ImGui::EndListBox();
-
-	
-
 	TileInfo CurTileInfo = AllStage[m_CurLevel].AllTile[AllStage[m_CurLevel].TileSize - 1];
-	{
-		std::string text ="CurDegree "+ GameEngineString::ToString(m_CurDegree);
-			ImGui::Text(text.c_str());
-	}
-	{
-		std::string text = "CurTile Pos " +
-			CurTileInfo.Position.ToString();
-		ImGui::Text(text.c_str());
-	}
-	{
-		std::string text = "CurTile StartPivotPos " +
-			CurTileInfo.Tile->GetStartPivotPos().ToString();
-		ImGui::Text(text.c_str());
-	}
-	{
-		std::string text = "CurTile EndPivotPos " +
-			CurTileInfo.Tile->GetEndPivotPos().ToString();
-		ImGui::Text(text.c_str());
-	}
-	
+	ImGui::Text("CurDegree: %s", GameEngineString::ToString(m_CurDegree).c_str());
+	ImGui::Separator();
 
-	if (ImGui::Button("0"))
-	{
-		CreateTile(Level, TileDeg::Deg0);
-	}
-	ImGui::SameLine();
-	if (ImGui::Button("45"))
-	{
-		CreateTile(Level, TileDeg::Deg45);
-	}
-	ImGui::SameLine();
-	if (ImGui::Button("60"))
-	{
-		CreateTile(Level, TileDeg::Deg60);
-	}
-	ImGui::SameLine();
-	if (ImGui::Button("90"))
-	{
-		CreateTile(Level, TileDeg::Deg90);
-	}
-	ImGui::SameLine();
-	if (ImGui::Button("120"))
-	{
-		CreateTile(Level, TileDeg::Deg120);
-	}
-	ImGui::SameLine();
-	if (ImGui::Button("135"))
-	{
-		CreateTile(Level, TileDeg::Deg135);
-	}
+	ImGui::Text("<CurTile Info>");
+	ImGui::Columns(2);
+	ImGui::Text("Position");
+	ImGui::NextColumn();
+	ImGui::Text("x: %f", CurTileInfo.Position.x);
+	ImGui::Text("y: %f", CurTileInfo.Position.y);
+	ImGui::Text("z: %f", CurTileInfo.Position.z);
+	ImGui::Text("w: %f", CurTileInfo.Position.w);
+	ImGui::NextColumn();
+	ImGui::Separator();
 
-	if (ImGui::Button("225"))
-	{
-		CreateTile(Level, TileDeg::Deg225);
-	}
+	ImGui::Text("StartPivotPos");
+	ImGui::NextColumn();
+	ImGui::Text("x: %f", CurTileInfo.Tile->GetStartPivotPos().x);
+	ImGui::Text("y: %f", CurTileInfo.Tile->GetStartPivotPos().y);
+	ImGui::Text("z: %f", CurTileInfo.Tile->GetStartPivotPos().z);
+	ImGui::Text("w: %f", CurTileInfo.Tile->GetStartPivotPos().w);
+	ImGui::NextColumn();
+	ImGui::Separator();
+
+
+	ImGui::Text("EndPivotPos");
+	ImGui::NextColumn();
+	ImGui::Text("x: %f", CurTileInfo.Tile->GetEndPivotPos().x);
+	ImGui::Text("y: %f", CurTileInfo.Tile->GetEndPivotPos().y);
+	ImGui::Text("z: %f", CurTileInfo.Tile->GetEndPivotPos().z);
+	ImGui::Text("w: %f", CurTileInfo.Tile->GetEndPivotPos().w);
+	ImGui::NextColumn();
+	ImGui::Columns(1);
+	ImGui::Separator();
+
+
+	ImGui::Text("Create Tile:");
+	if (ImGui::Button("0")) { CreateTile(Level, TileDeg::Deg0); }
 	ImGui::SameLine();
-	if (ImGui::Button("240"))
-	{
-		CreateTile(Level, TileDeg::Deg240);
-	}
+	if (ImGui::Button("45")) { CreateTile(Level, TileDeg::Deg45); }
 	ImGui::SameLine();
-	if (ImGui::Button("270"))
-	{
-		CreateTile(Level, TileDeg::Deg270);
-	}
+	if (ImGui::Button("60")) { CreateTile(Level, TileDeg::Deg60); }
 	ImGui::SameLine();
-	if (ImGui::Button("300"))
-	{
-		CreateTile(Level, TileDeg::Deg300);
-	}
+	if (ImGui::Button("90")) { CreateTile(Level, TileDeg::Deg90); }
 	ImGui::SameLine();
-	if (ImGui::Button("310"))
-	{
-		CreateTile(Level, TileDeg::Deg315);
-	}	
+	if (ImGui::Button("120")) { CreateTile(Level, TileDeg::Deg120); }
+	ImGui::SameLine();
+	if (ImGui::Button("135")) { CreateTile(Level, TileDeg::Deg135); }
+
+	if (ImGui::Button("225")) { CreateTile(Level, TileDeg::Deg225); }
+	ImGui::SameLine();
+	if (ImGui::Button("240")) { CreateTile(Level, TileDeg::Deg240); }
+	ImGui::SameLine();
+	if (ImGui::Button("270")) { CreateTile(Level, TileDeg::Deg270); }
+	ImGui::SameLine();
+	if (ImGui::Button("300")) { CreateTile(Level, TileDeg::Deg300); }
+	ImGui::SameLine();
+	if (ImGui::Button("310")) { CreateTile(Level, TileDeg::Deg315); }
+	ImGui::Separator();
+
+	if (ImGui::Button("Delete CurTile")) { DeleteCurTile(); }
+
+	if (ImGui::Button("Save")) { Save(); }
+	ImGui::SameLine();
+	if (ImGui::Button("Load")) { Load(); };
 }
 
 void EditGui::CreateTile(std::shared_ptr<class GameEngineLevel> Level, TileDeg _Deg)
@@ -155,15 +131,40 @@ void EditGui::CreateTile(std::shared_ptr<class GameEngineLevel> Level, TileDeg _
 		}
 	}
 
-	
+	TileInfo Info = {};
+	Info.Tile = pTile;
+	Info.NextRatio = static_cast<float>(iDeg);
+	Info.Position = pTile->GetTransform()->GetWorldPosition();
 
-	AllStage[m_CurLevel].AllTile[m_CurTileSize].NextRatio = static_cast<float>(iDeg);
+	AllStage[m_CurLevel].AllTile[AllStage[m_CurLevel].TileSize]=Info;
 
-	AllStage[m_CurLevel].AllTile[m_CurTileSize].Tile = pTile;
-	AllStage[m_CurLevel].AllTile[m_CurTileSize].Position = pTile->GetTransform()->GetWorldPosition();
+	//AllStage[m_CurLevel].AllTile[m_CurTileSize].NextRatio = static_cast<float>(iDeg);
+	//
+	//AllStage[m_CurLevel].AllTile[m_CurTileSize].Tile = pTile;
+	//AllStage[m_CurLevel].AllTile[m_CurTileSize].Position = pTile->GetTransform()->GetWorldPosition();
 	++AllStage[m_CurLevel].TileSize;
 
 
 	Level->GetMainCamera()->GetTransform()->SetWorldPosition(pTile->GetTransform()->GetWorldPosition());
 }
 
+void EditGui::Save()
+{
+}
+
+void EditGui::Load()
+{
+}
+
+void EditGui::DeleteCurTile()
+{
+	if (0 == AllStage[m_CurLevel].TileSize - 1)
+	{
+		MessageBoxA(nullptr,  "첫 타일은 지울수 없습니다.", "주의", MB_OK);
+		return;
+	}
+	TileInfo info = AllStage[m_CurLevel].AllTile[AllStage[m_CurLevel].TileSize-1];
+	info.Tile->Death();
+	m_CurDegree -= static_cast<int>(info.NextRatio);
+	--AllStage[m_CurLevel].TileSize;
+}
