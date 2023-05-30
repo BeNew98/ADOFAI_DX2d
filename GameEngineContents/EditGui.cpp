@@ -245,6 +245,7 @@ void EditGui::Load()
 		AllStage[m_CurLevel].AllTile[i].Tile->Death();
 	}
 	size_t TileSize = file.GetFileSize() / sizeof(float);
+
 	AllStage[m_CurLevel].AllTile.clear();
 	AllStage[m_CurLevel].AllTile.reserve(TileSize);
 	
