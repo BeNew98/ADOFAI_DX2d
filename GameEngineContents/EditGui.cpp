@@ -164,7 +164,7 @@ void EditGui::Save()
 
 
 	std::wstring strTileFolderPath = {};
-	strTileFolderPath = strTileFolderPath.assign(Initpath.begin(), Initpath.end());
+	strTileFolderPath.assign(Initpath.begin(), Initpath.end());
 	wchar_t szFilePath[256] = {};
 
 	ZeroMemory(&ofn, sizeof(ofn));
@@ -213,7 +213,7 @@ void EditGui::Load()
 
 
 	std::wstring strTileFolderPath = {};
-	strTileFolderPath = strTileFolderPath.assign(Initpath.begin(), Initpath.end());
+	strTileFolderPath.assign(Initpath.begin(), Initpath.end());
 	wchar_t szFilePath[256] = {};
 
 	ZeroMemory(&ofn, sizeof(ofn));
@@ -242,10 +242,24 @@ void EditGui::Load()
 	GameEngineSerializer Ser = {};
 	file.LoadBin(Ser);
 	float fRatio = 0.f;
-	
-	for (size_t i = 0; i < Ser.GetBufferSize()/sizeof(size_t)* sizeof(float); i++)
+	TileInfo Info = {};
+	for (size_t i = 0; i < AllStage[m_CurLevel].AllTile.size(); i++)
 	{
-		Ser.Read(&AllStage[m_CurLevel].AllTile[i].NextRatio, sizeof(float));
+		AllStage[m_CurLevel].AllTile[i].Tile->Death();
+	}
+	AllStage[m_CurLevel].AllTile.clear();
+	
+	for (size_t i = 0; i < file.GetFileSize(); i++)
+	{
+		Ser.Read(&Info.NextRatio, sizeof(float));
+		if (i == 0)
+		{
+			m_CurDegree = 0;
+			AllStage[m_CurLevel].AllTile.reserve(file.GetFileSize());
+			CreateTile(GameEngineCore::GetCurLevel(), static_cast<TileDeg>(Info.NextRatio));
+			continue;
+		}
+		CreateTile(GameEngineCore::GetCurLevel(), static_cast<TileDeg>(Info.NextRatio));
 	}
 
 	int a = 0;

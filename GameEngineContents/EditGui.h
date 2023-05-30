@@ -49,5 +49,6 @@ private:
 	void Save();
 	void Load();
 	void DeleteCurTile();
+	void ClearAllTile();
 };
 
