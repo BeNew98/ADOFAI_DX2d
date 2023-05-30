@@ -41,70 +41,24 @@ struct Input
 
 struct OutPut
 {
-    // 레스터라이저야 이 포지션이
-    // w나눈 다음  뷰포트 곱하고 픽셀 건져낼때 쓸포지션 정보를 내가 보낸거야.
     float4 Pos : SV_Position;
     float4 UV : TEXCOORD;
 };
 
-
-cbuffer AtlasData : register(b1)
-{
-    // 0.0 0.5
-    float2 FramePos;
-    // 0.5 0.5 
-    float2 FrameScale;
-    // float4 AtlasUV;
-}
-
-// 월드뷰프로젝션
-
-OutPut Texture_VS(Input _Value)
+OutPut Debug_VS(Input _Value)
 {
     OutPut OutPutValue = (OutPut) 0;
-	
     _Value.Pos.w = 1.0f;
     OutPutValue.Pos = mul(_Value.Pos, WorldViewProjectionMatrix);
-    // OutPutValue.UV = _Value.UV;
-    
-    // [][]
-    // [][]
-    
-    // 0.5 0.0  0.5 0.5 
-    
-    // 0,0    1,0
-    //
-    //
-    // 0,1    1,1
-    OutPutValue.UV.x = (_Value.UV.x * FrameScale.x) + FramePos.x;
-    OutPutValue.UV.y = (_Value.UV.y * FrameScale.y) + FramePos.y;
-    
     return OutPutValue;
 }
 
-cbuffer ColorOption : register(b0)
+cbuffer DebugColor : register(b0)
 {
-    float4 MulColor;
-    float4 PlusColor;
+    float4 RenderColor;
 }
 
-Texture2D DiffuseTex : register(t0);
-SamplerState CLAMPSAMPLER : register(s0);
-
-struct OutColor
+float4 Debug_PS(OutPut _Value) : SV_Target0
 {
-    float4 Color0 : SV_Target0;
-    float4 Color1 : SV_Target1;
-    float4 Color2 : SV_Target2;
-    float4 Color3 : SV_Target3;
-};
-
-float4 Texture_PS(OutPut _Value) : SV_Target0
-{
-    float4 Color = DiffuseTex.Sample(CLAMPSAMPLER, _Value.UV.xy);
-    
-    Color *= MulColor;
-    Color += PlusColor;
-    
-    return Color;
+    return RenderColor;
 }
