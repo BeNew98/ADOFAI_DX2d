@@ -15,7 +15,6 @@ struct TileInfo
 struct StageInfo
 {
 	std::vector<TileInfo> AllTile;
-	int TileSize = 0;
 	int BPM = 0;
 	float fitch = 0.f;
 };

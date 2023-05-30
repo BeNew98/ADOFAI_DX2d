@@ -29,7 +29,7 @@ void EditGui::Start()
 void EditGui::OnGUI(std::shared_ptr<class GameEngineLevel> Level, float _DeltaTime)
 {
 
-	TileInfo CurTileInfo = AllStage[m_CurLevel].AllTile[AllStage[m_CurLevel].TileSize - 1];
+	TileInfo CurTileInfo = AllStage[m_CurLevel].AllTile[AllStage[m_CurLevel].AllTile.size()-1];
 	ImGui::Text("CurDegree: %s", GameEngineString::ToString(m_CurDegree).c_str());
 	ImGui::Separator();
 
@@ -136,15 +136,6 @@ void EditGui::CreateTile(std::shared_ptr<class GameEngineLevel> Level, TileDeg _
 	AllStage[m_CurLevel].AllTile.push_back(Info);
 
 
-	//AllStage[m_CurLevel].AllTile[AllStage[m_CurLevel].TileSize]=Info;
-
-	//AllStage[m_CurLevel].AllTile[m_CurTileSize].NextRatio = static_cast<float>(iDeg);
-	//
-	//AllStage[m_CurLevel].AllTile[m_CurTileSize].Tile = pTile;
-	//AllStage[m_CurLevel].AllTile[m_CurTileSize].Position = pTile->GetTransform()->GetWorldPosition();
-	++AllStage[m_CurLevel].TileSize;
-
-
 	Level->GetMainCamera()->GetTransform()->SetWorldPosition(pTile->GetTransform()->GetWorldPosition());
 }
 
@@ -182,7 +173,7 @@ void EditGui::Save()
 
 	GameEngineSerializer Ser = {};
 
-	for (size_t i = 0; i < AllStage[m_CurLevel].TileSize; i++)
+	for (size_t i = 0; i < AllStage[m_CurLevel].AllTile.size(); i++)
 	{
 		Ser.Write(&AllStage[m_CurLevel].AllTile[i].NextRatio, sizeof(float));
 	}
@@ -255,8 +246,6 @@ void EditGui::Load()
 		if (i == 0)
 		{
 			m_CurDegree = 0;
-			AllStage[m_CurLevel].TileSize = 0;
-			//continue;
 		}
 		CreateTile(GameEngineCore::GetCurLevel(), static_cast<TileDeg>(fRatio));
 	}
@@ -264,15 +253,14 @@ void EditGui::Load()
 
 void EditGui::DeleteCurTile()
 {
-	if (0 == AllStage[m_CurLevel].TileSize - 1)
+	if (0 == AllStage[m_CurLevel].AllTile.size() - 1)
 	{
 		MessageBoxA(nullptr,  "첫 타일은 지울수 없습니다.", "주의", MB_OK);
 		return;
 	}
-	TileInfo info = AllStage[m_CurLevel].AllTile[AllStage[m_CurLevel].TileSize-1];
+	TileInfo info = AllStage[m_CurLevel].AllTile[AllStage[m_CurLevel].AllTile.size()-1];
 	info.Tile->Death();
 	std::vector<TileInfo>::iterator iter = AllStage[m_CurLevel].AllTile.end();
 	AllStage[m_CurLevel].AllTile.erase(iter -1);
 	m_CurDegree -= static_cast<int>(info.NextRatio);
-	--AllStage[m_CurLevel].TileSize;
 }
