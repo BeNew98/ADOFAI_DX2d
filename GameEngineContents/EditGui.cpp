@@ -1,7 +1,9 @@
 #include "PrecompileHeader.h"
 #include "EditGui.h"
 
+#include <GameEngineBase/GameEngineSerializer.h>
 #include <GameEngineBase/GameEngineString.h>
+#include <GameEngineBase/GameEngineFile.h>
 #include <GameEngineCore/GameEngineLevel.h>
 #include <GameEngineCore/GameEngineSpriteRenderer.h>
 #include <GameEngineCore/GameEngineCore.h>
@@ -150,6 +152,24 @@ void EditGui::CreateTile(std::shared_ptr<class GameEngineLevel> Level, TileDeg _
 
 void EditGui::Save()
 {
+	GameEngineSerializer Ser = {};
+
+	for (size_t i = 0; i < AllStage[m_CurLevel].TileSize; i++)
+	{
+		Ser.Write(&AllStage[m_CurLevel].AllTile[i].Position, sizeof(float4));
+	}
+
+	GameEngineDirectory NewDir;
+	NewDir.MoveParentToDirectory("ContentResources");
+	NewDir.Move("ContentResources");
+	NewDir.Move("Text");
+	NewDir.GetPath();
+	std::string str = NewDir.GetPath().GetFullPath() +"\\" + "Level"+GameEngineString::ToString(m_CurLevel)+".txt";
+	GameEngineFile file = GameEngineFile(str);
+	
+	file.SaveBin(Ser);
+
+
 }
 
 void EditGui::Load()
