@@ -153,7 +153,37 @@ void EditGui::CreateTile(std::shared_ptr<class GameEngineLevel> Level, TileDeg _
 }
 
 void EditGui::Save()
-{
+{	GameEngineDirectory NewDir;
+	NewDir.MoveParentToDirectory("ContentResources");
+	NewDir.Move("ContentResources");
+	NewDir.Move("Text");
+	std::string Initpath = NewDir.GetPath().GetFullPath();
+
+
+	OPENFILENAME ofn = {};
+
+
+	std::wstring strTileFolderPath = {};
+	strTileFolderPath = strTileFolderPath.assign(Initpath.begin(), Initpath.end());
+	wchar_t szFilePath[256] = {};
+
+	ZeroMemory(&ofn, sizeof(ofn));
+	ofn.lStructSize = sizeof(ofn);
+	ofn.hwndOwner = NULL;
+	ofn.lpstrFile = szFilePath;
+	ofn.lpstrFile[0] = '\0';
+	ofn.nMaxFile = 256;
+	ofn.lpstrFilter = L"ALL\0*.*";
+	ofn.nFilterIndex = 1;
+	ofn.lpstrFileTitle = NULL;
+	ofn.nMaxFileTitle = 0;
+	ofn.lpstrInitialDir = strTileFolderPath.c_str();
+	ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
+
+	if (false == GetSaveFileName(&ofn))
+		return;
+
+
 	GameEngineSerializer Ser = {};
 
 	for (size_t i = 0; i < AllStage[m_CurLevel].TileSize; i++)
@@ -161,23 +191,17 @@ void EditGui::Save()
 		Ser.Write(&AllStage[m_CurLevel].AllTile[i].NextRatio, sizeof(float));
 	}
 
-	GameEngineDirectory NewDir;
-	NewDir.MoveParentToDirectory("ContentResources");
-	NewDir.Move("ContentResources");
-	NewDir.Move("Text");
-	NewDir.GetPath();
-	std::string str = NewDir.GetPath().GetFullPath() +"\\" + "Level"+GameEngineString::ToString(m_CurLevel)+".txt";
-	GameEngineFile file = GameEngineFile(str);
+	std::string dir = {};
+	std::wstring filename = szFilePath;
+	dir.assign(filename.begin(), filename.end());
+
+	GameEngineFile file = GameEngineFile(dir);
 	
 	file.SaveBin(Ser);
-
-
 }
 
 void EditGui::Load()
 {
-
-
 	GameEngineDirectory NewDir;
 	NewDir.MoveParentToDirectory("ContentResources");
 	NewDir.Move("ContentResources");
@@ -198,7 +222,7 @@ void EditGui::Load()
 	ofn.lpstrFile = szFilePath;
 	ofn.lpstrFile[0] = '\0';
 	ofn.nMaxFile = 256;
-	ofn.lpstrFilter = L"txt\0*.txt\0ALL\0*.*";
+	ofn.lpstrFilter = L"ALL\0*.*";
 	ofn.nFilterIndex = 1;
 	ofn.lpstrFileTitle = NULL;
 	ofn.nMaxFileTitle = 0;
@@ -210,7 +234,7 @@ void EditGui::Load()
 
 	std::string dir = {};
 	std::wstring filename = szFilePath;
-	dir = dir.assign(filename.begin(), filename.end());
+	dir.assign(filename.begin(), filename.end());
 
 	GameEngineFile file = GameEngineFile(dir);
 
@@ -218,7 +242,8 @@ void EditGui::Load()
 	GameEngineSerializer Ser = {};
 	file.LoadBin(Ser);
 	float fRatio = 0.f;
-	for (size_t i = 0; i < 200; i++)
+	
+	for (size_t i = 0; i < Ser.GetBufferSize()/sizeof(size_t)* sizeof(float); i++)
 	{
 		Ser.Read(&AllStage[m_CurLevel].AllTile[i].NextRatio, sizeof(float));
 	}
