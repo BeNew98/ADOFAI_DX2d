@@ -24,7 +24,7 @@ void EditGui::Start()
 	AllStage.resize(m_LevelSize);
 	for (size_t i = 0; i < AllStage.size(); i++)
 	{
-		AllStage[i].AllTile.resize(200);
+		//AllStage[i].AllTile.resize(200);
 	}
 	
 	CreateTile(GameEngineCore::GetCurLevel(), TileDeg::Deg0);
@@ -137,8 +137,10 @@ void EditGui::CreateTile(std::shared_ptr<class GameEngineLevel> Level, TileDeg _
 	Info.Tile = pTile;
 	Info.NextRatio = static_cast<float>(iDeg);
 	Info.Position = pTile->GetTransform()->GetWorldPosition();
+	AllStage[m_CurLevel].AllTile.push_back(Info);
 
-	AllStage[m_CurLevel].AllTile[AllStage[m_CurLevel].TileSize]=Info;
+
+	//AllStage[m_CurLevel].AllTile[AllStage[m_CurLevel].TileSize]=Info;
 
 	//AllStage[m_CurLevel].AllTile[m_CurTileSize].NextRatio = static_cast<float>(iDeg);
 	//
@@ -156,7 +158,7 @@ void EditGui::Save()
 
 	for (size_t i = 0; i < AllStage[m_CurLevel].TileSize; i++)
 	{
-		Ser.Write(&AllStage[m_CurLevel].AllTile[i].Position, sizeof(float4));
+		Ser.Write(&AllStage[m_CurLevel].AllTile[i].NextRatio, sizeof(float));
 	}
 
 	GameEngineDirectory NewDir;
@@ -215,10 +217,10 @@ void EditGui::Load()
 
 	GameEngineSerializer Ser = {};
 	file.LoadBin(Ser);
-
-	for (size_t i = 0; i < AllStage[m_CurLevel].TileSize; i++)
+	float fRatio = 0.f;
+	for (size_t i = 0; i < 200; i++)
 	{
-		Ser.Read(&AllStage[m_CurLevel].AllTile[i].Position, sizeof(float4));
+		Ser.Read(&AllStage[m_CurLevel].AllTile[i].NextRatio, sizeof(float));
 	}
 
 	int a = 0;
@@ -233,6 +235,8 @@ void EditGui::DeleteCurTile()
 	}
 	TileInfo info = AllStage[m_CurLevel].AllTile[AllStage[m_CurLevel].TileSize-1];
 	info.Tile->Death();
+	std::vector<TileInfo>::iterator iter = AllStage[m_CurLevel].AllTile.end();
+	AllStage[m_CurLevel].AllTile.erase(iter -1);
 	m_CurDegree -= static_cast<int>(info.NextRatio);
 	--AllStage[m_CurLevel].TileSize;
 }
