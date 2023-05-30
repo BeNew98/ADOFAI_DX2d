@@ -174,6 +174,54 @@ void EditGui::Save()
 
 void EditGui::Load()
 {
+
+
+	GameEngineDirectory NewDir;
+	NewDir.MoveParentToDirectory("ContentResources");
+	NewDir.Move("ContentResources");
+	NewDir.Move("Text");
+	std::string Initpath = NewDir.GetPath().GetFullPath();
+
+
+	OPENFILENAME ofn = {};
+
+
+	std::wstring strTileFolderPath = {};
+	strTileFolderPath = strTileFolderPath.assign(Initpath.begin(), Initpath.end());
+	wchar_t szFilePath[256] = {};
+
+	ZeroMemory(&ofn, sizeof(ofn));
+	ofn.lStructSize = sizeof(ofn);
+	ofn.hwndOwner = NULL;
+	ofn.lpstrFile = szFilePath;
+	ofn.lpstrFile[0] = '\0';
+	ofn.nMaxFile = 256;
+	ofn.lpstrFilter = L"txt\0*.txt\0ALL\0*.*";
+	ofn.nFilterIndex = 1;
+	ofn.lpstrFileTitle = NULL;
+	ofn.nMaxFileTitle = 0;
+	ofn.lpstrInitialDir = strTileFolderPath.c_str();
+	ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
+
+	if (false == GetSaveFileName(&ofn))
+		return;
+
+	std::string dir = {};
+	std::wstring filename = szFilePath;
+	dir = dir.assign(filename.begin(), filename.end());
+
+	GameEngineFile file = GameEngineFile(dir);
+
+
+	GameEngineSerializer Ser = {};
+	file.LoadBin(Ser);
+
+	for (size_t i = 0; i < AllStage[m_CurLevel].TileSize; i++)
+	{
+		Ser.Read(&AllStage[m_CurLevel].AllTile[i].Position, sizeof(float4));
+	}
+
+	int a = 0;
 }
 
 void EditGui::DeleteCurTile()
