@@ -167,7 +167,7 @@ void EditGui::Save()
 	ofn.lStructSize = sizeof(ofn);
 	ofn.hwndOwner = NULL;
 	ofn.lpstrFile = szFilePath;
-	ofn.lpstrFile[0] = '\0';
+	ofn.lpstrFile[0] = NULL;//'\0';
 	ofn.nMaxFile = 256;
 	ofn.lpstrFilter = L"ALL\0*.*";
 	ofn.nFilterIndex = 1;
@@ -216,7 +216,7 @@ void EditGui::Load()
 	ofn.lStructSize = sizeof(ofn);
 	ofn.hwndOwner = NULL;
 	ofn.lpstrFile = szFilePath;
-	ofn.lpstrFile[0] = '\0';
+	ofn.lpstrFile[0] = NULL; //'\0';
 	ofn.nMaxFile = 256;
 	ofn.lpstrFilter = L"ALL\0*.*";
 	ofn.nFilterIndex = 1;
@@ -244,8 +244,9 @@ void EditGui::Load()
 	{
 		AllStage[m_CurLevel].AllTile[i].Tile->Death();
 	}
-
 	size_t TileSize = file.GetFileSize() / sizeof(float);
+	AllStage[m_CurLevel].AllTile.clear();
+	AllStage[m_CurLevel].AllTile.reserve(TileSize);
 	
 	for (size_t i = 0; i < TileSize; i++)
 	{
@@ -253,6 +254,8 @@ void EditGui::Load()
 		if (i == 0)
 		{
 			m_CurDegree = 0;
+			AllStage[m_CurLevel].TileSize = 0;
+			//continue;
 		}
 		CreateTile(GameEngineCore::GetCurLevel(), static_cast<TileDeg>(fRatio));
 	}
