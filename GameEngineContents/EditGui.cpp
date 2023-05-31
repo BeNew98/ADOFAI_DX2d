@@ -257,7 +257,7 @@ void EditGui::Load()
 }
 void EditGui::CreatePlayer(std::shared_ptr<class GameEngineLevel> _Level)
 {
-	std::shared_ptr<Player> pPlayer =  Player::GetPlayer();
+	std::shared_ptr<Player> pPlayer = _Level->CreateActor<Player>(0);
 	pPlayer->GetTransform()->SetLocalPosition({ 0.f,0.f,0.f });
 }
 

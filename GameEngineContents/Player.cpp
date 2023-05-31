@@ -19,14 +19,6 @@ Player::~Player()
 {
 }
 
-std::shared_ptr<Player> Player::GetPlayer()
-{
-	
-	static std::shared_ptr<Player> Inst = GameEngineCore::GetCurLevel()->CreateActor<Player>();
-	return Inst;
-	
-}
-
 void Player::Start()
 {
 	GetTransform()->AddLocalPosition({ 0.f,17.f,0.f });
