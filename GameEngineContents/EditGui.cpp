@@ -26,7 +26,7 @@ void EditGui::Start()
 	
 	CreateTile(GameEngineCore::GetCurLevel(), TileDeg::Deg0);
 }
-
+int iCurTileNum = 0;
 void EditGui::OnGUI(std::shared_ptr<class GameEngineLevel> Level, float _DeltaTime)
 {
 
@@ -35,6 +35,8 @@ void EditGui::OnGUI(std::shared_ptr<class GameEngineLevel> Level, float _DeltaTi
 	ImGui::Separator();
 
 	ImGui::Text("<CurTile Info>");
+
+	ImGui::Text("CurTileNumber : %d", m_vecAllStage[m_iCurLevel].AllTile.size() - 1);
 	ImGui::Columns(2);
 	ImGui::Text("Position");
 	ImGui::NextColumn();
@@ -99,6 +101,14 @@ void EditGui::OnGUI(std::shared_ptr<class GameEngineLevel> Level, float _DeltaTi
 
 	if (ImGui::Button("PlayerCreate")) { CreatePlayer(Level); };
 
+	if (ImGui::InputInt("CamMoveToTile", &iCurTileNum))
+	{
+		if (iCurTileNum<0|| iCurTileNum>=m_vecAllStage[m_iCurLevel].AllTile.size())
+		{
+			return;
+		}
+		Level->GetMainCamera()->GetTransform()->SetWorldPosition(m_vecAllStage[m_iCurLevel].AllTile[iCurTileNum].m_pTile->GetTransform()->GetLocalPosition());
+	}
 
 }
 

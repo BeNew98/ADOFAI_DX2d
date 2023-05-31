@@ -25,20 +25,20 @@ void EditLevel::Start()
 
 void EditLevel::Update(float _Deltatime)
 {
-	if (GameEngineInput::IsDown("TitleLevel"))
-	{
-		GameEngineCore::ChangeLevel("TitleLevel");
-	}
-
-	if (GameEngineInput::IsDown("PlayLevel"))
-	{
-		GameEngineCore::ChangeLevel("PlayLevel");
-	}
-
-	if (GameEngineInput::IsDown("CenterLevel"))
-	{
-		GameEngineCore::ChangeLevel("CenterLevel");
-	}
+	//if (GameEngineInput::IsDown("TitleLevel"))
+	//{
+	//	GameEngineCore::ChangeLevel("TitleLevel");
+	//}
+	//
+	//if (GameEngineInput::IsDown("PlayLevel"))
+	//{
+	//	GameEngineCore::ChangeLevel("PlayLevel");
+	//}
+	//
+	//if (GameEngineInput::IsDown("CenterLevel"))
+	//{
+	//	GameEngineCore::ChangeLevel("CenterLevel");
+	//}
 
 	if (ImGui::IsMouseDragging(1))
 	{
