@@ -44,9 +44,10 @@ private:
 	int m_CurDegree = 0;
 	std::vector<StageInfo> AllStage;
 
-	void CreateTile(std::shared_ptr<class GameEngineLevel> Level, TileDeg _Deg);
+	void CreateTile(std::shared_ptr< GameEngineLevel> _Level, TileDeg _Deg);
 	void Save();
 	void Load();
+	void CreatePlayer(std::shared_ptr< GameEngineLevel> _Level);
 	void DeleteCurTile();
 	void ClearAllTile();
 };

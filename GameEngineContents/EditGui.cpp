@@ -10,6 +10,7 @@
 
 #include "Tiles.h"
 #include "EditLevel.h"
+#include "Player.h"
 
 EditGui::EditGui() 
 {
@@ -94,6 +95,11 @@ void EditGui::OnGUI(std::shared_ptr<class GameEngineLevel> Level, float _DeltaTi
 	if (ImGui::Button("Save")) { Save(); }
 	ImGui::SameLine();
 	if (ImGui::Button("Load")) { Load(); };
+	ImGui::Separator();
+
+	if (ImGui::Button("PlayerCreate")) { CreatePlayer(Level); };
+
+
 }
 
 void EditGui::CreateTile(std::shared_ptr<class GameEngineLevel> Level, TileDeg _Deg)
@@ -249,6 +255,11 @@ void EditGui::Load()
 		}
 		CreateTile(GameEngineCore::GetCurLevel(), static_cast<TileDeg>(fRatio));
 	}
+}
+void EditGui::CreatePlayer(std::shared_ptr<class GameEngineLevel> _Level)
+{
+	std::shared_ptr<Player> pPlayer = _Level->CreateActor<Player>(0);
+	pPlayer->GetTransform()->SetLocalPosition({ 0.f,0.f,0.f });
 }
 
 void EditGui::DeleteCurTile()
