@@ -31,13 +31,14 @@ void EditGui::OnGUI(std::shared_ptr<class GameEngineLevel> Level, float _DeltaTi
 {
 
 	TileInfo CurTileInfo = m_vecAllStage[m_iCurLevel].AllTile[m_vecAllStage[m_iCurLevel].AllTile.size()-1];
-	ImGui::Text("CurDegree: %s", GameEngineString::ToString(m_iCurDegree).c_str());
+	ImGui::Text("<CurTile Info>");
 	ImGui::Separator();
 
-	ImGui::Text("<CurTile Info>");
-
+	ImGui::Text("CurDegree: %s", GameEngineString::ToString(m_iCurDegree).c_str());
 	ImGui::Text("CurTileNumber : %d", m_vecAllStage[m_iCurLevel].AllTile.size() - 1);
 	ImGui::Columns(2);
+	ImGui::Separator();
+
 	ImGui::Text("Position");
 	ImGui::NextColumn();
 	ImGui::Text("x: %f", CurTileInfo.m_pTile->GetTransform()->GetLocalPosition().x);
