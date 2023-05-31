@@ -21,24 +21,22 @@ Player::~Player()
 
 void Player::Start()
 {
-	std::shared_ptr<GameEngineSpriteRenderer> render = CreateComponent<GameEngineSpriteRenderer>(OrderNum::EFFECT);
-	render->SetScaleToTexture("bottomglow_E2.png");
-	render->SetOrder(static_cast<int>(OrderNum::EFFECT));
-	//render->GetTransform()->SetLocalPosition(m_pCenter->GetTransform()->GetWorldPosition());
 
 	m_pRed = GetLevel()->CreateActor<Planet>(OrderNum::PLANET,"Red");
-	m_pRed->GetTransform()->SetLocalPosition({ 0.f,0.f,0.f });
+	m_pRed->GetTransform()->SetLocalPosition({ 0.f,18.f,0.f });
 
-	m_pBlue = GetLevel()->CreateActor<Planet>(OrderNum::PLANET, "Red");
-	m_pBlue->GetTransform()->SetLocalPosition({ -100.f,0.f,0.f });
+	m_pBlue = GetLevel()->CreateActor<Planet>(OrderNum::PLANET, "Blue");
+	m_pBlue->GetTransform()->SetLocalPosition({ -150.f,18.f,0.f });
 
 	m_pCenter = m_pRed;
 	m_pTurn = m_pBlue;
 
 	m_pTurn->GetTransform()->SetParent(m_pCenter->GetTransform());
 
-
-
+	std::shared_ptr<GameEngineSpriteRenderer> render = CreateComponent<GameEngineSpriteRenderer>(OrderNum::EFFECT);
+	render->SetScaleToTexture("bottomglow_E2.png");
+	render->SetOrder(static_cast<int>(OrderNum::EFFECT));
+	render->GetTransform()->SetLocalPosition(m_pCenter->GetTransform()->GetWorldPosition());
 
 	GameEngineInput::CreateKey("R", 'R');
 
