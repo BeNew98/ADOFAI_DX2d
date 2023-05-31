@@ -3,6 +3,7 @@
 
 // Ό³Έν :
 class Planet;
+class GameEngineCore;
 class Player : public GameEngineActor
 {
 public:
@@ -15,6 +16,8 @@ public:
 	Player(Player&& _Other) noexcept = delete;
 	Player& operator=(const Player& _Other) = delete;
 	Player& operator=(Player&& _Other) noexcept = delete;
+
+	static std::shared_ptr<Player> GetPlayer();
 
 protected:
 	void Start();

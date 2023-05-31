@@ -18,6 +18,8 @@ void Tiles::Start()
 	m_pStartPivot->GetTransform()->SetLocalScale(float4(10.f, 10.f));
 	m_pEndPivot = CreateComponent<GameEngineSpriteRenderer>();
 	m_pEndPivot->GetTransform()->SetLocalScale(float4(20.f, 20.f));
+
+	m_pCollision = CreateComponent<GameEngineCollision>(OrderNum::MAP);
 }
 
 
@@ -31,7 +33,6 @@ void Tiles::CreateTile(TileDeg _TileDeg)
 	{
 		m_pRender = CreateComponent<GameEngineSpriteRenderer>();
 		m_pRender->SetScaleToTexture("tiles_new_world1_b_0_Sprite.png");
-		std::shared_ptr<GameEngineCollision> Collision = CreateComponent<GameEngineCollision>(OrderNum::MAP);
 		m_fStartCal ={ 3.f,28.f};
 		m_fEndCal = { 153.f,28.f };
 		break;
@@ -40,7 +41,6 @@ void Tiles::CreateTile(TileDeg _TileDeg)
 	{
 		m_pRender = CreateComponent<GameEngineSpriteRenderer>();
 		m_pRender->SetScaleToTexture("tiles_new_world1_b_45_Sprite.png");
-		std::shared_ptr<GameEngineCollision> Collision = CreateComponent<GameEngineCollision>(OrderNum::MAP);
 		m_fStartCal = { 3.f,59.f }	;
 		m_fEndCal	= { 102.5f,17.5f };
 		break;
@@ -49,7 +49,6 @@ void Tiles::CreateTile(TileDeg _TileDeg)
 	{
 		m_pRender = CreateComponent<GameEngineSpriteRenderer>();
 		m_pRender->SetScaleToTexture("tiles_new_world1_b_60_Sprite.png");
-		std::shared_ptr<GameEngineCollision> Collision = CreateComponent<GameEngineCollision>(OrderNum::MAP);
 		m_fStartCal =float4{ 3.f,58.f };
 		m_fEndCal =float4{ 80.f,14.f };
 		break;
@@ -58,7 +57,6 @@ void Tiles::CreateTile(TileDeg _TileDeg)
 	{
 		m_pRender = CreateComponent<GameEngineSpriteRenderer>();
 		m_pRender->SetScaleToTexture("tiles_new_world1_b_90_Sprite.png");
-		std::shared_ptr<GameEngineCollision> Collision = CreateComponent<GameEngineCollision>(OrderNum::MAP);
 		m_fStartCal =float4{ 3.f,37.f };
 		m_fEndCal = float4{ 38.f,2.f };
 		break;
@@ -67,7 +65,6 @@ void Tiles::CreateTile(TileDeg _TileDeg)
 	{
 		m_pRender = CreateComponent<GameEngineSpriteRenderer>();
 		m_pRender->SetScaleToTexture("tiles_new_world1_b_120_Sprite.png");
-		std::shared_ptr<GameEngineCollision> Collision = CreateComponent<GameEngineCollision>(OrderNum::MAP);
 		m_fStartCal = float4{ 3.f,60.f };
 		m_fEndCal = float4{ 5.f,55.f };
 		break;
@@ -76,7 +73,6 @@ void Tiles::CreateTile(TileDeg _TileDeg)
 	{
 		m_pRender = CreateComponent<GameEngineSpriteRenderer>();
 		m_pRender->SetScaleToTexture("tiles_new_world1_b_135_Sprite.png");
-		std::shared_ptr<GameEngineCollision> Collision = CreateComponent<GameEngineCollision>(OrderNum::MAP);
 		m_fStartCal = float4{ 9.f,60.f };
 		m_fEndCal = float4{ 2.5f,74.5f };
 		break;
@@ -85,7 +81,6 @@ void Tiles::CreateTile(TileDeg _TileDeg)
 	{
 		m_pRender = CreateComponent<GameEngineSpriteRenderer>();
 		m_pRender->SetScaleToTexture("tiles_new_world1_b_135_Sprite.png");
-		std::shared_ptr<GameEngineCollision> Collision = CreateComponent<GameEngineCollision>(OrderNum::MAP);
 		//m_pRender->SetFlipY();
 		m_fStartCal = float4{ 9.f,27.f };
 		m_fEndCal = float4{ 59.f,148.f };
@@ -95,7 +90,6 @@ void Tiles::CreateTile(TileDeg _TileDeg)
 	{
 		m_pRender = CreateComponent<GameEngineSpriteRenderer>();
 		m_pRender->SetScaleToTexture("tiles_new_world1_b_120_Sprite.png");
-		std::shared_ptr<GameEngineCollision> Collision = CreateComponent<GameEngineCollision>(OrderNum::MAP);
 		//m_pRender->SetFlipY();
 		m_fStartCal = float4{ 3.f,27.f };
 		m_fEndCal = float4{ 75.f,151.f };
@@ -105,7 +99,6 @@ void Tiles::CreateTile(TileDeg _TileDeg)
 	{
 		m_pRender = CreateComponent<GameEngineSpriteRenderer>();
 		m_pRender->SetScaleToTexture("tiles_new_world1_b_90_Sprite.png");
-		std::shared_ptr<GameEngineCollision> Collision = CreateComponent<GameEngineCollision>(OrderNum::MAP);
 		//m_pRender->SetFlipY();
 		m_fStartCal = float4{ 3.f,27.f };
 		m_fEndCal = float4{ 117.f,142.f };
@@ -115,7 +108,6 @@ void Tiles::CreateTile(TileDeg _TileDeg)
 	{
 		m_pRender = CreateComponent<GameEngineSpriteRenderer>();
 		m_pRender->SetScaleToTexture("tiles_new_world1_b_60_Sprite.png");
-		std::shared_ptr<GameEngineCollision> Collision = CreateComponent<GameEngineCollision>(OrderNum::MAP);
 		//m_pRender->SetFlipY();
 		m_fStartCal = float4{ 3.f,60.f };
 		m_fEndCal = float4{ 149,145.f };
@@ -125,7 +117,6 @@ void Tiles::CreateTile(TileDeg _TileDeg)
 	{
 		m_pRender = CreateComponent<GameEngineSpriteRenderer>();
 		m_pRender->SetScaleToTexture("tiles_new_world1_b_45_Sprite.png");
-		std::shared_ptr<GameEngineCollision> Collision = CreateComponent<GameEngineCollision>(OrderNum::MAP);
 		//m_pRender->SetFlipY();
 		m_fStartCal = { 3.f,27.f };
 		m_fEndCal = { 158.f,92.5f };

@@ -22,7 +22,7 @@ EditGui::~EditGui()
 
 void EditGui::Start()
 {
-	AllStage.resize(m_LevelSize);
+	m_vecAllStage.resize(m_iLevelSize);
 	
 	CreateTile(GameEngineCore::GetCurLevel(), TileDeg::Deg0);
 }
@@ -30,37 +30,37 @@ void EditGui::Start()
 void EditGui::OnGUI(std::shared_ptr<class GameEngineLevel> Level, float _DeltaTime)
 {
 
-	TileInfo CurTileInfo = AllStage[m_CurLevel].AllTile[AllStage[m_CurLevel].AllTile.size()-1];
-	ImGui::Text("CurDegree: %s", GameEngineString::ToString(m_CurDegree).c_str());
+	TileInfo CurTileInfo = m_vecAllStage[m_iCurLevel].AllTile[m_vecAllStage[m_iCurLevel].AllTile.size()-1];
+	ImGui::Text("CurDegree: %s", GameEngineString::ToString(m_iCurDegree).c_str());
 	ImGui::Separator();
 
 	ImGui::Text("<CurTile Info>");
 	ImGui::Columns(2);
 	ImGui::Text("Position");
 	ImGui::NextColumn();
-	ImGui::Text("x: %f", CurTileInfo.Position.x);
-	ImGui::Text("y: %f", CurTileInfo.Position.y);
-	ImGui::Text("z: %f", CurTileInfo.Position.z);
-	ImGui::Text("w: %f", CurTileInfo.Position.w);
+	ImGui::Text("x: %f", CurTileInfo.m_pTile->GetTransform()->GetLocalPosition().x);
+	ImGui::Text("y: %f", CurTileInfo.m_pTile->GetTransform()->GetLocalPosition().y);
+	ImGui::Text("z: %f", CurTileInfo.m_pTile->GetTransform()->GetLocalPosition().z);
+	ImGui::Text("w: %f", CurTileInfo.m_pTile->GetTransform()->GetLocalPosition().w);
 	ImGui::NextColumn();
 	ImGui::Separator();
 
 	ImGui::Text("StartPivotPos");
 	ImGui::NextColumn();
-	ImGui::Text("x: %f", CurTileInfo.Tile->GetStartPivotPos().x);
-	ImGui::Text("y: %f", CurTileInfo.Tile->GetStartPivotPos().y);
-	ImGui::Text("z: %f", CurTileInfo.Tile->GetStartPivotPos().z);
-	ImGui::Text("w: %f", CurTileInfo.Tile->GetStartPivotPos().w);
+	ImGui::Text("x: %f", CurTileInfo.m_pTile->GetStartPivotPos().x);
+	ImGui::Text("y: %f", CurTileInfo.m_pTile->GetStartPivotPos().y);
+	ImGui::Text("z: %f", CurTileInfo.m_pTile->GetStartPivotPos().z);
+	ImGui::Text("w: %f", CurTileInfo.m_pTile->GetStartPivotPos().w);
 	ImGui::NextColumn();
 	ImGui::Separator();
 
 
 	ImGui::Text("EndPivotPos");
 	ImGui::NextColumn();
-	ImGui::Text("x: %f", CurTileInfo.Tile->GetEndPivotPos().x);
-	ImGui::Text("y: %f", CurTileInfo.Tile->GetEndPivotPos().y);
-	ImGui::Text("z: %f", CurTileInfo.Tile->GetEndPivotPos().z);
-	ImGui::Text("w: %f", CurTileInfo.Tile->GetEndPivotPos().w);
+	ImGui::Text("x: %f", CurTileInfo.m_pTile->GetEndPivotPos().x);
+	ImGui::Text("y: %f", CurTileInfo.m_pTile->GetEndPivotPos().y);
+	ImGui::Text("z: %f", CurTileInfo.m_pTile->GetEndPivotPos().z);
+	ImGui::Text("w: %f", CurTileInfo.m_pTile->GetEndPivotPos().w);
 	ImGui::NextColumn();
 	ImGui::Columns(1);
 	ImGui::Separator();
@@ -108,18 +108,18 @@ void EditGui::CreateTile(std::shared_ptr<class GameEngineLevel> Level, TileDeg _
 	pTile->CreateTile(_Deg);
 	int iDeg = static_cast<int>(_Deg);
 
-	int m_CurTileSize = static_cast<int>(AllStage[m_CurLevel].AllTile.size());
+	int m_CurTileSize = static_cast<int>(m_vecAllStage[m_iCurLevel].AllTile.size());
 
 	if (m_CurTileSize != 0)
 	{
 		//이전 타일
-		std::shared_ptr<Tiles> PrevTile = AllStage[m_CurLevel].AllTile[m_CurTileSize - 1].Tile;		
+		std::shared_ptr<Tiles> PrevTile = m_vecAllStage[m_iCurLevel].AllTile[m_CurTileSize - 1].m_pTile;		
 
 		float4 PrevTilesEndPivotPos = PrevTile->GetEndPivotPos();
 		
-		pTile->GetTransform()->SetLocalRotation({ 0.f,0.f,static_cast<float>(m_CurDegree) });
+		pTile->GetTransform()->SetLocalRotation({ 0.f,0.f,static_cast<float>(m_iCurDegree) });
 		float4 StartBetPos = pTile->GetStartBetPos();
-		StartBetPos.RotaitonZDeg(static_cast<float>(m_CurDegree));
+		StartBetPos.RotaitonZDeg(static_cast<float>(m_iCurDegree));
 
 		
 		float4 CurSettingPos = PrevTilesEndPivotPos - StartBetPos;
@@ -127,19 +127,18 @@ void EditGui::CreateTile(std::shared_ptr<class GameEngineLevel> Level, TileDeg _
 		pTile->GetTransform()->SetLocalPosition(CurSettingPos);
 		
 		
-		m_CurDegree += iDeg;
+		m_iCurDegree += iDeg;
 
-		if (m_CurDegree >=360)
+		if (m_iCurDegree >=360)
 		{
-			m_CurDegree -= 360;
+			m_iCurDegree -= 360;
 		}
 	}
 
 	TileInfo Info = {};
-	Info.Tile = pTile;
-	Info.NextRatio = static_cast<float>(iDeg);
-	Info.Position = pTile->GetTransform()->GetWorldPosition();
-	AllStage[m_CurLevel].AllTile.push_back(Info);
+	Info.m_pTile = pTile;
+	Info.m_fNextRatio = static_cast<float>(iDeg);
+	m_vecAllStage[m_iCurLevel].AllTile.push_back(Info);
 
 
 	Level->GetMainCamera()->GetTransform()->SetWorldPosition(pTile->GetTransform()->GetWorldPosition());
@@ -179,9 +178,9 @@ void EditGui::Save()
 
 	GameEngineSerializer Ser = {};
 
-	for (size_t i = 0; i < AllStage[m_CurLevel].AllTile.size(); i++)
+	for (size_t i = 0; i < m_vecAllStage[m_iCurLevel].AllTile.size(); i++)
 	{
-		Ser.Write(&AllStage[m_CurLevel].AllTile[i].NextRatio, sizeof(float));
+		Ser.Write(&m_vecAllStage[m_iCurLevel].AllTile[i].m_fNextRatio, sizeof(float));
 	}
 
 	std::string dir = {};
@@ -237,41 +236,41 @@ void EditGui::Load()
 	float fRatio = 0.f;
 	TileInfo Info = {};
 
-	for (size_t i = 0; i < AllStage[m_CurLevel].AllTile.size(); i++)
+	for (size_t i = 0; i < m_vecAllStage[m_iCurLevel].AllTile.size(); i++)
 	{
-		AllStage[m_CurLevel].AllTile[i].Tile->Death();
+		m_vecAllStage[m_iCurLevel].AllTile[i].m_pTile->Death();
 	}
 	size_t TileSize = file.GetFileSize() / sizeof(float);
 
-	AllStage[m_CurLevel].AllTile.clear();
-	AllStage[m_CurLevel].AllTile.reserve(TileSize);
+	m_vecAllStage[m_iCurLevel].AllTile.clear();
+	m_vecAllStage[m_iCurLevel].AllTile.reserve(TileSize);
 	
 	for (size_t i = 0; i < TileSize; i++)
 	{
 		Ser.Read(&fRatio, sizeof(float));
 		if (i == 0)
 		{
-			m_CurDegree = 0;
+			m_iCurDegree = 0;
 		}
 		CreateTile(GameEngineCore::GetCurLevel(), static_cast<TileDeg>(fRatio));
 	}
 }
 void EditGui::CreatePlayer(std::shared_ptr<class GameEngineLevel> _Level)
 {
-	std::shared_ptr<Player> pPlayer = _Level->CreateActor<Player>(0);
+	std::shared_ptr<Player> pPlayer =  Player::GetPlayer();
 	pPlayer->GetTransform()->SetLocalPosition({ 0.f,0.f,0.f });
 }
 
 void EditGui::DeleteCurTile()
 {
-	if (0 == AllStage[m_CurLevel].AllTile.size() - 1)
+	if (0 == m_vecAllStage[m_iCurLevel].AllTile.size() - 1)
 	{
 		MessageBoxA(nullptr,  "첫 타일은 지울수 없습니다.", "주의", MB_OK);
 		return;
 	}
-	TileInfo info = AllStage[m_CurLevel].AllTile[AllStage[m_CurLevel].AllTile.size()-1];
-	info.Tile->Death();
-	std::vector<TileInfo>::iterator iter = AllStage[m_CurLevel].AllTile.end();
-	AllStage[m_CurLevel].AllTile.erase(iter -1);
-	m_CurDegree -= static_cast<int>(info.NextRatio);
+	TileInfo info = m_vecAllStage[m_iCurLevel].AllTile[m_vecAllStage[m_iCurLevel].AllTile.size()-1];
+	info.m_pTile->Death();
+	std::vector<TileInfo>::iterator iter = m_vecAllStage[m_iCurLevel].AllTile.end();
+	m_vecAllStage[m_iCurLevel].AllTile.erase(iter -1);
+	m_iCurDegree -= static_cast<int>(info.m_fNextRatio);
 }

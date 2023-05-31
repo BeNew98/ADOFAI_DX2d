@@ -42,6 +42,11 @@ public:
 	{
 		return m_fEndBetPos;
 	}
+
+	std::shared_ptr<class GameEngineCollision> GetCol()
+	{
+		return m_pCollision;
+	}
 	
 	void DeathEndPivot()
 	{
@@ -65,6 +70,6 @@ private:
 	float4 m_fStartCal	= float4::Zero;
 	float4 m_fEndCal	= float4::Zero;
 
-
+	std::shared_ptr<class GameEngineCollision> m_pCollision;
 };
 

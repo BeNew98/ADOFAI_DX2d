@@ -65,9 +65,7 @@ void TitleLevel::LevelChangeStart()
 		std::shared_ptr<TitleLogo> pLogo = CreateActor<TitleLogo>(0);
 		pLogo->GetTransform()->SetLocalPosition({ 0.f,200.f,0.f });
 
-
-		std::shared_ptr<Player> pPlayer = CreateActor<Player>(0);
-		pPlayer->GetTransform()->SetLocalPosition({ 0.f,0.f,0.f });
+		std::shared_ptr<Player> pPlayer = Player::GetPlayer();
 	}
 }
 

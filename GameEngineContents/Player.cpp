@@ -19,14 +19,24 @@ Player::~Player()
 {
 }
 
+std::shared_ptr<Player> Player::GetPlayer()
+{
+	
+	static std::shared_ptr<Player> Inst = GameEngineCore::GetCurLevel()->CreateActor<Player>();
+	return Inst;
+	
+}
+
 void Player::Start()
 {
+	GetTransform()->AddLocalPosition({ 0.f,17.f,0.f });
 
 	m_pRed = GetLevel()->CreateActor<Planet>(OrderNum::PLANET,"Red");
-	m_pRed->GetTransform()->SetLocalPosition({ 0.f,18.f,0.f });
+	m_pRed->GetTransform()->SetLocalPosition(GetTransform()->GetLocalPosition());
 
 	m_pBlue = GetLevel()->CreateActor<Planet>(OrderNum::PLANET, "Blue");
-	m_pBlue->GetTransform()->SetLocalPosition({ -150.f,18.f,0.f });
+	m_pBlue->GetTransform()->SetLocalPosition(GetTransform()->GetLocalPosition());
+	m_pBlue->GetTransform()->AddLocalPosition({ -150.f,0.f,0.f });
 
 	m_pCenter = m_pRed;
 	m_pTurn = m_pBlue;
