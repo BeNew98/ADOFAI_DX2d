@@ -29,9 +29,6 @@ private:
 	bool m_bMoveControl = false;
 	float m_fLerpTime = 0.f;
 
-	float4 m_fPrevCenterPos = float4::Zero;
-	float4 m_fCurCenterPos = float4::Zero;
-
 	class EditGui* m_pEditor = nullptr;
 
 	std::shared_ptr<Planet> m_pRed;
@@ -40,6 +37,6 @@ private:
 	std::shared_ptr<Planet> m_pTurn;
 
 	void PlanetSwap(float _Deltatime);
-	void CamMoveLerp(float4 _Start, float4 _End, float _Ratio);
+	void CamMoveLerp(float _Ratio);
 };
 
