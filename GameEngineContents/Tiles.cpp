@@ -23,11 +23,6 @@ void Tiles::Start()
 	m_pCollision->GetTransform()->SetLocalScale({ 80.f,80.f,0.f });
 	m_pCollision->GetTransform()->AddLocalPosition({ 0.f,16.f });
 
-	std::shared_ptr<GameEngineSpriteRenderer> rend = CreateComponent<GameEngineSpriteRenderer>(OrderNum::PLANET);
-
-	rend->GetTransform()->SetLocalScale(m_pCollision->GetTransform()->GetLocalScale());
-	rend->GetTransform()->SetLocalPosition(m_pCollision->GetTransform()->GetLocalPosition());
-	rend->SetTexture("ballsprites_gold_0_Sprite.png");
 }
 
 
@@ -158,6 +153,13 @@ void Tiles::PivotCal(float _Deg)
 	m_fStartBetPos = GetTransform()->GetLocalPosition() - fabsRenderScale + m_fStartCal;
 	m_fStartBetPos.y = -m_fStartBetPos.y;
 	m_pStartPivot->GetTransform()->SetLocalPosition(m_fStartBetPos);
+	m_pCollision->GetTransform()->SetLocalPosition(m_pStartPivot->GetTransform()->GetLocalPosition() +float4{ 75.f,-40.f });
+
+	std::shared_ptr<GameEngineSpriteRenderer> rend = CreateComponent<GameEngineSpriteRenderer>(OrderNum::PLANET);
+
+	rend->GetTransform()->SetLocalScale(m_pCollision->GetTransform()->GetLocalScale());
+	rend->GetTransform()->SetLocalPosition(m_pCollision->GetTransform()->GetLocalPosition());
+	rend->SetTexture("ballsprites_gold_0_Sprite.png");
 
 	m_fEndBetPos = m_fEndCal - m_fStartCal;
 	m_fEndBetPos.y = -m_fEndBetPos.y;
