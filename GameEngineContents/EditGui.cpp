@@ -273,8 +273,13 @@ void EditGui::Load()
 }
 void EditGui::CreatePlayer(std::shared_ptr<class GameEngineLevel> _Level)
 {
-	std::shared_ptr<Player> pPlayer = _Level->CreateActor<Player>(0);
-	pPlayer->GetTransform()->SetLocalPosition({ 0.f,0.f,0.f });
+	if (nullptr!=m_pPlayer)
+	{
+		m_pPlayer->GetTransform()->SetLocalPosition({ 0.f,0.f,0.f });
+		return;
+	}
+	m_pPlayer = _Level->CreateActor<Player>(0);
+	m_pPlayer->GetTransform()->SetLocalPosition({ 0.f,0.f,0.f });
 }
 
 void EditGui::DeleteCurTile()

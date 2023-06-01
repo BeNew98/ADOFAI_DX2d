@@ -29,6 +29,9 @@ private:
 	bool m_bMoveControl = false;
 	float m_fLerpTime = 0.f;
 
+	float4 m_fCurTilePos = float4::Zero;
+	float4 m_fPrevTilePos = float4::Zero;
+
 	class EditGui* m_pEditor = nullptr;
 
 	std::shared_ptr<Planet> m_pRed;

@@ -43,7 +43,11 @@ private:
 	int m_iLevelSize = 1;
 	int m_iCurLevel = 0;
 	int m_iCurDegree = 0;
+
+
 	std::vector<StageInfo> m_vecAllStage;
+
+	std::shared_ptr<class Player> m_pPlayer = nullptr;
 
 	void CreateTile(std::shared_ptr< GameEngineLevel> _Level, TileDeg _Deg);
 	void Save();
