@@ -5,6 +5,7 @@
 // Ό³Έν :
 class Tiles : public GameEngineActor
 {
+	friend class Player;
 public:
 	// constrcuter destructer
 	Tiles();

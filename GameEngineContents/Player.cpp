@@ -8,8 +8,11 @@
 #include <GameEngineCore/GameEngineLevel.h>
 #include <GameEngineCore/GameEngineCamera.h>
 #include <GameEngineCore/GameEngineRenderer.h>
+#include <GameEngineCore/GameEngineCollision.h>
 
 #include "Planet.h"
+#include "EditGui.h"
+#include "Tiles.h"
 
 Player::Player()
 {
@@ -21,7 +24,9 @@ Player::~Player()
 
 void Player::Start()
 {
-	GetTransform()->AddLocalPosition({ 0.f,17.f,0.f });
+	m_pEditor = EditGui::Editor;
+
+	GetTransform()->AddLocalPosition({ 0.f,16.f,0.f });
 
 	m_pRed = GetLevel()->CreateActor<Planet>(OrderNum::PLANET,"Red");
 	m_pRed->GetTransform()->SetLocalPosition(GetTransform()->GetLocalPosition());
@@ -61,17 +66,34 @@ void Player::Start()
 
 void Player::Update(float _DeltaTime)
 {
-	TransformData red = m_pRed->GetTransform()->GetTransDataRef();
-	TransformData blue = m_pBlue->GetTransform()->GetTransDataRef();
-	int a = 0;
+	PlanetSwap(_DeltaTime);
+	m_pCenter->GetTransform()->AddLocalRotation({ 0.f,0.f,-180.f * _DeltaTime });
 
-	if (true == GameEngineInput::IsAnyKey())
+	CamMoveLerp(m_fPrevCenterPos, m_fCurCenterPos, _DeltaTime*0.1f);
+}
+
+// 이건 디버깅용도나 
+void Player::Render(float _DeltaTime)
+{
+}
+
+void Player::PlanetSwap(float _Deltatime)
+{
+	if (m_iCurIndex>= m_pEditor->m_vecAllStage[m_pEditor->m_iCurLevel].AllTile.size()||
+		m_iCurIndex + 1 >= m_pEditor->m_vecAllStage[m_pEditor->m_iCurLevel].AllTile.size())
 	{
-		std::shared_ptr<GameEngineSpriteRenderer> render = CreateComponent<GameEngineSpriteRenderer>(OrderNum::EFFECT);
-		render->SetScaleToTexture("bottomglow_E2.png");
-		render->GetTransform()->SetLocalPosition(m_pTurn->GetTransform()->GetWorldPosition());
+		return;
+	}
+	std::shared_ptr<Tiles> pTile = m_pEditor->m_vecAllStage[m_pEditor->m_iCurLevel].AllTile[m_iCurIndex + 1].m_pTile;
+
+	m_fPrevCenterPos = m_fCurCenterPos;
+
+	if (true == GameEngineInput::IsAnyKey()
+		&& m_pTurn->GetTransform()->Collision({ ._OtherTrans = pTile->GetCol()->GetTransform() }))
+	{
+
 		m_pTurn->GetTransform()->SetParent(nullptr);
-		if (false==m_bTurn)
+		if (false == m_bTurn)
 		{
 			m_pCenter = m_pBlue;
 			m_pTurn = m_pRed;
@@ -83,111 +105,21 @@ void Player::Update(float _DeltaTime)
 			m_pTurn = m_pBlue;
 			m_bTurn = false;
 		}
+		m_pTurn->GetTransform()->SetParent(m_pCenter->GetTransform());
+		m_pCenter->GetTransform()->SetLocalPosition(pTile->GetCol()->GetTransform()->GetWorldPosition());
 
-		//GetTransform()->AddLocalPosition(float4::LerpClamp(m_pTurn->GetTransform()->GetWorldPosition(),m_pCenter->GetTransform()->GetWorldPosition(), _DeltaTime));
-		m_pTurn->GetTransform()->SetParent(m_pCenter->GetTransform());		
-	}
+		std::shared_ptr<GameEngineSpriteRenderer> render = CreateComponent<GameEngineSpriteRenderer>(OrderNum::EFFECT);
+		render->SetScaleToTexture("bottomglow_E2.png");
+		render->GetTransform()->SetLocalPosition(m_pCenter->GetTransform()->GetWorldPosition());
+		++m_iCurIndex;
 
-	
-	if (true == GameEngineInput::IsDown("1"))
-	{
-		m_bMoveControl = false;
-	}
-	if (true == GameEngineInput::IsDown("2"))
-	{
-		m_bMoveControl = true;
-	}
 
-	if (false == m_bMoveControl)
-	{
-		LocalMove(_DeltaTime);
+		m_fCurCenterPos = m_pCenter->GetTransform()->GetWorldPosition();
+
 	}
-	else
-	{
-		WorldMove(_DeltaTime);
-	}
-	
-	m_pCenter->GetTransform()->AddLocalRotation({ 0.f,0.f,-300.f * _DeltaTime });
 }
 
-// 이건 디버깅용도나 
-void Player::Render(float _DeltaTime)
+void Player::CamMoveLerp(float4 _Start, float4 _End, float _Ratio)
 {
+	GetLevel()->GetMainCamera()->GetTransform()->SetLocalPosition(float4::LerpClamp(_Start, _End, _Ratio));
 }
-void Player::LocalMove(float _DeltaTime)
-{
-	if (true == GameEngineInput::IsPress("W"))
-	{
-		m_pRed->GetTransform()->AddLocalPosition(float4::Up * 100.f * _DeltaTime);
-	}
-
-	if (true == GameEngineInput::IsPress("A"))
-	{
-		m_pRed->GetTransform()->AddLocalPosition(float4::Left * 100.f * _DeltaTime);
-	}
-	if (true == GameEngineInput::IsPress("S"))
-	{
-		m_pRed->GetTransform()->AddLocalPosition(float4::Down * 100.f * _DeltaTime);
-	}
-	if (true == GameEngineInput::IsPress("D"))
-	{
-		m_pRed->GetTransform()->AddLocalPosition(float4::Right * 100.f * _DeltaTime);
-	}
-
-	if (true == GameEngineInput::IsPress("I"))
-	{
-		m_pBlue->GetTransform()->AddLocalPosition(float4::Up * 100.f * _DeltaTime);
-	}
-
-	if (true == GameEngineInput::IsPress("J"))
-	{
-		m_pBlue->GetTransform()->AddLocalPosition(float4::Left * 100.f * _DeltaTime);
-	}
-	if (true == GameEngineInput::IsPress("K"))
-	{
-		m_pBlue->GetTransform()->AddLocalPosition(float4::Down * 100.f * _DeltaTime);
-	}
-	if (true == GameEngineInput::IsPress("L"))
-	{
-		m_pBlue->GetTransform()->AddLocalPosition(float4::Right * 100.f * _DeltaTime);
-	}
-}
-void Player::WorldMove(float _DeltaTime)
-{
-	if (true == GameEngineInput::IsPress("W"))
-	{
-		m_pRed->GetTransform()->AddWorldPosition(float4::Up*100.f*_DeltaTime);
-	}
-
-	if (true == GameEngineInput::IsPress("A"))
-	{
-		m_pRed->GetTransform()->AddWorldPosition(float4::Left * 100.f * _DeltaTime);
-	}
-	if (true == GameEngineInput::IsPress("S"))
-	{
-		m_pRed->GetTransform()->AddWorldPosition(float4::Down * 100.f * _DeltaTime);
-	}
-	if (true == GameEngineInput::IsPress("D"))
-	{
-		m_pRed->GetTransform()->AddWorldPosition(float4::Right * 100.f * _DeltaTime);
-	}
-
-	if (true == GameEngineInput::IsPress("I"))
-	{
-		m_pBlue->GetTransform()->AddWorldPosition(float4::Up * 100.f * _DeltaTime);
-	}
-
-	if (true == GameEngineInput::IsPress("J"))
-	{
-		m_pBlue->GetTransform()->AddWorldPosition(float4::Left * 100.f * _DeltaTime);
-	}
-	if (true == GameEngineInput::IsPress("K"))
-	{
-		m_pBlue->GetTransform()->AddWorldPosition(float4::Down * 100.f * _DeltaTime);
-	}
-	if (true == GameEngineInput::IsPress("L"))
-	{
-		m_pBlue->GetTransform()->AddWorldPosition(float4::Right * 100.f * _DeltaTime);
-	}
-}
-;

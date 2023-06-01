@@ -23,17 +23,22 @@ protected:
 
 	float4 TestColor;
 private:
-	float Angle = 0.0f;
+	int m_iCurIndex = 0;
+	float m_fAngle = 0.0f;
 	bool m_bTurn = false;
 	bool m_bMoveControl = false;
+
+	float4 m_fPrevCenterPos = float4::Zero;
+	float4 m_fCurCenterPos = float4::Zero;
+
+	class EditGui* m_pEditor = nullptr;
+
 	std::shared_ptr<Planet> m_pRed;
 	std::shared_ptr<Planet> m_pBlue;
 	std::shared_ptr<Planet> m_pCenter;
 	std::shared_ptr<Planet> m_pTurn;
 
-	void LocalMove(float _DeltaTime);
-	void WorldMove(float _DeltaTime);
-
-
+	void PlanetSwap(float _Deltatime);
+	void CamMoveLerp(float4 _Start, float4 _End, float _Ratio);
 };
 

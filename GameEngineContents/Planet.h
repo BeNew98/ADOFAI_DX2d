@@ -14,11 +14,16 @@ public:
 	Planet(Planet&& _Other) noexcept = delete;
 	Planet& operator=(const Planet& _Other) = delete;
 	Planet& operator=(Planet&& _Other) noexcept = delete;
+	std::shared_ptr<class GameEngineCollision> GetCollision()
+	{
+		return m_pCollision;
+	}
 
 protected:
 	void Start() override;
 
 private:
 	static int m_iUseCount;
+	std::shared_ptr<GameEngineCollision> m_pCollision = nullptr;
 };
 

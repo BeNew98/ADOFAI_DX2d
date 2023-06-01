@@ -21,6 +21,7 @@ struct StageInfo
 class EditGui : public GameEngineGUIWindow
 {
 	friend class EditLevel;
+	friend class Player;
 public:
 	// constrcuter destructer
 	EditGui();
@@ -31,6 +32,8 @@ public:
 	EditGui(EditGui&& _OLevelther) noexcept = delete;
 	EditGui& operator=(const EditGui& _Other) = delete;
 	EditGui& operator=(EditGui&& _Other) noexcept = delete;
+
+	static EditGui* Editor;
 
 protected:
 	void Start() override; 

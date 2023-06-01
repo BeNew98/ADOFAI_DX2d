@@ -12,8 +12,12 @@
 #include "EditLevel.h"
 #include "Player.h"
 
+
+EditGui* EditGui::Editor = nullptr;
+
 EditGui::EditGui() 
 {
+	Editor = this;
 }
 
 EditGui::~EditGui() 
@@ -135,8 +139,7 @@ void EditGui::CreateTile(std::shared_ptr<class GameEngineLevel> Level, TileDeg _
 		
 		float4 CurSettingPos = PrevTilesEndPivotPos - StartBetPos;
 		
-		pTile->GetTransform()->SetLocalPosition(CurSettingPos);
-		
+		pTile->GetTransform()->SetLocalPosition(CurSettingPos);		
 		
 		m_iCurDegree += iDeg;
 
@@ -193,12 +196,11 @@ void EditGui::Save()
 	{
 		Ser.Write(&m_vecAllStage[m_iCurLevel].AllTile[i].m_fNextRatio, sizeof(float));
 	}
-
-	std::string dir = {};
+	
 	std::wstring filename = szFilePath;
-	dir.assign(filename.begin(), filename.end());
+	GameEngineString::UniCodeToAnsi(filename);
 
-	GameEngineFile file = GameEngineFile(dir);
+	GameEngineFile file = GameEngineFile(filename);
 	
 	file.SaveBin(Ser);
 }
@@ -235,11 +237,10 @@ void EditGui::Load()
 	if (false == GetSaveFileName(&ofn))
 		return;
 
-	std::string dir = {};
 	std::wstring filename = szFilePath;
-	dir.assign(filename.begin(), filename.end());
+	GameEngineString::UniCodeToAnsi(filename);
 
-	GameEngineFile file = GameEngineFile(dir);
+	GameEngineFile file = GameEngineFile(filename);
 
 
 	GameEngineSerializer Ser = {};
@@ -264,6 +265,10 @@ void EditGui::Load()
 			m_iCurDegree = 0;
 		}
 		CreateTile(GameEngineCore::GetCurLevel(), static_cast<TileDeg>(fRatio));
+	}
+	for (size_t i = 0; i < m_vecAllStage[m_iCurLevel].AllTile.size(); i++)
+	{
+		m_vecAllStage[m_iCurLevel].AllTile[i].m_pTile->DeathEndPivot();
 	}
 }
 void EditGui::CreatePlayer(std::shared_ptr<class GameEngineLevel> _Level)
