@@ -27,6 +27,7 @@ private:
 	float m_fAngle = 0.0f;
 	bool m_bTurn = false;
 	bool m_bMoveControl = false;
+	float m_fLerpTime = 0.f;
 
 	float4 m_fPrevCenterPos = float4::Zero;
 	float4 m_fCurCenterPos = float4::Zero;

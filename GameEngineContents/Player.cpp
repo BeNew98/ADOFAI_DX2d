@@ -69,7 +69,7 @@ void Player::Update(float _DeltaTime)
 	PlanetSwap(_DeltaTime);
 	m_pCenter->GetTransform()->AddLocalRotation({ 0.f,0.f,-180.f * _DeltaTime });
 
-	CamMoveLerp(m_fPrevCenterPos, m_fCurCenterPos, _DeltaTime*0.1f);
+	CamMoveLerp(m_fPrevCenterPos, m_fCurCenterPos, _DeltaTime);
 }
 
 // 이건 디버깅용도나 
@@ -86,12 +86,12 @@ void Player::PlanetSwap(float _Deltatime)
 	}
 	std::shared_ptr<Tiles> pTile = m_pEditor->m_vecAllStage[m_pEditor->m_iCurLevel].AllTile[m_iCurIndex + 1].m_pTile;
 
-	m_fPrevCenterPos = m_fCurCenterPos;
 
 	if (true == GameEngineInput::IsAnyKey()
 		&& m_pTurn->GetTransform()->Collision({ ._OtherTrans = pTile->GetCol()->GetTransform() }))
 	{
 
+		m_fPrevCenterPos = m_fCurCenterPos;
 		m_pTurn->GetTransform()->SetParent(nullptr);
 		if (false == m_bTurn)
 		{
@@ -113,7 +113,7 @@ void Player::PlanetSwap(float _Deltatime)
 		render->GetTransform()->SetLocalPosition(m_pCenter->GetTransform()->GetWorldPosition());
 		++m_iCurIndex;
 
-
+		m_fLerpTime = 0;
 		m_fCurCenterPos = m_pCenter->GetTransform()->GetWorldPosition();
 
 	}
@@ -121,5 +121,16 @@ void Player::PlanetSwap(float _Deltatime)
 
 void Player::CamMoveLerp(float4 _Start, float4 _End, float _Ratio)
 {
-	GetLevel()->GetMainCamera()->GetTransform()->SetLocalPosition(float4::LerpClamp(_Start, _End, _Ratio));
+	if (m_iCurIndex >= m_pEditor->m_vecAllStage[m_pEditor->m_iCurLevel].AllTile.size() ||
+		m_iCurIndex + 1 >= m_pEditor->m_vecAllStage[m_pEditor->m_iCurLevel].AllTile.size())
+	{
+		return;
+	}
+	std::shared_ptr<Tiles> pCurTile = m_pEditor->m_vecAllStage[m_pEditor->m_iCurLevel].AllTile[m_iCurIndex].m_pTile;
+	std::shared_ptr<Tiles> pNextTile = m_pEditor->m_vecAllStage[m_pEditor->m_iCurLevel].AllTile[m_iCurIndex + 1].m_pTile;
+	m_fLerpTime += _Ratio;
+	//GetLevel()->GetMainCamera()->GetTransform()->SetWorldPosition(float4::LerpClamp(_Start, _End, m_fLerpTime));
+
+	GetLevel()->GetMainCamera()->GetTransform()->SetWorldPosition(float4::LerpClamp(pCurTile->GetTransform()->GetWorldPosition(), pNextTile->GetTransform()->GetWorldPosition(), m_fLerpTime));
+	int a = 0;
 }
