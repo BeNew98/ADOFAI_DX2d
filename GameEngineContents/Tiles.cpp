@@ -14,14 +14,11 @@ Tiles::~Tiles()
 
 void Tiles::Start()
 {
+
 	m_pStartPivot = CreateComponent<GameEngineSpriteRenderer>();
 	m_pStartPivot->GetTransform()->SetLocalScale(float4(10.f, 10.f));
 	m_pEndPivot = CreateComponent<GameEngineSpriteRenderer>();
 	m_pEndPivot->GetTransform()->SetLocalScale(float4(20.f, 20.f));
-
-	m_pCollision = CreateComponent<GameEngineCollision>(OrderNum::MAP);
-	m_pCollision->GetTransform()->SetLocalScale({ 80.f,80.f,0.f });
-	m_pCollision->GetTransform()->AddLocalPosition({ 0.f,16.f });
 
 }
 
@@ -129,10 +126,22 @@ void Tiles::CreateTile(TileDeg _TileDeg)
 		m_pRender = CreateComponent<GameEngineSpriteRenderer>(OrderNum::MAP);
 		m_pRender->SetScaleToTexture("tile_cls_square_Sprite.png");
 		return;
+	}	
+	case TileDeg::Blank:
+	{
+		m_pRender = CreateComponent<GameEngineSpriteRenderer>(OrderNum::MAP);
+		m_pRender->SetScaleToTexture("nothing.png");
+		return;
 	}
 	default:
+		MsgAssert("없는 각도");
 		break;
 	}
+
+
+	m_pCollision = CreateComponent<GameEngineCollision>(OrderNum::MAP);
+	m_pCollision->GetTransform()->SetLocalScale({ 80.f,80.f,0.f });
+	m_pCollision->GetTransform()->AddLocalPosition({ 0.f,16.f });
 
 	PivotCal(static_cast<float>(_TileDeg));
 }
@@ -171,5 +180,4 @@ void Tiles::PivotCal(float _Deg)
 	m_fEndBetPos.y = -m_fEndBetPos.y;
 	m_pEndPivot->GetTransform()->SetLocalPosition(m_pStartPivot->GetTransform()->GetLocalPosition() + m_fEndBetPos);
 
-	m_pStartPivot->Death();
 }

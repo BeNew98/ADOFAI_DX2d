@@ -101,6 +101,8 @@ void EditGui::OnGUI(std::shared_ptr<class GameEngineLevel> _Level, float _DeltaT
 
 	if (ImGui::Button("Square")) { CreateSquare(_Level, TileDeg::Square); }
 	ImGui::SameLine();
+	if (ImGui::Button("Blank")) { CreateSquare(_Level, TileDeg::Blank); }
+	ImGui::SameLine();
 	if (ImGui::Button("NextRow")) { ++m_iY; m_iX = 0; CreateSquare(_Level, TileDeg::Square); }
 	ImGui::Separator();
 
@@ -124,9 +126,16 @@ void EditGui::OnGUI(std::shared_ptr<class GameEngineLevel> _Level, float _DeltaT
 
 }
 
+void EditGui::CreateTile(std::shared_ptr<GameEngineLevel> _Level, float4 _Data)
+{
+	m_iX = _Data.x;
+	m_iY = _Data.y;
+	CreateTile(_Level, static_cast<TileDeg>(_Data.z));
+}
+
 void EditGui::CreateTile(std::shared_ptr<class GameEngineLevel> _Level, TileDeg _Deg)
 {
-	if (_Deg == TileDeg::Square)
+	if (_Deg == TileDeg::Square|| _Deg == TileDeg::Blank)
 	{
 		CreateSquare(_Level, _Deg);
 		return;
@@ -277,7 +286,7 @@ void EditGui::Load()
 	size_t uSize = file.GetFileSize();
 	GameEngineSerializer Ser = {};
 
-	Ser.BufferResize(uSize);
+	Ser.BufferResize(uSize+1);
 	file.LoadBin(Ser);
 
 	float4 fRatio = float4::Zero;
@@ -287,7 +296,7 @@ void EditGui::Load()
 	{
 		m_vecAllStage[m_iCurLevel].AllTile[i].m_pTile->Death();
 	}
-	size_t TileSize = file.GetFileSize() / sizeof(float4)-sizeof(int);
+	size_t TileSize = file.GetFileSize() / sizeof(float4);
 
 	m_vecAllStage[m_iCurLevel].AllTile.clear();
 	m_vecAllStage[m_iCurLevel].AllTile.reserve(TileSize);
@@ -301,11 +310,11 @@ void EditGui::Load()
 			m_iX = 0;
 			m_iY = 0;
 		}
-		CreateTile(GameEngineCore::GetCurLevel(), static_cast<TileDeg>(fRatio.z));
+		CreateTile(GameEngineCore::GetCurLevel(),fRatio);
 	}
 	for (size_t i = 0; i < m_vecAllStage[m_iCurLevel].AllTile.size(); i++)
 	{
-		m_vecAllStage[m_iCurLevel].AllTile[i].m_pTile->DeathEndPivot();
+		m_vecAllStage[m_iCurLevel].AllTile[i].m_pTile->DeathPivot();
 	}
 }
 void EditGui::CreatePlayer(std::shared_ptr<class GameEngineLevel> _Level)

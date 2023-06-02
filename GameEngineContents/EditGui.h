@@ -52,6 +52,7 @@ private:
 
 	std::shared_ptr<class Player> m_pPlayer = nullptr;
 
+	void CreateTile(std::shared_ptr< GameEngineLevel> _Level, float4 _Data);
 	void CreateTile(std::shared_ptr< GameEngineLevel> _Level, TileDeg _Deg);
 	void CreateSquare(std::shared_ptr< GameEngineLevel> _Level, TileDeg _Deg);
 	void Save();

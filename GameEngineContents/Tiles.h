@@ -49,8 +49,9 @@ public:
 		return m_pCollision;
 	}
 	
-	void DeathEndPivot()
+	void DeathPivot()
 	{
+		m_pStartPivot->Death();
 		m_pEndPivot->Death();
 	}
 
