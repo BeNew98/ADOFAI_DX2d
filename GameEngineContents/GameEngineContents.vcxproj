@@ -184,6 +184,7 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="FadeEffect.h" />
     <ClInclude Include="MapSettingStruct.h" />
     <ClInclude Include="MyMouse.h">
       <SubType>
@@ -228,6 +229,7 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="Contents_Resources.cpp" />
     <ClCompile Include="DFICore.cpp">
       <SubType>
       </SubType>
@@ -240,6 +242,7 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="FadeEffect.cpp" />
     <ClCompile Include="MyMouse.cpp">
       <SubType>
       </SubType>

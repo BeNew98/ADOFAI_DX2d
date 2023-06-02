@@ -143,7 +143,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <FxCompile Include="CollisionDebugShader.hlsl" />
+    <FxCompile Include="DebugMeshRender.hlsl" />
     <FxCompile Include="MergeShader.hlsl" />
     <FxCompile Include="TextureShader.hlsl" />
   </ItemGroup>

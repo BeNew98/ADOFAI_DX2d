@@ -43,6 +43,9 @@
     <ClInclude Include="MyMouse.h">
       <Filter>PublicObject</Filter>
     </ClInclude>
+    <ClInclude Include="FadeEffect.h">
+      <Filter>PostEffect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DFICore.cpp" />
@@ -83,6 +86,10 @@
     <ClCompile Include="MyMouse.cpp">
       <Filter>PublicObject</Filter>
     </ClCompile>
+    <ClCompile Include="FadeEffect.cpp">
+      <Filter>PostEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="Contents_Resources.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Levels">
@@ -111,6 +118,9 @@
     </Filter>
     <Filter Include="Levels\EditLevel\CenterLevel">
       <UniqueIdentifier>{b9cbe269-9b4d-482a-bca6-90b7d293f58a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PostEffect">
+      <UniqueIdentifier>{878aa53d-9b07-46bb-9930-b34cfa029088}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

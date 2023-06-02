@@ -20,6 +20,8 @@ void Tiles::Start()
 	m_pEndPivot = CreateComponent<GameEngineSpriteRenderer>();
 	m_pEndPivot->GetTransform()->SetLocalScale(float4(20.f, 20.f));
 
+	m_pCollision = CreateComponent<GameEngineCollision>(OrderNum::MAP);
+	m_pCollision->GetTransform()->SetLocalScale({ 80.f,80.f,0.f });
 }
 
 
@@ -139,8 +141,6 @@ void Tiles::CreateTile(TileDeg _TileDeg)
 	}
 
 
-	m_pCollision = CreateComponent<GameEngineCollision>(OrderNum::MAP);
-	m_pCollision->GetTransform()->SetLocalScale({ 80.f,80.f,0.f });
 	m_pCollision->GetTransform()->AddLocalPosition({ 0.f,16.f });
 
 	PivotCal(static_cast<float>(_TileDeg));

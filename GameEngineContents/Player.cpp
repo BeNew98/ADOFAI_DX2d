@@ -26,7 +26,7 @@ void Player::Start()
 {
 	m_pEditor = EditGui::Editor;
 
-	GetTransform()->AddLocalPosition({ 0.f,16.f,0.f });
+	//GetTransform()->AddLocalPosition({ 0.f,16.f,0.f });
 
 	m_pRed = GetLevel()->CreateActor<Planet>(OrderNum::PLANET,"Red");
 	m_pRed->GetTransform()->SetLocalPosition(GetTransform()->GetLocalPosition());

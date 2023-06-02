@@ -128,8 +128,8 @@ void EditGui::OnGUI(std::shared_ptr<class GameEngineLevel> _Level, float _DeltaT
 
 void EditGui::CreateTile(std::shared_ptr<GameEngineLevel> _Level, float4 _Data)
 {
-	m_iX = _Data.x;
-	m_iY = _Data.y;
+	m_iX = static_cast<int>(_Data.x);
+	m_iY = static_cast<int>(_Data.y);
 	CreateTile(_Level, static_cast<TileDeg>(_Data.z));
 }
 
@@ -192,8 +192,8 @@ void EditGui::CreateSquare(std::shared_ptr<GameEngineLevel> _Level, TileDeg _Deg
 
 	TileInfo Info = {};
 	Info.m_pTile = pTile;
-	Info.m_fData.x = m_iX;
-	Info.m_fData.y = m_iY;
+	Info.m_fData.x = static_cast<float>(m_iX);
+	Info.m_fData.y = static_cast<float>(m_iY);
 	Info.m_fData.z = static_cast<float>(iDeg);
 	m_vecAllStage[m_iCurLevel].AllTile.push_back(Info);
 
