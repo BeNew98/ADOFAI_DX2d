@@ -126,6 +126,11 @@ void EditGui::OnGUI(std::shared_ptr<class GameEngineLevel> _Level, float _DeltaT
 
 void EditGui::CreateTile(std::shared_ptr<class GameEngineLevel> _Level, TileDeg _Deg)
 {
+	if (_Deg == TileDeg::Square)
+	{
+		CreateSquare(_Level, _Deg);
+		return;
+	}
 	std::shared_ptr<Tiles> pTile = _Level->CreateActor<Tiles>();
 	pTile->CreateTile(_Deg);
 
@@ -174,13 +179,16 @@ void EditGui::CreateSquare(std::shared_ptr<GameEngineLevel> _Level, TileDeg _Deg
 	
 	pTile->GetTransform()->SetLocalPosition({ m_iX * m_iTileSize ,-m_iY * m_iTileSize });
 	
-	++m_iX;
+	
 
 	TileInfo Info = {};
 	Info.m_pTile = pTile;
+	Info.m_fData.x = m_iX;
+	Info.m_fData.y = m_iY;
 	Info.m_fData.z = static_cast<float>(iDeg);
 	m_vecAllStage[m_iCurLevel].AllTile.push_back(Info);
 
+	++m_iX;
 
 	_Level->GetMainCamera()->GetTransform()->SetWorldPosition(pTile->GetTransform()->GetWorldPosition());
 }
@@ -290,6 +298,8 @@ void EditGui::Load()
 		if (i == 0)
 		{
 			m_iCurDegree = 0;
+			m_iX = 0;
+			m_iY = 0;
 		}
 		CreateTile(GameEngineCore::GetCurLevel(), static_cast<TileDeg>(fRatio.z));
 	}
