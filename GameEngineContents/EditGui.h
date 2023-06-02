@@ -43,8 +43,9 @@ private:
 	int m_iLevelSize = 1;
 	int m_iCurLevel = 0;
 	int m_iCurDegree = 0;
-	int m_iRow = 0;
-	int m_iCol = 0;
+	int m_iX = 0;
+	int m_iY = 0;
+	float m_iTileSize = 96.f;
 
 
 	std::vector<StageInfo> m_vecAllStage;

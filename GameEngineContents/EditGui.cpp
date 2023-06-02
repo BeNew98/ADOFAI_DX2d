@@ -31,7 +31,7 @@ void EditGui::Start()
 	//CreateTile(GameEngineCore::GetCurLevel(), TileDeg::Deg0);
 }
 int iCurTileNum = 0;
-void EditGui::OnGUI(std::shared_ptr<class GameEngineLevel> Level, float _DeltaTime)
+void EditGui::OnGUI(std::shared_ptr<class GameEngineLevel> _Level, float _DeltaTime)
 {
 	if (0<m_vecAllStage[m_iCurLevel].AllTile.size())
 	{	
@@ -76,29 +76,32 @@ void EditGui::OnGUI(std::shared_ptr<class GameEngineLevel> Level, float _DeltaTi
 
 
 	ImGui::Text("Create Tile:");
-	if (ImGui::Button("0")) { CreateTile(Level, TileDeg::Deg0); }
+	if (ImGui::Button("0")) { CreateTile(_Level, TileDeg::Deg0); }
 	ImGui::SameLine();
-	if (ImGui::Button("45")) { CreateTile(Level, TileDeg::Deg45); }
+	if (ImGui::Button("45")) { CreateTile(_Level, TileDeg::Deg45); }
 	ImGui::SameLine();
-	if (ImGui::Button("60")) { CreateTile(Level, TileDeg::Deg60); }
+	if (ImGui::Button("60")) { CreateTile(_Level, TileDeg::Deg60); }
 	ImGui::SameLine();
-	if (ImGui::Button("90")) { CreateTile(Level, TileDeg::Deg90); }
+	if (ImGui::Button("90")) { CreateTile(_Level, TileDeg::Deg90); }
 	ImGui::SameLine();
-	if (ImGui::Button("120")) { CreateTile(Level, TileDeg::Deg120); }
+	if (ImGui::Button("120")) { CreateTile(_Level, TileDeg::Deg120); }
 	ImGui::SameLine();
-	if (ImGui::Button("135")) { CreateTile(Level, TileDeg::Deg135); }
+	if (ImGui::Button("135")) { CreateTile(_Level, TileDeg::Deg135); }
 
-	if (ImGui::Button("225")) { CreateTile(Level, TileDeg::Deg225); }
+	if (ImGui::Button("225")) { CreateTile(_Level, TileDeg::Deg225); }
 	ImGui::SameLine();
-	if (ImGui::Button("240")) { CreateTile(Level, TileDeg::Deg240); }
+	if (ImGui::Button("240")) { CreateTile(_Level, TileDeg::Deg240); }
 	ImGui::SameLine();
-	if (ImGui::Button("270")) { CreateTile(Level, TileDeg::Deg270); }
+	if (ImGui::Button("270")) { CreateTile(_Level, TileDeg::Deg270); }
 	ImGui::SameLine();
-	if (ImGui::Button("300")) { CreateTile(Level, TileDeg::Deg300); }
+	if (ImGui::Button("300")) { CreateTile(_Level, TileDeg::Deg300); }
 	ImGui::SameLine();
-	if (ImGui::Button("310")) { CreateTile(Level, TileDeg::Deg315); }
+	if (ImGui::Button("310")) { CreateTile(_Level, TileDeg::Deg315); }
 	ImGui::Separator();
-	if (ImGui::Button("Square")) { CreateTile(Level, TileDeg::Square); }
+
+	if (ImGui::Button("Square")) { CreateSquare(_Level, TileDeg::Square); }
+	ImGui::SameLine();
+	if (ImGui::Button("NextRow")) { ++m_iY; m_iX = 0; CreateSquare(_Level, TileDeg::Square); }
 	ImGui::Separator();
 
 	if (ImGui::Button("Delete CurTile")) { DeleteCurTile(); }
@@ -108,7 +111,7 @@ void EditGui::OnGUI(std::shared_ptr<class GameEngineLevel> Level, float _DeltaTi
 	if (ImGui::Button("Load")) { Load(); };
 	ImGui::Separator();
 
-	if (ImGui::Button("PlayerCreate")) { CreatePlayer(Level); };
+	if (ImGui::Button("PlayerCreate")) { CreatePlayer(_Level); };
 
 	if (ImGui::InputInt("CamMoveToTile", &iCurTileNum))
 	{
@@ -116,17 +119,17 @@ void EditGui::OnGUI(std::shared_ptr<class GameEngineLevel> Level, float _DeltaTi
 		{
 			return;
 		}
-		Level->GetMainCamera()->GetTransform()->SetWorldPosition(m_vecAllStage[m_iCurLevel].AllTile[iCurTileNum].m_pTile->GetTransform()->GetLocalPosition());
+		_Level->GetMainCamera()->GetTransform()->SetWorldPosition(m_vecAllStage[m_iCurLevel].AllTile[iCurTileNum].m_pTile->GetTransform()->GetLocalPosition());
 	}
 
 }
 
-void EditGui::CreateTile(std::shared_ptr<class GameEngineLevel> Level, TileDeg _Deg)
+void EditGui::CreateTile(std::shared_ptr<class GameEngineLevel> _Level, TileDeg _Deg)
 {
-	std::shared_ptr<Tiles> pTile = Level->CreateActor<Tiles>();
+	std::shared_ptr<Tiles> pTile = _Level->CreateActor<Tiles>();
 	pTile->CreateTile(_Deg);
-	int iDeg = static_cast<int>(_Deg);
 
+	int iDeg = static_cast<int>(_Deg);
 	int m_CurTileSize = static_cast<int>(m_vecAllStage[m_iCurLevel].AllTile.size());
 
 	if (m_CurTileSize != 0)
@@ -159,7 +162,27 @@ void EditGui::CreateTile(std::shared_ptr<class GameEngineLevel> Level, TileDeg _
 	m_vecAllStage[m_iCurLevel].AllTile.push_back(Info);
 
 
-	Level->GetMainCamera()->GetTransform()->SetWorldPosition(pTile->GetTransform()->GetWorldPosition());
+	_Level->GetMainCamera()->GetTransform()->SetWorldPosition(pTile->GetTransform()->GetWorldPosition());
+}
+
+void EditGui::CreateSquare(std::shared_ptr<GameEngineLevel> _Level, TileDeg _Deg)
+{
+	std::shared_ptr<Tiles> pTile = _Level->CreateActor<Tiles>();
+	pTile->CreateTile(_Deg);
+
+	int iDeg = static_cast<int>(_Deg);
+	
+	pTile->GetTransform()->SetLocalPosition({ m_iX * m_iTileSize ,-m_iY * m_iTileSize });
+	
+	++m_iX;
+
+	TileInfo Info = {};
+	Info.m_pTile = pTile;
+	Info.m_fNextRatio = static_cast<float>(iDeg);
+	m_vecAllStage[m_iCurLevel].AllTile.push_back(Info);
+
+
+	_Level->GetMainCamera()->GetTransform()->SetWorldPosition(pTile->GetTransform()->GetWorldPosition());
 }
 
 void EditGui::Save()
