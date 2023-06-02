@@ -37,12 +37,14 @@ public:
 
 protected:
 	void Start() override; 
-	void OnGUI(std::shared_ptr<class GameEngineLevel> Level, float _DeltaTime) override;
+	void OnGUI(std::shared_ptr<class GameEngineLevel> _Level, float _DeltaTime) override;
 
 private:
 	int m_iLevelSize = 1;
 	int m_iCurLevel = 0;
 	int m_iCurDegree = 0;
+	int m_iRow = 0;
+	int m_iCol = 0;
 
 
 	std::vector<StageInfo> m_vecAllStage;
@@ -50,6 +52,7 @@ private:
 	std::shared_ptr<class Player> m_pPlayer = nullptr;
 
 	void CreateTile(std::shared_ptr< GameEngineLevel> _Level, TileDeg _Deg);
+	void CreateSquare(std::shared_ptr< GameEngineLevel> _Level, TileDeg _Deg);
 	void Save();
 	void Load();
 	void CreatePlayer(std::shared_ptr< GameEngineLevel> _Level);

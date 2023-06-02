@@ -28,49 +28,51 @@ void EditGui::Start()
 {
 	m_vecAllStage.resize(m_iLevelSize);
 	
-	CreateTile(GameEngineCore::GetCurLevel(), TileDeg::Deg0);
+	//CreateTile(GameEngineCore::GetCurLevel(), TileDeg::Deg0);
 }
 int iCurTileNum = 0;
 void EditGui::OnGUI(std::shared_ptr<class GameEngineLevel> Level, float _DeltaTime)
 {
+	if (0<m_vecAllStage[m_iCurLevel].AllTile.size())
+	{	
+		TileInfo CurTileInfo = m_vecAllStage[m_iCurLevel].AllTile[m_vecAllStage[m_iCurLevel].AllTile.size() - 1];
+		ImGui::Text("<CurTile Info>");
+		ImGui::Separator();
 
-	TileInfo CurTileInfo = m_vecAllStage[m_iCurLevel].AllTile[m_vecAllStage[m_iCurLevel].AllTile.size()-1];
-	ImGui::Text("<CurTile Info>");
-	ImGui::Separator();
+		ImGui::Text("CurDegree: %s", GameEngineString::ToString(m_iCurDegree).c_str());
+		ImGui::Text("CurTileNumber : %d", m_vecAllStage[m_iCurLevel].AllTile.size() - 1);
+		ImGui::Columns(2);
+		ImGui::Separator();
 
-	ImGui::Text("CurDegree: %s", GameEngineString::ToString(m_iCurDegree).c_str());
-	ImGui::Text("CurTileNumber : %d", m_vecAllStage[m_iCurLevel].AllTile.size() - 1);
-	ImGui::Columns(2);
-	ImGui::Separator();
+		ImGui::Text("Position");
+		ImGui::NextColumn();
+		ImGui::Text("x: %f", CurTileInfo.m_pTile->GetTransform()->GetLocalPosition().x);
+		ImGui::Text("y: %f", CurTileInfo.m_pTile->GetTransform()->GetLocalPosition().y);
+		ImGui::Text("z: %f", CurTileInfo.m_pTile->GetTransform()->GetLocalPosition().z);
+		ImGui::Text("w: %f", CurTileInfo.m_pTile->GetTransform()->GetLocalPosition().w);
+		ImGui::NextColumn();
+		ImGui::Separator();
 
-	ImGui::Text("Position");
-	ImGui::NextColumn();
-	ImGui::Text("x: %f", CurTileInfo.m_pTile->GetTransform()->GetLocalPosition().x);
-	ImGui::Text("y: %f", CurTileInfo.m_pTile->GetTransform()->GetLocalPosition().y);
-	ImGui::Text("z: %f", CurTileInfo.m_pTile->GetTransform()->GetLocalPosition().z);
-	ImGui::Text("w: %f", CurTileInfo.m_pTile->GetTransform()->GetLocalPosition().w);
-	ImGui::NextColumn();
-	ImGui::Separator();
-
-	ImGui::Text("StartPivotPos");
-	ImGui::NextColumn();
-	ImGui::Text("x: %f", CurTileInfo.m_pTile->GetStartPivotPos().x);
-	ImGui::Text("y: %f", CurTileInfo.m_pTile->GetStartPivotPos().y);
-	ImGui::Text("z: %f", CurTileInfo.m_pTile->GetStartPivotPos().z);
-	ImGui::Text("w: %f", CurTileInfo.m_pTile->GetStartPivotPos().w);
-	ImGui::NextColumn();
-	ImGui::Separator();
+		ImGui::Text("StartPivotPos");
+		ImGui::NextColumn();
+		ImGui::Text("x: %f", CurTileInfo.m_pTile->GetStartPivotPos().x);
+		ImGui::Text("y: %f", CurTileInfo.m_pTile->GetStartPivotPos().y);
+		ImGui::Text("z: %f", CurTileInfo.m_pTile->GetStartPivotPos().z);
+		ImGui::Text("w: %f", CurTileInfo.m_pTile->GetStartPivotPos().w);
+		ImGui::NextColumn();
+		ImGui::Separator();
 
 
-	ImGui::Text("EndPivotPos");
-	ImGui::NextColumn();
-	ImGui::Text("x: %f", CurTileInfo.m_pTile->GetEndPivotPos().x);
-	ImGui::Text("y: %f", CurTileInfo.m_pTile->GetEndPivotPos().y);
-	ImGui::Text("z: %f", CurTileInfo.m_pTile->GetEndPivotPos().z);
-	ImGui::Text("w: %f", CurTileInfo.m_pTile->GetEndPivotPos().w);
-	ImGui::NextColumn();
-	ImGui::Columns(1);
-	ImGui::Separator();
+		ImGui::Text("EndPivotPos");
+		ImGui::NextColumn();
+		ImGui::Text("x: %f", CurTileInfo.m_pTile->GetEndPivotPos().x);
+		ImGui::Text("y: %f", CurTileInfo.m_pTile->GetEndPivotPos().y);
+		ImGui::Text("z: %f", CurTileInfo.m_pTile->GetEndPivotPos().z);
+		ImGui::Text("w: %f", CurTileInfo.m_pTile->GetEndPivotPos().w);
+		ImGui::NextColumn();
+		ImGui::Columns(1);
+		ImGui::Separator();
+	}
 
 
 	ImGui::Text("Create Tile:");
@@ -95,6 +97,8 @@ void EditGui::OnGUI(std::shared_ptr<class GameEngineLevel> Level, float _DeltaTi
 	if (ImGui::Button("300")) { CreateTile(Level, TileDeg::Deg300); }
 	ImGui::SameLine();
 	if (ImGui::Button("310")) { CreateTile(Level, TileDeg::Deg315); }
+	ImGui::Separator();
+	if (ImGui::Button("Square")) { CreateTile(Level, TileDeg::Square); }
 	ImGui::Separator();
 
 	if (ImGui::Button("Delete CurTile")) { DeleteCurTile(); }
@@ -284,11 +288,11 @@ void EditGui::CreatePlayer(std::shared_ptr<class GameEngineLevel> _Level)
 
 void EditGui::DeleteCurTile()
 {
-	if (0 == m_vecAllStage[m_iCurLevel].AllTile.size() - 1)
-	{
-		MessageBoxA(nullptr,  "첫 타일은 지울수 없습니다.", "주의", MB_OK);
-		return;
-	}
+	//if (0 == m_vecAllStage[m_iCurLevel].AllTile.size() - 1)
+	//{
+	//	MessageBoxA(nullptr,  "첫 타일은 지울수 없습니다.", "주의", MB_OK);
+	//	return;
+	//}
 	TileInfo info = m_vecAllStage[m_iCurLevel].AllTile[m_vecAllStage[m_iCurLevel].AllTile.size()-1];
 	info.m_pTile->Death();
 	std::vector<TileInfo>::iterator iter = m_vecAllStage[m_iCurLevel].AllTile.end();

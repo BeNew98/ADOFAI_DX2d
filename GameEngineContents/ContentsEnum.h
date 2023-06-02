@@ -22,4 +22,5 @@ enum class TileDeg
 	Deg270	= 270,
 	Deg300	= 300,
 	Deg315	= 315,
+	Square = 360,
 };
