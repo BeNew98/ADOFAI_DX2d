@@ -170,7 +170,7 @@ void Tiles::PivotCal(float _Deg)
 	m_pStartPivot->GetTransform()->SetLocalPosition(m_fStartBetPos);
 	m_pCollision->GetTransform()->SetLocalPosition(m_pStartPivot->GetTransform()->GetLocalPosition() +float4{ 75.f,-40.f });
 
-	std::shared_ptr<GameEngineSpriteRenderer> rend = CreateComponent<GameEngineSpriteRenderer>(OrderNum::PLANET);
+	std::shared_ptr<GameEngineSpriteRenderer> rend = CreateComponent<GameEngineSpriteRenderer>(OrderNum::MAP);
 
 	rend->GetTransform()->SetLocalScale(m_pCollision->GetTransform()->GetLocalScale());
 	rend->GetTransform()->SetLocalPosition(m_pCollision->GetTransform()->GetLocalPosition());
