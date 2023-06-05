@@ -7,6 +7,8 @@
 #include <GameEngineCore/GameEngineVideo.h>
 #include <GameEngineCore/GameEngineCoreWindow.h>
 
+#include "EditGui.h"
+
 PlayLevel::PlayLevel()
 {
 }
@@ -28,6 +30,10 @@ void PlayLevel::Start()
 void PlayLevel::LevelChangeStart()
 {
 	GameEngineLevel::LevelChangeStart();
+	EditGui::Editor->LoadtoString("Level1");
+
+	std::shared_ptr<Player> player = CreateActor<Player>(OrderNum::PLANET);
+
 }
 
 void PlayLevel::LevelChangeEnd()

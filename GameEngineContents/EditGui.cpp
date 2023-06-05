@@ -317,6 +317,52 @@ void EditGui::Load()
 		m_vecAllStage[m_iCurLevel].AllTile[i].m_pTile->DeathPivot();
 	}
 }
+void EditGui::LoadtoString(std::string_view _FileName)
+{
+	GameEngineDirectory NewDir;
+	NewDir.MoveParentToDirectory("ContentResources");
+	NewDir.Move("ContentResources");
+	NewDir.Move("Text");
+	std::string Initpath = NewDir.GetPath().GetFullPath() + "\\" + _FileName.data();
+
+
+	GameEngineFile file = GameEngineFile(Initpath);
+
+
+	size_t uSize = file.GetFileSize();
+	GameEngineSerializer Ser = {};
+
+	Ser.BufferResize(uSize + 1);
+	file.LoadBin(Ser);
+
+	float4 fRatio = float4::Zero;
+	TileInfo Info = {};
+
+	for (size_t i = 0; i < m_vecAllStage[m_iCurLevel].AllTile.size(); i++)
+	{
+		m_vecAllStage[m_iCurLevel].AllTile[i].m_pTile->Death();
+	}
+	size_t TileSize = file.GetFileSize() / sizeof(float4);
+
+	m_vecAllStage[m_iCurLevel].AllTile.clear();
+	m_vecAllStage[m_iCurLevel].AllTile.reserve(TileSize);
+
+	for (size_t i = 0; i < TileSize; i++)
+	{
+		Ser.Read(&fRatio, sizeof(float4));
+		if (i == 0)
+		{
+			m_iCurDegree = 0;
+			m_iX = 0;
+			m_iY = 0;
+		}
+		CreateTile(GameEngineCore::GetCurLevel(), fRatio);
+	}
+	for (size_t i = 0; i < m_vecAllStage[m_iCurLevel].AllTile.size(); i++)
+	{
+		m_vecAllStage[m_iCurLevel].AllTile[i].m_pTile->DeathPivot();
+	}
+}
 void EditGui::CreatePlayer(std::shared_ptr<class GameEngineLevel> _Level)
 {
 	if (nullptr!=m_pPlayer)

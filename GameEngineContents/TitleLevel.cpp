@@ -9,6 +9,7 @@
 #include <GameEngineCore/GameEngineSpriteRenderer.h>
 
 #include "TitleLogo.h"
+#include "EditGui.h"
 #include "BlackScreen.h"
 
 TitleLevel::TitleLevel() 
@@ -69,6 +70,8 @@ void TitleLevel::LevelChangeStart()
 		std::shared_ptr<Player> pPlayer = CreateActor<Player>(0);
 		pPlayer->GetTransform()->SetLocalPosition({ 0.f,0.f,0.f });
 	}
+
+	EditGui::Editor->LoadtoString("Title1~2");
 }
 
 void TitleLevel::LevelChangeEnd()

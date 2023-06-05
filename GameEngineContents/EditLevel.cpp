@@ -25,16 +25,16 @@ void EditLevel::Start()
 
 void EditLevel::Update(float _Deltatime)
 {
-	//if (GameEngineInput::IsDown("TitleLevel"))
-	//{
-	//	GameEngineCore::ChangeLevel("TitleLevel");
-	//}
-	//
-	//if (GameEngineInput::IsDown("PlayLevel"))
-	//{
-	//	GameEngineCore::ChangeLevel("PlayLevel");
-	//}
-	//
+	if (GameEngineInput::IsDown("TitleLevel"))
+	{
+		GameEngineCore::ChangeLevel("TitleLevel");
+	}
+	
+	if (GameEngineInput::IsDown("PlayLevel"))
+	{
+		GameEngineCore::ChangeLevel("PlayLevel");
+	}
+	
 	//if (GameEngineInput::IsDown("CenterLevel"))
 	//{
 	//	GameEngineCore::ChangeLevel("CenterLevel");
@@ -46,6 +46,7 @@ void EditLevel::Update(float _Deltatime)
 		CurMousePos.y = -CurMousePos.y;
 		GetMainCamera()->GetTransform()->AddWorldPosition(-CurMousePos);
 	}
+
 }
 
 void EditLevel::LevelChangeStart()

@@ -35,6 +35,8 @@ public:
 
 	static EditGui* Editor;
 
+	void LoadtoString(std::string_view _FileName);
+
 protected:
 	void Start() override; 
 	void OnGUI(std::shared_ptr<class GameEngineLevel> _Level, float _DeltaTime) override;
@@ -57,6 +59,7 @@ private:
 	void CreateSquare(std::shared_ptr< GameEngineLevel> _Level, TileDeg _Deg);
 	void Save();
 	void Load();
+
 	void CreatePlayer(std::shared_ptr< GameEngineLevel> _Level);
 	void DeleteCurTile();
 	void ClearAllTile();
