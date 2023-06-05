@@ -330,12 +330,25 @@ void EditGui::CreatePlayer(std::shared_ptr<class GameEngineLevel> _Level)
 
 void EditGui::DeleteCurTile()
 {
-	//if (0 == m_vecAllStage[m_iCurLevel].AllTile.size() - 1)
-	//{
-	//	MessageBoxA(nullptr,  "첫 타일은 지울수 없습니다.", "주의", MB_OK);
-	//	return;
-	//}
+
+	if (0 > m_vecAllStage[m_iCurLevel].AllTile.size() - 1)
+	{
+		return;
+	}
+
 	TileInfo info = m_vecAllStage[m_iCurLevel].AllTile[m_vecAllStage[m_iCurLevel].AllTile.size()-1];
+	if (info.m_fData.z==360.f)
+	{
+		if (m_iX==0)
+		{
+			--m_iY;
+			m_iX = m_vecAllStage[m_iCurLevel].AllTile[m_vecAllStage[m_iCurLevel].AllTile.size() - 1].m_fData.ix();
+		}
+		else
+		{
+			--m_iX;
+		}
+	}
 	info.m_pTile->Death();
 	std::vector<TileInfo>::iterator iter = m_vecAllStage[m_iCurLevel].AllTile.end();
 	m_vecAllStage[m_iCurLevel].AllTile.erase(iter -1);
