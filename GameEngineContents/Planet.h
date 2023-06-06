@@ -19,11 +19,18 @@ public:
 		return m_pCollision;
 	}
 
+	bool IsCenter()
+	{
+		return m_bCenter;
+	}
 protected:
 	void Start() override;
+	void Update(float _DeltaTime) override;
+
 
 private:
 	static int m_iUseCount;
+	bool m_bCenter = false;
 	std::shared_ptr<GameEngineCollision> m_pCollision = nullptr;
 };
 

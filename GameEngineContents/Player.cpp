@@ -24,49 +24,12 @@ Player::~Player()
 
 void Player::Start()
 {
-	m_pEditor = EditGui::Editor;
-
-	//GetTransform()->AddLocalPosition({ 0.f,16.f,0.f });
-
-	m_pRed = GetLevel()->CreateActor<Planet>(OrderNum::PLANET,"Red");
-	m_pRed->GetTransform()->SetLocalPosition(GetTransform()->GetLocalPosition());
-
-	m_pBlue = GetLevel()->CreateActor<Planet>(OrderNum::PLANET, "Blue");
-	m_pBlue->GetTransform()->SetLocalPosition(GetTransform()->GetLocalPosition());
-	m_pBlue->GetTransform()->AddLocalPosition({ -150.f,0.f,0.f });
-
-	m_pCenter = m_pRed;
-	m_pTurn = m_pBlue;
-
-	m_pTurn->GetTransform()->SetParent(m_pCenter->GetTransform());
-
-	std::shared_ptr<GameEngineSpriteRenderer> render = CreateComponent<GameEngineSpriteRenderer>(OrderNum::EFFECT);
-	render->SetScaleToTexture("bottomglow_E2.png");
-	render->SetOrder(static_cast<int>(OrderNum::EFFECT));
-	render->GetTransform()->SetLocalPosition(m_pCenter->GetTransform()->GetWorldPosition());
-
-	GameEngineInput::CreateKey("R", 'R');
-
-
-
-	GameEngineInput::CreateKey("1", '1');
-	GameEngineInput::CreateKey("2", '2');
-
-	GameEngineInput::CreateKey("W", 'W');
-	GameEngineInput::CreateKey("A", 'A');
-	GameEngineInput::CreateKey("S", 'S');
-	GameEngineInput::CreateKey("D", 'D');
-
-
-	GameEngineInput::CreateKey("I", 'I');
-	GameEngineInput::CreateKey("J", 'J');
-	GameEngineInput::CreateKey("K", 'K');
-	GameEngineInput::CreateKey("L", 'L');
 }
 
 void Player::Update(float _DeltaTime)
 {
-	PlanetSwap(_DeltaTime);
+	float4 pos = GetTransform()->GetLocalPosition();
+	//PlanetSwap(_DeltaTime);
 	m_pCenter->GetTransform()->AddLocalRotation({ 0.f,0.f,-180.f * _DeltaTime });
 
 	CamMoveLerp(_DeltaTime);

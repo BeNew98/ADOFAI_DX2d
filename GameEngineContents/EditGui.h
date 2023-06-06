@@ -37,6 +37,11 @@ public:
 
 	void LoadtoString(std::string_view _FileName);
 
+	StageInfo GetStageInfo(int _Index)
+	{
+		return m_vecAllStage[_Index];
+	}
+
 protected:
 	void Start() override; 
 	void OnGUI(std::shared_ptr<class GameEngineLevel> _Level, float _DeltaTime) override;

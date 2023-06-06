@@ -1,5 +1,6 @@
 #pragma once
 #include <GameEngineCore\GameEngineLevel.h>
+#include "EditGui.h"
 
 // Ό³Έν :
 class TitleLevel : public GameEngineLevel
@@ -23,6 +24,18 @@ protected:
 	void LevelChangeEnd() override;
 
 private:
-	
+	StageInfo m_pStageInfo = {};
+	std::shared_ptr<class Planet> m_pRed;
+	std::shared_ptr<class Planet> m_pBlue;
+	void CenterCheck();
+	void CamMoveLerp(float _Ratio);
+
+	int m_iCurIndex = 0;
+	float m_fLerpTime = 0.f;
+
+	float4 m_fCurTilePos = float4::Zero;
+	float4 m_fPrevTilePos = float4::Zero;
+
+	void PlanetSwap();
 };
 
