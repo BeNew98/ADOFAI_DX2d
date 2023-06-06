@@ -29,7 +29,7 @@ void Planet::Start()
 		render->SetTexture("ballsprites_blue_sheet_grid_0_Sprite.png");
 		render->GetTransform()->SetLocalScale({ 64.f, 64.f, 0.f });
 
-		std::shared_ptr<GameEngineCollision> m_pCollision = CreateComponent<GameEngineCollision>(OrderNum::PLANET);
+		m_pCollision = CreateComponent<GameEngineCollision>(OrderNum::PLANET);
 		m_pCollision->GetTransform()->SetLocalScale({ 64.f, 64.f, 0.f });
 		m_iUseCount += render.use_count();
 
@@ -43,7 +43,7 @@ void Planet::Start()
 		m_bCenter = true;
 
 
-		std::shared_ptr<GameEngineCollision> m_pCollision = CreateComponent<GameEngineCollision>(OrderNum::PLANET);
+		m_pCollision = CreateComponent<GameEngineCollision>(OrderNum::PLANET);
 		m_pCollision->GetTransform()->SetLocalScale({ 64.f, 64.f, 0.f });
 
 

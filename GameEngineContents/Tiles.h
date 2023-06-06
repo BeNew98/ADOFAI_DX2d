@@ -57,6 +57,8 @@ public:
 
 	void PivotCal(float _Deg);
 
+	float4 m_fData = float4::Zero;
+
 protected:
 	void Start() override;
 
@@ -64,6 +66,7 @@ private:
 	std::shared_ptr<GameEngineSpriteRenderer> m_pRender = nullptr;
 	std::shared_ptr<GameEngineSpriteRenderer> m_pStartPivot = nullptr;
 	std::shared_ptr<GameEngineSpriteRenderer> m_pEndPivot = nullptr;
+
 	
 	float4 m_fStartBetPos = float4::Zero;
 	float4 m_fEndBetPos = float4::Zero;

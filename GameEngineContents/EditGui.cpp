@@ -172,7 +172,7 @@ void EditGui::CreateTile(std::shared_ptr<class GameEngineLevel> _Level, TileDeg 
 
 	TileInfo Info = {};
 	Info.m_pTile = pTile;
-	Info.m_fData.z = static_cast<float>(iDeg);
+	Info.m_pTile->m_fData.z = static_cast<float>(iDeg);
 	m_vecAllStage[m_iCurLevel].AllTile.push_back(Info);
 
 
@@ -192,9 +192,9 @@ void EditGui::CreateSquare(std::shared_ptr<GameEngineLevel> _Level, TileDeg _Deg
 
 	TileInfo Info = {};
 	Info.m_pTile = pTile;
-	Info.m_fData.x = static_cast<float>(m_iX);
-	Info.m_fData.y = static_cast<float>(m_iY);
-	Info.m_fData.z = static_cast<float>(iDeg);
+	Info.m_pTile->m_fData.x = static_cast<float>(m_iX);
+	Info.m_pTile->m_fData.y = static_cast<float>(m_iY);
+	Info.m_pTile->m_fData.z = static_cast<float>(iDeg);
 	m_vecAllStage[m_iCurLevel].AllTile.push_back(Info);
 
 	++m_iX;
@@ -235,7 +235,7 @@ void EditGui::Save()
 	GameEngineSerializer Ser = {};
 	for (size_t i = 0; i < m_vecAllStage[m_iCurLevel].AllTile.size(); i++)
 	{
-		Ser.Write(&m_vecAllStage[m_iCurLevel].AllTile[i].m_fData, sizeof(float4));
+		Ser.Write(&m_vecAllStage[m_iCurLevel].AllTile[i].m_pTile->m_fData, sizeof(float4));
 	}
 	
 	std::wstring filename = szFilePath;
@@ -383,12 +383,12 @@ void EditGui::DeleteCurTile()
 	}
 
 	TileInfo info = m_vecAllStage[m_iCurLevel].AllTile[m_vecAllStage[m_iCurLevel].AllTile.size()-1];
-	if (info.m_fData.z==360.f)
+	if (info.m_pTile->m_fData.z==360.f)
 	{
 		if (m_iX==0)
 		{
 			--m_iY;
-			m_iX = m_vecAllStage[m_iCurLevel].AllTile[m_vecAllStage[m_iCurLevel].AllTile.size() - 1].m_fData.ix();
+			m_iX = m_vecAllStage[m_iCurLevel].AllTile[m_vecAllStage[m_iCurLevel].AllTile.size() - 1].m_pTile->m_fData.ix();
 		}
 		else
 		{
@@ -398,5 +398,5 @@ void EditGui::DeleteCurTile()
 	info.m_pTile->Death();
 	std::vector<TileInfo>::iterator iter = m_vecAllStage[m_iCurLevel].AllTile.end();
 	m_vecAllStage[m_iCurLevel].AllTile.erase(iter -1);
-	m_iCurDegree -= static_cast<int>(info.m_fData.z);
+	m_iCurDegree -= static_cast<int>(info.m_pTile->m_fData.z);
 }

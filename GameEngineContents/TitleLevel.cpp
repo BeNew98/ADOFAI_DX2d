@@ -25,9 +25,10 @@ TitleLevel::~TitleLevel()
 
 void TitleLevel::Update(float _DeltaTime)
 {
-	CamMoveLerp(_DeltaTime);
-	PlanetSwap();
+	//CamMoveLerp(_DeltaTime);
 	CenterCheck();
+	PlanetSwap();
+	GetLevel()->GetMainCamera()->GetTransform()->SetWorldPosition(m_pCenter->GetTransform()->GetWorldPosition());
 }
 
 void TitleLevel::Start()
@@ -118,7 +119,20 @@ void TitleLevel::CenterCheck()
 			m_pStageInfo.AllTile[i].m_pTile->GetRender()->Off();
 		}
 	}
-	
+	else
+	{
+		for (size_t i = 0; i < m_pStageInfo.AllTile.size(); i++)
+		{
+			if (i == 6 || i == 7 || i == 8 || i == 11 || i == 12 || i == 13 || i == 16 || i == 17 || i == 18)
+			{
+				continue;
+			}
+			m_pStageInfo.AllTile[i].m_pTile->GetRender()->On();
+		}
+
+
+	}
+
 }
 
 void TitleLevel::CamMoveLerp(float _Ratio)
@@ -137,8 +151,33 @@ void TitleLevel::CamMoveLerp(float _Ratio)
 
 void TitleLevel::PlanetSwap()
 {
+
+
 		if (true == GameEngineInput::IsAnyKey())
 		{
+			std::shared_ptr<GameEngineCollision> pCenterColTile = m_pCenter->GetCollision()->Collision(OrderNum::MAP);
+
+
+			std::shared_ptr<GameEngineCollision> pTurnColTile = m_pTurn->GetCollision()->Collision(OrderNum::MAP);
+
+
+
+			if (nullptr==pTurnColTile)
+			{
+				return;
+			}
+
+			std::shared_ptr<Tiles> ColCenterTile = pCenterColTile->GetActor()->DynamicThis<Tiles>();
+			std::shared_ptr<Tiles> ColTurnTile = pTurnColTile->GetActor()->DynamicThis<Tiles>();
+
+			if (ColCenterTile->m_fData.x!= ColTurnTile->m_fData.x +1&& ColCenterTile->m_fData.x != ColTurnTile->m_fData.x - 1 &&
+				ColCenterTile->m_fData.y != ColTurnTile->m_fData.y + 1 && ColCenterTile->m_fData.y != ColTurnTile->m_fData.y -1)
+			{
+				return;
+			}
+
+
+
 
 			m_pTurn->GetTransform()->SetParent(nullptr);
 			if (true == m_pRed->IsCenter())
@@ -157,6 +196,7 @@ void TitleLevel::PlanetSwap()
 			}
 			m_pTurn->GetTransform()->SetParent(m_pCenter->GetTransform());
 			
+			m_pCenter->GetTransform()->SetWorldPosition(ColTurnTile->GetTransform()->GetWorldPosition());
 
 			std::shared_ptr<GameEngineSpriteRenderer> render = m_pBlackScreen->CreateComponent<GameEngineSpriteRenderer>(OrderNum::EFFECT);
 			render->SetScaleToTexture("bottomglow_E2.png");

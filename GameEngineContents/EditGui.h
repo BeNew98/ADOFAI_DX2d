@@ -5,7 +5,6 @@
 struct TileInfo
 {
 	std::shared_ptr<class Tiles> m_pTile;
-	float4 m_fData = float4::Zero;
 	bool m_Slow = false;
 	bool m_Fast = false;
 };
