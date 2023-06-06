@@ -59,7 +59,7 @@ void Player::PlanetSwap(float _Deltatime)
 			{
 				m_pCenter = m_pBlue;
 				m_pTurn = m_pRed;
-				m_bTurn = true;
+				m_pTurn->CenterChange();
 			}
 			else
 			{

@@ -25,8 +25,13 @@ protected:
 
 private:
 	StageInfo m_pStageInfo = {};
-	std::shared_ptr<class Planet> m_pRed;
-	std::shared_ptr<class Planet> m_pBlue;
+	std::shared_ptr<class Planet> m_pRed = nullptr;
+	std::shared_ptr<class Planet> m_pBlue = nullptr;
+	std::shared_ptr<Planet> m_pCenter = nullptr;
+	std::shared_ptr<Planet> m_pTurn = nullptr;
+
+	std::shared_ptr<class BlackScreen> m_pBlackScreen = nullptr;
+
 	void CenterCheck();
 	void CamMoveLerp(float _Ratio);
 

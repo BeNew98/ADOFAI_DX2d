@@ -17,6 +17,10 @@ Planet::~Planet()
 }
  
 
+void Planet::CreateEffect()
+{
+}
+
 void Planet::Start()
 {
 	if (m_iUseCount!=0)
@@ -43,10 +47,6 @@ void Planet::Start()
 		m_pCollision->GetTransform()->SetLocalScale({ 64.f, 64.f, 0.f });
 
 
-		std::shared_ptr<GameEngineSpriteRenderer> pEffectRender = CreateComponent<GameEngineSpriteRenderer>(OrderNum::EFFECT);
-		pEffectRender->SetScaleToTexture("bottomglow_E2.png");
-		pEffectRender->SetOrder(static_cast<int>(OrderNum::EFFECT));
-		pEffectRender->GetTransform()->SetLocalPosition(GetTransform()->GetWorldPosition());
 
 		m_iUseCount += prender.use_count();
 

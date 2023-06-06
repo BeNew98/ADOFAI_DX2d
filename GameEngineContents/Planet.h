@@ -23,6 +23,13 @@ public:
 	{
 		return m_bCenter;
 	}
+	void CenterChange()
+	{
+		m_bCenter = !m_bCenter;
+	}
+
+	void CreateEffect();
+
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
