@@ -22,17 +22,17 @@ void Tiles::Start()
 
 	m_pCollision = CreateComponent<GameEngineCollision>(OrderNum::MAP);
 	m_pCollision->GetTransform()->SetLocalScale({ 80.f,80.f,0.f });
+	
 }
 
 
 void Tiles::CreateTile(TileDeg _TileDeg)
 {
-
+	m_pRender = CreateComponent<GameEngineSpriteRenderer>(OrderNum::MAP);
 	switch (_TileDeg)
 	{
 	case TileDeg::Deg0:
 	{
-		m_pRender = CreateComponent<GameEngineSpriteRenderer>(OrderNum::MAP);
 		m_pRender->SetScaleToTexture("tiles_new_world1_b_0_Sprite.png");
 		m_fStartCal ={ 3.f,28.f};
 		m_fEndCal = { 153.f,28.f };
@@ -40,7 +40,6 @@ void Tiles::CreateTile(TileDeg _TileDeg)
 	}
 	case TileDeg::Deg45:
 	{
-		m_pRender = CreateComponent<GameEngineSpriteRenderer>(OrderNum::MAP);
 		m_pRender->SetScaleToTexture("tiles_new_world1_b_45_Sprite.png");
 		m_fStartCal = { 3.f,59.f }	;
 		m_fEndCal	= { 102.5f,17.5f };
@@ -48,7 +47,6 @@ void Tiles::CreateTile(TileDeg _TileDeg)
 	}
 	case TileDeg::Deg60:
 	{
-		m_pRender = CreateComponent<GameEngineSpriteRenderer>(OrderNum::MAP);
 		m_pRender->SetScaleToTexture("tiles_new_world1_b_60_Sprite.png");
 		m_fStartCal =float4{ 3.f,58.f };
 		m_fEndCal =float4{ 80.f,14.f };
@@ -56,7 +54,6 @@ void Tiles::CreateTile(TileDeg _TileDeg)
 	}
 	case TileDeg::Deg90:
 	{
-		m_pRender = CreateComponent<GameEngineSpriteRenderer>(OrderNum::MAP);
 		m_pRender->SetScaleToTexture("tiles_new_world1_b_90_Sprite.png");
 		m_fStartCal =float4{ 3.f,37.f };
 		m_fEndCal = float4{ 38.f,2.f };
@@ -64,7 +61,6 @@ void Tiles::CreateTile(TileDeg _TileDeg)
 	}
 	case TileDeg::Deg120:
 	{
-		m_pRender = CreateComponent<GameEngineSpriteRenderer>(OrderNum::MAP);
 		m_pRender->SetScaleToTexture("tiles_new_world1_b_120_Sprite.png");
 		m_fStartCal = float4{ 3.f,60.f };
 		m_fEndCal = float4{ 5.f,55.f };
@@ -72,7 +68,6 @@ void Tiles::CreateTile(TileDeg _TileDeg)
 	}
 	case TileDeg::Deg135:
 	{
-		m_pRender = CreateComponent<GameEngineSpriteRenderer>(OrderNum::MAP);
 		m_pRender->SetScaleToTexture("tiles_new_world1_b_135_Sprite.png");
 		m_fStartCal = float4{ 9.f,60.f };
 		m_fEndCal = float4{ 2.5f,74.5f };
@@ -80,7 +75,6 @@ void Tiles::CreateTile(TileDeg _TileDeg)
 	}
 	case TileDeg::Deg225:
 	{
-		m_pRender = CreateComponent<GameEngineSpriteRenderer>(OrderNum::MAP);
 		m_pRender->SetScaleToTexture("tiles_new_world1_b_135_Sprite.png");
 		//m_pRender->SetFlipY();
 		m_fStartCal = float4{ 9.f,27.f };
@@ -89,7 +83,6 @@ void Tiles::CreateTile(TileDeg _TileDeg)
 	}
 	case TileDeg::Deg240:
 	{
-		m_pRender = CreateComponent<GameEngineSpriteRenderer>(OrderNum::MAP);
 		m_pRender->SetScaleToTexture("tiles_new_world1_b_120_Sprite.png");
 		//m_pRender->SetFlipY();
 		m_fStartCal = float4{ 3.f,27.f };
@@ -98,7 +91,6 @@ void Tiles::CreateTile(TileDeg _TileDeg)
 	}
 	case TileDeg::Deg270:
 	{
-		m_pRender = CreateComponent<GameEngineSpriteRenderer>(OrderNum::MAP);
 		m_pRender->SetScaleToTexture("tiles_new_world1_b_90_Sprite.png");
 		//m_pRender->SetFlipY();
 		m_fStartCal = float4{ 3.f,27.f };
@@ -107,7 +99,6 @@ void Tiles::CreateTile(TileDeg _TileDeg)
 	}
 	case TileDeg::Deg300:
 	{
-		m_pRender = CreateComponent<GameEngineSpriteRenderer>(OrderNum::MAP);
 		m_pRender->SetScaleToTexture("tiles_new_world1_b_60_Sprite.png");
 		//m_pRender->SetFlipY();
 		m_fStartCal = float4{ 3.f,60.f };
@@ -116,7 +107,6 @@ void Tiles::CreateTile(TileDeg _TileDeg)
 	}
 	case TileDeg::Deg315:
 	{
-		m_pRender = CreateComponent<GameEngineSpriteRenderer>(OrderNum::MAP);
 		m_pRender->SetScaleToTexture("tiles_new_world1_b_45_Sprite.png");
 		//m_pRender->SetFlipY();
 		m_fStartCal = { 3.f,27.f };
@@ -125,13 +115,11 @@ void Tiles::CreateTile(TileDeg _TileDeg)
 	}
 	case TileDeg::Square:
 	{
-		m_pRender = CreateComponent<GameEngineSpriteRenderer>(OrderNum::MAP);
 		m_pRender->SetScaleToTexture("tile_cls_square_Sprite.png");
 		return;
 	}	
 	case TileDeg::Blank:
 	{
-		m_pRender = CreateComponent<GameEngineSpriteRenderer>(OrderNum::MAP);
 		m_pRender->SetScaleToTexture("nothing.png");
 		return;
 	}

@@ -12,6 +12,7 @@
 #include "Tiles.h"
 #include "Planet.h"
 #include "EditGui.h"
+#include "GlowEffect.h"
 
 
 TitleLevel::TitleLevel() 
@@ -26,7 +27,7 @@ TitleLevel::~TitleLevel()
 void TitleLevel::Update(float _DeltaTime)
 {
 	//CamMoveLerp(_DeltaTime);
-	CenterCheck();
+	//CenterCheck();
 	PlanetSwap();
 	GetLevel()->GetMainCamera()->GetTransform()->SetWorldPosition(m_pCenter->GetTransform()->GetWorldPosition());
 }
@@ -87,10 +88,8 @@ void TitleLevel::LevelChangeStart()
 	m_pTurn = m_pBlue;
 
 
-	std::shared_ptr<GameEngineSpriteRenderer> pEffectRender = m_pBlackScreen->CreateComponent<GameEngineSpriteRenderer>(OrderNum::EFFECT);
-	pEffectRender->SetScaleToTexture("bottomglow_E2.png");
-	pEffectRender->SetOrder(static_cast<int>(OrderNum::EFFECT));
-	pEffectRender->GetTransform()->SetLocalPosition(m_pCenter->GetTransform()->GetWorldPosition());
+	std::shared_ptr<GlowEffect> pGlow = CreateActor<GlowEffect>(OrderNum::EFFECT);
+	pGlow->GetTransform()->SetLocalPosition(m_pCenter->GetTransform()->GetWorldPosition());
 
 
 	for (size_t i = 0; i < m_pStageInfo.AllTile.size(); i++)
@@ -99,6 +98,8 @@ void TitleLevel::LevelChangeStart()
 	}
 
 	m_pRed->GetTransform()->SetLocalPosition(m_pStageInfo.AllTile[12].m_pTile->GetTransform()->GetWorldPosition());
+
+	CenterCheck();
 }
 
 void TitleLevel::LevelChangeEnd()
@@ -108,7 +109,6 @@ void TitleLevel::LevelChangeEnd()
 
 void TitleLevel::CenterCheck()
 {
-	
 	if (m_pCenter->IsCenter() == true && m_pCenter->GetTransform()->Collision({._OtherTrans = m_pStageInfo.AllTile[12].m_pTile->GetCol()->GetTransform()}))
 	{
 		for (size_t i = 0; i < m_pStageInfo.AllTile.size(); i++)
@@ -118,6 +118,7 @@ void TitleLevel::CenterCheck()
 				continue;
 			}
 			m_pStageInfo.AllTile[i].m_pTile->GetRender()->Off();
+			//m_pStageInfo.AllTile[i].m_pTile->GetRender()->ColorOptionValue.MulColor = float4{1.f,1.f,1.f,0.f};
 		}
 	}
 	else 
@@ -129,6 +130,7 @@ void TitleLevel::CenterCheck()
 				continue;
 			}
 			m_pStageInfo.AllTile[i].m_pTile->GetRender()->On();
+			//m_pStageInfo.AllTile[i].m_pTile->GetRender()->ColorOptionValue.PlusColor = float4{ 0.f,0.f,0.f,1.f };
 		}
 
 
@@ -179,7 +181,7 @@ void TitleLevel::PlanetSwap()
 			if (false == ((CenterX + 1 == TurnX && CenterY == TurnY) ||
 				(CenterX == TurnX && CenterY + 1 == TurnY) ||
 				(CenterX - 1 == TurnX && CenterY == TurnY) ||
-				(CenterX == TurnX && CenterY - 1 == TurnY)))
+				(CenterX == TurnX && CenterY - 1 == TurnY))|| ColTurnTile->m_fData.iz() == 361)
 			{
 				return;
 			}
@@ -206,9 +208,8 @@ void TitleLevel::PlanetSwap()
 			
 			m_pCenter->GetTransform()->SetWorldPosition(ColTurnTile->GetTransform()->GetWorldPosition());
 
-			std::shared_ptr<GameEngineSpriteRenderer> render = m_pBlackScreen->CreateComponent<GameEngineSpriteRenderer>(OrderNum::EFFECT);
-			render->SetScaleToTexture("bottomglow_E2.png");
-			render->GetTransform()->SetLocalPosition(m_pCenter->GetTransform()->GetWorldPosition());
+			std::shared_ptr<GlowEffect> pGlow = CreateActor<GlowEffect>(OrderNum::EFFECT);
+			pGlow->GetTransform()->SetLocalPosition(m_pCenter->GetTransform()->GetWorldPosition());
 
 			m_fLerpTime = 0;
 
@@ -217,4 +218,5 @@ void TitleLevel::PlanetSwap()
 			m_fCurTilePos = m_pStageInfo.AllTile[m_iCurIndex].m_pTile->GetTransform()->GetWorldPosition();
 		}
 
+		CenterCheck();
 }

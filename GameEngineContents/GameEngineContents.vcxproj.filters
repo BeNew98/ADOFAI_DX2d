@@ -46,6 +46,9 @@
     <ClInclude Include="FadeEffect.h">
       <Filter>PostEffect</Filter>
     </ClInclude>
+    <ClInclude Include="GlowEffect.h">
+      <Filter>PublicObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DFICore.cpp" />
@@ -90,6 +93,9 @@
       <Filter>PostEffect</Filter>
     </ClCompile>
     <ClCompile Include="Contents_Resources.cpp" />
+    <ClCompile Include="GlowEffect.cpp">
+      <Filter>PublicObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Levels">
