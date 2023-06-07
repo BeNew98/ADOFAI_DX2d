@@ -108,18 +108,19 @@ void TitleLevel::LevelChangeEnd()
 
 void TitleLevel::CenterCheck()
 {
-	if (m_pCenter->IsCenter() == true && m_pRed->GetTransform()->Collision({._OtherTrans = m_pStageInfo.AllTile[12].m_pTile->GetCol()->GetTransform()}))
+	
+	if (m_pCenter->IsCenter() == true && m_pCenter->GetTransform()->Collision({._OtherTrans = m_pStageInfo.AllTile[12].m_pTile->GetCol()->GetTransform()}))
 	{
 		for (size_t i = 0; i < m_pStageInfo.AllTile.size(); i++)
 		{
-			if (i==6|| i == 7 || i == 8 || i == 11 || i == 12 || i == 13 || i == 16 || i == 17 || i == 18)
+			if (i == 6 || i == 7 || i == 8 || i == 11 || i == 12 || i == 13 || i == 16 || i == 17 || i == 18)
 			{
 				continue;
 			}
 			m_pStageInfo.AllTile[i].m_pTile->GetRender()->Off();
 		}
 	}
-	else
+	else 
 	{
 		for (size_t i = 0; i < m_pStageInfo.AllTile.size(); i++)
 		{
@@ -169,9 +170,16 @@ void TitleLevel::PlanetSwap()
 
 			std::shared_ptr<Tiles> ColCenterTile = pCenterColTile->GetActor()->DynamicThis<Tiles>();
 			std::shared_ptr<Tiles> ColTurnTile = pTurnColTile->GetActor()->DynamicThis<Tiles>();
+			int CenterX =(ColCenterTile->m_fData.ix());
+			int CenterY =(ColCenterTile->m_fData.iy());
+			int TurnX	=(ColTurnTile->m_fData.ix());
+			int TurnY	=(ColTurnTile->m_fData.iy());
+			
 
-			if (ColCenterTile->m_fData.x!= ColTurnTile->m_fData.x +1&& ColCenterTile->m_fData.x != ColTurnTile->m_fData.x - 1 &&
-				ColCenterTile->m_fData.y != ColTurnTile->m_fData.y + 1 && ColCenterTile->m_fData.y != ColTurnTile->m_fData.y -1)
+			if (false == ((CenterX + 1 == TurnX && CenterY == TurnY) ||
+				(CenterX == TurnX && CenterY + 1 == TurnY) ||
+				(CenterX - 1 == TurnX && CenterY == TurnY) ||
+				(CenterX == TurnX && CenterY - 1 == TurnY)))
 			{
 				return;
 			}
