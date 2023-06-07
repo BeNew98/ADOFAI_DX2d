@@ -14,9 +14,17 @@ public:
 	GlowEffect& operator=(const GlowEffect& _Other) = delete;
 	GlowEffect& operator=(GlowEffect&& _Other) noexcept = delete;
 
+	std::shared_ptr<class GameEngineSpriteRenderer>GetRender()
+	{
+		return m_pRender;
+	}
+
 protected:
 	void Start() override;
-private:
+	void Update(float _DeltaTime) override;
 
+private:
+	std::shared_ptr<class GameEngineSpriteRenderer> m_pRender = nullptr;
+	TileDeg m_sDeg = {};
 };
 

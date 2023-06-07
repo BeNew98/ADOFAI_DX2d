@@ -117,8 +117,8 @@ void TitleLevel::CenterCheck()
 			{
 				continue;
 			}
-			m_pStageInfo.AllTile[i].m_pTile->GetRender()->Off();
-			//m_pStageInfo.AllTile[i].m_pTile->GetRender()->ColorOptionValue.MulColor = float4{1.f,1.f,1.f,0.f};
+			//m_pStageInfo.AllTile[i].m_pTile->GetRender()->Off();
+			m_pStageInfo.AllTile[i].m_pTile->SetPlusColor(float4{ 0.f,0.f,0.f,-1.f });
 		}
 	}
 	else 
@@ -129,8 +129,8 @@ void TitleLevel::CenterCheck()
 			{
 				continue;
 			}
-			m_pStageInfo.AllTile[i].m_pTile->GetRender()->On();
-			//m_pStageInfo.AllTile[i].m_pTile->GetRender()->ColorOptionValue.PlusColor = float4{ 0.f,0.f,0.f,1.f };
+			//m_pStageInfo.AllTile[i].m_pTile->GetRender()->On();
+			m_pStageInfo.AllTile[i].m_pTile->SetPlusColor(float4{ 0.f,0.f,0.f,1.f });
 		}
 
 
@@ -208,8 +208,7 @@ void TitleLevel::PlanetSwap()
 			
 			m_pCenter->GetTransform()->SetWorldPosition(ColTurnTile->GetTransform()->GetWorldPosition());
 
-			std::shared_ptr<GlowEffect> pGlow = CreateActor<GlowEffect>(OrderNum::EFFECT);
-			pGlow->GetTransform()->SetLocalPosition(m_pCenter->GetTransform()->GetWorldPosition());
+			ColTurnTile->GlowOn();
 
 			m_fLerpTime = 0;
 

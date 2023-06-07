@@ -48,6 +48,11 @@ public:
 	{
 		return m_pCollision;
 	}
+
+	void GlowOn()
+	{
+		m_bGlow = true;
+	}
 	
 	void DeathPivot()
 	{
@@ -56,18 +61,22 @@ public:
 	}
 
 	void PivotCal(float _Deg);
+	void SetMulColor(float4 _Color);
+	void SetPlusColor(float4 _Color);
 
 	float4 m_fData = float4::Zero;
 
 protected:
 	void Start() override;
+	void Update(float _DeltaTime) override;
 
 private:
 	std::shared_ptr<GameEngineSpriteRenderer> m_pRender = nullptr;
 	std::shared_ptr<GameEngineSpriteRenderer> m_pStartPivot = nullptr;
 	std::shared_ptr<GameEngineSpriteRenderer> m_pEndPivot = nullptr;
 
-	
+	bool m_bGlow = false;
+	std::shared_ptr<class GlowEffect> m_pGlow = nullptr;
 	float4 m_fStartBetPos = float4::Zero;
 	float4 m_fEndBetPos = float4::Zero;
 

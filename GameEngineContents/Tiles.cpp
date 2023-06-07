@@ -1,7 +1,10 @@
 #include "PrecompileHeader.h"
 #include "Tiles.h"
+#include <GameEngineCore/GameEngineLevel.h>
 #include <GameEngineCore/GameEngineSpriteRenderer.h>
 #include <GameEngineCore/GameEngineCollision.h>
+
+#include "GlowEffect.h"
 
 Tiles::Tiles() 
 {
@@ -23,6 +26,19 @@ void Tiles::Start()
 	m_pCollision = CreateComponent<GameEngineCollision>(OrderNum::MAP);
 	m_pCollision->GetTransform()->SetLocalScale({ 80.f,80.f,0.f });
 	
+}
+
+void Tiles::Update(float _DeltaTime)
+{
+	if (m_fData.iz()==360&& true == m_bGlow)
+	{
+		if (nullptr == m_pGlow)
+		{
+	
+			m_pGlow = GetLevel()->CreateActor<GlowEffect>(OrderNum::EFFECT);
+			m_pGlow->GetTransform()->SetLocalPosition(GetTransform()->GetWorldPosition());
+		}
+	}
 }
 
 
@@ -168,4 +184,24 @@ void Tiles::PivotCal(float _Deg)
 	m_fEndBetPos.y = -m_fEndBetPos.y;
 	m_pEndPivot->GetTransform()->SetLocalPosition(m_pStartPivot->GetTransform()->GetLocalPosition() + m_fEndBetPos);
 
+}
+
+void Tiles::SetMulColor(float4 _Color)
+{
+	m_pRender->ColorOptionValue.MulColor = _Color;
+	if (m_pGlow == nullptr)
+	{
+		return;
+	}
+	m_pGlow->GetRender()->ColorOptionValue.MulColor = _Color;
+}
+
+void Tiles::SetPlusColor(float4 _Color)
+{
+	m_pRender->ColorOptionValue.PlusColor = _Color;
+	if (m_pGlow == nullptr)
+	{
+		return;
+	}
+	m_pGlow->GetRender()->ColorOptionValue.PlusColor = _Color;
 }
