@@ -187,6 +187,9 @@ public:
 	float4 QuaternionToEulerDeg();
 	float4 QuaternionToEulerRad();
 
+	float XYDistance(float4 _Value);
+	float XYZDistance(float4 _Value);
+
 	int ix() const
 	{
 		return static_cast<int>(x);
@@ -711,7 +714,7 @@ public:
 		Arr2D[3][3] = 1.0f;
 	}
 
-	void Decompose(float4& _Scale, float4& _RotQuaternion, float4& _Pos)
+	void Decompose(float4& _Scale, float4& _RotQuaternion, float4& _Pos) const
 	{
 		DirectX::XMMatrixDecompose(&_Scale.DirectVector, &_RotQuaternion.DirectVector, &_Pos.DirectVector, DirectMatrix);
 	}

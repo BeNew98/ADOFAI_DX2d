@@ -67,9 +67,8 @@ void GameEngineCollision::SetOrder(int _Order)
 	GetLevel()->PushCollision(ConThis);
 }
 
-void GameEngineCollision::Update(float _Delta) 
+void GameEngineCollision::DebugRender(float _Delta)
 {
-
 	switch (Type)
 	{
 	case ColType::SPHERE2D:

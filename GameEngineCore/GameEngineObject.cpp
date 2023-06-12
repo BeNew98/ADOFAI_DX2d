@@ -119,6 +119,16 @@ bool GameEngineObject::IsUpdate()
 	return GameEngineObjectBase::IsUpdate();
 }
 
+void GameEngineObject::AllDestroy() 
+{
+	Destroy();
+
+	for (std::shared_ptr<GameEngineObject> Object : Childs)
+	{
+		Object->AllDestroy();
+	}
+}
+
 void GameEngineObject::AllLevelChangeStart() 
 {
 	LevelChangeStart();

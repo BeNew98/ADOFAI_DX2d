@@ -97,6 +97,15 @@ float4x4 float4::QuaternionToRotationMatrix()
 	return DirectX::XMMatrixRotationQuaternion(DirectVector);
 }
 
+float float4::XYDistance(float4 _Value)
+{
+	return sqrtf((x - _Value.x) * (x - _Value.x) + (y - _Value.y) * (y - _Value.y));
+}
+float float4::XYZDistance(float4 _Value)
+{
+	return sqrtf((x - _Value.x) * (x - _Value.x) + (y - _Value.y) * (y - _Value.y) + (z - _Value.z) * (z - _Value.z));
+}
+
 // 뭘하는 함수냐?
 // 123121 [1][2][3][1][2][1]
 std::vector<unsigned int> GameEngineMath::GetDigits(int _Value)
