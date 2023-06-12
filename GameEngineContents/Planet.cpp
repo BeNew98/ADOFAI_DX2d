@@ -53,7 +53,7 @@ void Planet::Start()
 	}
 
 
-
+	//GetTransform()->SetLocalScale({ 64.f, 64.f, 0.f });
 }
 
 void Planet::Update(float _DeltaTime)

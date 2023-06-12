@@ -29,6 +29,10 @@ public:
 	}
 
 	void CreateEffect();
+	std::shared_ptr<GameEngineCollision> GetCol()
+	{
+		return m_pCollision;
+	}
 
 protected:
 	void Start() override;

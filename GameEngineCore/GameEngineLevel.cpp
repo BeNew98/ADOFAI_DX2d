@@ -7,7 +7,7 @@
 #include "GameEngineDebug3D.h"
 #include <GameEnginePlatform/GameEngineInput.h>
 
-bool GameEngineLevel::IsDebugRender = true;
+bool GameEngineLevel::IsDebugRender = false;
 
 GameEngineLevel::GameEngineLevel() 
 {

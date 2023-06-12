@@ -69,10 +69,6 @@ void GameEngineCollision::SetOrder(int _Order)
 
 void GameEngineCollision::Update(float _Delta) 
 {
-	if (false == IsDebug())
-	{
-		return;
-	}
 
 	switch (Type)
 	{

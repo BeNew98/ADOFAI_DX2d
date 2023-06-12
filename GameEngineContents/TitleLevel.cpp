@@ -84,6 +84,7 @@ void TitleLevel::LevelChangeStart()
 		m_pStageInfo.AllTile[i].m_pTile->GetTransform()->AddWorldPosition({ -Tilepos.x, -Tilepos.y });
 	}
 	std::shared_ptr<Portal> pPortal1 = CreateActor<Portal>(OrderNum::MAP);
+	pPortal1->GetTransform()->SetLocalPosition(m_pStageInfo.AllTile[30].m_pTile->GetTransform()->GetWorldPosition());
 	//5pPortal1->SetFunction([]()
 	//5	{
 	//5		GameEngineCore::ChangeLevel("PlayLevel");
@@ -92,6 +93,7 @@ void TitleLevel::LevelChangeStart()
 	m_pRed->GetTransform()->SetLocalPosition(m_pStageInfo.AllTile[12].m_pTile->GetTransform()->GetWorldPosition());
 
 	CenterCheck();
+	
 }
 
 void TitleLevel::LevelChangeEnd()
@@ -110,6 +112,14 @@ void TitleLevel::CenterCheck()
 				continue;
 			}
 			m_pStageInfo.AllTile[i].m_pTile->GetRender()->Off();
+
+			if (m_pStageInfo.AllTile[i].m_pTile->GetGlow() == nullptr)
+			{
+				continue;
+			}
+
+			
+			m_pStageInfo.AllTile[i].m_pTile->GetGlow()->Off();
 			//m_pStageInfo.AllTile[i].m_pTile->SetPlusColor(float4{ 0.f,0.f,0.f, -1.f });
 		}
 	}
@@ -123,6 +133,12 @@ void TitleLevel::CenterCheck()
 			}
 
 			m_pStageInfo.AllTile[i].m_pTile->GetRender()->On();
+
+			if (m_pStageInfo.AllTile[i].m_pTile->GetGlow() == nullptr)
+			{
+				continue;
+			}
+			m_pStageInfo.AllTile[i].m_pTile->GetGlow()->On();
 			//m_pStageInfo.AllTile[i].m_pTile->SetPlusColor(float4{ 0.f,0.f,0.f,1.f });
 		}
 	}
@@ -145,68 +161,66 @@ void TitleLevel::CamMoveLerp(float _Ratio)
 
 void TitleLevel::PlanetSwap()
 {
+	if (true == GameEngineInput::IsAnyKey())
+	{
+		std::shared_ptr<GameEngineCollision> pCenterColTile = m_pCenter->GetCol()->Collision(OrderNum::MAP);
 
 
-		if (true == GameEngineInput::IsAnyKey())
+		std::shared_ptr<GameEngineCollision> pTurnColTile = m_pTurn->GetCol()->Collision(OrderNum::MAP);
+
+
+
+		if (nullptr == pTurnColTile)
 		{
-			std::shared_ptr<GameEngineCollision> pCenterColTile = m_pCenter->GetCollision()->Collision(OrderNum::MAP);
-
-
-			std::shared_ptr<GameEngineCollision> pTurnColTile = m_pTurn->GetCollision()->Collision(OrderNum::MAP);
-
-
-
-			if (nullptr==pTurnColTile)
-			{
-				return;
-			}
-
-			std::shared_ptr<Tiles> ColCenterTile = pCenterColTile->GetActor()->DynamicThis<Tiles>();
-			std::shared_ptr<Tiles> ColTurnTile = pTurnColTile->GetActor()->DynamicThis<Tiles>();
-			int CenterX =(ColCenterTile->m_fData.ix());
-			int CenterY =(ColCenterTile->m_fData.iy());
-			int TurnX	=(ColTurnTile->m_fData.ix());
-			int TurnY	=(ColTurnTile->m_fData.iy());
-			
-
-			if (false == ((CenterX + 1 == TurnX && CenterY == TurnY) ||
-				(CenterX == TurnX && CenterY + 1 == TurnY) ||
-				(CenterX - 1 == TurnX && CenterY == TurnY) ||
-				(CenterX == TurnX && CenterY - 1 == TurnY))|| ColTurnTile->m_fData.iz() == 361)
-			{
-				return;
-			}
-
-
-
-
-			m_pTurn->GetTransform()->SetParent(nullptr);
-			if (true == m_pRed->IsCenter())
-			{
-				m_pRed->CenterChange();
-				m_pBlue->CenterChange();
-				m_pCenter = m_pBlue;
-				m_pTurn = m_pRed;
-			}
-			else
-			{
-				m_pRed->CenterChange();
-				m_pBlue->CenterChange();
-				m_pCenter = m_pRed;
-				m_pTurn = m_pBlue;
-			}
-			m_pTurn->GetTransform()->SetParent(m_pCenter->GetTransform());
-			
-			m_pCenter->GetTransform()->SetWorldPosition(ColTurnTile->GetTransform()->GetWorldPosition());
-
-			ColTurnTile->GlowOn();
-
-			m_fLerpTime = 0;
-
-			++m_iCurIndex;
-			m_fPrevTilePos = m_pStageInfo.AllTile[m_iCurIndex - 1].m_pTile->GetTransform()->GetWorldPosition();
-			m_fCurTilePos = m_pStageInfo.AllTile[m_iCurIndex].m_pTile->GetTransform()->GetWorldPosition();
+			return;
 		}
 
-		CenterCheck();
+		std::shared_ptr<Tiles> ColCenterTile = pCenterColTile->GetActor()->DynamicThis<Tiles>();
+		std::shared_ptr<Tiles> ColTurnTile = pTurnColTile->GetActor()->DynamicThis<Tiles>();
+		int CenterX = (ColCenterTile->m_fData.ix());
+		int CenterY = (ColCenterTile->m_fData.iy());
+		int TurnX = (ColTurnTile->m_fData.ix());
+		int TurnY = (ColTurnTile->m_fData.iy());
+
+
+		if (false == ((CenterX + 1 == TurnX && CenterY == TurnY) ||
+			(CenterX == TurnX && CenterY + 1 == TurnY) ||
+			(CenterX - 1 == TurnX && CenterY == TurnY) ||
+			(CenterX == TurnX && CenterY - 1 == TurnY)) || ColTurnTile->m_fData.iz() == 361)
+		{
+			return;
+		}
+
+
+
+
+		m_pTurn->GetTransform()->SetParent(nullptr);
+		if (true == m_pRed->IsCenter())
+		{
+			m_pRed->CenterChange();
+			m_pBlue->CenterChange();
+			m_pCenter = m_pBlue;
+			m_pTurn = m_pRed;
+		}
+		else
+		{
+			m_pRed->CenterChange();
+			m_pBlue->CenterChange();
+			m_pCenter = m_pRed;
+			m_pTurn = m_pBlue;
+		}
+		m_pTurn->GetTransform()->SetParent(m_pCenter->GetTransform());
+
+		m_pCenter->GetTransform()->SetWorldPosition(ColTurnTile->GetTransform()->GetWorldPosition());
+
+		ColTurnTile->GlowOn();
+
+		//m_fLerpTime = 0;
+		//
+		//++m_iCurIndex;
+		//m_fPrevTilePos = m_pStageInfo.AllTile[m_iCurIndex - 1].m_pTile->GetTransform()->GetWorldPosition();
+		//m_fCurTilePos = m_pStageInfo.AllTile[m_iCurIndex].m_pTile->GetTransform()->GetWorldPosition();
+	}
+
+	CenterCheck();
 }

@@ -60,6 +60,11 @@ public:
 		m_pEndPivot->Death();
 	}
 
+	std::shared_ptr<class GlowEffect> GetGlow()
+	{
+		return m_pGlow;
+	}
+
 	void PivotCal(float _Deg);
 	void SetMulColor(float4 _Color);
 	void SetPlusColor(float4 _Color);
