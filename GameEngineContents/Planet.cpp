@@ -60,7 +60,7 @@ void Planet::Update(float _DeltaTime)
 {
 	if (m_bCenter==true)
 	{
-		GetTransform()->AddLocalRotation({ 0.f,0.f,-180.f * _DeltaTime });
+		GetTransform()->AddLocalRotation({ 0.f,0.f,-360.f * _DeltaTime });
 	}
 }
 

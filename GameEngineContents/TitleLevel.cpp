@@ -13,7 +13,7 @@
 #include "Planet.h"
 #include "EditGui.h"
 #include "GlowEffect.h"
-
+#include "Portal.h"
 
 TitleLevel::TitleLevel() 
 {
@@ -41,20 +41,7 @@ void TitleLevel::Start()
 
 void TitleLevel::LevelChangeStart()
 {
-	{
-		GameEngineDirectory NewDir;
-		NewDir.MoveParentToDirectory("ContentResources");
-		NewDir.Move("ContentResources");
-
-
-		std::vector<GameEngineFile> File = NewDir.GetAllFile({ ".Png", });
-
-
-		for (size_t i = 0; i < File.size(); i++)
-		{
-			GameEngineTexture::Load(File[i].GetFullPath());
-		}
-	}
+	
 	{
 
 		GetMainCamera()->SetProjectionType(CameraType::Orthogonal);
@@ -96,6 +83,11 @@ void TitleLevel::LevelChangeStart()
 	{
 		m_pStageInfo.AllTile[i].m_pTile->GetTransform()->AddWorldPosition({ -Tilepos.x, -Tilepos.y });
 	}
+	std::shared_ptr<Portal> pPortal1 = CreateActor<Portal>(OrderNum::MAP);
+	//5pPortal1->SetFunction([]()
+	//5	{
+	//5		GameEngineCore::ChangeLevel("PlayLevel");
+	//5	});
 
 	m_pRed->GetTransform()->SetLocalPosition(m_pStageInfo.AllTile[12].m_pTile->GetTransform()->GetWorldPosition());
 
@@ -117,11 +109,11 @@ void TitleLevel::CenterCheck()
 			{
 				continue;
 			}
-			//m_pStageInfo.AllTile[i].m_pTile->GetRender()->Off();
-			m_pStageInfo.AllTile[i].m_pTile->SetPlusColor(float4{ 0.f,0.f,0.f,-1.f });
+			m_pStageInfo.AllTile[i].m_pTile->GetRender()->Off();
+			//m_pStageInfo.AllTile[i].m_pTile->SetPlusColor(float4{ 0.f,0.f,0.f, -1.f });
 		}
 	}
-	else 
+	else
 	{
 		for (size_t i = 0; i < m_pStageInfo.AllTile.size(); i++)
 		{
@@ -129,11 +121,10 @@ void TitleLevel::CenterCheck()
 			{
 				continue;
 			}
-			//m_pStageInfo.AllTile[i].m_pTile->GetRender()->On();
-			m_pStageInfo.AllTile[i].m_pTile->SetPlusColor(float4{ 0.f,0.f,0.f,1.f });
+
+			m_pStageInfo.AllTile[i].m_pTile->GetRender()->On();
+			//m_pStageInfo.AllTile[i].m_pTile->SetPlusColor(float4{ 0.f,0.f,0.f,1.f });
 		}
-
-
 	}
 
 }

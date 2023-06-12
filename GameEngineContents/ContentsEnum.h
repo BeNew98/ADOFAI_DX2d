@@ -25,3 +25,12 @@ enum class TileDeg
 	Square = 360,
 	Blank,
 };
+
+enum class EventType
+{
+	ZOOM,
+	CAMMOVE,
+	BLACK,
+	ROTATION,
+
+};

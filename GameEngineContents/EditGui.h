@@ -4,11 +4,9 @@
 
 struct TileInfo
 {
-	std::shared_ptr<class Tiles> m_pTile;
-	bool m_Slow = false;
-	bool m_Fast = false;
-};
+	std::shared_ptr<class Tiles> m_pTile = nullptr;
 
+};
 struct StageInfo
 {
 	std::vector<TileInfo> AllTile;
