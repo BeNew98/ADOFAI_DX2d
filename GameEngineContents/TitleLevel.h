@@ -41,6 +41,8 @@ private:
 	float4 m_fCurTilePos = float4::Zero;
 	float4 m_fPrevTilePos = float4::Zero;
 
+
+	std::shared_ptr<class Portal> m_pPortal1 = nullptr;
 	void PlanetSwap();
 };
 

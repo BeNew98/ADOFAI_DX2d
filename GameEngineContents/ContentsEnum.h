@@ -9,6 +9,13 @@ enum class OrderNum
 
 };
 
+enum class ColNum
+{
+	TILE,
+	PLANET,
+	PORTAL,
+};
+
 enum class TileDeg
 {
 	Deg0	= 0,

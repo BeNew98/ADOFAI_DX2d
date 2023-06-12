@@ -23,7 +23,7 @@ void Tiles::Start()
 	m_pEndPivot = CreateComponent<GameEngineSpriteRenderer>();
 	m_pEndPivot->GetTransform()->SetLocalScale(float4(20.f, 20.f));
 
-	m_pCollision = CreateComponent<GameEngineCollision>(OrderNum::MAP);
+	m_pCollision = CreateComponent<GameEngineCollision>(ColNum::TILE);
 	m_pCollision->GetTransform()->SetLocalScale({ 80.f,80.f,0.f });
 	
 }
@@ -137,6 +137,7 @@ void Tiles::CreateTile(TileDeg _TileDeg)
 	case TileDeg::Blank:
 	{
 		m_pRender->SetScaleToTexture("nothing.png");
+		m_pCollision->Death();
 		return;
 	}
 	default:
@@ -144,6 +145,7 @@ void Tiles::CreateTile(TileDeg _TileDeg)
 		break;
 	}
 
+	
 
 	m_pCollision->GetTransform()->AddLocalPosition({ 0.f,16.f });
 

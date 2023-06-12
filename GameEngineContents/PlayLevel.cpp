@@ -32,7 +32,7 @@ void PlayLevel::LevelChangeStart()
 	GameEngineLevel::LevelChangeStart();
 	EditGui::Editor->LoadtoString("Level1");
 
-	std::shared_ptr<Player> player = CreateActor<Player>(OrderNum::PLANET);
+	//std::shared_ptr<Player> player = CreateActor<Player>(OrderNum::PLANET);
 
 }
 

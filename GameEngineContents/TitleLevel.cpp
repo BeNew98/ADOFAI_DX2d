@@ -75,25 +75,20 @@ void TitleLevel::LevelChangeStart()
 	m_pTurn = m_pBlue;
 
 
-	std::shared_ptr<GlowEffect> pGlow = CreateActor<GlowEffect>(OrderNum::EFFECT);
-	pGlow->GetTransform()->SetLocalPosition(m_pCenter->GetTransform()->GetWorldPosition());
-
 
 	for (size_t i = 0; i < m_pStageInfo.AllTile.size(); i++)
 	{
 		m_pStageInfo.AllTile[i].m_pTile->GetTransform()->AddWorldPosition({ -Tilepos.x, -Tilepos.y });
 	}
-	std::shared_ptr<Portal> pPortal1 = CreateActor<Portal>(OrderNum::MAP);
-	pPortal1->GetTransform()->SetLocalPosition(m_pStageInfo.AllTile[30].m_pTile->GetTransform()->GetWorldPosition());
-	//5pPortal1->SetFunction([]()
-	//5	{
-	//5		GameEngineCore::ChangeLevel("PlayLevel");
-	//5	});
+	m_pPortal1 = CreateActor<Portal>(OrderNum::MAP);
+	m_pPortal1->GetTransform()->SetLocalPosition(m_pStageInfo.AllTile[30].m_pTile->GetTransform()->GetWorldPosition());
+	m_pPortal1->SetFunction([]() {GameEngineCore::ChangeLevel("PlayLevel"); });
 
 	m_pRed->GetTransform()->SetLocalPosition(m_pStageInfo.AllTile[12].m_pTile->GetTransform()->GetWorldPosition());
 
 	CenterCheck();
 	
+	//IsDebugSwitch();
 }
 
 void TitleLevel::LevelChangeEnd()
@@ -163,16 +158,19 @@ void TitleLevel::PlanetSwap()
 {
 	if (true == GameEngineInput::IsAnyKey())
 	{
-		std::shared_ptr<GameEngineCollision> pCenterColTile = m_pCenter->GetCol()->Collision(OrderNum::MAP);
+		std::shared_ptr<GameEngineCollision> pCenterColTile = m_pCenter->GetCol()->Collision(ColNum::TILE);
 
+		std::vector<std::shared_ptr<GameEngineCollision>> vecCol;
+		m_pTurn->GetCol()->CollisionAll(ColNum::TILE, vecCol);
 
-		std::shared_ptr<GameEngineCollision> pTurnColTile = m_pTurn->GetCol()->Collision(OrderNum::MAP);
-
-
-
+		std::shared_ptr<GameEngineCollision> pTurnColTile = nullptr;
+		for (size_t i = 0; i < vecCol.size(); i++)
+		{
+			pTurnColTile = vecCol[i];
+		
 		if (nullptr == pTurnColTile)
 		{
-			return;
+			continue;
 		}
 
 		std::shared_ptr<Tiles> ColCenterTile = pCenterColTile->GetActor()->DynamicThis<Tiles>();
@@ -190,7 +188,7 @@ void TitleLevel::PlanetSwap()
 		{
 			return;
 		}
-
+		
 
 
 
@@ -221,6 +219,8 @@ void TitleLevel::PlanetSwap()
 		//m_fPrevTilePos = m_pStageInfo.AllTile[m_iCurIndex - 1].m_pTile->GetTransform()->GetWorldPosition();
 		//m_fCurTilePos = m_pStageInfo.AllTile[m_iCurIndex].m_pTile->GetTransform()->GetWorldPosition();
 	}
-
 	CenterCheck();
+	return;
+	}
+
 }
