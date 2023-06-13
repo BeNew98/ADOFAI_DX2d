@@ -68,7 +68,7 @@ void PlayLevel::PlanetSwap()
 		float fAngle = f4Angle.x * GameEngineMath::RadToDeg;
 		float NextTileDeg = pNextTile->m_fData.z;
 
-		if (fAngle>25.f|| fAngle<-25.f)
+		if (fAngle>=45.f|| fAngle<=-45.f)
 		{
 			return;
 		}
