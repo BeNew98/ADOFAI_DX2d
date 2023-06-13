@@ -20,6 +20,7 @@ CenterLevel::~CenterLevel()
 
 void CenterLevel::Start()
 {
+	EditGui::Editor->Off();
 	GameEngineInput::CreateKey("TitleLevel", '1');
 	GameEngineInput::CreateKey("PlayLevel", '2');
 	GameEngineInput::CreateKey("EditLevel", '3');
