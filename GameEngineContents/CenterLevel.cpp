@@ -43,6 +43,13 @@ void CenterLevel::Start()
 		}
 	}
 
+
+	//윗쪽은 MainCam 아랫쪽은 UICam
+	//왼쪽은 배경x	오른쪽은 배경o
+
+	//		Main + 배경x    Main + 배경o
+	
+	//		UI  + 배경x     UI  + 배경o 
 	{
 		std::shared_ptr<TestScreen> render = CreateActor<TestScreen>();
 	}
