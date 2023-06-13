@@ -31,7 +31,7 @@ void Tiles::Start()
 
 void Tiles::Update(float _DeltaTime)
 {
-	if (m_fData.iz()==360&& true == m_bGlow)
+	if (m_fData.iz()!=360&& true == m_bGlow)
 	{
 		if (nullptr == m_pGlow)
 		{

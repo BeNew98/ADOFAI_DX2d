@@ -65,9 +65,9 @@ public:
 		return m_pGlow;
 	}
 
-	std::shared_ptr<class GameEngineComponent>GetPivot()
+	float4 GetPivotPos()
 	{
-		return m_pCenterPivot;
+		return m_pCenterPivot->GetTransform()->GetWorldPosition();
 	}
 
 	void PivotCal(float _Deg);

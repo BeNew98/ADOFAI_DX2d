@@ -26,6 +26,7 @@ TitleLevel::~TitleLevel()
 
 void TitleLevel::Update(float _DeltaTime)
 {
+
 	//CamMoveLerp(_DeltaTime);
 	//CenterCheck();
 	PlanetSwap();
@@ -91,8 +92,8 @@ void TitleLevel::LevelChangeStart()
 	m_pRed->GetTransform()->SetLocalPosition(m_pStageInfo.AllTile[12].m_pTile->GetTransform()->GetWorldPosition());
 
 	CenterCheck();
-	
-	//IsDebugSwitch();
+
+	EditGui::Editor->Off();
 }
 
 void TitleLevel::LevelChangeEnd()

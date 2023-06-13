@@ -4,6 +4,10 @@
 #include <GameEnginePlatform/GameEngineInput.h>
 #include <GameEngineCore/GameEngineCore.h>
 #include <GameEngineCore/GameEngineCamera.h>
+#include <GameEngineCore/GameEngineSpriteRenderer.h>
+
+#include "EditGui.h"
+#include "GlowEffect.h"
 
 CenterLevel::CenterLevel() 
 {
@@ -19,6 +23,7 @@ void CenterLevel::Start()
 	GameEngineInput::CreateKey("PlayLevel", '2');
 	GameEngineInput::CreateKey("EditLevel", '3');
 	GameEngineInput::CreateKey("CenterLevel", '4');
+
 	GetMainCamera()->SetProjectionType(CameraType::Orthogonal);
 	GetMainCamera()->GetTransform()->SetLocalPosition({ 0, 0, -1000.0f });
 
@@ -36,6 +41,8 @@ void CenterLevel::Start()
 			GameEngineTexture::Load(File[i].GetFullPath());
 		}
 	}
+
+	std::shared_ptr<GlowEffect> rende = CreateActor<GlowEffect>();
 }
 
 
@@ -49,6 +56,7 @@ void CenterLevel::Update(float _DeltaTime)
 	if (GameEngineInput::IsDown("PlayLevel"))
 	{
 		GameEngineCore::ChangeLevel("PlayLevel");
+		EditGui::Editor->SetLevel(1);
 	}
 
 	if (GameEngineInput::IsDown("EditLevel"))

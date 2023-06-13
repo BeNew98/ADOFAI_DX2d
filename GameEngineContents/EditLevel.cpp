@@ -56,9 +56,7 @@ void EditLevel::Update(float _Deltatime)
 }
 
 void EditLevel::LevelChangeStart()
-{
-
-
+{	
 	m_pEditor->On();
 
 	m_pMouse = CreateActor<MyMouse>();
