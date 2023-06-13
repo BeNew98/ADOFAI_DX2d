@@ -65,6 +65,11 @@ public:
 		return m_pGlow;
 	}
 
+	std::shared_ptr<class GameEngineComponent>GetPivot()
+	{
+		return m_pCenterPivot;
+	}
+
 	void PivotCal(float _Deg);
 	void SetMulColor(float4 _Color);
 	void SetPlusColor(float4 _Color);
@@ -79,6 +84,7 @@ private:
 	std::shared_ptr<GameEngineSpriteRenderer> m_pRender = nullptr;
 	std::shared_ptr<GameEngineSpriteRenderer> m_pStartPivot = nullptr;
 	std::shared_ptr<GameEngineSpriteRenderer> m_pEndPivot = nullptr;
+	std::shared_ptr<class GameEngineComponent> m_pCenterPivot = nullptr;
 
 	bool m_bGlow = false;
 	std::shared_ptr<class GlowEffect> m_pGlow = nullptr;

@@ -33,7 +33,8 @@ private:
 	std::shared_ptr<Planet> m_pCenter = nullptr;
 	std::shared_ptr<Planet> m_pTurn = nullptr;
 
+	int m_iCurIndex = 0;
 
-	void PlanetSwap()
+	void PlanetSwap();
 };
 

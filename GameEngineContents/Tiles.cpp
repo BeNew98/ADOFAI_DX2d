@@ -14,7 +14,7 @@ Tiles::~Tiles()
 {
 }
 
-¤»
+
 void Tiles::Start()
 {
 
@@ -25,7 +25,11 @@ void Tiles::Start()
 
 	m_pCollision = CreateComponent<GameEngineCollision>(ColNum::TILE);
 	m_pCollision->GetTransform()->SetLocalScale({ 80.f,80.f,0.f });
-	
+
+	m_pCenterPivot = CreateComponent<GameEngineComponent>();
+	std::shared_ptr< GameEngineSpriteRenderer> rende = CreateComponent<GameEngineSpriteRenderer>(OrderNum::PLANET);
+	rende->GetTransform()->SetLocalScale({ 80.f,80.f,0.f });
+	rende->GetTransform()->AddLocalPosition({ 0.f,16.f });
 }
 
 void Tiles::Update(float _DeltaTime)
@@ -146,7 +150,7 @@ void Tiles::CreateTile(TileDeg _TileDeg)
 	}
 
 	
-
+	m_pCenterPivot->GetTransform()->AddLocalPosition({ 0.f,16.f });
 	m_pCollision->GetTransform()->AddLocalPosition({ 0.f,16.f });
 
 	PivotCal(static_cast<float>(_TileDeg));
