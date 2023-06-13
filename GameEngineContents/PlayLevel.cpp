@@ -68,11 +68,10 @@ void PlayLevel::PlanetSwap()
 		float fAngle = f4Angle.x * GameEngineMath::RadToDeg;
 		float NextTileDeg = pNextTile->m_fData.z;
 
-		if (fAngle>20.f|| fAngle<-20.f)
+		if (fAngle>25.f|| fAngle<-25.f)
 		{
 			return;
 		}
-		int a = 0;
 
 		m_pTurn->GetTransform()->SetParent(nullptr);
 		if (true == m_pRed->IsCenter())
