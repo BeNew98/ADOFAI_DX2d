@@ -2,9 +2,6 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClInclude Include="DFICore.h" />
-    <ClInclude Include="Player.h">
-      <Filter>PublicObject</Filter>
-    </ClInclude>
     <ClInclude Include="PrecompileHeader.h" />
     <ClInclude Include="TestObject.h">
       <Filter>PublicObject</Filter>
@@ -49,12 +46,10 @@
     <ClInclude Include="GlowEffect.h">
       <Filter>PublicObject</Filter>
     </ClInclude>
+    <ClInclude Include="Portal.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DFICore.cpp" />
-    <ClCompile Include="Player.cpp">
-      <Filter>PublicObject</Filter>
-    </ClCompile>
     <ClCompile Include="PrecompileHeader.cpp" />
     <ClCompile Include="TestObject.cpp">
       <Filter>PublicObject</Filter>
@@ -96,6 +91,7 @@
     <ClCompile Include="GlowEffect.cpp">
       <Filter>PublicObject</Filter>
     </ClCompile>
+    <ClCompile Include="Portal.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Levels">

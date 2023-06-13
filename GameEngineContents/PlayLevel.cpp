@@ -8,6 +8,8 @@
 #include <GameEngineCore/GameEngineCoreWindow.h>
 
 #include "EditGui.h"
+#include "Tiles.h"
+#include "Planet.h"
 
 PlayLevel::PlayLevel()
 {
@@ -29,14 +31,20 @@ void PlayLevel::Start()
 }
 void PlayLevel::LevelChangeStart()
 {
-	GameEngineLevel::LevelChangeStart();
-	EditGui::Editor->LoadtoString("Level1");
+	EditGui::Editor->LoadtoString("");
 
-	//std::shared_ptr<Player> player = CreateActor<Player>(OrderNum::PLANET);
+	m_pStageInfo = EditGui::Editor->GetStageInfo(0);
+
+	m_pRed = CreateActor<Planet>(OrderNum::PLANET);
+	m_pBlue = CreateActor<Planet>(OrderNum::PLANET);
+	float4 Tilepos = m_pStageInfo.AllTile[12].m_pTile->GetTransform()->GetWorldPosition();
+	m_pBlue->GetTransform()->SetParent(m_pRed->GetTransform());
+	m_pBlue->GetTransform()->AddLocalPosition({ -100.f,0.f,0.f });
+	m_pCenter = m_pRed;
+	m_pTurn = m_pBlue;
 
 }
 
 void PlayLevel::LevelChangeEnd()
 {
-	GameEngineLevel::LevelChangeEnd();
 }

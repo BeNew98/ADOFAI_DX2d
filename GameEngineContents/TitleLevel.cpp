@@ -82,7 +82,11 @@ void TitleLevel::LevelChangeStart()
 	}
 	m_pPortal1 = CreateActor<Portal>(OrderNum::MAP);
 	m_pPortal1->GetTransform()->SetLocalPosition(m_pStageInfo.AllTile[30].m_pTile->GetTransform()->GetWorldPosition());
-	m_pPortal1->SetFunction([]() {GameEngineCore::ChangeLevel("PlayLevel"); });
+	m_pPortal1->SetFunction([]() 
+		{
+			GameEngineCore::ChangeLevel("PlayLevel"); 
+			EditGui::Editor->SetLevel(1);
+		});
 
 	m_pRed->GetTransform()->SetLocalPosition(m_pStageInfo.AllTile[12].m_pTile->GetTransform()->GetWorldPosition());
 
@@ -186,7 +190,7 @@ void TitleLevel::PlanetSwap()
 				(CenterX - 1 == TurnX && CenterY == TurnY) ||
 				(CenterX == TurnX && CenterY - 1 == TurnY)) || ColTurnTile->m_fData.iz() == 361)
 			{
-				return;
+				continue;
 			}
 
 

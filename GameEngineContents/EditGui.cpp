@@ -10,7 +10,6 @@
 
 #include "Tiles.h"
 #include "EditLevel.h"
-#include "Player.h"
 
 
 EditGui* EditGui::Editor = nullptr;
@@ -319,11 +318,16 @@ void EditGui::Load()
 }
 void EditGui::LoadtoString(std::string_view _FileName)
 {
+	std::string FileName = _FileName.data();
+	if (_FileName =="")
+	{
+		FileName = "Level" + GameEngineString::ToString(m_iLevelValue);
+	}
 	GameEngineDirectory NewDir;
 	NewDir.MoveParentToDirectory("ContentResources");
 	NewDir.Move("ContentResources");
 	NewDir.Move("Text");
-	std::string Initpath = NewDir.GetPath().GetFullPath() + "\\" + _FileName.data();
+	std::string Initpath = NewDir.GetPath().GetFullPath() + "\\" + FileName;
 
 
 	GameEngineFile file = GameEngineFile(Initpath);
@@ -365,13 +369,8 @@ void EditGui::LoadtoString(std::string_view _FileName)
 }
 void EditGui::CreatePlayer(std::shared_ptr<class GameEngineLevel> _Level)
 {
-	if (nullptr!=m_pPlayer)
-	{
-		m_pPlayer->GetTransform()->SetLocalPosition({ 0.f,0.f,0.f });
-		return;
-	}
-	m_pPlayer = _Level->CreateActor<Player>(0);
-	m_pPlayer->GetTransform()->SetLocalPosition({ 0.f,0.f,0.f });
+
+
 }
 
 void EditGui::DeleteCurTile()

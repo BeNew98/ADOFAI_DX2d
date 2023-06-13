@@ -32,11 +32,16 @@ public:
 
 	static EditGui* Editor;
 
-	void LoadtoString(std::string_view _FileName);
+	void LoadtoString(std::string_view _FileName = "");
 
 	StageInfo GetStageInfo(int _Index)
 	{
 		return m_vecAllStage[_Index];
+	}
+
+	void SetLevel(int _Level)
+	{
+		m_iLevelValue = _Level;
 	}
 
 protected:
@@ -49,6 +54,7 @@ private:
 	int m_iCurDegree = 0;
 	int m_iX = 0;
 	int m_iY = 0;
+	int m_iLevelValue = 0;
 	float m_iTileSize = 96.f;
 
 

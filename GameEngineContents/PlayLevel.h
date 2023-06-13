@@ -1,5 +1,6 @@
 #pragma once
 #include <GameEngineCore\GameEngineLevel.h>
+#include "EditGui.h"
 
 // Ό³Έν :
 class PlayLevel : public GameEngineLevel
@@ -26,6 +27,11 @@ protected:
 
 
 private:
+	StageInfo m_pStageInfo = {};
+	std::shared_ptr<class Planet> m_pRed = nullptr;
+	std::shared_ptr<class Planet> m_pBlue = nullptr;
+	std::shared_ptr<Planet> m_pCenter = nullptr;
+	std::shared_ptr<Planet> m_pTurn = nullptr;
 
 
 };
