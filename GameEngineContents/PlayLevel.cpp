@@ -63,12 +63,15 @@ void PlayLevel::PlanetSwap()
 		std::shared_ptr<Tiles> pNextTile = m_pStageInfo.AllTile[m_iCurIndex + 1].m_pTile;
 		float4 f4NextTilePos = pNextTile->GetPivotPos();
 
-		float fAngle = 0.f;
-
 		float4 f4Angle = DirectX::XMVector2AngleBetweenVectors(f4NextTilePos- f4CenterPos, f4TurnPos- f4CenterPos);
 
-		fAngle = f4Angle.x* GameEngineMath::RadToDeg;;
+		float fAngle = f4Angle.x * GameEngineMath::RadToDeg;
 		float NextTileDeg = pNextTile->m_fData.z;
+
+		if (fAngle>20.f|| fAngle<-20.f)
+		{
+			return;
+		}
 		int a = 0;
 
 		m_pTurn->GetTransform()->SetParent(nullptr);
