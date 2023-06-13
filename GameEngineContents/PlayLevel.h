@@ -34,5 +34,6 @@ private:
 	std::shared_ptr<Planet> m_pTurn = nullptr;
 
 
+	void PlanetSwap()
 };
 
