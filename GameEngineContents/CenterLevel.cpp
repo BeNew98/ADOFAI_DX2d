@@ -7,7 +7,8 @@
 #include <GameEngineCore/GameEngineSpriteRenderer.h>
 
 #include "EditGui.h"
-#include "GlowEffect.h"
+#include "TestScreen.h"
+#include "TestObject.h"
 
 CenterLevel::CenterLevel() 
 {
@@ -42,7 +43,20 @@ void CenterLevel::Start()
 		}
 	}
 
-	std::shared_ptr<GlowEffect> rende = CreateActor<GlowEffect>();
+	{
+		std::shared_ptr<TestScreen> render = CreateActor<TestScreen>();
+	}
+
+	{
+		std::shared_ptr<TestObject> render = CreateActor<TestObject>();
+		render->GetTransform()->AddLocalPosition({-500.f,0.f});
+	} 
+	{
+		std::shared_ptr<TestObject> render = CreateActor<TestObject>();
+		render->GetTransform()->AddLocalPosition({ 500.f,0.f });
+	}
+
+
 }
 
 

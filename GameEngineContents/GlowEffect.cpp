@@ -15,11 +15,6 @@ GlowEffect::~GlowEffect()
 
 void GlowEffect::Start()
 {
-	{
-		m_pRender = CreateComponent<GameEngineSpriteRenderer>(OrderNum::EFFECT);
-		m_pRender->SetTexture("nothing.png");
-		m_pRender->GetTransform()->SetLocalScale({ 1600.f, 900.f, 0.f, 0.f });
-			}
 	m_pRender = CreateComponent<GameEngineSpriteRenderer>(OrderNum::EFFECT);
 	m_pRender->SetScaleToTexture("bottomglow_E2.png");
 }

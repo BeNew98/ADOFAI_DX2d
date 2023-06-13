@@ -15,8 +15,6 @@ public:
 	TestObject& operator=(const TestObject& _Other) = delete;
 	TestObject& operator=(TestObject&& _Other) noexcept = delete;
 
-	std::shared_ptr<class GameEngineSpriteRenderer> Render;
-
 protected:
 	void Start();
 	void Update(float _Delta) override;

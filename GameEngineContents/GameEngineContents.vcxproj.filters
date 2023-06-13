@@ -47,6 +47,9 @@
       <Filter>PublicObject</Filter>
     </ClInclude>
     <ClInclude Include="Portal.h" />
+    <ClInclude Include="TestScreen.h">
+      <Filter>PublicObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DFICore.cpp" />
@@ -92,6 +95,9 @@
       <Filter>PublicObject</Filter>
     </ClCompile>
     <ClCompile Include="Portal.cpp" />
+    <ClCompile Include="TestScreen.cpp">
+      <Filter>PublicObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Levels">
