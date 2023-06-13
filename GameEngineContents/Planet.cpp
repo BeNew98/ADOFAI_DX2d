@@ -31,7 +31,7 @@ void Planet::Start()
 
 		m_pCollision = CreateComponent<GameEngineCollision>(ColNum::PLANET);
 		m_pCollision->GetTransform()->SetLocalScale({ 64.f, 64.f, 0.f });
-		m_iUseCount += render.use_count();
+		m_iUseCount = 0;
 
 	}
 	else
@@ -48,7 +48,7 @@ void Planet::Start()
 
 
 
-		m_iUseCount += prender.use_count();
+		++m_iUseCount;
 
 	}
 

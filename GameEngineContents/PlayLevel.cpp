@@ -38,11 +38,12 @@ void PlayLevel::LevelChangeStart()
 
 	m_pRed = CreateActor<Planet>(OrderNum::PLANET);
 	m_pBlue = CreateActor<Planet>(OrderNum::PLANET);
-	float4 Tilepos = m_pStageInfo.AllTile[12].m_pTile->GetTransform()->GetWorldPosition();
 	m_pBlue->GetTransform()->SetParent(m_pRed->GetTransform());
 	m_pBlue->GetTransform()->AddLocalPosition({ -100.f,0.f,0.f });
 	m_pCenter = m_pRed;
 	m_pTurn = m_pBlue;
+
+	m_pCenter->GetTransform()->SetWorldPosition(m_pStageInfo.AllTile[0].m_pTile->GetPivot()->GetTransform()->GetWorldPosition());
 
 }
 
