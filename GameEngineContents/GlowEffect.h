@@ -18,6 +18,14 @@ public:
 	{
 		return m_pRender;
 	}
+	void SetGlow(GlowType _Type)
+	{
+		m_sType = _Type;
+	}
+	void SetIndex(int _Index)
+	{
+		m_iIndex = _Index;
+	}
 
 protected:
 	void Start() override;
@@ -26,5 +34,11 @@ protected:
 private:
 	std::shared_ptr<class GameEngineSpriteRenderer> m_pRender = nullptr;
 	TileDeg m_sDeg = {};
+	GlowType m_sType = GlowType::ROUND;
+	int m_iIndex = 0;
+	float m_fTime = 0.f;
+	bool m_bColor = false;
+
+	bool m_bCheckValue = false;
 };
 

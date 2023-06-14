@@ -35,7 +35,33 @@ void Tiles::Update(float _DeltaTime)
 	
 			m_pGlow = GetLevel()->CreateActor<GlowEffect>(OrderNum::EFFECT);
 			m_pGlow->GetTransform()->SetLocalPosition(m_pCenterPivot->GetTransform()->GetWorldPosition());
+			m_pGlow->SetGlow(GlowType::ROUND);
+			m_pGlow->SetIndex(m_iIndex);
 		}
+	}
+	else if (m_fData.iz() == 360 && true == m_bGlow)
+	{
+		if (nullptr == m_pGlow)
+		{
+			m_pGlow = GetLevel()->CreateActor<GlowEffect>(OrderNum::EFFECT);
+			m_pGlow->GetTransform()->SetLocalPosition(m_pCenterPivot->GetTransform()->GetWorldPosition());
+			m_pGlow->SetGlow(GlowType::SQUARE_WHITE);
+			m_pGlow->SetIndex(m_iIndex);
+		}
+	}
+	EventStart();
+}
+
+void Tiles::EventStart()
+{
+	if (m_vecPtr.size() !=0 && false == m_bEventTrigger)
+	{
+		for (size_t i = 0; i < m_vecPtr.size(); i++)
+		{
+			m_vecPtr[i]();
+		}
+		m_vecPtr.clear();
+		m_bEventTrigger = true;
 	}
 }
 

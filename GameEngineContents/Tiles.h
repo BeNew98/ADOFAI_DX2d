@@ -77,7 +77,7 @@ public:
 
 	void EventOn()
 	{
-		m_EventTrigger = true;
+		m_bEventTrigger = true;
 	}
 	void SetFunction(std::function<void()> _Ptr)
 	{
@@ -93,6 +93,15 @@ public:
 	{
 		m_fData = _Data;
 	}
+	void SetIndex(int _Idx)
+	{
+		m_iIndex = _Idx;
+	}
+	int GetIndex()
+	{
+		return m_iIndex;
+	}
+
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
@@ -105,6 +114,7 @@ private:
 
 
 	float4 m_fData = float4::Zero;
+	int m_iIndex = 0;
 
 	bool m_bGlow = false;
 	std::shared_ptr<class GlowEffect> m_pGlow = nullptr;
@@ -118,7 +128,9 @@ private:
 	std::shared_ptr<class GameEngineCollision> m_pCollision;
 
 
-	bool m_EventTrigger = false;
+	bool m_bEventTrigger = false;
 	std::vector<std::function<void()>> m_vecPtr;
+
+	void EventStart();
 };
 
