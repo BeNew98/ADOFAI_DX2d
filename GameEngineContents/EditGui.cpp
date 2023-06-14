@@ -32,6 +32,20 @@ void EditGui::Start()
 int iCurTileNum = 0;
 void EditGui::OnGUI(std::shared_ptr<class GameEngineLevel> _Level, float _DeltaTime)
 {
+
+	std::shared_ptr<GameEngineCamera> Camera = _Level->GetMainCamera();
+
+	// ·£´õ·¯ 
+	float4x4 ViewPort = Camera->GetViewPort();
+	float4x4 Proj = Camera->GetProjection();
+	float4x4 View = Camera->GetView();
+
+	float4 Mouse = GameEngineInput::GetMousePosition();
+
+	Mouse *= ViewPort.InverseReturn();
+	Mouse *= Proj.InverseReturn();
+	Mouse *= View.InverseReturn();
+
 	if (0<m_vecAllStage[m_iCurLevel].AllTile.size())
 	{	
 		TileInfo CurTileInfo = m_vecAllStage[m_iCurLevel].AllTile[m_vecAllStage[m_iCurLevel].AllTile.size() - 1];
@@ -47,27 +61,21 @@ void EditGui::OnGUI(std::shared_ptr<class GameEngineLevel> _Level, float _DeltaT
 		ImGui::NextColumn();
 		ImGui::Text("x: %f", CurTileInfo.m_pTile->GetTransform()->GetLocalPosition().x);
 		ImGui::Text("y: %f", CurTileInfo.m_pTile->GetTransform()->GetLocalPosition().y);
-		ImGui::Text("z: %f", CurTileInfo.m_pTile->GetTransform()->GetLocalPosition().z);
-		ImGui::Text("w: %f", CurTileInfo.m_pTile->GetTransform()->GetLocalPosition().w);
 		ImGui::NextColumn();
 		ImGui::Separator();
 
-		ImGui::Text("StartPivotPos");
+		ImGui::Text("CenterPivotPos");
 		ImGui::NextColumn();
-		ImGui::Text("x: %f", CurTileInfo.m_pTile->GetStartPivotPos().x);
-		ImGui::Text("y: %f", CurTileInfo.m_pTile->GetStartPivotPos().y);
-		ImGui::Text("z: %f", CurTileInfo.m_pTile->GetStartPivotPos().z);
-		ImGui::Text("w: %f", CurTileInfo.m_pTile->GetStartPivotPos().w);
+		ImGui::Text("x: %f", CurTileInfo.m_pTile->GetPivotPos().x);
+		ImGui::Text("y: %f", CurTileInfo.m_pTile->GetPivotPos().y);
 		ImGui::NextColumn();
 		ImGui::Separator();
 
 
-		ImGui::Text("EndPivotPos");
+		ImGui::Text("Mouse-Pivot");
 		ImGui::NextColumn();
-		ImGui::Text("x: %f", CurTileInfo.m_pTile->GetEndPivotPos().x);
-		ImGui::Text("y: %f", CurTileInfo.m_pTile->GetEndPivotPos().y);
-		ImGui::Text("z: %f", CurTileInfo.m_pTile->GetEndPivotPos().z);
-		ImGui::Text("w: %f", CurTileInfo.m_pTile->GetEndPivotPos().w);
+		ImGui::Text("x: %f", CurTileInfo.m_pTile->GetPivotPos().x-Mouse.x);
+		ImGui::Text("y: %f", CurTileInfo.m_pTile->GetPivotPos().y-Mouse.y);
 		ImGui::NextColumn();
 		ImGui::Columns(1);
 		ImGui::Separator();

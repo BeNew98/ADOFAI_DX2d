@@ -21,10 +21,12 @@ CenterLevel::~CenterLevel()
 void CenterLevel::Start()
 {
 	EditGui::Editor->Off();
-	GameEngineInput::CreateKey("TitleLevel", '1');
-	GameEngineInput::CreateKey("PlayLevel", '2');
-	GameEngineInput::CreateKey("EditLevel", '3');
-	GameEngineInput::CreateKey("CenterLevel", '4');
+	GameEngineInput::CreateKey("Level1", '1');
+	GameEngineInput::CreateKey("Level2", '2');
+	GameEngineInput::CreateKey("TitleLevel", '7');
+	GameEngineInput::CreateKey("PlayLevel", '8');
+	GameEngineInput::CreateKey("EditLevel", '9');
+	GameEngineInput::CreateKey("CenterLevel", '0');
 
 	GetMainCamera()->SetProjectionType(CameraType::Orthogonal);
 	GetMainCamera()->GetTransform()->SetLocalPosition({ 0, 0, -1000.0f });

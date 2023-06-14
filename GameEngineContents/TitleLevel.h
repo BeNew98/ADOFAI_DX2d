@@ -31,7 +31,7 @@ private:
 	std::shared_ptr<Planet> m_pTurn = nullptr;
 
 	std::shared_ptr<class BlackScreen> m_pBlackScreen = nullptr;
-
+	std::shared_ptr<class TitleLogo> m_pLogo = nullptr;
 	void CenterCheck();
 	void CamMoveLerp(float _Ratio);
 

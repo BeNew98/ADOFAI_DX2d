@@ -38,6 +38,16 @@ void TitleLevel::Update(float _DeltaTime)
 	{
 		GameEngineCore::ChangeLevel("CenterLevel");
 	}
+	if (GameEngineInput::IsDown("Level1"))
+	{
+		GameEngineCore::ChangeLevel("PlayLevel");
+		EditGui::Editor->SetLevel(1);
+	}
+	//if (GameEngineInput::IsDown("Level2"))
+	//{
+	//	GameEngineCore::ChangeLevel("PlayLevel");
+	//	EditGui::Editor->SetLevel(2);
+	//}
 }
 
 void TitleLevel::Start()
@@ -63,8 +73,8 @@ void TitleLevel::LevelChangeStart()
 		std::shared_ptr<BackGroundRenderer> pStar1 = m_pBlackScreen->CreateComponent<BackGroundRenderer>(OrderNum::BACKGROUND);
 		pStar1->SetScaleToTexture("starfields2.png");
 
-		std::shared_ptr<TitleLogo> pLogo = CreateActor<TitleLogo>(0);
-		pLogo->GetTransform()->SetLocalPosition({ 0.f,300.f,0.f });
+		m_pLogo = CreateActor<TitleLogo>(OrderNum::BACKGROUND);
+		m_pLogo->GetTransform()->SetLocalPosition({ 0.f,300.f,0.f });
 
 
 		
@@ -105,6 +115,7 @@ void TitleLevel::LevelChangeStart()
 
 void TitleLevel::LevelChangeEnd()
 {
+	AllActorDestroy();
 }
 
 
@@ -129,6 +140,7 @@ void TitleLevel::CenterCheck()
 			m_pStageInfo.AllTile[i].m_pTile->GetGlow()->Off();
 			//m_pStageInfo.AllTile[i].m_pTile->SetPlusColor(float4{ 0.f,0.f,0.f, -1.f });
 		}
+		m_pLogo->On();
 	}
 	else
 	{
@@ -148,6 +160,7 @@ void TitleLevel::CenterCheck()
 			m_pStageInfo.AllTile[i].m_pTile->GetGlow()->On();
 			//m_pStageInfo.AllTile[i].m_pTile->SetPlusColor(float4{ 0.f,0.f,0.f,1.f });
 		}
+		m_pLogo->Off();
 	}
 
 }

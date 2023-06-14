@@ -23,9 +23,6 @@ void Tiles::Start()
 	m_pEndPivot = CreateComponent<GameEngineSpriteRenderer>();
 	m_pEndPivot->GetTransform()->SetLocalScale(float4(20.f, 20.f));
 
-	m_pCollision = CreateComponent<GameEngineCollision>(ColNum::TILE);
-	m_pCollision->GetTransform()->SetLocalScale({ 80.f,80.f,0.f });
-
 	m_pCenterPivot = CreateComponent<GameEngineComponent>();
 }
 
@@ -53,6 +50,7 @@ void Tiles::CreateTile(TileDeg _TileDeg)
 		m_pRender->SetScaleToTexture("tiles_new_world1_b_0_Sprite.png");
 		m_fStartCal ={ 3.f,28.f};
 		m_fEndCal = { 153.f,28.f };
+		m_pCenterPivot->GetTransform()->AddLocalPosition({ 0.f,16.f });
 		break;
 	}
 	case TileDeg::Deg45:
@@ -111,7 +109,7 @@ void Tiles::CreateTile(TileDeg _TileDeg)
 		m_pRender->SetScaleToTexture("tiles_new_world1_b_90_Sprite.png");
 		//m_pRender->SetFlipY();
 		m_fStartCal = float4{ 3.f,27.f };
-		m_fEndCal = float4{ 117.f,142.f };
+		m_fEndCal = float4{ 119.f,142.f };
 		break;
 	}
 	case TileDeg::Deg300:
@@ -133,12 +131,13 @@ void Tiles::CreateTile(TileDeg _TileDeg)
 	case TileDeg::Square:
 	{
 		m_pRender->SetScaleToTexture("tile_cls_square_Sprite.png");
+		m_pCollision = CreateComponent<GameEngineCollision>(ColNum::TILE);
+		m_pCollision->GetTransform()->SetLocalScale({ 80.f,80.f,0.f });
 		return;
 	}	
 	case TileDeg::Blank:
 	{
 		m_pRender->SetScaleToTexture("nothing.png");
-		m_pCollision->Death();
 		return;
 	}
 	default:
@@ -147,10 +146,14 @@ void Tiles::CreateTile(TileDeg _TileDeg)
 	}
 
 	
-	m_pCenterPivot->GetTransform()->AddLocalPosition({ 0.f,16.f });
-	m_pCollision->GetTransform()->AddLocalPosition({ 0.f,16.f });
 
 	PivotCal(static_cast<float>(_TileDeg));
+
+
+
+	std::shared_ptr< GameEngineSpriteRenderer> m_ptestPivot = CreateComponent<GameEngineSpriteRenderer>(OrderNum::PLANET);
+	m_ptestPivot->GetTransform()->SetLocalScale(float4(20.f, 20.f));
+	m_ptestPivot->GetTransform()->SetLocalPosition(GetPivotPos());
 }
 
 
@@ -175,7 +178,6 @@ void Tiles::PivotCal(float _Deg)
 	m_fStartBetPos = GetTransform()->GetLocalPosition() - fabsRenderScale + m_fStartCal;
 	m_fStartBetPos.y = -m_fStartBetPos.y;
 	m_pStartPivot->GetTransform()->SetLocalPosition(m_fStartBetPos);
-	m_pCollision->GetTransform()->SetLocalPosition(m_pStartPivot->GetTransform()->GetLocalPosition() +float4{ 75.f,-40.f });
 
 	m_fEndBetPos = m_fEndCal - m_fStartCal;
 	m_fEndBetPos.y = -m_fEndBetPos.y;
