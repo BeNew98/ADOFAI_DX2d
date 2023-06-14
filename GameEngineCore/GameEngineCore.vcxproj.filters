@@ -151,6 +151,9 @@
     <ClInclude Include="GameEngineDebug3D.h">
       <Filter>Debug</Filter>
     </ClInclude>
+    <ClInclude Include="ThirdParty\FW1Font\Inc\FW1FontWrapper.h">
+      <Filter>ThirdParty\Fw1Font\Header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngineCore.cpp" />
@@ -379,6 +382,21 @@
     <Filter Include="Debug">
       <UniqueIdentifier>{e4061487-0602-4e9b-bae7-727663d40d33}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ThirdParty\Fw1Font">
+      <UniqueIdentifier>{cae9860c-eb82-4f0f-9259-65c3a2c00f28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\Fw1Font\bin">
+      <UniqueIdentifier>{409041c7-8cb6-423e-8332-c0d2c090aa65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\Fw1Font\Header">
+      <UniqueIdentifier>{199c0967-92d2-4d5c-85ee-465effce69d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\Fw1Font\bin\Debug">
+      <UniqueIdentifier>{f0085e3b-db37-4279-8c6e-e3d1100a5707}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\Fw1Font\bin\Release">
+      <UniqueIdentifier>{bc184e14-0b0f-40e7-821c-85d3866c7c8a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ThirdParty\DirectXTex\inc\DirectXTex.inl">
@@ -389,6 +407,18 @@
     </None>
     <None Include="ThirdParty\DirectXTex\lib\x64\Release\DirectXTex.lib">
       <Filter>ThirdParty\DirectXTex\bin\Release</Filter>
+    </None>
+    <None Include="ThirdParty\FW1Font\lib\x64\Debug\FW1FontWrapper.dll">
+      <Filter>ThirdParty\Fw1Font\bin\Debug</Filter>
+    </None>
+    <None Include="ThirdParty\FW1Font\lib\x64\Release\FW1FontWrapper.dll">
+      <Filter>ThirdParty\Fw1Font\bin\Release</Filter>
+    </None>
+    <None Include="ThirdParty\FW1Font\lib\x64\Debug\FW1FontWrapper.lib">
+      <Filter>ThirdParty\Fw1Font\bin\Debug</Filter>
+    </None>
+    <None Include="ThirdParty\FW1Font\lib\x64\Release\FW1FontWrapper.lib">
+      <Filter>ThirdParty\Fw1Font\bin\Release</Filter>
     </None>
   </ItemGroup>
 </Project>
