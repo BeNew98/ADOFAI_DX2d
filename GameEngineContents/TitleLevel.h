@@ -20,10 +20,8 @@ public:
 	{
 		return m_fTime;
 	}
-	void AddTime(float _Time)
-	{
-		m_fTime += _Time;
-	}
+
+
 protected:
 	void Update(float _DeltaTime) override;
 	void Start() override;
@@ -54,5 +52,7 @@ private:
 
 	std::shared_ptr<class Portal> m_pPortal1 = nullptr;
 	void PlanetSwap();
+
+	void GlowTimeCheck(float _DeltaTime);
 };
 

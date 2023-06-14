@@ -27,7 +27,7 @@ TitleLevel::~TitleLevel()
 
 void TitleLevel::Update(float _DeltaTime)
 {
-	m_fTime += 360.f*_DeltaTime;
+	GlowTimeCheck(_DeltaTime);
 	//CamMoveLerp(_DeltaTime);
 	//CenterCheck();
 	PlanetSwap();
@@ -248,4 +248,14 @@ void TitleLevel::PlanetSwap()
 		return;
 	}
 
+}
+
+void TitleLevel::GlowTimeCheck(float _DeltaTime)
+{
+	if (m_fTime>=360.f)
+	{
+		m_fTime -= 360.f;
+	}
+
+	m_fTime += 360.f * _DeltaTime;
 }

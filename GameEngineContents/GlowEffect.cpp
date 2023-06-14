@@ -31,15 +31,14 @@ void GlowEffect::Update(float _DeltaTime)
 	std::weak_ptr<TitleLevel> Level = GetLevel()->DynamicThis<TitleLevel>();
 	if (Level.lock()->GetTime() >=360.f)
 	{
-		Level.lock()->AddTime(-360.f);
 		m_bColor = !m_bColor;
  		m_bCheckValue = true;
 	}
 	if (false == m_bCheckValue)
 	{
-		return;
+		//return;
 	}
-	
+
 	if (m_iIndex%2 == 0)
 	{
 		if (true== m_bColor)

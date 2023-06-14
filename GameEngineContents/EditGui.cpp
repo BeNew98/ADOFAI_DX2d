@@ -158,7 +158,7 @@ void EditGui::CreateTile(std::shared_ptr<class GameEngineLevel> _Level, TileDeg 
 
 	int iDeg = static_cast<int>(_Deg);
 	int m_CurTileSize = static_cast<int>(m_vecAllStage[m_iCurLevel].AllTile.size());
-	pTile->SetIndex(m_CurTileSize);
+ 	pTile->SetIndex(m_CurTileSize);
 	if (m_CurTileSize != 0)
 	{
 		//이전 타일
