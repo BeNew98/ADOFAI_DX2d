@@ -20,7 +20,10 @@ public:
 	{
 		return m_fTime;
 	}
-
+	bool GetGlow()
+	{
+		return m_bGlow;
+	}
 
 protected:
 	void Update(float _DeltaTime) override;
@@ -48,6 +51,7 @@ private:
 	float4 m_fPrevTilePos = float4::Zero;
 
 	float m_fTime = 0.f;
+	bool m_bGlow = false;
 
 
 	std::shared_ptr<class Portal> m_pPortal1 = nullptr;

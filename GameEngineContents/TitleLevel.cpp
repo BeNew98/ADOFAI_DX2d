@@ -255,6 +255,7 @@ void TitleLevel::GlowTimeCheck(float _DeltaTime)
 	if (m_fTime>=360.f)
 	{
 		m_fTime -= 360.f;
+		m_bGlow = !m_bGlow;
 	}
 
 	m_fTime += 360.f * _DeltaTime;
