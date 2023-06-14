@@ -74,8 +74,25 @@ public:
 	void SetMulColor(float4 _Color);
 	void SetPlusColor(float4 _Color);
 
-	float4 m_fData = float4::Zero;
 
+	void EventOn()
+	{
+		m_EventTrigger = true;
+	}
+	void SetFunction(std::function<void()> _Ptr)
+	{
+		m_vecPtr.push_back(_Ptr);
+	}
+
+	float4 GetData()
+	{
+		return m_fData;
+	}
+
+	void SetData(float4 _Data)
+	{
+		m_fData = _Data;
+	}
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
@@ -85,6 +102,9 @@ private:
 	std::shared_ptr<GameEngineSpriteRenderer> m_pStartPivot = nullptr;
 	std::shared_ptr<GameEngineSpriteRenderer> m_pEndPivot = nullptr;
 	std::shared_ptr<class GameEngineComponent> m_pCenterPivot = nullptr;
+
+
+	float4 m_fData = float4::Zero;
 
 	bool m_bGlow = false;
 	std::shared_ptr<class GlowEffect> m_pGlow = nullptr;
@@ -96,5 +116,9 @@ private:
 	float4 m_fEndCal	= float4::Zero;
 
 	std::shared_ptr<class GameEngineCollision> m_pCollision;
+
+
+	bool m_EventTrigger = false;
+	std::vector<std::function<void()>> m_vecPtr;
 };
 

@@ -44,6 +44,7 @@ public:
 		m_iLevelValue = _Level;
 	}
 
+
 protected:
 	void Start() override; 
 	void OnGUI(std::shared_ptr<class GameEngineLevel> _Level, float _DeltaTime) override;
@@ -56,6 +57,8 @@ private:
 	int m_iY = 0;
 	int m_iLevelValue = 0;
 	float m_iTileSize = 96.f;
+
+	bool m_bSwitch = false;
 
 
 	std::vector<StageInfo> m_vecAllStage;

@@ -28,6 +28,9 @@ void CenterLevel::Start()
 	GameEngineInput::CreateKey("EditLevel", '9');
 	GameEngineInput::CreateKey("CenterLevel", '0');
 
+
+
+
 	GetMainCamera()->SetProjectionType(CameraType::Orthogonal);
 	GetMainCamera()->GetTransform()->SetLocalPosition({ 0, 0, -1000.0f });
 

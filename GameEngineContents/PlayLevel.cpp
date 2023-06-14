@@ -80,7 +80,7 @@ void PlayLevel::PlanetSwap()
 		float4 f4Angle = DirectX::XMVector2AngleBetweenVectors(f4NextTilePos- f4CenterPos, f4TurnPos- f4CenterPos);
 
 		float fAngle = f4Angle.x * GameEngineMath::RadToDeg;
-		float NextTileDeg = pNextTile->m_fData.z;
+		float NextTileDeg = pNextTile->GetData().z;
 
 		if (fAngle>=45.f|| fAngle<=-45.f)
 		{

@@ -109,8 +109,8 @@ void TitleLevel::LevelChangeStart()
 
 	CenterCheck();
 
-	EditGui::Editor->Off();
-
+	//EditGui::Editor->Off();
+	EditGui::Editor->On();
 }
 
 void TitleLevel::LevelChangeEnd()
@@ -200,16 +200,16 @@ void TitleLevel::PlanetSwap()
 
 			std::shared_ptr<Tiles> ColCenterTile = pCenterColTile->GetActor()->DynamicThis<Tiles>();
 			std::shared_ptr<Tiles> ColTurnTile = pTurnColTile->GetActor()->DynamicThis<Tiles>();
-			int CenterX = (ColCenterTile->m_fData.ix());
-			int CenterY = (ColCenterTile->m_fData.iy());
-			int TurnX = (ColTurnTile->m_fData.ix());
-			int TurnY = (ColTurnTile->m_fData.iy());
+			int CenterX = (ColCenterTile->GetData().ix());
+			int CenterY = (ColCenterTile->GetData().iy());
+			int TurnX = (ColTurnTile->GetData().ix());
+			int TurnY = (ColTurnTile->GetData().iy());
 
 
 			if (false == ((CenterX + 1 == TurnX && CenterY == TurnY) ||
 				(CenterX == TurnX && CenterY + 1 == TurnY) ||
 				(CenterX - 1 == TurnX && CenterY == TurnY) ||
-				(CenterX == TurnX && CenterY - 1 == TurnY)) || ColTurnTile->m_fData.iz() == 361)
+				(CenterX == TurnX && CenterY - 1 == TurnY)) || ColTurnTile->GetData().iz() == 361)
 			{
 				continue;
 			}
