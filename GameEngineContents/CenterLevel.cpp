@@ -85,5 +85,6 @@ void CenterLevel::Update(float _DeltaTime)
 	{
 		GameEngineCore::ChangeLevel("EditLevel");
 	}
+
 }
 

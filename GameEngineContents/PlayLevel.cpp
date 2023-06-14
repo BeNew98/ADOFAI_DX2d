@@ -10,6 +10,7 @@
 #include "EditGui.h"
 #include "Tiles.h"
 #include "Planet.h"
+#include "BlackScreen.h"
 
 PlayLevel::PlayLevel()
 {
@@ -25,15 +26,27 @@ void PlayLevel::Update(float _DeltaTime)
 
 	GetLevel()->GetMainCamera()->GetTransform()->SetWorldPosition(m_pCenter->GetTransform()->GetWorldPosition());
 
+	if (GameEngineInput::IsDown("CenterLevel"))
+	{
+		GameEngineCore::ChangeLevel("CenterLevel");
+	}
 }
 
 void PlayLevel::Start()
 {
-	GetMainCamera()->SetProjectionType(CameraType::Orthogonal);
-	GetMainCamera()->GetTransform()->SetLocalPosition({ 0, 0, -1000.0f });
 }
 void PlayLevel::LevelChangeStart()
 {
+	std::shared_ptr<GameEngineCamera> BackCam = CreateNewCamera(-1);
+	BackCam->SetProjectionType(CameraType::Perspective);
+	BackCam->GetTransform()->SetLocalPosition({ 0.f,0.f,-750.f });
+
+	GetMainCamera()->SetProjectionType(CameraType::Orthogonal);
+	GetMainCamera()->GetTransform()->SetLocalPosition({ 0, 0, -1000.0f });
+
+	std::shared_ptr<BlackScreen> m_pBlackScreen = CreateActor<BlackScreen>(OrderNum::BACKGROUND);
+	m_pBlackScreen->GetTransform()->SetLocalPosition({ 0.f,0.f,0.f });
+
 	EditGui::Editor->LoadtoString("");
 
 	m_pStageInfo = EditGui::Editor->GetStageInfo(0);
@@ -52,6 +65,7 @@ void PlayLevel::LevelChangeStart()
 
 void PlayLevel::LevelChangeEnd()
 {
+	AllActorDestroy();
 }
 
 void PlayLevel::PlanetSwap()

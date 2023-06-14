@@ -19,8 +19,6 @@ EditLevel::~EditLevel()
 
 void EditLevel::Start()
 {
-	GetMainCamera()->SetProjectionType(CameraType::Orthogonal);
-	GetMainCamera()->GetTransform()->SetLocalPosition({ 0, 0, -1000.0f });
 
 	if (nullptr == GameEngineGUI::FindGUIWindow("LevelEdit"))
 	{
@@ -53,6 +51,10 @@ void EditLevel::Update(float _Deltatime)
 		GetMainCamera()->GetTransform()->AddWorldPosition(-CurMousePos);
 	}
 
+	if (GameEngineInput::IsDown("CenterLevel"))
+	{
+		GameEngineCore::ChangeLevel("CenterLevel");
+	}
 }
 
 void EditLevel::LevelChangeStart()
@@ -60,6 +62,10 @@ void EditLevel::LevelChangeStart()
 	m_pEditor->On();
 
 	m_pMouse = CreateActor<MyMouse>();
+
+	
+	GetMainCamera()->SetProjectionType(CameraType::Orthogonal);
+	GetMainCamera()->GetTransform()->SetLocalPosition({ 0, 0, -1000.0f });
 }
 
 void EditLevel::LevelChangeEnd()

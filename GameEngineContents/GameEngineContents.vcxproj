@@ -163,6 +163,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="BackGroundRenderer.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="BlackScreen.h">
       <SubType>
       </SubType>
@@ -229,6 +233,10 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BackGroundRenderer.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="BlackScreen.cpp">
       <SubType>
       </SubType>

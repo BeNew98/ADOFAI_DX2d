@@ -37,7 +37,7 @@ void Tiles::Update(float _DeltaTime)
 		{
 	
 			m_pGlow = GetLevel()->CreateActor<GlowEffect>(OrderNum::EFFECT);
-			m_pGlow->GetTransform()->SetLocalPosition(GetTransform()->GetWorldPosition());
+			m_pGlow->GetTransform()->SetLocalPosition(m_pCenterPivot->GetTransform()->GetWorldPosition());
 		}
 	}
 }

@@ -3,9 +3,6 @@
   <ItemGroup>
     <ClInclude Include="DFICore.h" />
     <ClInclude Include="PrecompileHeader.h" />
-    <ClInclude Include="TestObject.h">
-      <Filter>PublicObject</Filter>
-    </ClInclude>
     <ClInclude Include="Planet.h">
       <Filter>PublicObject</Filter>
     </ClInclude>
@@ -46,17 +43,22 @@
     <ClInclude Include="GlowEffect.h">
       <Filter>PublicObject</Filter>
     </ClInclude>
-    <ClInclude Include="Portal.h" />
+    <ClInclude Include="Portal.h">
+      <Filter>PublicObject</Filter>
+    </ClInclude>
     <ClInclude Include="TestScreen.h">
+      <Filter>TestObj</Filter>
+    </ClInclude>
+    <ClInclude Include="TestObject.h">
+      <Filter>TestObj</Filter>
+    </ClInclude>
+    <ClInclude Include="BackGroundRenderer.h">
       <Filter>PublicObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DFICore.cpp" />
     <ClCompile Include="PrecompileHeader.cpp" />
-    <ClCompile Include="TestObject.cpp">
-      <Filter>PublicObject</Filter>
-    </ClCompile>
     <ClCompile Include="Planet.cpp">
       <Filter>PublicObject</Filter>
     </ClCompile>
@@ -94,8 +96,16 @@
     <ClCompile Include="GlowEffect.cpp">
       <Filter>PublicObject</Filter>
     </ClCompile>
-    <ClCompile Include="Portal.cpp" />
+    <ClCompile Include="Portal.cpp">
+      <Filter>PublicObject</Filter>
+    </ClCompile>
+    <ClCompile Include="TestObject.cpp">
+      <Filter>TestObj</Filter>
+    </ClCompile>
     <ClCompile Include="TestScreen.cpp">
+      <Filter>TestObj</Filter>
+    </ClCompile>
+    <ClCompile Include="BackGroundRenderer.cpp">
       <Filter>PublicObject</Filter>
     </ClCompile>
   </ItemGroup>
@@ -129,6 +139,9 @@
     </Filter>
     <Filter Include="PostEffect">
       <UniqueIdentifier>{878aa53d-9b07-46bb-9930-b34cfa029088}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TestObj">
+      <UniqueIdentifier>{5e14cc9a-c6eb-4b02-9b45-0038facf9beb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

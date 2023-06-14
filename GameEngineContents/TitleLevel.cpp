@@ -6,6 +6,7 @@
 #include <GameEngineCore/GameEngineCoreWindow.h>
 #include <GameEngineCore/GameEngineSpriteRenderer.h>
 
+#include "BackGroundRenderer.h"
 #include "TitleLogo.h"
 #include "EditGui.h"
 #include "BlackScreen.h"
@@ -31,30 +32,35 @@ void TitleLevel::Update(float _DeltaTime)
 	//CenterCheck();
 	PlanetSwap();
 	GetLevel()->GetMainCamera()->GetTransform()->SetWorldPosition(m_pCenter->GetTransform()->GetWorldPosition());
+
+
+	if (GameEngineInput::IsDown("CenterLevel"))
+	{
+		GameEngineCore::ChangeLevel("CenterLevel");
+	}
 }
 
 void TitleLevel::Start()
-{
-	GameEngineInput::CreateKey("R", 'R');
-	GameEngineInput::CreateKey("1", '1');
-	GameEngineInput::CreateKey("2", '2');	
+{	
 }
 
 void TitleLevel::LevelChangeStart()
 {
-	
 	{
+		std::shared_ptr<GameEngineCamera> BackCam = CreateNewCamera(-1);
+		BackCam->SetProjectionType(CameraType::Perspective);
+		BackCam->GetTransform()->SetLocalPosition({ 0.f,0.f,-750.f });
 
 		GetMainCamera()->SetProjectionType(CameraType::Orthogonal);
 		GetMainCamera()->GetTransform()->SetLocalPosition({ 0, 0, -1000.0f });
 
-		m_pBlackScreen = CreateActor<BlackScreen>(0);
+		m_pBlackScreen = CreateActor<BlackScreen>(OrderNum::BACKGROUND);
 		m_pBlackScreen->GetTransform()->SetLocalPosition({ 0.f,0.f,0.f });
 
-		std::shared_ptr<GameEngineSpriteRenderer> pStar0 = m_pBlackScreen->CreateComponent<GameEngineSpriteRenderer>();
+		std::shared_ptr<BackGroundRenderer> pStar0 = m_pBlackScreen->CreateComponent<BackGroundRenderer>(OrderNum::BACKGROUND);
 		pStar0->SetScaleToTexture("starfields1.png");
 
-		std::shared_ptr<GameEngineSpriteRenderer> pStar1 = m_pBlackScreen->CreateComponent<GameEngineSpriteRenderer>();
+		std::shared_ptr<BackGroundRenderer> pStar1 = m_pBlackScreen->CreateComponent<BackGroundRenderer>(OrderNum::BACKGROUND);
 		pStar1->SetScaleToTexture("starfields2.png");
 
 		std::shared_ptr<TitleLogo> pLogo = CreateActor<TitleLogo>(0);
@@ -94,6 +100,7 @@ void TitleLevel::LevelChangeStart()
 	CenterCheck();
 
 	EditGui::Editor->Off();
+
 }
 
 void TitleLevel::LevelChangeEnd()
