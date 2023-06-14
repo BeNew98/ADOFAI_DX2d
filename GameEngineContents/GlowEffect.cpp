@@ -36,7 +36,7 @@ void GlowEffect::Update(float _DeltaTime)
 	}
 	if (false == m_bCheckValue)
 	{
-		//return;
+		return;
 	}
 
 	if (m_iIndex%2 == 0)
