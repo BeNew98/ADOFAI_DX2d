@@ -81,14 +81,14 @@ void Tiles::Update(float _DeltaTime)
 
 void Tiles::EventStart()
 {
-	if (m_vecPtr.size() !=0 && false == m_bEventTrigger)
+	if (m_vecPtr.size() !=0 && true == m_bEventTrigger)
 	{
 		for (size_t i = 0; i < m_vecPtr.size(); i++)
 		{
 			m_vecPtr[i]();
 		}
 		m_vecPtr.clear();
-		m_bEventTrigger = true;
+		m_bEventTrigger = false;
 	}
 }
 

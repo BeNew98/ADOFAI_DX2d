@@ -58,6 +58,9 @@
     <ClInclude Include="BlackScreen.h">
       <Filter>PublicObject\BackGround</Filter>
     </ClInclude>
+    <ClInclude Include="Level1BackGround.h">
+      <Filter>Levels\PlayLevel\Obj</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DFICore.cpp" />
@@ -113,6 +116,9 @@
     </ClCompile>
     <ClCompile Include="BlackScreen.cpp">
       <Filter>PublicObject\BackGround</Filter>
+    </ClCompile>
+    <ClCompile Include="Level1BackGround.cpp">
+      <Filter>Levels\PlayLevel\Obj</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

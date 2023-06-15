@@ -12,6 +12,7 @@
 #include "Planet.h"
 #include "BlackScreen.h"
 #include "Portal.h"
+#include "Level1BackGround.h"
 
 PlayLevel::PlayLevel()
 {
@@ -48,6 +49,11 @@ void PlayLevel::LevelChangeStart()
 	std::shared_ptr<BlackScreen> m_pBlackScreen = CreateActor<BlackScreen>(OrderNum::BACKGROUND);
 	m_pBlackScreen->GetTransform()->SetLocalPosition({ 0.f,0.f,0.f });
 
+
+	std::shared_ptr<Level1BackGround> m_pLevel1BackGround = CreateActor<Level1BackGround>(OrderNum::BACKGROUND);
+	m_pLevel1BackGround->GetTransform()->AddLocalPosition({ -12500.f,0.f,0.f });
+
+
 	EditGui::Editor->LoadtoString("");
 
 	m_pStageInfo = EditGui::Editor->GetStageInfo(0);
@@ -61,7 +67,10 @@ void PlayLevel::LevelChangeStart()
 
 	m_pCenter->GetTransform()->SetWorldPosition(m_pStageInfo.AllTile[0].m_pTile->GetPivotPos());
 
-
+	m_pStageInfo.AllTile[3].m_pTile->SetFunction([this]()
+		{
+			GetMainCamera()->SetZoomRatio(0.9f);
+		});
 	std::shared_ptr<Portal> m_pPortal1 = CreateActor<Portal>(OrderNum::MAP);
 	m_pPortal1->GetTransform()->SetLocalPosition(m_pStageInfo.AllTile[m_pStageInfo.AllTile.size()-1].m_pTile->GetPivotPos());
 	m_pPortal1->SetFunction([]()
@@ -129,6 +138,7 @@ void PlayLevel::PlanetSwap()
 
 		m_pStageInfo.AllTile[m_iCurIndex + 1].m_pTile->GlowOn();
 
+		pNextTile->EventOn();
 
 		++m_iCurIndex;
 	}
