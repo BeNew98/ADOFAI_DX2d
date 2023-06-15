@@ -189,7 +189,11 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="FadeEffect.h" />
-    <ClInclude Include="GlowEffect.h">
+    <ClInclude Include="RoundGlowEffect.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="SquareGlowEffect.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -259,7 +263,11 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="FadeEffect.cpp" />
-    <ClCompile Include="GlowEffect.cpp">
+    <ClCompile Include="RoundGlowEffect.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="SquareGlowEffect.cpp">
       <SubType>
       </SubType>
     </ClCompile>

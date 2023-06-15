@@ -5,6 +5,7 @@
 #include <GameEngineCore/GameEngineCollision.h>
 #include <GameEngineCore/GameEngineCoreWindow.h>
 #include <GameEngineCore/GameEngineSpriteRenderer.h>
+#include <GameEngineCore/GameEngineResource.h>
 
 #include "BackGroundRenderer.h"
 #include "TitleLogo.h"
@@ -13,7 +14,7 @@
 #include "Tiles.h"
 #include "Planet.h"
 #include "EditGui.h"
-#include "GlowEffect.h"
+#include "SquareGlowEffect.h"
 #include "Portal.h"
 
 TitleLevel::TitleLevel() 
@@ -131,13 +132,13 @@ void TitleLevel::CenterCheck()
 			}
 			m_pStageInfo.AllTile[i].m_pTile->GetRender()->Off();
 
-			if (m_pStageInfo.AllTile[i].m_pTile->GetGlow() == nullptr)
+			if (m_pStageInfo.AllTile[i].m_pTile->GetSGlow() == nullptr)
 			{
 				continue;
 			}
 
 			
-			m_pStageInfo.AllTile[i].m_pTile->GetGlow()->Off();
+			m_pStageInfo.AllTile[i].m_pTile->GetSGlow()->Off();
 			//m_pStageInfo.AllTile[i].m_pTile->SetPlusColor(float4{ 0.f,0.f,0.f, -1.f });
 		}
 		m_pLogo->On();
@@ -153,11 +154,11 @@ void TitleLevel::CenterCheck()
 
 			m_pStageInfo.AllTile[i].m_pTile->GetRender()->On();
 
-			if (m_pStageInfo.AllTile[i].m_pTile->GetGlow() == nullptr)
+			if (m_pStageInfo.AllTile[i].m_pTile->GetSGlow() == nullptr)
 			{
 				continue;
 			}
-			m_pStageInfo.AllTile[i].m_pTile->GetGlow()->On();
+			m_pStageInfo.AllTile[i].m_pTile->GetSGlow()->On();
 			//m_pStageInfo.AllTile[i].m_pTile->SetPlusColor(float4{ 0.f,0.f,0.f,1.f });
 		}
 		m_pLogo->Off();
@@ -248,15 +249,15 @@ void TitleLevel::PlanetSwap()
 		return;
 	}
 
-}
 
+}
 void TitleLevel::GlowTimeCheck(float _DeltaTime)
 {
-	if (m_fTime>=360.f)
+	if (m_fTime>=180.f)
 	{
-		m_fTime -= 360.f;
+		m_fTime -= 180.f;
 		m_bGlow = !m_bGlow;
 	}
 
-	m_fTime += 360.f * _DeltaTime;
+	m_fTime += 180.f * _DeltaTime;
 }

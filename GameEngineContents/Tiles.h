@@ -5,6 +5,7 @@
 // Ό³Έν :
 class Tiles : public GameEngineActor
 {
+	friend class SquareGlowEffect;
 	friend class Player;
 public:
 	// constrcuter destructer
@@ -60,9 +61,14 @@ public:
 		m_pEndPivot->Death();
 	}
 
-	std::shared_ptr<class GlowEffect> GetGlow()
+	std::shared_ptr<class RoundGlowEffect> GetRGlow()
 	{
-		return m_pGlow;
+		return m_pRGlow;
+	}
+
+	std::shared_ptr<class SquareGlowEffect> GetSGlow()
+	{
+		return m_pSGlow;
 	}
 
 	float4 GetPivotPos()
@@ -71,9 +77,6 @@ public:
 	}
 
 	void PivotCal(float _Deg);
-	void SetMulColor(float4 _Color);
-	void SetPlusColor(float4 _Color);
-
 
 	void EventOn()
 	{
@@ -117,7 +120,8 @@ private:
 	int m_iIndex = 0;
 
 	bool m_bGlow = false;
-	std::shared_ptr<class GlowEffect> m_pGlow = nullptr;
+	std::shared_ptr<class SquareGlowEffect> m_pSGlow = nullptr;
+	std::shared_ptr<class RoundGlowEffect> m_pRGlow = nullptr;
 	float4 m_fStartBetPos = float4::Zero;
 	float4 m_fEndBetPos = float4::Zero;
 

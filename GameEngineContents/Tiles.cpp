@@ -4,7 +4,8 @@
 #include <GameEngineCore/GameEngineSpriteRenderer.h>
 #include <GameEngineCore/GameEngineCollision.h>
 
-#include "GlowEffect.h"
+#include "SquareGlowEffect.h"
+#include "RoundGlowEffect.h"
 
 Tiles::Tiles() 
 {
@@ -30,23 +31,20 @@ void Tiles::Update(float _DeltaTime)
 {
 	if (m_fData.iz()!=360&& true == m_bGlow)
 	{
-		if (nullptr == m_pGlow)
+		if (nullptr == m_pRGlow)
 		{
 	
-			m_pGlow = GetLevel()->CreateActor<GlowEffect>(OrderNum::EFFECT);
-			m_pGlow->GetTransform()->SetLocalPosition(m_pCenterPivot->GetTransform()->GetWorldPosition());
-			m_pGlow->SetGlow(GlowType::ROUND);
-			m_pGlow->SetIndex(m_iIndex);
+			m_pRGlow = GetLevel()->CreateActor<RoundGlowEffect>(OrderNum::EFFECT);
+			m_pRGlow->GetTransform()->SetLocalPosition(m_pCenterPivot->GetTransform()->GetWorldPosition());
 		}
 	}
 	else if (m_fData.iz() == 360 && true == m_bGlow)
 	{
-		if (nullptr == m_pGlow)
+		if (nullptr == m_pSGlow)
 		{
-			m_pGlow = GetLevel()->CreateActor<GlowEffect>(OrderNum::EFFECT);
-			m_pGlow->GetTransform()->SetLocalPosition(m_pCenterPivot->GetTransform()->GetWorldPosition());
-			m_pGlow->SetGlow(GlowType::SQUARE_WHITE);
-			m_pGlow->SetIndex(m_iIndex);
+			m_pSGlow = GetLevel()->CreateActor<SquareGlowEffect>(OrderNum::EFFECT);
+			m_pSGlow->GetTransform()->SetLocalPosition(m_pCenterPivot->GetTransform()->GetWorldPosition());
+			m_pSGlow->SetIndex(m_iIndex);
 		}
 	}
 	EventStart();
@@ -211,22 +209,3 @@ void Tiles::PivotCal(float _Deg)
 
 }
 
-void Tiles::SetMulColor(float4 _Color)
-{
-	m_pRender->ColorOptionValue.MulColor = _Color;
-	if (m_pGlow == nullptr)
-	{
-		return;
-	}
-	m_pGlow->GetRender()->ColorOptionValue.MulColor = _Color;
-}
-
-void Tiles::SetPlusColor(float4 _Color)
-{
-	m_pRender->ColorOptionValue.PlusColor = _Color;
-	if (m_pGlow == nullptr)
-	{
-		return;
-	}
-	m_pGlow->GetRender()->ColorOptionValue.PlusColor = _Color;
-}

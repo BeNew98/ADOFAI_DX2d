@@ -40,9 +40,6 @@
     <ClInclude Include="FadeEffect.h">
       <Filter>PostEffect</Filter>
     </ClInclude>
-    <ClInclude Include="GlowEffect.h">
-      <Filter>PublicObject</Filter>
-    </ClInclude>
     <ClInclude Include="Portal.h">
       <Filter>PublicObject</Filter>
     </ClInclude>
@@ -54,6 +51,12 @@
     </ClInclude>
     <ClInclude Include="BackGroundRenderer.h">
       <Filter>PublicObject</Filter>
+    </ClInclude>
+    <ClInclude Include="SquareGlowEffect.h">
+      <Filter>PublicObject\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="RoundGlowEffect.h">
+      <Filter>PublicObject\Effect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -93,9 +96,6 @@
       <Filter>PostEffect</Filter>
     </ClCompile>
     <ClCompile Include="Contents_Resources.cpp" />
-    <ClCompile Include="GlowEffect.cpp">
-      <Filter>PublicObject</Filter>
-    </ClCompile>
     <ClCompile Include="Portal.cpp">
       <Filter>PublicObject</Filter>
     </ClCompile>
@@ -107,6 +107,12 @@
     </ClCompile>
     <ClCompile Include="BackGroundRenderer.cpp">
       <Filter>PublicObject</Filter>
+    </ClCompile>
+    <ClCompile Include="SquareGlowEffect.cpp">
+      <Filter>PublicObject\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="RoundGlowEffect.cpp">
+      <Filter>PublicObject\Effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -142,6 +148,9 @@
     </Filter>
     <Filter Include="TestObj">
       <UniqueIdentifier>{5e14cc9a-c6eb-4b02-9b45-0038facf9beb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PublicObject\Effect">
+      <UniqueIdentifier>{5a681c16-5392-4d00-9ad8-1afbb5c0de32}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -41,11 +41,3 @@ enum class EventType
 	ROTATION,
 
 };
-
-enum class GlowType
-{
-	NONE,
-	SQUARE_WHITE,
-	SQUARE_YELLOW,
-	ROUND,
-};

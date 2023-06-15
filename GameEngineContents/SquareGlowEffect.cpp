@@ -1,5 +1,5 @@
 #include "PrecompileHeader.h"
-#include "GlowEffect.h"
+#include "SquareGlowEffect.h"
 
 #include <GameEngineCore/GameEngineSpriteRenderer.h>
 #include <GameEngineCore/GameEngineTransform.h>
@@ -7,31 +7,27 @@
 #include "Tiles.h"
 #include "TitleLevel.h"
 
-GlowEffect::GlowEffect() 
+SquareGlowEffect::SquareGlowEffect() 
 {
 }
 
-GlowEffect::~GlowEffect() 
+SquareGlowEffect::~SquareGlowEffect() 
 {
 }
 
 
-void GlowEffect::Start()
+void SquareGlowEffect::Start()
 {
 	m_pRender = CreateComponent<GameEngineSpriteRenderer>(OrderNum::EFFECT);
-	m_pRender->SetScaleToTexture("bottomglow_E2.png");
+	m_pRender->SetScaleToTexture("topglow_E.png");
 }
 
-void GlowEffect::Update(float _DeltaTime)
+void SquareGlowEffect::Update(float _DeltaTime)
 {
-	if (m_sType == GlowType::ROUND)
-	{
-		return;
-	}
 	std::weak_ptr<TitleLevel> Level = GetLevel()->DynamicThis<TitleLevel>();
-	if (Level.lock()->GetTime() >=360.f)
+	if (Level.lock()->GetTime() >=180.f)
 	{
-		m_bColor = Level.lock()->GetGlow();
+		m_bColor = Level.lock()->GetGlowValue();
  		m_bCheckValue = true;
 	}
 	if (false == m_bCheckValue)

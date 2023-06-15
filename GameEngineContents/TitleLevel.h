@@ -2,6 +2,8 @@
 #include <GameEngineCore\GameEngineLevel.h>
 #include "EditGui.h"
 
+#include <GameEngineCore/GameEngineTexture.h>
+
 // Ό³Έν :
 class TitleLevel : public GameEngineLevel
 {
@@ -16,11 +18,14 @@ public:
 	TitleLevel& operator=(const TitleLevel& _Other) = delete;
 	TitleLevel& operator=(TitleLevel&& _Other) noexcept = delete;
 
+	GameEnginePixelColor Color = {2,2,2,2};
+	class GameEngineSoundPlayer* m_pBGM;
+
 	float GetTime()
 	{
 		return m_fTime;
 	}
-	bool GetGlow()
+	bool GetGlowValue()
 	{
 		return m_bGlow;
 	}
