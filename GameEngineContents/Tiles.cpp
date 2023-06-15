@@ -29,6 +29,7 @@ void Tiles::Start()
 
 void Tiles::Update(float _DeltaTime)
 {
+	EventStart();
 	if (m_fData.iz()!=360&& true == m_bGlow)
 	{
 		if (nullptr == m_pRGlow)
@@ -47,7 +48,35 @@ void Tiles::Update(float _DeltaTime)
 			m_pSGlow->SetIndex(m_iIndex);
 		}
 	}
-	EventStart();
+
+	if (m_bAlpha == true)
+	{
+		if (m_fAlpha <= 0.f)
+		{
+			return;
+		}
+		m_fAlpha -= _DeltaTime / 0.3f;
+		m_pRender->ColorOptionValue.MulColor ={ 1.f,1.f,1.f,m_fAlpha };
+		if (m_pSGlow == nullptr)
+		{
+			return;
+		}
+		m_pSGlow->GetRender()->ColorOptionValue.MulColor = { 1.f,1.f,1.f,m_fAlpha };
+	}
+	else
+	{
+		if (m_fAlpha >= 1.f)
+		{
+			return;
+		}
+		m_fAlpha += _DeltaTime / 0.3f;
+		m_pRender->ColorOptionValue.MulColor = { 1.f,1.f,1.f,m_fAlpha };
+		if (m_pSGlow==nullptr)
+		{
+			return;
+		}
+		m_pSGlow->GetRender()->ColorOptionValue.MulColor = { 1.f,1.f,1.f,m_fAlpha };
+	}
 }
 
 void Tiles::EventStart()

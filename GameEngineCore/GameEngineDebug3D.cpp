@@ -36,6 +36,7 @@ namespace GameEngineDebug
 
 	void DrawSphere(class GameEngineCamera* _Cam, class GameEngineTransform* _Trans, float4 Color) 
 	{
+
 		if (DebugDrawDatas.end() == DebugDrawDatas.find(_Cam))
 		{
 			DebugDrawDatas[_Cam].reserve(1000);

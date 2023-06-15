@@ -57,6 +57,9 @@ private:
 
 	float m_fTime = 0.f;
 	bool m_bGlow = false;
+	float m_fGlowRatio = 0.f;
+
+
 
 
 	std::shared_ptr<class Portal> m_pPortal1 = nullptr;

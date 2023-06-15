@@ -6,9 +6,6 @@
     <ClInclude Include="Planet.h">
       <Filter>PublicObject</Filter>
     </ClInclude>
-    <ClInclude Include="BlackScreen.h">
-      <Filter>PublicObject</Filter>
-    </ClInclude>
     <ClInclude Include="ContentsEnum.h" />
     <ClInclude Include="EditLevel.h">
       <Filter>Levels\EditLevel</Filter>
@@ -58,14 +55,14 @@
     <ClInclude Include="RoundGlowEffect.h">
       <Filter>PublicObject\Effect</Filter>
     </ClInclude>
+    <ClInclude Include="BlackScreen.h">
+      <Filter>PublicObject\BackGround</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DFICore.cpp" />
     <ClCompile Include="PrecompileHeader.cpp" />
     <ClCompile Include="Planet.cpp">
-      <Filter>PublicObject</Filter>
-    </ClCompile>
-    <ClCompile Include="BlackScreen.cpp">
       <Filter>PublicObject</Filter>
     </ClCompile>
     <ClCompile Include="EditLevel.cpp">
@@ -114,6 +111,9 @@
     <ClCompile Include="RoundGlowEffect.cpp">
       <Filter>PublicObject\Effect</Filter>
     </ClCompile>
+    <ClCompile Include="BlackScreen.cpp">
+      <Filter>PublicObject\BackGround</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Levels">
@@ -151,6 +151,9 @@
     </Filter>
     <Filter Include="PublicObject\Effect">
       <UniqueIdentifier>{5a681c16-5392-4d00-9ad8-1afbb5c0de32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PublicObject\BackGround">
+      <UniqueIdentifier>{843510cc-0d01-4876-a60c-8e5e933a858e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

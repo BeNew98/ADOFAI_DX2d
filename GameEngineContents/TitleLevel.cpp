@@ -110,8 +110,8 @@ void TitleLevel::LevelChangeStart()
 
 	CenterCheck();
 
-	//EditGui::Editor->Off();
-	EditGui::Editor->On();
+	EditGui::Editor->Off();
+	//EditGui::Editor->On();
 }
 
 void TitleLevel::LevelChangeEnd()
@@ -130,18 +130,9 @@ void TitleLevel::CenterCheck()
 			{
 				continue;
 			}
-			m_pStageInfo.AllTile[i].m_pTile->GetRender()->Off();
-
-			if (m_pStageInfo.AllTile[i].m_pTile->GetSGlow() == nullptr)
-			{
-				continue;
-			}
-
-			
-			m_pStageInfo.AllTile[i].m_pTile->GetSGlow()->Off();
-			//m_pStageInfo.AllTile[i].m_pTile->SetPlusColor(float4{ 0.f,0.f,0.f, -1.f });
+			m_pStageInfo.AllTile[i].m_pTile->AlphaSwitch();
 		}
-		m_pLogo->On();
+		m_pLogo->AlphaSwitch();
 	}
 	else
 	{
@@ -151,17 +142,14 @@ void TitleLevel::CenterCheck()
 			{
 				continue;
 			}
-
-			m_pStageInfo.AllTile[i].m_pTile->GetRender()->On();
-
-			if (m_pStageInfo.AllTile[i].m_pTile->GetSGlow() == nullptr)
+			if (m_pStageInfo.AllTile[i].m_pTile->GetAlphaValue() == false)
 			{
-				continue;
+				return;
 			}
-			m_pStageInfo.AllTile[i].m_pTile->GetSGlow()->On();
-			//m_pStageInfo.AllTile[i].m_pTile->SetPlusColor(float4{ 0.f,0.f,0.f,1.f });
+			m_pStageInfo.AllTile[i].m_pTile->AlphaSwitch();
+
 		}
-		m_pLogo->Off();
+		m_pLogo->AlphaSwitch();
 	}
 
 }

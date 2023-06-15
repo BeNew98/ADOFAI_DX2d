@@ -105,6 +105,15 @@ public:
 		return m_iIndex;
 	}
 
+	void AlphaSwitch()
+	{
+		m_bAlpha = !m_bAlpha;
+	}
+	bool GetAlphaValue()
+	{
+		return m_bAlpha;
+	}
+
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
@@ -120,6 +129,8 @@ private:
 	int m_iIndex = 0;
 
 	bool m_bGlow = false;
+	bool m_bAlpha = false;
+	float m_fAlpha = 0.f;
 	std::shared_ptr<class SquareGlowEffect> m_pSGlow = nullptr;
 	std::shared_ptr<class RoundGlowEffect> m_pRGlow = nullptr;
 	float4 m_fStartBetPos = float4::Zero;
