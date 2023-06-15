@@ -25,7 +25,6 @@ protected:
 	void LevelChangeStart() override;
 	void LevelChangeEnd() override;
 
-
 private:
 	StageInfo m_pStageInfo = {};
 	std::shared_ptr<class Planet> m_pRed = nullptr;
@@ -36,5 +35,6 @@ private:
 	int m_iCurIndex = 0;
 
 	void PlanetSwap();
+	void Reset();
 };
 

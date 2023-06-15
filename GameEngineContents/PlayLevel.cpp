@@ -11,6 +11,7 @@
 #include "Tiles.h"
 #include "Planet.h"
 #include "BlackScreen.h"
+#include "Portal.h"
 
 PlayLevel::PlayLevel()
 {
@@ -60,12 +61,32 @@ void PlayLevel::LevelChangeStart()
 
 	m_pCenter->GetTransform()->SetWorldPosition(m_pStageInfo.AllTile[0].m_pTile->GetPivotPos());
 
+
+	std::shared_ptr<Portal> m_pPortal1 = CreateActor<Portal>(OrderNum::MAP);
+	m_pPortal1->GetTransform()->SetLocalPosition(m_pStageInfo.AllTile[m_pStageInfo.AllTile.size()-1].m_pTile->GetPivotPos());
+	m_pPortal1->SetFunction([]()
+		{
+			GameEngineCore::ChangeLevel("CenterLevel");
+		});
+
 	EditGui::Editor->Off();
 }
 
 void PlayLevel::LevelChangeEnd()
 {
 	AllActorDestroy();
+	Reset();
+}
+
+void PlayLevel::Reset()
+{
+	m_pStageInfo = {};
+	m_pRed = nullptr;
+	m_pBlue = nullptr;
+	m_pCenter = nullptr;
+	m_pTurn = nullptr;
+
+	m_iCurIndex = 0;
 }
 
 void PlayLevel::PlanetSwap()

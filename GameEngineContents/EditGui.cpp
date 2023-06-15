@@ -333,7 +333,7 @@ void EditGui::Load()
 		m_vecAllStage[m_iCurLevel].AllTile[i].m_pTile->DeathPivot();
 	}
 }
-void EditGui::LoadtoString(std::string_view _FileName)
+void EditGui::LoadtoString(const std::string_view& _FileName)
 {
 	std::string FileName = _FileName.data();
 	if (_FileName =="")

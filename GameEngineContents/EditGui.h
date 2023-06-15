@@ -32,7 +32,7 @@ public:
 
 	static EditGui* Editor;
 
-	void LoadtoString(std::string_view _FileName = "");
+	void LoadtoString(const std::string_view& _FileName = "");
 
 	StageInfo GetStageInfo(int _Index)
 	{

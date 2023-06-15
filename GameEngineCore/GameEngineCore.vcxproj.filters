@@ -408,17 +408,19 @@
     <None Include="ThirdParty\DirectXTex\lib\x64\Release\DirectXTex.lib">
       <Filter>ThirdParty\DirectXTex\bin\Release</Filter>
     </None>
-    <None Include="ThirdParty\FW1Font\lib\x64\Debug\FW1FontWrapper.dll">
-      <Filter>ThirdParty\Fw1Font\bin\Debug</Filter>
-    </None>
-    <None Include="ThirdParty\FW1Font\lib\x64\Release\FW1FontWrapper.dll">
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="ThirdParty\FW1Font\lib\x64\Release\FW1FontWrapper.lib">
       <Filter>ThirdParty\Fw1Font\bin\Release</Filter>
-    </None>
-    <None Include="ThirdParty\FW1Font\lib\x64\Debug\FW1FontWrapper.lib">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="ThirdParty\FW1Font\lib\x64\Debug\FW1FontWrapper.lib">
       <Filter>ThirdParty\Fw1Font\bin\Debug</Filter>
-    </None>
-    <None Include="ThirdParty\FW1Font\lib\x64\Release\FW1FontWrapper.lib">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="ThirdParty\FW1Font\lib\x64\Debug\FW1FontWrapper.dll">
+      <Filter>ThirdParty\Fw1Font\bin\Debug</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="ThirdParty\FW1Font\lib\x64\Release\FW1FontWrapper.dll">
       <Filter>ThirdParty\Fw1Font\bin\Release</Filter>
-    </None>
+    </CopyFileToFolders>
   </ItemGroup>
 </Project>
