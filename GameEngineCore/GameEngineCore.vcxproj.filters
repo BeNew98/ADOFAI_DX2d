@@ -154,6 +154,12 @@
     <ClInclude Include="ThirdParty\FW1Font\Inc\FW1FontWrapper.h">
       <Filter>ThirdParty\Fw1Font\Header</Filter>
     </ClInclude>
+    <ClInclude Include="GameEngineFont.h">
+      <Filter>Resources\Font</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngineFontRenderer.h">
+      <Filter>Object\Rendering\Component\2D</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngineCore.cpp" />
@@ -302,6 +308,12 @@
     <ClCompile Include="GameEngineDebug3D.cpp">
       <Filter>Debug</Filter>
     </ClCompile>
+    <ClCompile Include="GameEngineFont.cpp">
+      <Filter>Resources\Font</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineFontRenderer.cpp">
+      <Filter>Object\Rendering\Component\2D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Object">
@@ -396,6 +408,9 @@
     </Filter>
     <Filter Include="ThirdParty\Fw1Font\bin\Release">
       <UniqueIdentifier>{bc184e14-0b0f-40e7-821c-85d3866c7c8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\Font">
+      <UniqueIdentifier>{6790c424-dca8-4c29-8b59-149170306fe1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

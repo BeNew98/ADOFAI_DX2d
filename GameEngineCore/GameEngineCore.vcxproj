@@ -216,6 +216,8 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="GameEngineFont.h" />
+    <ClInclude Include="GameEngineFontRenderer.h" />
     <ClInclude Include="GameEngineFSM.h">
       <SubType>
       </SubType>
@@ -382,6 +384,8 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="GameEngineFont.cpp" />
+    <ClCompile Include="GameEngineFontRenderer.cpp" />
     <ClCompile Include="GameEngineFSM.cpp">
       <SubType>
       </SubType>
