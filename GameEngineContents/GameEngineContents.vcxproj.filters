@@ -46,9 +46,6 @@
     <ClInclude Include="TestObject.h">
       <Filter>TestObj</Filter>
     </ClInclude>
-    <ClInclude Include="BackGroundRenderer.h">
-      <Filter>PublicObject</Filter>
-    </ClInclude>
     <ClInclude Include="SquareGlowEffect.h">
       <Filter>PublicObject\Effect</Filter>
     </ClInclude>
@@ -61,6 +58,7 @@
     <ClInclude Include="Level1BackGround.h">
       <Filter>Levels\PlayLevel\Obj</Filter>
     </ClInclude>
+    <ClInclude Include="BackGroundRenderer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DFICore.cpp" />
@@ -105,9 +103,6 @@
     <ClCompile Include="TestScreen.cpp">
       <Filter>TestObj</Filter>
     </ClCompile>
-    <ClCompile Include="BackGroundRenderer.cpp">
-      <Filter>PublicObject</Filter>
-    </ClCompile>
     <ClCompile Include="SquareGlowEffect.cpp">
       <Filter>PublicObject\Effect</Filter>
     </ClCompile>
@@ -120,6 +115,7 @@
     <ClCompile Include="Level1BackGround.cpp">
       <Filter>Levels\PlayLevel\Obj</Filter>
     </ClCompile>
+    <ClCompile Include="BackGroundRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Levels">

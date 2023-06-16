@@ -27,6 +27,7 @@ void PlayLevel::Update(float _DeltaTime)
 	PlanetSwap();
 
 	GetLevel()->GetMainCamera()->GetTransform()->SetWorldPosition(m_pCenter->GetTransform()->GetWorldPosition());
+	GetLevel()->GetCamera(-1)->GetTransform()->SetWorldPosition(m_pCenter->GetTransform()->GetWorldPosition());
 
 	if (GameEngineInput::IsDown("CenterLevel"))
 	{
@@ -46,12 +47,12 @@ void PlayLevel::LevelChangeStart()
 	GetMainCamera()->SetProjectionType(CameraType::Orthogonal);
 	GetMainCamera()->GetTransform()->SetLocalPosition({ 0, 0, -1000.0f });
 
-	std::shared_ptr<BlackScreen> m_pBlackScreen = CreateActor<BlackScreen>(OrderNum::BACKGROUND);
-	m_pBlackScreen->GetTransform()->SetLocalPosition({ 0.f,0.f,0.f });
+	//std::shared_ptr<BlackScreen> m_pBlackScreen = CreateActor<BlackScreen>(OrderNum::BACKGROUND);
+	//m_pBlackScreen->GetTransform()->SetLocalPosition({ 0.f,0.f,0.f });
 
 
 	std::shared_ptr<Level1BackGround> m_pLevel1BackGround = CreateActor<Level1BackGround>(OrderNum::BACKGROUND);
-	m_pLevel1BackGround->GetTransform()->AddLocalPosition({ -12500.f,0.f,0.f });
+	//m_pLevel1BackGround->GetTransform()->AddLocalPosition({ -12500.f,0.f,0.f });
 
 
 	EditGui::Editor->LoadtoString("");
