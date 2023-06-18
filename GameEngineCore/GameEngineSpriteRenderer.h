@@ -26,7 +26,7 @@ private:
 		IsPauseValue = true;
 	}
 
-	inline void PauseOff()
+	inline void PauseOff() 
 	{
 		IsPauseValue = false;
 	}
@@ -64,10 +64,14 @@ public:
 	std::vector<float> FrameTime = std::vector<float>();
 };
 
-enum ImagePivot
+enum class ClipXDir
 {
 	Left,
 	Right,
+};
+
+enum class ClipYDir
+{
 	Top,
 	Bot,
 };
@@ -126,38 +130,8 @@ public:
 	}
 
 	// 내 눈에 보이는 이미지에서 0.1;
-	void ImageClipping(float _Ratio, ImagePivot _ScalePivot = ImagePivot::Bot, ImagePivot _PosPivot = ImagePivot::Bot)
-	{
-		ClippingPercent = _Ratio;
-
-		if (0.0f >= ClippingPercent)
-		{
-			ClippingPercent = 0.0f;
-		}
-
-
-		ScalePivot = _ScalePivot;
-		PosPivot = _PosPivot;
-
-		AtlasData = float4(0, 0, 1, 1);
-		switch (ScalePivot)
-		{
-		case Left:
-			AtlasData.PosX += (AtlasData.SizeX * (1 - ClippingPercent));
-			break;
-		case Right:
-			AtlasData.SizeX *= ClippingPercent;
-			break;
-		case Top:
-			AtlasData.PosY += (AtlasData.SizeY * (1 - ClippingPercent));
-			break;
-		case Bot:
-			AtlasData.SizeY *= ClippingPercent;
-			break;
-		default:
-			break;
-		}
-	}
+	void ImageClippingX(float _Ratio, ClipXDir _Dir);
+	void ImageClippingY(float _Ratio, ClipYDir _Dir);
 
 	inline float GetScaleRatio() const
 	{
@@ -168,7 +142,7 @@ public:
 
 	void SetFrame(size_t _Frame);
 
-	void SetAnimPauseOn()
+	void SetAnimPauseOn() 
 	{
 		CurAnimation->PauseOn();
 	}
@@ -191,6 +165,7 @@ public:
 protected:
 	void SpriteRenderInit();
 	float4 AtlasData;
+	float4 Clip = float4::One;
 
 private:
 	void Update(float _Delta) override;
@@ -204,9 +179,6 @@ private:
 	std::shared_ptr<GameEngineSprite> Sprite = nullptr;
 	size_t Frame = -1;
 
-	float ClippingPercent = 1.0f;
-	ImagePivot ScalePivot = ImagePivot::Bot;
-	ImagePivot PosPivot = ImagePivot::Bot;
 	std::shared_ptr<GameEngineTexture> CurTexture;
 
 	float ScaleRatio = 1.0f;

@@ -86,7 +86,7 @@ public:
 		return Textures[_Index];
 	}
 
-	void DepthSettingOn()
+	void DepthSettingOn() 
 	{
 		DepthSetting = true;
 	}

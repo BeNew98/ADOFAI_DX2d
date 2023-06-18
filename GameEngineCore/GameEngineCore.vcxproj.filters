@@ -158,7 +158,7 @@
       <Filter>Resources\Font</Filter>
     </ClInclude>
     <ClInclude Include="GameEngineFontRenderer.h">
-      <Filter>Object\Rendering\Component\2D</Filter>
+      <Filter>Object\Rendering\Component</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -312,7 +312,7 @@
       <Filter>Resources\Font</Filter>
     </ClCompile>
     <ClCompile Include="GameEngineFontRenderer.cpp">
-      <Filter>Object\Rendering\Component\2D</Filter>
+      <Filter>Object\Rendering\Component</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -395,22 +395,22 @@
       <UniqueIdentifier>{e4061487-0602-4e9b-bae7-727663d40d33}</UniqueIdentifier>
     </Filter>
     <Filter Include="ThirdParty\Fw1Font">
-      <UniqueIdentifier>{cae9860c-eb82-4f0f-9259-65c3a2c00f28}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ThirdParty\Fw1Font\bin">
-      <UniqueIdentifier>{409041c7-8cb6-423e-8332-c0d2c090aa65}</UniqueIdentifier>
+      <UniqueIdentifier>{faa3abdd-e3d9-42c5-b479-b4f328524a6f}</UniqueIdentifier>
     </Filter>
     <Filter Include="ThirdParty\Fw1Font\Header">
-      <UniqueIdentifier>{199c0967-92d2-4d5c-85ee-465effce69d3}</UniqueIdentifier>
+      <UniqueIdentifier>{04f945cd-bdb5-47ce-a6b9-2dcb5cfaa543}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\Fw1Font\bin">
+      <UniqueIdentifier>{c222c17d-9afd-43e4-a7b1-9718e6e18088}</UniqueIdentifier>
     </Filter>
     <Filter Include="ThirdParty\Fw1Font\bin\Debug">
-      <UniqueIdentifier>{f0085e3b-db37-4279-8c6e-e3d1100a5707}</UniqueIdentifier>
+      <UniqueIdentifier>{36fa6dfb-3509-4e7d-8f7d-8553cf263482}</UniqueIdentifier>
     </Filter>
     <Filter Include="ThirdParty\Fw1Font\bin\Release">
-      <UniqueIdentifier>{bc184e14-0b0f-40e7-821c-85d3866c7c8a}</UniqueIdentifier>
+      <UniqueIdentifier>{c9a2e2ec-0a21-4f6e-85a7-897e30369c14}</UniqueIdentifier>
     </Filter>
     <Filter Include="Resources\Font">
-      <UniqueIdentifier>{6790c424-dca8-4c29-8b59-149170306fe1}</UniqueIdentifier>
+      <UniqueIdentifier>{a1cce2ad-1d76-4ebf-a170-51f35fee46c7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -425,17 +425,15 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <CopyFileToFolders Include="ThirdParty\FW1Font\lib\x64\Release\FW1FontWrapper.lib">
-      <Filter>ThirdParty\Fw1Font\bin\Release</Filter>
-    </CopyFileToFolders>
     <CopyFileToFolders Include="ThirdParty\FW1Font\lib\x64\Debug\FW1FontWrapper.lib">
       <Filter>ThirdParty\Fw1Font\bin\Debug</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="ThirdParty\FW1Font\lib\x64\Release\FW1FontWrapper.lib">
+      <Filter>ThirdParty\Fw1Font\bin\Release</Filter>
     </CopyFileToFolders>
     <CopyFileToFolders Include="ThirdParty\FW1Font\lib\x64\Debug\FW1FontWrapper.dll">
       <Filter>ThirdParty\Fw1Font\bin\Debug</Filter>
     </CopyFileToFolders>
-    <CopyFileToFolders Include="ThirdParty\FW1Font\lib\x64\Release\FW1FontWrapper.dll">
-      <Filter>ThirdParty\Fw1Font\bin\Release</Filter>
-    </CopyFileToFolders>
+    <CopyFileToFolders Include="ThirdParty\FW1Font\lib\x64\Release\FW1FontWrapper.dll" />
   </ItemGroup>
 </Project>
