@@ -114,7 +114,7 @@ void PlayLevel::PlanetSwap()
 		std::shared_ptr<Tiles> pNextTile = m_pStageInfo.AllTile[m_iCurIndex + 1].m_pTile;
 		float4 f4NextTilePos = pNextTile->GetPivotPos();
 
-		float fAngle = float4::GetAngleVectorToVectorDegNegative(f4NextTilePos - f4CenterPos, f4TurnPos - f4CenterPos);
+		float fAngle = float4::GetAngleVectorToVectorDeg360(f4NextTilePos - f4CenterPos, f4TurnPos - f4CenterPos);
 
 		if (fAngle>45.f|| fAngle<-45.f)
 		{

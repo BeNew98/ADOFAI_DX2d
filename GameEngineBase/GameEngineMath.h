@@ -67,9 +67,9 @@ public:
 		return GetAngleVectorToVectorRad(_Left, _Right) * GameEngineMath::RadToDeg;
 	}
 
-	static float GetAngleVectorToVectorDegNegative(const float4& _Left, const float4& _Right)
+	static float GetAngleVectorToVectorDeg360(const float4& _Left, const float4& _Right)
 	{
-		return GetAngleVectorToVectorRadNegative(_Left, _Right) * GameEngineMath::RadToDeg;
+		return GetAngleVectorToVectorRad360(_Left, _Right) * GameEngineMath::RadToDeg;
 	}
 
 	// 외적의 결과는 두개의 백터가 겹칠때 주의해서 처리해줘야 한다.
@@ -88,7 +88,7 @@ public:
 		return Angle;
 	}
 	
-	static float GetAngleVectorToVectorRadNegative(const float4& _Left, const float4& _Right)
+	static float GetAngleVectorToVectorRad360(const float4& _Left, const float4& _Right)
 	{
 		float4 Left = _Left;
 		float4 Right = _Right;
