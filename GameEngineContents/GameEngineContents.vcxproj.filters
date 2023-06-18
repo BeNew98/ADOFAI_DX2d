@@ -22,9 +22,6 @@
     <ClInclude Include="TitleLogo.h">
       <Filter>Levels\TitleLevel\Obj</Filter>
     </ClInclude>
-    <ClInclude Include="MapSettingStruct.h">
-      <Filter>Levels\EditLevel\Obj</Filter>
-    </ClInclude>
     <ClInclude Include="CenterLevel.h">
       <Filter>Levels\EditLevel\CenterLevel</Filter>
     </ClInclude>
@@ -59,6 +56,9 @@
       <Filter>Levels\PlayLevel\Obj</Filter>
     </ClInclude>
     <ClInclude Include="BackGroundRenderer.h" />
+    <ClInclude Include="WrongMark.h">
+      <Filter>PublicObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DFICore.cpp" />
@@ -116,6 +116,9 @@
       <Filter>Levels\PlayLevel\Obj</Filter>
     </ClCompile>
     <ClCompile Include="BackGroundRenderer.cpp" />
+    <ClCompile Include="WrongMark.cpp">
+      <Filter>PublicObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Levels">

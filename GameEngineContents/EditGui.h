@@ -1,6 +1,5 @@
 #pragma once
 #include <GameEngineCore/GameEngineGUI.h>
-#include "MapSettingStruct.h"
 
 struct TileInfo
 {

@@ -6,6 +6,8 @@
 #include <GameEngineCore/GameEngineTexture.h>
 #include <GameEngineCore/GameEngineVideo.h>
 #include <GameEngineCore/GameEngineCoreWindow.h>
+#include <GameEngineCore/GameEngineFont.h>
+#include <GameEngineCore/GameEngineFontRenderer.h>
 
 #include "EditGui.h"
 #include "Tiles.h"
@@ -13,6 +15,7 @@
 #include "BlackScreen.h"
 #include "Portal.h"
 #include "Level1BackGround.h"
+#include "WrongMark.h"
 
 PlayLevel::PlayLevel()
 {
@@ -40,6 +43,7 @@ void PlayLevel::Start()
 }
 void PlayLevel::LevelChangeStart()
 {
+	GameEngineFont::Load("Ch2.0-1");
 	std::shared_ptr<GameEngineCamera> BackCam = CreateNewCamera(-1);
 	BackCam->SetProjectionType(CameraType::Perspective);
 	BackCam->GetTransform()->SetLocalPosition({ 0.f,0.f,-750.f });
@@ -115,6 +119,12 @@ void PlayLevel::PlanetSwap()
 
 		if (fAngle>=45.f|| fAngle<=-45.f)
 		{
+			if (fAngle >= 45.f )
+			{
+				std::shared_ptr<WrongMark> pWorngMark = CreateActor<WrongMark>(OrderNum::MAP);
+				pWorngMark->GetTransform()->SetLocalPosition(m_pTurn->GetTransform()->GetWorldPosition());
+				pWorngMark->SetTxt("너무빠름");
+			}
 			return;
 		}
 

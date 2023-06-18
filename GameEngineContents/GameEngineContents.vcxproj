@@ -201,7 +201,6 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="MapSettingStruct.h" />
     <ClInclude Include="MyMouse.h">
       <SubType>
       </SubType>
@@ -236,6 +235,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="TitleLogo.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="WrongMark.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -318,6 +321,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="TitleLogo.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="WrongMark.cpp">
       <SubType>
       </SubType>
     </ClCompile>
