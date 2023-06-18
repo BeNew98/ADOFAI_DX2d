@@ -16,8 +16,8 @@ void Level1BackGround::Start()
 {
 	std::shared_ptr<BackGroundRenderer> render = CreateComponent<BackGroundRenderer>(OrderNum::BACKGROUND);
 		render->SetTexture("TestBack.png");
-		render->GetTransform()->SetLocalScale({ 10000.f,2000.f });
-		render->GetTransform()->AddLocalPosition({5000.f,0.f,5000.f});
+		render->GetTransform()->SetLocalScale({ 20000.f,2000.f });
+		render->GetTransform()->AddLocalPosition({3500.f,0.f,1000.f});
 
 
 	//for (size_t i = 0; i < 5; i++)

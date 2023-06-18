@@ -30,6 +30,11 @@ public:
 		FontColor = _FontColor;
 	}
 
+	float4 GetColor()
+	{
+		return FontColor;
+	}
+
 protected:
 	void Render(float _Delta) override;
 

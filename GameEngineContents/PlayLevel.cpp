@@ -44,6 +44,8 @@ void PlayLevel::Start()
 void PlayLevel::LevelChangeStart()
 {
 	GameEngineFont::Load("Ch2.0-1");
+
+
 	std::shared_ptr<GameEngineCamera> BackCam = CreateNewCamera(-1);
 	BackCam->SetProjectionType(CameraType::Perspective);
 	BackCam->GetTransform()->SetLocalPosition({ 0.f,0.f,-750.f });
@@ -112,18 +114,21 @@ void PlayLevel::PlanetSwap()
 		std::shared_ptr<Tiles> pNextTile = m_pStageInfo.AllTile[m_iCurIndex + 1].m_pTile;
 		float4 f4NextTilePos = pNextTile->GetPivotPos();
 
-		float4 f4Angle = DirectX::XMVector2AngleBetweenVectors(f4NextTilePos- f4CenterPos, f4TurnPos- f4CenterPos);
+		float fAngle = float4::GetAngleVectorToVectorDegNegative(f4NextTilePos - f4CenterPos, f4TurnPos - f4CenterPos);
 
-		float fAngle = f4Angle.x * GameEngineMath::RadToDeg;
-		float NextTileDeg = pNextTile->GetData().z;
-
-		if (fAngle>=45.f|| fAngle<=-45.f)
+		if (fAngle>45.f|| fAngle<-45.f)
 		{
-			if (fAngle >= 45.f )
+			if (fAngle > 45.f && fAngle<180.f)
 			{
 				std::shared_ptr<WrongMark> pWorngMark = CreateActor<WrongMark>(OrderNum::MAP);
 				pWorngMark->GetTransform()->SetLocalPosition(m_pTurn->GetTransform()->GetWorldPosition());
 				pWorngMark->SetTxt("너무빠름");
+			}
+			else if (fAngle < -45.f && fAngle > -180.f)
+			{
+				std::shared_ptr<WrongMark> pWorngMark = CreateActor<WrongMark>(OrderNum::MAP);
+				pWorngMark->GetTransform()->SetLocalPosition(m_pTurn->GetTransform()->GetWorldPosition());
+				pWorngMark->SetTxt("너무 느림");
 			}
 			return;
 		}
