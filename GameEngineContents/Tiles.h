@@ -2,6 +2,16 @@
 #include <GameEngineCore/GameEngineActor.h>
 #include <GameEngineCore/GameEngineSpriteRenderer.h>
 
+struct TileEvent
+{
+	friend class Tiles;
+public:
+	EventType Type = EventType::NONE;
+	float Ratio=0.f;
+	float Time=0.f;
+private:
+	bool End= false;
+};
 // Ό³Έν :
 class Tiles : public GameEngineActor
 {
@@ -82,10 +92,6 @@ public:
 	{
 		m_bEventTrigger = true;
 	}
-	void SetFunction(std::function<void()> _Ptr)
-	{
-		m_vecPtr.push_back(_Ptr);
-	}
 
 	float4 GetData()
 	{
@@ -114,6 +120,18 @@ public:
 		return m_bAlpha;
 	}
 
+
+	void SetTileEvent(EventType _Type, float _Ratio, float _Time)
+	{
+		TileEvent Evt = {};
+		Evt.Type = _Type;
+		Evt.Ratio=_Ratio;
+		Evt.Time= _Time;
+
+		m_vecEvent.push_back(Evt);
+	}
+
+	
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
@@ -123,7 +141,6 @@ private:
 	std::shared_ptr<GameEngineSpriteRenderer> m_pStartPivot = nullptr;
 	std::shared_ptr<GameEngineSpriteRenderer> m_pEndPivot = nullptr;
 	std::shared_ptr<class GameEngineComponent> m_pCenterPivot = nullptr;
-
 
 	float4 m_fData = float4::Zero;
 	int m_iIndex = 0;
@@ -140,12 +157,11 @@ private:
 	float4 m_fStartCal	= float4::Zero;
 	float4 m_fEndCal	= float4::Zero;
 
-	std::shared_ptr<class GameEngineCollision> m_pCollision;
+	std::shared_ptr<class GameEngineCollision> m_pCollision= nullptr;
 
-
+	std::vector<TileEvent> m_vecEvent;
 	bool m_bEventTrigger = false;
-	std::vector<std::function<void()>> m_vecPtr;
 
-	void EventStart();
+	void EventStart(float _DeltaTime);
 };
 

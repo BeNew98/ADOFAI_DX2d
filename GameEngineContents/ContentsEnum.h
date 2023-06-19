@@ -35,7 +35,9 @@ enum class TileDeg
 
 enum class EventType
 {
-	ZOOM,
+	NONE,
+	ZOOMIN,
+	ZOOMOUT,
 	CAMMOVE,
 	BLACK,
 	ROTATION,

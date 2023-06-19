@@ -29,7 +29,7 @@ void Tiles::Start()
 
 void Tiles::Update(float _DeltaTime)
 {
-	EventStart();
+	EventStart(_DeltaTime);
 	if (m_fData.iz()!=360&& true == m_bGlow)
 	{
 		if (nullptr == m_pRGlow)
@@ -79,16 +79,59 @@ void Tiles::Update(float _DeltaTime)
 	}
 }
 
-void Tiles::EventStart()
+void Tiles::EventStart(float _DeltaTime)
 {
-	if (m_vecPtr.size() !=0 && true == m_bEventTrigger)
+	if (m_vecEvent.size()!=0&&m_bEventTrigger==false)
 	{
-		for (size_t i = 0; i < m_vecPtr.size(); i++)
+		return;
+	}
+	for (size_t i = 0; i < m_vecEvent.size(); i++)
+	{
+		if (true==m_vecEvent[i].End)
 		{
-			m_vecPtr[i]();
+			continue;
 		}
-		m_vecPtr.clear();
-		m_bEventTrigger = false;
+		TileEvent Evt = m_vecEvent[i];
+		EventType sType = Evt.Type;
+		switch (sType)
+		{
+		case EventType::NONE:
+			break;
+		case EventType::ZOOMIN:
+		{
+			float fRatio = GetLevel()->GetMainCamera()->GetZoomRatio();
+			if (Evt.Ratio >= fRatio)
+			{
+				GetLevel()->GetMainCamera()->SetZoomRatio(Evt.Ratio);
+				m_vecEvent[i].End = true;
+			}
+   			float ZoomRatio = (1 - Evt.Ratio) * _DeltaTime/ Evt.Time;
+			GetLevel()->GetMainCamera()->AddZoomRatio(ZoomRatio);
+			return;
+		}
+			break;
+		case EventType::ZOOMOUT:
+		{
+			float fRatio = GetLevel()->GetMainCamera()->GetZoomRatio();
+			if (Evt.Ratio <= fRatio)
+			{
+				GetLevel()->GetMainCamera()->SetZoomRatio(Evt.Ratio);
+				m_vecEvent[i].End = true;
+			}
+			float ZoomRatio = (1 - Evt.Ratio) * _DeltaTime / Evt.Time;
+			GetLevel()->GetMainCamera()->AddZoomRatio(ZoomRatio);
+			return;
+		}
+		break;
+		case EventType::CAMMOVE:
+			break;
+		case EventType::BLACK:
+			break;
+		case EventType::ROTATION:
+			break;
+		default:
+			break;
+		}
 	}
 }
 

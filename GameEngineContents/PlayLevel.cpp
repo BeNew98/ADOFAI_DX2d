@@ -65,6 +65,10 @@ void PlayLevel::LevelChangeStart()
 
 	m_pStageInfo = EditGui::Editor->GetStageInfo(0);
 
+	std::shared_ptr<Tiles> tile = m_pStageInfo.AllTile[3].m_pTile;
+	tile->SetTileEvent(EventType::ZOOMIN, 0.9f, 0.1f);
+	tile->SetTileEvent(EventType::ZOOMOUT, 1.f, 0.2f);
+
 	m_pRed = CreateActor<Planet>(OrderNum::PLANET);
 	m_pBlue = CreateActor<Planet>(OrderNum::PLANET);
 	m_pBlue->GetTransform()->SetParent(m_pRed->GetTransform());
@@ -74,10 +78,6 @@ void PlayLevel::LevelChangeStart()
 
 	m_pCenter->GetTransform()->SetWorldPosition(m_pStageInfo.AllTile[0].m_pTile->GetPivotPos());
 
-	m_pStageInfo.AllTile[3].m_pTile->SetFunction([this]()
-		{
-			GetMainCamera()->SetZoomRatio(0.9f);
-		});
 	std::shared_ptr<Portal> m_pPortal1 = CreateActor<Portal>(OrderNum::MAP);
 	m_pPortal1->GetTransform()->SetLocalPosition(m_pStageInfo.AllTile[m_pStageInfo.AllTile.size()-1].m_pTile->GetPivotPos());
 	m_pPortal1->SetFunction([]()
