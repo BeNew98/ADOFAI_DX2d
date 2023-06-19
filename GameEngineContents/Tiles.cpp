@@ -81,33 +81,37 @@ void Tiles::Update(float _DeltaTime)
 
 void Tiles::EventStart(float _DeltaTime)
 {
-	if (m_vecEvent.size()!=0&&m_bEventTrigger==false)
+	if (m_bEventTrigger == false)
 	{
 		return;
 	}
-	for (size_t i = 0; i < m_vecEvent.size(); i++)
+	ZoomEvent(_DeltaTime);
+}
+
+void Tiles::ZoomEvent(float _DeltaTime)
+{
+	std::map<EventType, std::vector<TileEvent>>::iterator findIter = m_mapAllEvent.find(EventType::ZOOM);
+
+	std::vector<TileEvent> *vecEvt = &findIter->second;
+
+	for (size_t i = 0; i < (*vecEvt).size(); i++)
 	{
-		if (true==m_vecEvent[i].End)
+		if (true == (*vecEvt)[i].End)
 		{
 			continue;
 		}
-		TileEvent Evt = m_vecEvent[i];
-		EventType sType = Evt.Type;
-		switch (sType)
-		{
-		case EventType::NONE:
-			break;
-		case EventType::ZOOM:
+		TileEvent Evt = (*vecEvt)[i];
 		{
 
 			float fRatio = GetLevel()->GetMainCamera()->GetZoomRatio();
-			if (Evt.Ratio>0.f)
+			if (Evt.Ratio > 0.f)
 			{
 				if ((m_PrevRatio - Evt.Ratio) >= fRatio)
 				{
 					GetLevel()->GetMainCamera()->SetZoomRatio(m_PrevRatio - Evt.Ratio);
 					m_PrevRatio = GetLevel()->GetMainCamera()->GetZoomRatio();
-					m_vecEvent[i].End = true;
+					(*vecEvt)[i].End = true;
+					return;
 				}
 			}
 			else
@@ -116,24 +120,14 @@ void Tiles::EventStart(float _DeltaTime)
 				{
 					GetLevel()->GetMainCamera()->SetZoomRatio(m_PrevRatio - Evt.Ratio);
 					m_PrevRatio = GetLevel()->GetMainCamera()->GetZoomRatio();
-					m_vecEvent[i].End = true;
+					(*vecEvt)[i].End = true;
+					return;
 				}
 			}
-			
+
 			float ZoomRatio = Evt.Ratio * _DeltaTime / Evt.Time;
 			GetLevel()->GetMainCamera()->AddZoomRatio(ZoomRatio);
 			return;
-		}
-			break;
-		break;
-		case EventType::CAMMOVE:
-			break;
-		case EventType::BLACK:
-			break;
-		case EventType::ROTATION:
-			break;
-		default:
-			break;
 		}
 	}
 }

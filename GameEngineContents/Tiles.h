@@ -170,5 +170,6 @@ private:
 	bool m_bEventTrigger = false;
 
 	void EventStart(float _DeltaTime);
+	void ZoomEvent(float _DeltaTime);
 };
 
