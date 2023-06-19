@@ -128,6 +128,8 @@ public:
 		Evt.Ratio=_Ratio;
 		Evt.Time= _Time;
 
+		m_mapAllEvent[Evt.Type].push_back(Evt);
+		
 		m_vecEvent.push_back(Evt);
 	}
 
@@ -163,7 +165,7 @@ private:
 	float4 m_fEndCal	= float4::Zero;
 
 	std::shared_ptr<class GameEngineCollision> m_pCollision= nullptr;
-
+	std::map<EventType ,std::vector<TileEvent>> m_mapAllEvent;
 	std::vector<TileEvent> m_vecEvent;
 	bool m_bEventTrigger = false;
 
