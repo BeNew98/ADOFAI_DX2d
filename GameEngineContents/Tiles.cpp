@@ -99,14 +99,6 @@ void Tiles::EventStart(float _DeltaTime)
 			break;
 		case EventType::ZOOM:
 		{
-			//float fRatio = GetLevel()->GetMainCamera()->GetZoomRatio();
-			//if (Evt.Ratio >= fRatio)
-			//{
-			//	m_PrevRatio = GetLevel()->GetMainCamera()->GetZoomRatio();
-			//	m_vecEvent[i].End = true;
-			//}
-   			//float ZoomRatio = (m_PrevRatio - Evt.Ratio) * _DeltaTime/ Evt.Time;
-			//GetLevel()->GetMainCamera()->AddZoomRatio(ZoomRatio);
 
 			float fRatio = GetLevel()->GetMainCamera()->GetZoomRatio();
 			if (Evt.Ratio>0.f)
