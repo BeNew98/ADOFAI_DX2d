@@ -64,10 +64,15 @@ void PlayLevel::LevelChangeStart()
 	EditGui::Editor->LoadtoString("");
 
 	m_pStageInfo = EditGui::Editor->GetStageInfo(0);
-
-	std::shared_ptr<Tiles> tile = m_pStageInfo.AllTile[3].m_pTile;
-	tile->SetTileEvent(EventType::ZOOM, 0.1f, 0.05f);
-	tile->SetTileEvent(EventType::ZOOM, -0.1f, 0.1f);
+	{
+		for (size_t i = 0; i < m_pStageInfo.AllTile.size(); i++)
+		{
+			std::shared_ptr<Tiles> tile = m_pStageInfo.AllTile[i].m_pTile;
+			tile->SetTileEvent(EventType::ZOOM, 0.1f, 0.05f);
+			tile->SetTileEvent(EventType::ZOOM, -0.1f, 0.1f);
+		}
+		
+	}
 
 	m_pRed = CreateActor<Planet>(OrderNum::PLANET);
 	m_pBlue = CreateActor<Planet>(OrderNum::PLANET);
