@@ -66,8 +66,8 @@ void PlayLevel::LevelChangeStart()
 	m_pStageInfo = EditGui::Editor->GetStageInfo(0);
 
 	std::shared_ptr<Tiles> tile = m_pStageInfo.AllTile[3].m_pTile;
-	tile->SetTileEvent(EventType::ZOOMIN, 0.9f, 0.1f);
-	tile->SetTileEvent(EventType::ZOOMOUT, 1.0f, 0.2f);
+	tile->SetTileEvent(EventType::ZOOM, 0.1f, 0.05f);
+	tile->SetTileEvent(EventType::ZOOM, -0.1f, 0.1f);
 
 	m_pRed = CreateActor<Planet>(OrderNum::PLANET);
 	m_pBlue = CreateActor<Planet>(OrderNum::PLANET);
