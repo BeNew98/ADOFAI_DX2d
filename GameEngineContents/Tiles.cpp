@@ -102,10 +102,10 @@ void Tiles::EventStart(float _DeltaTime)
 			float fRatio = GetLevel()->GetMainCamera()->GetZoomRatio();
 			if (Evt.Ratio >= fRatio)
 			{
-				GetLevel()->GetMainCamera()->SetZoomRatio(Evt.Ratio);
+				m_PrevRatio = GetLevel()->GetMainCamera()->GetZoomRatio();
 				m_vecEvent[i].End = true;
 			}
-   			float ZoomRatio = (1 - Evt.Ratio) * _DeltaTime/ Evt.Time;
+   			float ZoomRatio = (m_PrevRatio - Evt.Ratio) * _DeltaTime/ Evt.Time;
 			GetLevel()->GetMainCamera()->AddZoomRatio(ZoomRatio);
 			return;
 		}
@@ -115,10 +115,10 @@ void Tiles::EventStart(float _DeltaTime)
 			float fRatio = GetLevel()->GetMainCamera()->GetZoomRatio();
 			if (Evt.Ratio <= fRatio)
 			{
-				GetLevel()->GetMainCamera()->SetZoomRatio(Evt.Ratio);
+				m_PrevRatio = GetLevel()->GetMainCamera()->GetZoomRatio();
 				m_vecEvent[i].End = true;
 			}
-			float ZoomRatio = (1 - Evt.Ratio) * _DeltaTime / Evt.Time;
+			float ZoomRatio = (m_PrevRatio - Evt.Ratio) * _DeltaTime / Evt.Time;
 			GetLevel()->GetMainCamera()->AddZoomRatio(ZoomRatio);
 			return;
 		}

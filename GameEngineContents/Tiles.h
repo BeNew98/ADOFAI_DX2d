@@ -131,6 +131,10 @@ public:
 		m_vecEvent.push_back(Evt);
 	}
 
+	void SetPrevRatio(float _Ratio)
+	{
+		m_PrevRatio = _Ratio;
+	}
 	
 protected:
 	void Start() override;
@@ -143,6 +147,7 @@ private:
 	std::shared_ptr<class GameEngineComponent> m_pCenterPivot = nullptr;
 
 	float4 m_fData = float4::Zero;
+	float m_PrevRatio = 0.f;
 	int m_iIndex = 0;
 
 	bool m_bGlow = false;

@@ -67,7 +67,7 @@ void PlayLevel::LevelChangeStart()
 
 	std::shared_ptr<Tiles> tile = m_pStageInfo.AllTile[3].m_pTile;
 	tile->SetTileEvent(EventType::ZOOMIN, 0.9f, 0.1f);
-	tile->SetTileEvent(EventType::ZOOMOUT, 1.f, 0.2f);
+	tile->SetTileEvent(EventType::ZOOMOUT, 1.0f, 0.2f);
 
 	m_pRed = CreateActor<Planet>(OrderNum::PLANET);
 	m_pBlue = CreateActor<Planet>(OrderNum::PLANET);
@@ -155,6 +155,7 @@ void PlayLevel::PlanetSwap()
 		m_pStageInfo.AllTile[m_iCurIndex + 1].m_pTile->GlowOn();
 
 		pNextTile->EventOn();
+		pNextTile->SetPrevRatio(GetMainCamera()->GetZoomRatio());
 
 		++m_iCurIndex;
 	}
