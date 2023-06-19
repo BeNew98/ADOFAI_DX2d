@@ -36,6 +36,21 @@ void GameEngineLevel::Start()
 
 void GameEngineLevel::ActorUpdate(float _DeltaTime)
 {
+	//bool Check = false;
+	//for (std::pair<const int, std::shared_ptr<GameEngineCamera>>& Cam : Cameras)
+	//{
+	//	if (true == Cam.second->IsFreeCamera())
+	//	{
+	//		Cam.second->Update(_DeltaTime);
+	//		Check = true;
+	//	}
+	//}
+
+	//if (true == Check)
+	//{
+	//	return;
+	//}
+
 	if (true == MainCamera->IsFreeCamera())
 	{
 		MainCamera->Update(_DeltaTime);

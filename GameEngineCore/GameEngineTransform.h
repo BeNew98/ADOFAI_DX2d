@@ -27,7 +27,7 @@ public:
 		DirectX::BoundingOrientedBox OBB;
 	};
 
-	void ScaleABS() 
+	void ScaleABS()
 	{
 		OBB.Extents.x = abs(OBB.Extents.x);
 		OBB.Extents.y = abs(OBB.Extents.y);
@@ -315,11 +315,11 @@ public:
 
 	void SetParent(GameEngineTransform* _Parent, bool _IsParentWorld = true);
 
-	bool IsAbsoluteScale() 
+	bool IsAbsoluteScale()
 	{
 		return  AbsoluteScale;
 	}
-	bool IsAbsoluteRotation() 
+	bool IsAbsoluteRotation()
 	{
 		return  AbsoluteRotation;
 	}
@@ -345,7 +345,7 @@ public:
 		TransData = _Data;
 	}
 
-	CollisionData GetCollisionData() 
+	CollisionData GetCollisionData()
 	{
 		return ColData;
 	}
