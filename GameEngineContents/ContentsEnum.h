@@ -37,7 +37,7 @@ enum class EventType
 {
 	NONE,
 	ZOOM,
-	CAMMOVE,
+	MOVE,
 	BLACK,
 	ROTATION,
 
