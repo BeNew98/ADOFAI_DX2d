@@ -73,7 +73,7 @@ void PlayLevel::LevelChangeStart()
 
 			tile->SetTileEvent(EventType::MOVE, 100.f, 1.f);
 
-			tile->SetTileEvent(EventType::ROTATION, 1.f, 1.f);
+			tile->SetTileEvent(EventType::ROTATION,90.f, 1.f);
 		}
 		
 	}

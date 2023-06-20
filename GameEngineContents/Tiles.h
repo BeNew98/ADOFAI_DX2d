@@ -134,7 +134,7 @@ public:
 
 	void SetPrevRatio(float _Ratio)
 	{
-		m_PrevZoomRatio = _Ratio;
+		m_fPrevZoomRatio = _Ratio;
 	}
 	
 protected:
@@ -148,8 +148,9 @@ private:
 	std::shared_ptr<class GameEngineComponent> m_pCenterPivot = nullptr;
 
 	float4 m_fData = float4::Zero;
-	float m_PrevZoomRatio = 0.f;
-	float m_PrevRotRatio = 0.f;
+	float m_fPrevZoomRatio = 0.f;
+	float m_fPrevRotRatio = 0.f;
+	float4 m_fPrevPos = float4::Zero;
 	int m_iIndex = 0;
 
 	bool m_bGlow = false;

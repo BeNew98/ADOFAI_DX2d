@@ -112,20 +112,20 @@ void Tiles::ZoomEvent(float _DeltaTime)
 			float fRatio = GetLevel()->GetMainCamera()->GetZoomRatio();
 			if (Evt.Ratio > 0.f)
 			{
-				if ((m_PrevZoomRatio - Evt.Ratio) >= fRatio)
+				if ((m_fPrevZoomRatio - Evt.Ratio) >= fRatio)
 				{
-					GetLevel()->GetMainCamera()->SetZoomRatio(m_PrevZoomRatio - Evt.Ratio);
-					m_PrevZoomRatio = GetLevel()->GetMainCamera()->GetZoomRatio();
+					GetLevel()->GetMainCamera()->SetZoomRatio(m_fPrevZoomRatio - Evt.Ratio);
+					m_fPrevZoomRatio = GetLevel()->GetMainCamera()->GetZoomRatio();
 					(*vecEvt)[i].End = true;
 					return;
 				}
 			}
 			else
 			{
-				if ((m_PrevZoomRatio - Evt.Ratio) <= fRatio)
+				if ((m_fPrevZoomRatio - Evt.Ratio) <= fRatio)
 				{
-					GetLevel()->GetMainCamera()->SetZoomRatio(m_PrevZoomRatio - Evt.Ratio);
-					m_PrevZoomRatio = GetLevel()->GetMainCamera()->GetZoomRatio();
+					GetLevel()->GetMainCamera()->SetZoomRatio(m_fPrevZoomRatio - Evt.Ratio);
+					m_fPrevZoomRatio = GetLevel()->GetMainCamera()->GetZoomRatio();
 					(*vecEvt)[i].End = true;
 					return;
 				}
@@ -200,26 +200,29 @@ void Tiles::RotationEvent(float _DeltaTime)
 		TileEvent Evt = (*vecEvt)[i];
 		{
 			float RotRatio = Evt.Ratio * _DeltaTime / Evt.Time;
-			m_PrevRotRatio += RotRatio;
+			m_fPrevRotRatio += RotRatio;
 			if (Evt.Ratio > 0.f)
 			{
-				if (m_PrevRotRatio >= Evt.Ratio)
+				if (m_fPrevRotRatio >= Evt.Ratio)
 				{
-					m_PrevRotRatio - Evt.Ratio;
-					m_PrevRotRatio = 0.f;
-					//MainCamera->GetTransform()->SetLocalRotation({ 0.f,0.f,Evt.Ratio });
-					//BackGroundCamera->GetTransform()->AddLocalRotation({ 0.f,0.f,Evt.Ratio });
+					float fCal = m_fPrevRotRatio - Evt.Ratio;
+
+					MainCamera->GetTransform()->AddLocalRotation({ 0.f,0.f,RotRatio - fCal });
+					BackGroundCamera->GetTransform()->AddLocalRotation({ 0.f,0.f,RotRatio - fCal });
+					m_fPrevRotRatio = 0.f;
 					(*vecEvt)[i].End = true;
 					return;
 				}
 			}
 			else
 			{
-				if (m_PrevRotRatio <= Evt.Ratio)
+				if (m_fPrevRotRatio <= Evt.Ratio)
 				{
-					m_PrevRotRatio = 0.f;
-					//MainCamera->GetTransform()->SetLocalRotation({ 0.f,0.f,Evt.Ratio });
-					//BackGroundCamera->GetTransform()->AddLocalRotation({ 0.f,0.f,Evt.Ratio });
+					float fCal = m_fPrevRotRatio - Evt.Ratio;
+
+					MainCamera->GetTransform()->AddLocalRotation({ 0.f,0.f,RotRatio - fCal });
+					BackGroundCamera->GetTransform()->AddLocalRotation({ 0.f,0.f,RotRatio - fCal });
+					m_fPrevRotRatio = 0.f;
 					(*vecEvt)[i].End = true;
 					return;
 				}
