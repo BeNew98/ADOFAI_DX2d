@@ -44,8 +44,6 @@ void PlayLevel::Start()
 void PlayLevel::LevelChangeStart()
 {
 	m_BGM = GameEngineSound::Play("1-X.wav");
-	m_BGM.SetPosition(16.f);
-	m_BGM.SetLoopPoint(16.36346f, 18.45345f);
 	std::shared_ptr<GameEngineCamera> BackCam = CreateNewCamera(-1);
 	BackCam->SetProjectionType(CameraType::Perspective);
 	BackCam->GetTransform()->SetLocalPosition({ 0.f,0.f,-750.f });

@@ -20,7 +20,7 @@ public:
 	TitleLevel& operator=(TitleLevel&& _Other) noexcept = delete;
 
 	GameEnginePixelColor Color = {2,2,2,2};
-	GameEngineSoundPlayer m_pBGM = nullptr;
+	GameEngineSoundPlayer m_BGM = nullptr;
 
 	float GetTime()
 	{

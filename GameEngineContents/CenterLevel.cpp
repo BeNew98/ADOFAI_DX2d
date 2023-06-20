@@ -59,6 +59,7 @@ void CenterLevel::Start()
 		NewDir.Move("Sound");
 
 		GameEngineSound::Load(NewDir.GetPlusFileName("1-X.wav").GetFullPath());
+		GameEngineSound::Load(NewDir.GetPlusFileName("sndKick.wav").GetFullPath());
 	}
 
 	//À­ÂÊÀº MainCam ¾Æ·§ÂÊÀº UICam

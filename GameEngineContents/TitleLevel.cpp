@@ -55,8 +55,9 @@ void TitleLevel::Start()
 void TitleLevel::LevelChangeStart()
 {
 	{
-		m_pBGM = GameEngineSound::Play("1-X.wav");
-		m_pBGM.SetPitch(0.8f);
+		m_BGM = GameEngineSound::Play("1-X.wav");
+		m_BGM.SetPitch(0.8f);
+		m_BGM.SetLoop();
 		std::shared_ptr<GameEngineCamera> BackCam = CreateNewCamera(-1);
 		BackCam->SetProjectionType(CameraType::Perspective);
 		BackCam->GetTransform()->SetLocalPosition({ 0.f,0.f,-750.f });
@@ -128,7 +129,7 @@ void TitleLevel::LevelChangeStart()
 
 void TitleLevel::LevelChangeEnd()
 {
-	m_pBGM.Stop();
+	m_BGM.Stop();
 	AllActorDestroy();
 }
 

@@ -17,7 +17,7 @@ public:
 	GameEngineSoundPlayer(FMOD::Channel* _Channel)
 		: Channel(_Channel)
 	{
-
+		
 	}
 
 	void Stop()
@@ -32,7 +32,7 @@ public:
 	{
 		Channel->setVolume(_Volume);
 	}
-	void SetLoopCount(int _Count)
+	void SetLoop(int _Count = -1)
 	{
 		Channel->setLoopCount(_Count);
 	}
