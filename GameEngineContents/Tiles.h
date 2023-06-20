@@ -1,6 +1,7 @@
 #pragma once
 #include <GameEngineCore/GameEngineActor.h>
 #include <GameEngineCore/GameEngineSpriteRenderer.h>
+#include "EditGui.h"
 
 struct TileEvent
 {
@@ -120,7 +121,7 @@ public:
 		return m_bAlpha;
 	}
 
-
+	//Ratio는 Zoom = 증감 배율, Move = 이동속도(?), Rotation은 회전각도
 	void SetTileEvent(EventType _Type, float _Ratio, float _Time)
 	{
 		TileEvent Evt = {};
@@ -128,14 +129,12 @@ public:
 		Evt.Ratio=_Ratio;
 		Evt.Time= _Time;
 
-		m_mapAllEvent[Evt.Type].push_back(Evt);
-		
-		m_vecEvent.push_back(Evt);
+		m_mapAllEvent[Evt.Type].push_back(Evt);		
 	}
 
 	void SetPrevRatio(float _Ratio)
 	{
-		m_PrevRatio = _Ratio;
+		m_PrevZoomRatio = _Ratio;
 	}
 	
 protected:
@@ -149,7 +148,8 @@ private:
 	std::shared_ptr<class GameEngineComponent> m_pCenterPivot = nullptr;
 
 	float4 m_fData = float4::Zero;
-	float m_PrevRatio = 0.f;
+	float m_PrevZoomRatio = 0.f;
+	float m_PrevRotRatio = 0.f;
 	int m_iIndex = 0;
 
 	bool m_bGlow = false;
@@ -166,8 +166,10 @@ private:
 
 	std::shared_ptr<class GameEngineCollision> m_pCollision= nullptr;
 	std::map<EventType ,std::vector<TileEvent>> m_mapAllEvent;
-	std::vector<TileEvent> m_vecEvent;
 	bool m_bEventTrigger = false;
+
+
+	StageInfo m_pStageInfo = {};
 
 	void EventStart(float _DeltaTime);
 	void ZoomEvent(float _DeltaTime);

@@ -18,7 +18,7 @@ Tiles::~Tiles()
 
 void Tiles::Start()
 {
-
+	m_pStageInfo = EditGui::Editor->GetStageInfo(0);
 	m_pStartPivot = CreateComponent<GameEngineSpriteRenderer>();
 	m_pStartPivot->GetTransform()->SetLocalScale(float4(10.f, 10.f));
 	m_pEndPivot = CreateComponent<GameEngineSpriteRenderer>();
@@ -94,7 +94,11 @@ void Tiles::ZoomEvent(float _DeltaTime)
 {
 	std::map<EventType, std::vector<TileEvent>>::iterator findIter = m_mapAllEvent.find(EventType::ZOOM);
 
-	std::vector<TileEvent> *vecEvt = &findIter->second;
+	if (findIter == m_mapAllEvent.end())
+	{
+		return;
+	}
+	std::vector<TileEvent>* vecEvt = &findIter->second;
 
 	for (size_t i = 0; i < (*vecEvt).size(); i++)
 	{
@@ -108,20 +112,20 @@ void Tiles::ZoomEvent(float _DeltaTime)
 			float fRatio = GetLevel()->GetMainCamera()->GetZoomRatio();
 			if (Evt.Ratio > 0.f)
 			{
-				if ((m_PrevRatio - Evt.Ratio) >= fRatio)
+				if ((m_PrevZoomRatio - Evt.Ratio) >= fRatio)
 				{
-					GetLevel()->GetMainCamera()->SetZoomRatio(m_PrevRatio - Evt.Ratio);
-					m_PrevRatio = GetLevel()->GetMainCamera()->GetZoomRatio();
+					GetLevel()->GetMainCamera()->SetZoomRatio(m_PrevZoomRatio - Evt.Ratio);
+					m_PrevZoomRatio = GetLevel()->GetMainCamera()->GetZoomRatio();
 					(*vecEvt)[i].End = true;
 					return;
 				}
 			}
 			else
 			{
-				if ((m_PrevRatio - Evt.Ratio) <= fRatio)
+				if ((m_PrevZoomRatio - Evt.Ratio) <= fRatio)
 				{
-					GetLevel()->GetMainCamera()->SetZoomRatio(m_PrevRatio - Evt.Ratio);
-					m_PrevRatio = GetLevel()->GetMainCamera()->GetZoomRatio();
+					GetLevel()->GetMainCamera()->SetZoomRatio(m_PrevZoomRatio - Evt.Ratio);
+					m_PrevZoomRatio = GetLevel()->GetMainCamera()->GetZoomRatio();
 					(*vecEvt)[i].End = true;
 					return;
 				}
@@ -136,12 +140,96 @@ void Tiles::ZoomEvent(float _DeltaTime)
 
 void Tiles::MoveEvent(float _DeltaTime)
 {
-	int a = 0;
+
+	std::map<EventType, std::vector<TileEvent>>::iterator findIter = m_mapAllEvent.find(EventType::MOVE);
+
+	if (findIter == m_mapAllEvent.end())
+	{
+		return;
+	}
+	std::vector<TileEvent>* vecEvt = &findIter->second;
+
+	std::shared_ptr<GameEngineCamera>MainCamera = GetLevel()->GetMainCamera();
+	std::shared_ptr<GameEngineCamera>BackGroundCamera = GetLevel()->GetCamera(-1);
+
+	for (size_t i = 0; i < (*vecEvt).size(); i++)
+	{
+		if (true == (*vecEvt)[i].End)
+		{
+			continue;
+		}
+		TileEvent Evt = (*vecEvt)[i];
+		{
+			float SpeedRatio = Evt.Ratio * _DeltaTime / Evt.Time;
+			if (SpeedRatio>=1.f)
+			{
+				(*vecEvt)[i].End = true;
+				return;
+			}
+			//CurPosition에서 이동해야하지 이전 타일이면 안됨.
+			float4 f4PrevTilePos = m_pStageInfo.AllTile[m_iIndex - 1].m_pTile->GetPivotPos();
+			MainCamera->GetTransform()->SetLocalPosition(float4::Lerp(f4PrevTilePos, GetPivotPos(), SpeedRatio));
+			BackGroundCamera->GetTransform()->SetLocalPosition(float4::Lerp(f4PrevTilePos, GetPivotPos(), SpeedRatio));
+
+			return;
+		}
+	}
+
 }
 
 void Tiles::RotationEvent(float _DeltaTime)
 {
-	int a = 0;
+
+	std::map<EventType, std::vector<TileEvent>>::iterator findIter = m_mapAllEvent.find(EventType::ROTATION);
+
+	if (findIter == m_mapAllEvent.end())
+	{
+		return;
+	}
+	std::vector<TileEvent>* vecEvt = &findIter->second;
+
+	std::shared_ptr<GameEngineCamera>MainCamera = GetLevel()->GetMainCamera();
+	std::shared_ptr<GameEngineCamera>BackGroundCamera = GetLevel()->GetCamera(-1);
+
+	for (size_t i = 0; i < (*vecEvt).size(); i++)
+	{
+		if (true == (*vecEvt)[i].End)
+		{
+			continue;
+		}
+		TileEvent Evt = (*vecEvt)[i];
+		{
+			float RotRatio = Evt.Ratio * _DeltaTime / Evt.Time;
+			m_PrevRotRatio += RotRatio;
+			if (Evt.Ratio > 0.f)
+			{
+				if (m_PrevRotRatio >= Evt.Ratio)
+				{
+					m_PrevRotRatio - Evt.Ratio;
+					m_PrevRotRatio = 0.f;
+					//MainCamera->GetTransform()->SetLocalRotation({ 0.f,0.f,Evt.Ratio });
+					//BackGroundCamera->GetTransform()->AddLocalRotation({ 0.f,0.f,Evt.Ratio });
+					(*vecEvt)[i].End = true;
+					return;
+				}
+			}
+			else
+			{
+				if (m_PrevRotRatio <= Evt.Ratio)
+				{
+					m_PrevRotRatio = 0.f;
+					//MainCamera->GetTransform()->SetLocalRotation({ 0.f,0.f,Evt.Ratio });
+					//BackGroundCamera->GetTransform()->AddLocalRotation({ 0.f,0.f,Evt.Ratio });
+					(*vecEvt)[i].End = true;
+					return;
+				}
+			}
+			MainCamera->GetTransform()->AddLocalRotation({ 0.f,0.f,RotRatio });
+			BackGroundCamera->GetTransform()->AddLocalRotation({ 0.f,0.f,RotRatio });
+
+			return;
+		}
+	}
 }
 
 

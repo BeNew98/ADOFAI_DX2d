@@ -70,6 +70,10 @@ void PlayLevel::LevelChangeStart()
 			std::shared_ptr<Tiles> tile = m_pStageInfo.AllTile[i].m_pTile;
 			tile->SetTileEvent(EventType::ZOOM, 0.1f, 0.05f);
 			tile->SetTileEvent(EventType::ZOOM, -0.1f, 0.1f);
+
+			tile->SetTileEvent(EventType::MOVE, 100.f, 1.f);
+
+			tile->SetTileEvent(EventType::ROTATION, 1.f, 1.f);
 		}
 		
 	}
