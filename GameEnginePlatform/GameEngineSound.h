@@ -44,6 +44,14 @@ public:
 	{
 		Channel->setPaused(_Value);
 	}
+	void SetPosition(float _StartSecond, FMOD_TIMEUNIT _TimeUnit = FMOD_TIMEUNIT_MS)
+	{
+		Channel->setPosition(static_cast<UINT>(_StartSecond * 1000.f), _TimeUnit);
+	}
+	void SetLoopPoint(float _StartSecond, float _EndSecond,FMOD_TIMEUNIT _TimeUnit = FMOD_TIMEUNIT_MS)
+	{
+		Channel->setLoopPoints(static_cast<UINT>(_StartSecond * 1000.f), _TimeUnit, static_cast<UINT>(_EndSecond * 1000.f), _TimeUnit);
+	}
 };
 
 // Ό³Έν :

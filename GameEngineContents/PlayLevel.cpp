@@ -43,8 +43,9 @@ void PlayLevel::Start()
 }
 void PlayLevel::LevelChangeStart()
 {
-
-
+	m_BGM = GameEngineSound::Play("1-X.wav");
+	m_BGM.SetPosition(16.f);
+	m_BGM.SetLoopPoint(16.36346f, 18.45345f);
 	std::shared_ptr<GameEngineCamera> BackCam = CreateNewCamera(-1);
 	BackCam->SetProjectionType(CameraType::Perspective);
 	BackCam->GetTransform()->SetLocalPosition({ 0.f,0.f,-750.f });
@@ -104,13 +105,13 @@ void PlayLevel::LevelChangeEnd()
 void PlayLevel::Reset()
 {
 	AllActorDestroy();
-
+	m_BGM.Stop();
 	m_pStageInfo = {};
 	m_pRed = nullptr;
 	m_pBlue = nullptr;
 	m_pCenter = nullptr;
 	m_pTurn = nullptr;
-
+	m_BGM = nullptr;
 	m_iCurIndex = 0;
 }
 

@@ -91,6 +91,10 @@ void TitleLevel::LevelChangeStart()
 	m_pCenter = m_pRed;
 	m_pTurn = m_pBlue;
 	
+	for (size_t i = 16; i < 21; i++)
+	{
+		int a = 0;
+	}
 	for (size_t i = 41; i < m_pStageInfo.AllTile.size(); i++)
 	{
 		std::shared_ptr<Tiles> tile = m_pStageInfo.AllTile[i].m_pTile;
@@ -124,6 +128,7 @@ void TitleLevel::LevelChangeStart()
 
 void TitleLevel::LevelChangeEnd()
 {
+	m_pBGM.Stop();
 	AllActorDestroy();
 }
 

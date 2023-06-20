@@ -1,6 +1,7 @@
 #pragma once
 #include <GameEngineCore\GameEngineLevel.h>
 #include "EditGui.h"
+#include <GameEnginePlatform/GameEngineSound.h>
 
 // Ό³Έν :
 class PlayLevel : public GameEngineLevel
@@ -18,6 +19,7 @@ public:
 
 	std::shared_ptr<class GameEngineVideo> Video;
 
+	GameEngineSoundPlayer m_BGM = nullptr;
 protected:
 	void Update(float _DeltaTime) override;
 	void Start() override;
