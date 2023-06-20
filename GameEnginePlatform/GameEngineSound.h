@@ -48,12 +48,12 @@ public:
 	}
 	void SetPosition(float _StartSecond, FMOD_TIMEUNIT _TimeUnit = FMOD_TIMEUNIT_MS)
 	{
-		//float으로 시작지점 초를 넣어주면 해당 지점부터 시작
+		//float으로 _StartSecond를 넣어주면 ms로 보정해서 해당 지점부터 시작
 		Channel->setPosition(static_cast<UINT>(_StartSecond * 1000.f), _TimeUnit);
 	}
 	void SetLoopPoint(float _StartSecond, float _EndSecond,FMOD_TIMEUNIT _TimeUnit = FMOD_TIMEUNIT_MS)
 	{
-		//_StartSecond ~_EndSecond 까지 반복 처음부터 _StartSecond로 시작하고 싶으면 SetPosition도 해주어야함.
+		//_StartSecond ~_EndSecond 까지 반복
 		Channel->setLoopPoints(static_cast<UINT>(_StartSecond * 1000.f), _TimeUnit, static_cast<UINT>(_EndSecond * 1000.f), _TimeUnit);
 	}
 };
