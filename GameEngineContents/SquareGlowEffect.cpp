@@ -4,6 +4,8 @@
 #include <GameEngineCore/GameEngineSpriteRenderer.h>
 #include <GameEngineCore/GameEngineTransform.h>
 #include <GameEngineCore/GameEngineLevel.h>
+
+#include "EditGui.h"
 #include "Tiles.h"
 #include "TitleLevel.h"
 
@@ -18,6 +20,7 @@ SquareGlowEffect::~SquareGlowEffect()
 
 void SquareGlowEffect::Start()
 {
+	m_fSpeed = EditGui::Editor->GetStageInfo(0).RotSpeed*2.f;
 	m_pRender = CreateComponent<GameEngineSpriteRenderer>(OrderNum::EFFECT);
 	m_pRender->SetScaleToTexture("topglow_E.png");
 }
@@ -25,7 +28,7 @@ void SquareGlowEffect::Start()
 void SquareGlowEffect::Update(float _DeltaTime)
 {
 	std::weak_ptr<TitleLevel> Level = GetLevel()->DynamicThis<TitleLevel>();
-	if (Level.lock()->GetTime() >=180.f)
+	if (Level.lock()->GetTime() >= m_fSpeed)
 	{
 		m_bColor = Level.lock()->GetGlowValue();
  		m_bCheckValue = true;

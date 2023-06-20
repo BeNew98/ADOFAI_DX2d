@@ -34,18 +34,6 @@ public:
 		return m_pCollision;
 	}
 
-	void SetSpeed(int BPM) 
-	{
-		if (BPM==0)
-		{
-			MsgAssert("BPM이 0입니다");
-			return;
-		}
-		m_fSpeed = static_cast<float>(180.f * (BPM / 60.f));
-	}
-
-
-
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;

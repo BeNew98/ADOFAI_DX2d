@@ -10,6 +10,7 @@ struct StageInfo
 {
 	std::vector<TileInfo> AllTile;
 	int BPM = 0;
+	float RotSpeed = 0.f;
 	float fitch = 0.f;
 };
 
@@ -42,10 +43,15 @@ public:
 	{
 		m_iLevelValue = _Level;
 	}
-
+	
 	void SetBPM(int _BPM)
 	{
-		m_vecAllStage[0].BPM = _BPM;
+		if (_BPM == 0)
+		{
+			MsgAssert("BPM이 0입니다");
+			return;
+		}
+		m_vecAllStage[0].RotSpeed = static_cast<float>(180.f * (_BPM / 60.f));
 	}
 
 

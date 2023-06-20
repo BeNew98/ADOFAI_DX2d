@@ -33,5 +33,6 @@ private:
 	int m_iIndex = 0;
 	bool m_bColor = false;
 	bool m_bCheckValue = false;
+	float m_fSpeed = 0.f;
 };
 

@@ -112,9 +112,9 @@ public:
 		return m_iIndex;
 	}
 
-	void AlphaSwitch()
+	void AlphaSwitch(bool _Value)
 	{
-		m_bAlpha = !m_bAlpha;
+		m_bAlpha = _Value;
 	}
 	bool GetAlphaValue()
 	{

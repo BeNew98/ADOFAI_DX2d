@@ -77,9 +77,7 @@ void PlayLevel::LevelChangeStart()
 	}
 
 	m_pRed = CreateActor<Planet>(OrderNum::PLANET);
-	m_pRed->SetSpeed(m_pStageInfo.BPM);
 	m_pBlue = CreateActor<Planet>(OrderNum::PLANET);
-	m_pBlue->SetSpeed(m_pStageInfo.BPM);
 	m_pBlue->GetTransform()->SetParent(m_pRed->GetTransform());
 	m_pBlue->GetTransform()->AddLocalPosition({ 150.f,0.f,0.f });
 	m_pCenter = m_pRed;
@@ -113,6 +111,8 @@ void PlayLevel::Reset()
 	m_pCenter = nullptr;
 	m_pTurn = nullptr;
 	m_BGM = nullptr;
+	m_bGameStart = false;
+	m_fStartTime = 0.f;
 	m_iCurIndex = 0;
 }
 

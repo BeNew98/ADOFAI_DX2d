@@ -54,7 +54,7 @@ void TitleLevel::Start()
 
 void TitleLevel::LevelChangeStart()
 {
-	{
+	{		
 		m_BGM = GameEngineSound::Play("1-X.wav");
 		m_BGM.SetPitch(0.8f);
 		m_BGM.SetLoop();
@@ -82,8 +82,9 @@ void TitleLevel::LevelChangeStart()
 	}
 
 	EditGui::Editor->LoadtoString("Title1~2");
+	EditGui::Editor->SetBPM(150.f * 0.8f);
 	m_pStageInfo = EditGui::Editor->GetStageInfo(0);
-	
+	m_fSpeed = m_pStageInfo.RotSpeed*2.f;
 	m_pRed = CreateActor<Planet>(OrderNum::PLANET);
 	m_pBlue = CreateActor<Planet>(OrderNum::PLANET);
 	float4 Tilepos = m_pStageInfo.AllTile[12].m_pTile->GetTransform()->GetWorldPosition();
@@ -121,8 +122,16 @@ void TitleLevel::LevelChangeStart()
 
 	m_pRed->GetTransform()->SetLocalPosition(m_pStageInfo.AllTile[12].m_pTile->GetTransform()->GetWorldPosition());
 
-	CenterCheck();
 
+	for (size_t i = 0; i < m_pStageInfo.AllTile.size(); i++)
+	{
+		if (i == 6 || i == 7 || i == 8 || i == 11 || i == 12 || i == 13 || i == 16 || i == 17 || i == 18)
+		{
+			continue;
+		}
+		m_pStageInfo.AllTile[i].m_pTile->GetRender()->ColorOptionValue.MulColor = { 1.f, 1.f, 1.f, 0.f };
+	}
+	
 	EditGui::Editor->Off();
 	//EditGui::Editor->On();
 	GetLevel()->GetMainCamera()->GetTransform()->SetWorldPosition(float4::Zero);
@@ -145,9 +154,9 @@ void TitleLevel::CenterCheck()
 			{
 				continue;
 			}
-			m_pStageInfo.AllTile[i].m_pTile->AlphaSwitch();
+			m_pStageInfo.AllTile[i].m_pTile->AlphaSwitch(true);
 		}
-		m_pLogo->AlphaSwitch();
+		m_pLogo->AlphaSwitch(true);
 	}
 	else
 	{
@@ -161,10 +170,14 @@ void TitleLevel::CenterCheck()
 			{
 				return;
 			}
-			m_pStageInfo.AllTile[i].m_pTile->AlphaSwitch();
+			m_pStageInfo.AllTile[i].m_pTile->AlphaSwitch(false);
 
 		}
-		m_pLogo->AlphaSwitch();
+		if (m_pLogo->GetAlphaValue() == false)
+		{
+			return;
+		}
+		m_pLogo->AlphaSwitch(false);
 	}
 
 }
@@ -237,11 +250,11 @@ void TitleLevel::PlanetSwap()
 }
 void TitleLevel::GlowTimeCheck(float _DeltaTime)
 {
-	if (m_fTime>=180.f)
+	if (m_fTime>= m_fSpeed)
 	{
-		m_fTime -= 180.f;
+		m_fTime -= m_fSpeed;
 		m_bGlow = !m_bGlow;
 	}
 
-	m_fTime += 180.f * _DeltaTime;
+	m_fTime += m_fSpeed * _DeltaTime;
 }

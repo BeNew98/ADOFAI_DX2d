@@ -15,9 +15,14 @@ public:
 	TitleLogo& operator=(const TitleLogo& _Other) = delete;
 	TitleLogo& operator=(TitleLogo&& _Other) noexcept = delete;
 
-	void AlphaSwitch()
+	void AlphaSwitch(bool _Value)
 	{
-		m_bAlpha = !m_bAlpha;
+		m_bAlpha = _Value;
+	}
+
+	bool GetAlphaValue()
+	{
+		return m_bAlpha;
 	}
 
 protected:

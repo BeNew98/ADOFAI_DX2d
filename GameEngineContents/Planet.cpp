@@ -23,33 +23,23 @@ void Planet::CreateEffect()
 
 void Planet::Start()
 {
+	std::shared_ptr<GameEngineSpriteRenderer> render = CreateComponent<GameEngineSpriteRenderer>(OrderNum::PLANET);
+	render->GetTransform()->SetLocalScale({ 64.f, 64.f, 1.f });
+
+	m_fSpeed = EditGui::Editor->GetStageInfo(0).RotSpeed;
+	m_pCollision = CreateComponent<GameEngineCollision>(ColNum::PLANET);
+	m_pCollision->GetTransform()->SetLocalScale({ 64.f, 64.f, 1.f });
 	if (m_iUseCount!=0)
 	{
-		std::shared_ptr<GameEngineSpriteRenderer> render = CreateComponent<GameEngineSpriteRenderer>(OrderNum::PLANET);
 		render->SetTexture("ballsprites_blue_sheet_grid_0_Sprite.png");
-		render->GetTransform()->SetLocalScale({ 64.f, 64.f, 1.f });
-
-		m_pCollision = CreateComponent<GameEngineCollision>(ColNum::PLANET);
-		m_pCollision->GetTransform()->SetLocalScale({ 64.f, 64.f, 1.f });
 		m_iUseCount = 0;
 
 	}
 	else
 	{
-		TransformData data = GetTransform()->GetTransDataRef();
-		std::shared_ptr<GameEngineSpriteRenderer> prender = CreateComponent<GameEngineSpriteRenderer>(OrderNum::PLANET);
-		prender->SetTexture("ballsprites_red_sheet_grid_0_Sprite.png");
-		prender->GetTransform()->SetLocalScale({ 64.f, 64.f, 1.f });
+		render->SetTexture("ballsprites_red_sheet_grid_0_Sprite.png");
 		m_bCenter = true;
-
-
-		m_pCollision = CreateComponent<GameEngineCollision>(ColNum::PLANET);
-		m_pCollision->GetTransform()->SetLocalScale({ 64.f, 64.f, 1.f });
-
-
-
 		++m_iUseCount;
-
 	}
 
 
