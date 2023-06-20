@@ -16,10 +16,10 @@ void Portal::Start()
 {
 	std::shared_ptr<GameEngineSpriteRenderer> pRender = CreateComponent<GameEngineSpriteRenderer>(OrderNum::MAP);
 	pRender->SetTexture("tiles_portal_circle_new_inner_Sprite.png");
-	pRender->GetTransform()->SetLocalScale({ 64.f,64.f });
+	pRender->GetTransform()->SetLocalScale({ 64.f,64.f ,1.f});
 
 	m_pCollision = CreateComponent< GameEngineCollision>(ColNum::PORTAL);
-	m_pCollision->GetTransform()->SetLocalScale({ 64.f, 64.f});
+	m_pCollision->GetTransform()->SetLocalScale({ 64.f, 64.f,1.f});
 }
 
 void Portal::Update(float _DeltaTime)

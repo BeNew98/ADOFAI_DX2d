@@ -27,10 +27,10 @@ void Planet::Start()
 	{
 		std::shared_ptr<GameEngineSpriteRenderer> render = CreateComponent<GameEngineSpriteRenderer>(OrderNum::PLANET);
 		render->SetTexture("ballsprites_blue_sheet_grid_0_Sprite.png");
-		render->GetTransform()->SetLocalScale({ 64.f, 64.f, 0.f });
+		render->GetTransform()->SetLocalScale({ 64.f, 64.f, 1.f });
 
 		m_pCollision = CreateComponent<GameEngineCollision>(ColNum::PLANET);
-		m_pCollision->GetTransform()->SetLocalScale({ 64.f, 64.f, 0.f });
+		m_pCollision->GetTransform()->SetLocalScale({ 64.f, 64.f, 1.f });
 		m_iUseCount = 0;
 
 	}
@@ -39,12 +39,12 @@ void Planet::Start()
 		TransformData data = GetTransform()->GetTransDataRef();
 		std::shared_ptr<GameEngineSpriteRenderer> prender = CreateComponent<GameEngineSpriteRenderer>(OrderNum::PLANET);
 		prender->SetTexture("ballsprites_red_sheet_grid_0_Sprite.png");
-		prender->GetTransform()->SetLocalScale({ 64.f, 64.f, 0.f });
+		prender->GetTransform()->SetLocalScale({ 64.f, 64.f, 1.f });
 		m_bCenter = true;
 
 
 		m_pCollision = CreateComponent<GameEngineCollision>(ColNum::PLANET);
-		m_pCollision->GetTransform()->SetLocalScale({ 64.f, 64.f, 0.f });
+		m_pCollision->GetTransform()->SetLocalScale({ 64.f, 64.f, 1.f });
 
 
 
@@ -53,7 +53,7 @@ void Planet::Start()
 	}
 
 
-	//GetTransform()->SetLocalScale({ 64.f, 64.f, 0.f });
+	//GetTransform()->SetLocalScale({ 64.f, 64.f, 1.f });
 }
 
 void Planet::Update(float _DeltaTime)

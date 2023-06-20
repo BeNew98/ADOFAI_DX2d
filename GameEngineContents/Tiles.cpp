@@ -20,9 +20,9 @@ void Tiles::Start()
 {
 	m_pStageInfo = EditGui::Editor->GetStageInfo(0);
 	m_pStartPivot = CreateComponent<GameEngineSpriteRenderer>();
-	m_pStartPivot->GetTransform()->SetLocalScale(float4(10.f, 10.f));
+	m_pStartPivot->GetTransform()->SetLocalScale(float4(10.f, 10.f,1.f));
 	m_pEndPivot = CreateComponent<GameEngineSpriteRenderer>();
-	m_pEndPivot->GetTransform()->SetLocalScale(float4(20.f, 20.f));
+	m_pEndPivot->GetTransform()->SetLocalScale(float4(20.f, 20.f, 1.f));
 
 	m_pCenterPivot = CreateComponent<GameEngineComponent>();
 }
@@ -331,7 +331,7 @@ void Tiles::CreateTile(TileDeg _TileDeg)
 	{
 		m_pRender->SetScaleToTexture("tile_cls_square_Sprite.png");
 		m_pCollision = CreateComponent<GameEngineCollision>(ColNum::TILE);
-		m_pCollision->GetTransform()->SetLocalScale({ 80.f,80.f,0.f });
+		m_pCollision->GetTransform()->SetLocalScale({ 80.f,80.f,1.f });
 		return;
 	}	
 	case TileDeg::Blank:
@@ -351,7 +351,7 @@ void Tiles::CreateTile(TileDeg _TileDeg)
 
 
 	//std::shared_ptr< GameEngineSpriteRenderer> m_ptestPivot = CreateComponent<GameEngineSpriteRenderer> OrderNum::PLANET);
-	//m_ptestPivot->GetTransform()->SetLocalScale(float4(20.f, 20.f));
+	//m_ptestPivot->GetTransform()->SetLocalScale(float4(20.f, 20.f,1.f));
 	//m_ptestPivot->GetTransform()->SetLocalPosition(GetPivotPos());
 }
 
