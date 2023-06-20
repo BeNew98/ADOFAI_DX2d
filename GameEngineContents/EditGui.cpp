@@ -7,7 +7,7 @@
 #include <GameEngineCore/GameEngineLevel.h>
 #include <GameEngineCore/GameEngineSpriteRenderer.h>
 #include <GameEngineCore/GameEngineCore.h>
-
+#include "Planet.h"
 #include "Tiles.h"
 #include "EditLevel.h"
 
@@ -29,7 +29,7 @@ void EditGui::Start()
 	
 	//CreateTile(GameEngineCore::GetCurLevel(), TileDeg::Deg0);
 }
-int iCurTileNum = 0;
+
 void EditGui::OnGUI(std::shared_ptr<class GameEngineLevel> _Level, float _DeltaTime)
 {
 
@@ -123,20 +123,36 @@ void EditGui::OnGUI(std::shared_ptr<class GameEngineLevel> _Level, float _DeltaT
 
 	if (ImGui::Button("Save")) { Save(); }
 	ImGui::SameLine();
-	if (ImGui::Button("Load")) { Load(); };
+	if (ImGui::Button("Load")) 
+	{ 
+		Load(); 
+
+		std::shared_ptr<EditLevel> pEditLevel = _Level->DynamicThis<EditLevel>();
+		pEditLevel->SetTileInfo(m_vecAllStage[0]);
+	};
 	ImGui::Separator();
 
-	if (ImGui::Button("PlayerCreate")) { CreatePlayer(_Level); };
-
-	if (ImGui::InputInt("CamMoveToTile", &iCurTileNum))
+	if (ImGui::Button("PlayerCreate")) 
 	{
-		if (iCurTileNum<0|| iCurTileNum>=m_vecAllStage[m_iCurLevel].AllTile.size())
-		{
-			return;
-		}
-		_Level->GetMainCamera()->GetTransform()->SetWorldPosition(m_vecAllStage[m_iCurLevel].AllTile[iCurTileNum].m_pTile->GetTransform()->GetLocalPosition());
-	}
+		CreatePlayer(_Level);
+		_Level->GetMainCamera()->GetTransform()->SetLocalPosition({ 0.f, 0.f });
+	};
+	if (ImGui::Button("Reset"))
+	{
+		 m_iLevelSize = 1;
+		 m_iCurLevel = 0;
+		 m_iCurDegree = 0;
+		 m_iX = 0;
+		 m_iY = 0;
+		 m_iLevelValue = 0;
 
+		 m_bSwitch = false;
+
+
+		 m_vecAllStage.clear();
+		 m_vecAllStage.resize(m_iLevelSize);
+		GameEngineCore::ChangeLevel("EditLevel");
+	};
 }
 
 void EditGui::CreateTile(std::shared_ptr<GameEngineLevel> _Level, float4 _Data)
@@ -247,11 +263,12 @@ void EditGui::Save()
 
 
 	GameEngineSerializer Ser = {};
-	float4 f4Data = float4::Zero;
+	
 	for (size_t i = 0; i < m_vecAllStage[m_iCurLevel].AllTile.size(); i++)
 	{
+		float4 f4Data = float4::Zero;
+		f4Data=m_vecAllStage[m_iCurLevel].AllTile[i].m_pTile->GetData();
 		Ser.Write(&f4Data, sizeof(float4));
-		m_vecAllStage[m_iCurLevel].AllTile[i].m_pTile->SetData(f4Data);
 	}
 	
 	std::wstring filename = szFilePath;
@@ -386,7 +403,15 @@ void EditGui::LoadtoString(const std::string_view& _FileName)
 }
 void EditGui::CreatePlayer(std::shared_ptr<class GameEngineLevel> _Level)
 {
+	std::shared_ptr<EditLevel> pEditLevel = _Level->DynamicThis<EditLevel>();
+	pEditLevel->m_pRed = _Level->CreateActor<Planet>(OrderNum::PLANET);
+	pEditLevel->m_pBlue = _Level->CreateActor<Planet>(OrderNum::PLANET);
+	pEditLevel->m_pBlue->GetTransform()->SetParent(pEditLevel->m_pRed->GetTransform());
+	pEditLevel->m_pBlue->GetTransform()->AddLocalPosition({ -150.f,0.f,0.f });
+	pEditLevel->m_pCenter = pEditLevel->m_pRed;
+	pEditLevel->m_pTurn = pEditLevel->m_pBlue;
 
+	pEditLevel->m_pCenter->GetTransform()->SetWorldPosition(m_vecAllStage[0].AllTile[0].m_pTile->GetPivotPos());
 
 }
 

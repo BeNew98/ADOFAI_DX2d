@@ -98,12 +98,13 @@ void PlayLevel::LevelChangeStart()
 
 void PlayLevel::LevelChangeEnd()
 {
-	AllActorDestroy();
 	Reset();
 }
 
 void PlayLevel::Reset()
 {
+	AllActorDestroy();
+
 	m_pStageInfo = {};
 	m_pRed = nullptr;
 	m_pBlue = nullptr;
@@ -117,12 +118,16 @@ void PlayLevel::PlanetSwap()
 {
 	if (true == GameEngineInput::IsAnyKey())
 	{
+		if (m_iCurIndex >= m_pStageInfo.AllTile.size())
+		{
+			return;
+		}
 		float4 f4CenterPos = m_pCenter->GetTransform()->GetWorldPosition();
 		float4 f4TurnPos = m_pTurn->GetTransform()->GetWorldPosition();
 		std::shared_ptr<Tiles> pNextTile = m_pStageInfo.AllTile[m_iCurIndex + 1].m_pTile;
 		float4 f4NextTilePos = pNextTile->GetPivotPos();
 
-		float fAngle = f4CenterPos.GetAngleVectorToVectorDeg360(f4NextTilePos - f4CenterPos, f4TurnPos - f4CenterPos);
+		float fAngle = float4::GetAngleVectorToVectorDeg360(f4NextTilePos - f4CenterPos, f4TurnPos - f4CenterPos);
 
 		if (fAngle>45.f|| fAngle<-45.f)
 		{

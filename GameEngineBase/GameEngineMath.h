@@ -100,7 +100,7 @@ public:
 
 
 		float Angle = 0.f;
-		(Left.y*Right.x + Left.x * Right.y > 0.0f) ? Angle=acosf(CosSeta) : Angle  = -acosf(CosSeta);
+		((-(Left.y * Right.x)) + (Left.x * Right.y) > 0.0f) ? Angle = acosf(CosSeta) : Angle = -acosf(CosSeta);
 		
 
 		return Angle;
