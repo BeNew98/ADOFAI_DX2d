@@ -29,10 +29,7 @@ TitleLevel::~TitleLevel()
 void TitleLevel::Update(float _DeltaTime)
 {
 	GlowTimeCheck(_DeltaTime);
-	//CamMoveLerp(_DeltaTime);
-	//CenterCheck();
 	PlanetSwap();
-	GetLevel()->GetMainCamera()->GetTransform()->SetWorldPosition(m_pCenter->GetTransform()->GetWorldPosition());
 
 
 	if (GameEngineInput::IsDown("CenterLevel"))
@@ -58,6 +55,8 @@ void TitleLevel::Start()
 void TitleLevel::LevelChangeStart()
 {
 	{
+		m_pBGM = GameEngineSound::Play("1-X.wav");
+		m_pBGM.SetPitch(0.8f);
 		std::shared_ptr<GameEngineCamera> BackCam = CreateNewCamera(-1);
 		BackCam->SetProjectionType(CameraType::Perspective);
 		BackCam->GetTransform()->SetLocalPosition({ 0.f,0.f,-750.f });
@@ -91,7 +90,15 @@ void TitleLevel::LevelChangeStart()
 	m_pBlue->GetTransform()->AddLocalPosition({ -100.f,0.f,0.f });
 	m_pCenter = m_pRed;
 	m_pTurn = m_pBlue;
+	
+	for (size_t i = 41; i < m_pStageInfo.AllTile.size(); i++)
+	{
+		std::shared_ptr<Tiles> tile = m_pStageInfo.AllTile[i].m_pTile;
+		tile->SetTileEvent(EventType::ZOOM, 0.05f, 0.05f);
+		tile->SetTileEvent(EventType::ZOOM, -0.05f, 0.1f);
 
+		tile->SetTileEvent(EventType::MOVE, 1.f, 0.5f);
+	}
 
 
 	for (size_t i = 0; i < m_pStageInfo.AllTile.size(); i++)
@@ -112,6 +119,7 @@ void TitleLevel::LevelChangeStart()
 
 	EditGui::Editor->Off();
 	//EditGui::Editor->On();
+	GetLevel()->GetMainCamera()->GetTransform()->SetWorldPosition(float4::Zero);
 }
 
 void TitleLevel::LevelChangeEnd()
@@ -152,20 +160,6 @@ void TitleLevel::CenterCheck()
 		m_pLogo->AlphaSwitch();
 	}
 
-}
-
-void TitleLevel::CamMoveLerp(float _Ratio)
-{
-	if (m_iCurIndex >= EditGui::Editor->GetStageInfo(0).AllTile.size() ||
-		m_iCurIndex + 1 >= EditGui::Editor->GetStageInfo(0).AllTile.size())
-	{
-		return;
-	}
-	std::shared_ptr<Tiles> pCurTile = EditGui::Editor->GetStageInfo(0).AllTile[m_iCurIndex + 1].m_pTile;
-	std::shared_ptr<Tiles> pNextTile = EditGui::Editor->GetStageInfo(0).AllTile[m_iCurIndex].m_pTile;
-	m_fLerpTime += _Ratio;
-
-	GetLevel()->GetMainCamera()->GetTransform()->SetWorldPosition(float4::LerpClamp(m_fPrevTilePos, m_fCurTilePos, m_fLerpTime));
 }
 
 void TitleLevel::PlanetSwap()
@@ -226,7 +220,7 @@ void TitleLevel::PlanetSwap()
 			m_pCenter->GetTransform()->SetWorldPosition(ColTurnTile->GetTransform()->GetWorldPosition());
 
 			ColTurnTile->GlowOn();
-
+			ColTurnTile->EventOn();
 			//m_fLerpTime = 0;
 			//
 			//++m_iCurIndex;

@@ -110,29 +110,42 @@ void Tiles::ZoomEvent(float _DeltaTime)
 		{
 
 			float fRatio = GetLevel()->GetMainCamera()->GetZoomRatio();
+			float ZoomRatio = Evt.Ratio * _DeltaTime / Evt.Time;
+			m_fPrevZoomRatio += ZoomRatio;
 			if (Evt.Ratio > 0.f)
 			{
-				if ((m_fPrevZoomRatio - Evt.Ratio) >= fRatio)
+				if (m_fPrevZoomRatio >= Evt.Ratio)
 				{
-					GetLevel()->GetMainCamera()->SetZoomRatio(m_fPrevZoomRatio - Evt.Ratio);
-					m_fPrevZoomRatio = GetLevel()->GetMainCamera()->GetZoomRatio();
+					float fCal = m_fPrevZoomRatio - Evt.Ratio;
+					GetLevel()->GetMainCamera()->AddZoomRatio(ZoomRatio- fCal);
+					m_fPrevZoomRatio = 0.f;
+					if (m_fData.z == 360.f)
+					{
+						m_bEventTrigger = false;
+						return;
+					}
 					(*vecEvt)[i].End = true;
 					return;
 				}
 			}
 			else
 			{
-				if ((m_fPrevZoomRatio - Evt.Ratio) <= fRatio)
+				if (m_fPrevZoomRatio <= Evt.Ratio)
 				{
-					GetLevel()->GetMainCamera()->SetZoomRatio(m_fPrevZoomRatio - Evt.Ratio);
-					m_fPrevZoomRatio = GetLevel()->GetMainCamera()->GetZoomRatio();
+					float fCal = m_fPrevZoomRatio - Evt.Ratio;
+					GetLevel()->GetMainCamera()->AddZoomRatio(ZoomRatio - fCal);
+					m_fPrevZoomRatio = 0.f;
+					if (m_fData.z == 360.f)
+					{
+						m_bEventTrigger = false;
+						return;
+					}
 					(*vecEvt)[i].End = true;
 					return;
 				}
 			}
 
-			float ZoomRatio = Evt.Ratio * _DeltaTime / Evt.Time;
-			GetLevel()->GetMainCamera()->AddZoomRatio(ZoomRatio);
+			GetLevel()->GetMainCamera()->AddZoomRatio(-ZoomRatio);
 			return;
 		}
 	}
@@ -148,8 +161,11 @@ void Tiles::MoveEvent(float _DeltaTime)
 		return;
 	}
 	std::vector<TileEvent>* vecEvt = &findIter->second;
-	std::map<EventType, std::vector<TileEvent>>::iterator findPrevIter = m_pStageInfo.AllTile[m_iIndex - 1].m_pTile->m_mapAllEvent.find(EventType::MOVE);
-	findPrevIter->second[0].End = true;
+	if (m_fData.z != 360.f)
+	{
+		std::map<EventType, std::vector<TileEvent>>::iterator findPrevIter = m_pStageInfo.AllTile[m_iIndex - 1].m_pTile->m_mapAllEvent.find(EventType::MOVE);
+		findPrevIter->second[0].End = true;
+	}
 
 	std::shared_ptr<GameEngineCamera>MainCamera = GetLevel()->GetMainCamera();
 	std::shared_ptr<GameEngineCamera>BackGroundCamera = GetLevel()->GetCamera(-1);
@@ -163,16 +179,22 @@ void Tiles::MoveEvent(float _DeltaTime)
 		TileEvent Evt = (*vecEvt)[i];
 		{
 			float SpeedRatio = Evt.Ratio * _DeltaTime / Evt.Time;
-			if (SpeedRatio>=1.f)
-			{
-				(*vecEvt)[i].End = true;
-				return;
-			}
 			//CurPosition에서 이동해야하지 이전 타일이면 안됨.
 			float4 Cam = GetLevel()->GetMainCamera()->GetTransform()->GetLocalPosition();
 			float4 f4PrevTilePos = m_pStageInfo.AllTile[m_iIndex - 1].m_pTile->GetPivotPos();
 			MainCamera->GetTransform()->SetLocalPosition(float4::Lerp(Cam, GetPivotPos(), SpeedRatio));
 			BackGroundCamera->GetTransform()->SetLocalPosition(float4::Lerp(Cam, GetPivotPos(), SpeedRatio));
+
+			if (SpeedRatio >= 1.f)
+			{
+				if (m_fData.z == 360.f)
+				{
+					m_bEventTrigger = false;
+					return;
+				}
+				(*vecEvt)[i].End = true;
+				return;
+			}
 
 			return;
 		}
@@ -213,6 +235,11 @@ void Tiles::RotationEvent(float _DeltaTime)
 					MainCamera->GetTransform()->AddLocalRotation({ 0.f,0.f,RotRatio - fCal });
 					BackGroundCamera->GetTransform()->AddLocalRotation({ 0.f,0.f,RotRatio - fCal });
 					m_fPrevRotRatio = 0.f;
+					if (m_fData.z == 360.f)
+					{
+						m_bEventTrigger = false;
+						return;
+					}
 					(*vecEvt)[i].End = true;
 					return;
 				}
@@ -226,6 +253,11 @@ void Tiles::RotationEvent(float _DeltaTime)
 					MainCamera->GetTransform()->AddLocalRotation({ 0.f,0.f,RotRatio - fCal });
 					BackGroundCamera->GetTransform()->AddLocalRotation({ 0.f,0.f,RotRatio - fCal });
 					m_fPrevRotRatio = 0.f;
+					if (m_fData.z == 360.f)
+					{
+						m_bEventTrigger = false;
+						return;
+					}
 					(*vecEvt)[i].End = true;
 					return;
 				}

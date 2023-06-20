@@ -2,6 +2,7 @@
 #include "CenterLevel.h"
 
 #include <GameEnginePlatform/GameEngineInput.h>
+#include <GameEnginePlatform/GameEngineSound.h>
 #include <GameEngineCore/GameEngineCore.h>
 #include <GameEngineCore/GameEngineCamera.h>
 #include <GameEngineCore/GameEngineSpriteRenderer.h>
@@ -51,6 +52,14 @@ void CenterLevel::Start()
 		}
 	}
 
+	{
+		GameEngineDirectory NewDir;
+		NewDir.MoveParentToDirectory("ContentResources");
+		NewDir.Move("ContentResources");
+		NewDir.Move("Sound");
+
+		GameEngineSound::Load(NewDir.GetPlusFileName("1-X.wav").GetFullPath());
+	}
 
 	//윗쪽은 MainCam 아랫쪽은 UICam
 	//왼쪽은 배경x	오른쪽은 배경o

@@ -3,6 +3,7 @@
 #include "EditGui.h"
 
 #include <GameEngineCore/GameEngineTexture.h>
+#include <GameEnginePlatform/GameEngineSound.h>
 
 // Ό³Έν :
 class TitleLevel : public GameEngineLevel
@@ -19,7 +20,7 @@ public:
 	TitleLevel& operator=(TitleLevel&& _Other) noexcept = delete;
 
 	GameEnginePixelColor Color = {2,2,2,2};
-	class GameEngineSoundPlayer* m_pBGM;
+	GameEngineSoundPlayer m_pBGM = nullptr;
 
 	float GetTime()
 	{
@@ -47,7 +48,6 @@ private:
 	std::shared_ptr<class BlackScreen> m_pBlackScreen = nullptr;
 	std::shared_ptr<class TitleLogo> m_pLogo = nullptr;
 	void CenterCheck();
-	void CamMoveLerp(float _Ratio);
 
 	int m_iCurIndex = 0;
 	float m_fLerpTime = 0.f;

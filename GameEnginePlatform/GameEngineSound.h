@@ -32,7 +32,7 @@ public:
 	{
 		Channel->setVolume(_Volume);
 	}
-	void SetLoopCount(float _Count)
+	void SetLoopCount(int _Count)
 	{
 		Channel->setLoopCount(_Count);
 	}
