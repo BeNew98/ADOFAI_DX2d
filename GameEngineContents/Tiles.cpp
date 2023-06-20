@@ -342,13 +342,9 @@ void Tiles::CreateTile(TileDeg _TileDeg)
 	default:
 		MsgAssert("없는 각도");
 		break;
-	}
-
-	
+	}	
 
 	PivotCal(static_cast<float>(_TileDeg));
-
-
 
 	//std::shared_ptr< GameEngineSpriteRenderer> m_ptestPivot = CreateComponent<GameEngineSpriteRenderer> OrderNum::PLANET);
 	//m_ptestPivot->GetTransform()->SetLocalScale(float4(20.f, 20.f,1.f));

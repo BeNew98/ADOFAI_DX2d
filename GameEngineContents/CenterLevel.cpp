@@ -5,6 +5,7 @@
 #include <GameEngineCore/GameEngineCore.h>
 #include <GameEngineCore/GameEngineCamera.h>
 #include <GameEngineCore/GameEngineSpriteRenderer.h>
+#include <GameEngineCore/GameEngineFont.h>
 
 #include "EditGui.h"
 #include "TestScreen.h"
@@ -27,6 +28,7 @@ void CenterLevel::Start()
 	GameEngineInput::CreateKey("PlayLevel", '8');
 	GameEngineInput::CreateKey("EditLevel", '9');
 	GameEngineInput::CreateKey("CenterLevel", '0');
+	GameEngineFont::Load("Ch2.0-1");
 
 
 

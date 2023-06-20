@@ -43,7 +43,6 @@ void PlayLevel::Start()
 }
 void PlayLevel::LevelChangeStart()
 {
-	GameEngineFont::Load("Ch2.0-1");
 
 
 	std::shared_ptr<GameEngineCamera> BackCam = CreateNewCamera(-1);
@@ -137,7 +136,7 @@ void PlayLevel::PlanetSwap()
 			{
 				std::shared_ptr<WrongMark> pWorngMark = CreateActor<WrongMark>(OrderNum::MAP);
 				pWorngMark->GetTransform()->SetLocalPosition(m_pTurn->GetTransform()->GetWorldPosition());
-				pWorngMark->SetTxt("너무 느림");
+				pWorngMark->SetTxt("너무느림");
 			}
 			return;
 		}
