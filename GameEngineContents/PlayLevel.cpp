@@ -29,8 +29,8 @@ void PlayLevel::Update(float _DeltaTime)
 {
 	PlanetSwap();
 
-	GetLevel()->GetMainCamera()->GetTransform()->SetWorldPosition(m_pCenter->GetTransform()->GetWorldPosition());
-	GetLevel()->GetCamera(-1)->GetTransform()->SetWorldPosition(m_pCenter->GetTransform()->GetWorldPosition());
+	//GetLevel()->GetMainCamera()->GetTransform()->SetWorldPosition(m_pCenter->GetTransform()->GetWorldPosition());
+	//GetLevel()->GetCamera(-1)->GetTransform()->SetWorldPosition(m_pCenter->GetTransform()->GetWorldPosition());
 
 	if (GameEngineInput::IsDown("CenterLevel"))
 	{
@@ -71,9 +71,9 @@ void PlayLevel::LevelChangeStart()
 			tile->SetTileEvent(EventType::ZOOM, 0.1f, 0.05f);
 			tile->SetTileEvent(EventType::ZOOM, -0.1f, 0.1f);
 
-			tile->SetTileEvent(EventType::MOVE, 100.f, 1.f);
+			tile->SetTileEvent(EventType::MOVE, 50.f, 1.f);
 
-			tile->SetTileEvent(EventType::ROTATION,90.f, 1.f);
+			//tile->SetTileEvent(EventType::ROTATION,90.f, 1.f);
 		}
 		
 	}

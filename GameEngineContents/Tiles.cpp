@@ -148,6 +148,8 @@ void Tiles::MoveEvent(float _DeltaTime)
 		return;
 	}
 	std::vector<TileEvent>* vecEvt = &findIter->second;
+	std::map<EventType, std::vector<TileEvent>>::iterator findIter2 = m_pStageInfo.AllTile[m_iIndex - 1].m_pTile->m_mapAllEvent.find(EventType::MOVE);
+	findIter2->second[0].End = true;
 
 	std::shared_ptr<GameEngineCamera>MainCamera = GetLevel()->GetMainCamera();
 	std::shared_ptr<GameEngineCamera>BackGroundCamera = GetLevel()->GetCamera(-1);
@@ -167,9 +169,10 @@ void Tiles::MoveEvent(float _DeltaTime)
 				return;
 			}
 			//CurPosition에서 이동해야하지 이전 타일이면 안됨.
+			float4 Cam = GetLevel()->GetMainCamera()->GetTransform()->GetLocalPosition();
 			float4 f4PrevTilePos = m_pStageInfo.AllTile[m_iIndex - 1].m_pTile->GetPivotPos();
-			MainCamera->GetTransform()->SetLocalPosition(float4::Lerp(f4PrevTilePos, GetPivotPos(), SpeedRatio));
-			BackGroundCamera->GetTransform()->SetLocalPosition(float4::Lerp(f4PrevTilePos, GetPivotPos(), SpeedRatio));
+			MainCamera->GetTransform()->SetLocalPosition(float4::Lerp(Cam, GetPivotPos(), SpeedRatio));
+			BackGroundCamera->GetTransform()->SetLocalPosition(float4::Lerp(Cam, GetPivotPos(), SpeedRatio));
 
 			return;
 		}
