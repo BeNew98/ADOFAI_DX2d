@@ -118,7 +118,7 @@ void PlayLevel::PlanetSwap()
 {
 	if (true == GameEngineInput::IsAnyKey())
 	{
-		if (m_iCurIndex >= m_pStageInfo.AllTile.size())
+		if (m_iCurIndex + 1 >= m_pStageInfo.AllTile.size())
 		{
 			return;
 		}
