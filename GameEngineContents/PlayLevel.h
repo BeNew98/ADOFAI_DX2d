@@ -17,7 +17,6 @@ public:
 	PlayLevel& operator=(const PlayLevel& _Other) = delete;
 	PlayLevel& operator=(PlayLevel&& _Other) noexcept = delete;
 
-	std::shared_ptr<class GameEngineVideo> Video;
 
 	GameEngineSoundPlayer m_BGM = nullptr;
 protected:
@@ -35,7 +34,8 @@ private:
 	std::shared_ptr<Planet> m_pTurn = nullptr;
 
 	int m_iCurIndex = 0;
-
+	bool m_bGameStart = false;
+	float m_fStartTime = 0.f;
 	void PlanetSwap();
 	void Reset();
 };

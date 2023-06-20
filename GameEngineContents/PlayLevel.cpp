@@ -61,6 +61,7 @@ void PlayLevel::LevelChangeStart()
 	EditGui::Editor->LoadtoString("");
 
 	m_pStageInfo = EditGui::Editor->GetStageInfo(0);
+	
 	{
 		for (size_t i = 0; i < m_pStageInfo.AllTile.size(); i++)
 		{
@@ -76,9 +77,11 @@ void PlayLevel::LevelChangeStart()
 	}
 
 	m_pRed = CreateActor<Planet>(OrderNum::PLANET);
+	m_pRed->SetSpeed(m_pStageInfo.BPM);
 	m_pBlue = CreateActor<Planet>(OrderNum::PLANET);
+	m_pBlue->SetSpeed(m_pStageInfo.BPM);
 	m_pBlue->GetTransform()->SetParent(m_pRed->GetTransform());
-	m_pBlue->GetTransform()->AddLocalPosition({ -150.f,0.f,0.f });
+	m_pBlue->GetTransform()->AddLocalPosition({ 150.f,0.f,0.f });
 	m_pCenter = m_pRed;
 	m_pTurn = m_pBlue;
 

@@ -116,6 +116,7 @@ void TitleLevel::LevelChangeStart()
 		{
 			GameEngineCore::ChangeLevel("PlayLevel"); 
 			EditGui::Editor->SetLevel(1);
+			EditGui::Editor->SetBPM(150);
 		});
 
 	m_pRed->GetTransform()->SetLocalPosition(m_pStageInfo.AllTile[12].m_pTile->GetTransform()->GetWorldPosition());

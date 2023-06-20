@@ -43,6 +43,11 @@ public:
 		m_iLevelValue = _Level;
 	}
 
+	void SetBPM(int _BPM)
+	{
+		m_vecAllStage[0].BPM = _BPM;
+	}
+
 
 protected:
 	void Start() override; 

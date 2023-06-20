@@ -31,6 +31,7 @@ public:
 		return m_bGlow;
 	}
 
+
 protected:
 	void Update(float _DeltaTime) override;
 	void Start() override;

@@ -34,6 +34,16 @@ public:
 		return m_pCollision;
 	}
 
+	void SetSpeed(int BPM) 
+	{
+		if (BPM==0)
+		{
+			MsgAssert("BPM이 0입니다");
+			return;
+		}
+		m_fSpeed = static_cast<float>(180.f * (BPM / 60.f));
+	}
+
 
 
 protected:
@@ -42,6 +52,7 @@ protected:
 
 
 private:
+	float m_fSpeed =360.f;
 	static int m_iUseCount;
 	bool m_bCenter = false;
 	std::shared_ptr<GameEngineCollision> m_pCollision = nullptr;

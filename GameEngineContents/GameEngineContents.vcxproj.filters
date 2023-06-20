@@ -161,4 +161,7 @@
       <UniqueIdentifier>{843510cc-0d01-4876-a60c-8e5e933a858e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\dfi.txt" />
+  </ItemGroup>
 </Project>
