@@ -150,7 +150,7 @@ private:
 	float4 m_fData = float4::Zero;
 	float m_fPrevZoomRatio = 0.f;
 	float m_fPrevRotRatio = 0.f;
-	float4 m_fPrevPos = float4::Zero;
+	float m_fPrevPosRatio = 0.f;
 	int m_iIndex = 0;
 
 	bool m_bGlow = false;

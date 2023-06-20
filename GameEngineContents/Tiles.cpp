@@ -102,8 +102,18 @@ void Tiles::ZoomEvent(float _DeltaTime)
 
 	for (size_t i = 0; i < (*vecEvt).size(); i++)
 	{
-		if (true == (*vecEvt)[i].End)
+		if (i == (*vecEvt).size()-1&& true == (*vecEvt)[i].End&&m_fData.z == 360.f)
 		{
+			m_bEventTrigger = false;
+			for (size_t i = 0; i < (*vecEvt).size(); i++)
+			{
+				(*vecEvt)[i].End = false;
+			}
+			return;
+
+		}
+		if (true == (*vecEvt)[i].End)
+		{			
 			continue;
 		}
 		TileEvent Evt = (*vecEvt)[i];
@@ -117,13 +127,8 @@ void Tiles::ZoomEvent(float _DeltaTime)
 				if (m_fPrevZoomRatio >= Evt.Ratio)
 				{
 					float fCal = m_fPrevZoomRatio - Evt.Ratio;
-					GetLevel()->GetMainCamera()->AddZoomRatio(ZoomRatio- fCal);
+					GetLevel()->GetMainCamera()->AddZoomRatio(-ZoomRatio+ fCal);
 					m_fPrevZoomRatio = 0.f;
-					if (m_fData.z == 360.f)
-					{
-						m_bEventTrigger = false;
-						return;
-					}
 					(*vecEvt)[i].End = true;
 					return;
 				}
@@ -133,13 +138,8 @@ void Tiles::ZoomEvent(float _DeltaTime)
 				if (m_fPrevZoomRatio <= Evt.Ratio)
 				{
 					float fCal = m_fPrevZoomRatio - Evt.Ratio;
-					GetLevel()->GetMainCamera()->AddZoomRatio(ZoomRatio - fCal);
+					GetLevel()->GetMainCamera()->AddZoomRatio(-ZoomRatio + fCal);
 					m_fPrevZoomRatio = 0.f;
-					if (m_fData.z == 360.f)
-					{
-						m_bEventTrigger = false;
-						return;
-					}
 					(*vecEvt)[i].End = true;
 					return;
 				}
@@ -172,6 +172,15 @@ void Tiles::MoveEvent(float _DeltaTime)
 
 	for (size_t i = 0; i < (*vecEvt).size(); i++)
 	{
+		if (i == (*vecEvt).size() - 1 && true == (*vecEvt)[i].End && m_fData.z == 360.f)
+		{
+			m_bEventTrigger = false;
+			for (size_t i = 0; i < (*vecEvt).size(); i++)
+			{
+				(*vecEvt)[i].End = false;
+			}
+			return;
+		}
 		if (true == (*vecEvt)[i].End)
 		{
 			continue;
@@ -179,19 +188,14 @@ void Tiles::MoveEvent(float _DeltaTime)
 		TileEvent Evt = (*vecEvt)[i];
 		{
 			float SpeedRatio = Evt.Ratio * _DeltaTime / Evt.Time;
-			//CurPosition에서 이동해야하지 이전 타일이면 안됨.
-			float4 Cam = GetLevel()->GetMainCamera()->GetTransform()->GetLocalPosition();
-			float4 f4PrevTilePos = m_pStageInfo.AllTile[m_iIndex - 1].m_pTile->GetPivotPos();
-			MainCamera->GetTransform()->SetLocalPosition(float4::Lerp(Cam, GetPivotPos(), SpeedRatio));
-			BackGroundCamera->GetTransform()->SetLocalPosition(float4::Lerp(Cam, GetPivotPos(), SpeedRatio));
+			m_fPrevPosRatio += SpeedRatio;
 
-			if (SpeedRatio >= 1.f)
+			float4 Cam = GetLevel()->GetMainCamera()->GetTransform()->GetLocalPosition();
+			MainCamera->GetTransform()->SetLocalPosition(float4::Lerp(Cam, GetPivotPos(), m_fPrevPosRatio));
+			BackGroundCamera->GetTransform()->SetLocalPosition(float4::Lerp(Cam, GetPivotPos(), m_fPrevPosRatio));
+
+			if (m_fPrevPosRatio >= 1.f)
 			{
-				if (m_fData.z == 360.f)
-				{
-					m_bEventTrigger = false;
-					return;
-				}
 				(*vecEvt)[i].End = true;
 				return;
 			}
@@ -218,6 +222,16 @@ void Tiles::RotationEvent(float _DeltaTime)
 
 	for (size_t i = 0; i < (*vecEvt).size(); i++)
 	{
+		if (i == (*vecEvt).size() - 1 && true == (*vecEvt)[i].End && m_fData.z == 360.f)
+		{
+			m_bEventTrigger = false;
+			for (size_t i = 0; i < (*vecEvt).size(); i++)
+			{
+				(*vecEvt)[i].End = false;
+			}
+			return;
+
+		}
 		if (true == (*vecEvt)[i].End)
 		{
 			continue;
@@ -235,11 +249,6 @@ void Tiles::RotationEvent(float _DeltaTime)
 					MainCamera->GetTransform()->AddLocalRotation({ 0.f,0.f,RotRatio - fCal });
 					BackGroundCamera->GetTransform()->AddLocalRotation({ 0.f,0.f,RotRatio - fCal });
 					m_fPrevRotRatio = 0.f;
-					if (m_fData.z == 360.f)
-					{
-						m_bEventTrigger = false;
-						return;
-					}
 					(*vecEvt)[i].End = true;
 					return;
 				}
@@ -253,11 +262,6 @@ void Tiles::RotationEvent(float _DeltaTime)
 					MainCamera->GetTransform()->AddLocalRotation({ 0.f,0.f,RotRatio - fCal });
 					BackGroundCamera->GetTransform()->AddLocalRotation({ 0.f,0.f,RotRatio - fCal });
 					m_fPrevRotRatio = 0.f;
-					if (m_fData.z == 360.f)
-					{
-						m_bEventTrigger = false;
-						return;
-					}
 					(*vecEvt)[i].End = true;
 					return;
 				}

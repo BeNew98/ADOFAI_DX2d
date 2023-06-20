@@ -168,7 +168,6 @@ void PlayLevel::PlanetSwap()
 		m_pStageInfo.AllTile[m_iCurIndex + 1].m_pTile->GlowOn();
 
 		pNextTile->EventOn();
-		//pNextTile->SetPrevRatio(GetMainCamera()->GetZoomRatio());
 
 		++m_iCurIndex;
 	}

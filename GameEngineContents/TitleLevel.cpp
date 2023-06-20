@@ -221,11 +221,6 @@ void TitleLevel::PlanetSwap()
 
 			ColTurnTile->GlowOn();
 			ColTurnTile->EventOn();
-			//m_fLerpTime = 0;
-			//
-			//++m_iCurIndex;
-			//m_fPrevTilePos = m_pStageInfo.AllTile[m_iCurIndex - 1].m_pTile->GetTransform()->GetWorldPosition();
-			//m_fCurTilePos = m_pStageInfo.AllTile[m_iCurIndex].m_pTile->GetTransform()->GetWorldPosition();
 		}
 		CenterCheck();
 		return;
