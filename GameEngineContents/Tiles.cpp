@@ -148,8 +148,8 @@ void Tiles::MoveEvent(float _DeltaTime)
 		return;
 	}
 	std::vector<TileEvent>* vecEvt = &findIter->second;
-	std::map<EventType, std::vector<TileEvent>>::iterator findIter2 = m_pStageInfo.AllTile[m_iIndex - 1].m_pTile->m_mapAllEvent.find(EventType::MOVE);
-	findIter2->second[0].End = true;
+	std::map<EventType, std::vector<TileEvent>>::iterator findPrevIter = m_pStageInfo.AllTile[m_iIndex - 1].m_pTile->m_mapAllEvent.find(EventType::MOVE);
+	findPrevIter->second[0].End = true;
 
 	std::shared_ptr<GameEngineCamera>MainCamera = GetLevel()->GetMainCamera();
 	std::shared_ptr<GameEngineCamera>BackGroundCamera = GetLevel()->GetCamera(-1);

@@ -51,7 +51,6 @@ void PlayLevel::LevelChangeStart()
 	BackCam->GetTransform()->SetLocalPosition({ 0.f,0.f,-750.f });
 
 	GetMainCamera()->SetProjectionType(CameraType::Orthogonal);
-	GetMainCamera()->GetTransform()->SetLocalPosition({ 0, 0, -1000.0f });
 
 	//std::shared_ptr<BlackScreen> m_pBlackScreen = CreateActor<BlackScreen>(OrderNum::BACKGROUND);
 	//m_pBlackScreen->GetTransform()->SetLocalPosition({ 0.f,0.f,0.f });
@@ -68,10 +67,10 @@ void PlayLevel::LevelChangeStart()
 		for (size_t i = 0; i < m_pStageInfo.AllTile.size(); i++)
 		{
 			std::shared_ptr<Tiles> tile = m_pStageInfo.AllTile[i].m_pTile;
-			tile->SetTileEvent(EventType::ZOOM, 0.1f, 0.05f);
-			tile->SetTileEvent(EventType::ZOOM, -0.1f, 0.1f);
+			tile->SetTileEvent(EventType::ZOOM, 0.05f, 0.05f);
+			tile->SetTileEvent(EventType::ZOOM, -0.05f, 0.1f);
 
-			tile->SetTileEvent(EventType::MOVE, 50.f, 1.f);
+			tile->SetTileEvent(EventType::MOVE, 1.f, 0.5f);
 
 			//tile->SetTileEvent(EventType::ROTATION,90.f, 1.f);
 		}
@@ -95,6 +94,7 @@ void PlayLevel::LevelChangeStart()
 		});
 
 	EditGui::Editor->Off();
+	GetMainCamera()->GetTransform()->SetLocalPosition({ 0, 0, -1000.0f });
 }
 
 void PlayLevel::LevelChangeEnd()
@@ -123,7 +123,7 @@ void PlayLevel::PlanetSwap()
 		std::shared_ptr<Tiles> pNextTile = m_pStageInfo.AllTile[m_iCurIndex + 1].m_pTile;
 		float4 f4NextTilePos = pNextTile->GetPivotPos();
 
-		float fAngle = float4::GetAngleVectorToVectorDeg360(f4NextTilePos - f4CenterPos, f4TurnPos - f4CenterPos);
+		float fAngle = f4CenterPos.GetAngleVectorToVectorDeg360(f4NextTilePos - f4CenterPos, f4TurnPos - f4CenterPos);
 
 		if (fAngle>45.f|| fAngle<-45.f)
 		{
