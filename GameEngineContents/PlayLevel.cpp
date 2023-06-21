@@ -27,6 +27,11 @@ PlayLevel::~PlayLevel()
 
 void PlayLevel::Update(float _DeltaTime)
 {
+	m_fStartTime += _DeltaTime;
+	//if (m_fStartTime< EditGui::Editor->GetStageInfo(0).BPM / 60.f * 2.f)
+	//{
+	//	return;
+	//}
 	PlanetSwap();
 
 	//GetLevel()->GetMainCamera()->GetTransform()->SetWorldPosition(m_pCenter->GetTransform()->GetWorldPosition());

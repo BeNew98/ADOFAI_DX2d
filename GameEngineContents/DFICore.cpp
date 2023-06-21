@@ -7,6 +7,7 @@
 #include "TitleLevel.h"
 #include "EditLevel.h"
 #include "CenterLevel.h"
+#include "EditGui.h"
 
 DFICore::DFICore()
 {
@@ -22,7 +23,6 @@ void DFICore::GameStart()
 {
 	// 이전에 매쉬는 만들어져 있어야 한다.
 
-	new int();
 
 	//GameEngineGUI::GUIWindowCreate<GameEngineCoreWindow>("CoreWindow");
 
@@ -34,7 +34,13 @@ void DFICore::GameStart()
 	GameEngineCore::CreateLevel<TitleLevel>();
 	GameEngineCore::CreateLevel<PlayLevel>() ;
 	GameEngineCore::CreateLevel<CenterLevel>();
-	GameEngineCore::ChangeLevel("TitleLevel");
+	std::string Level = "PlayLevel";
+	if (Level== "PlayLevel")
+	{
+		EditGui::Editor->SetLevel(1);
+		EditGui::Editor->SetBPM(150);
+	}
+	GameEngineCore::ChangeLevel(Level);
 }
 
 void DFICore::GameEnd()

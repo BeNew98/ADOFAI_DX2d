@@ -40,6 +40,7 @@ void TitleLevel::Update(float _DeltaTime)
 	{
 		GameEngineCore::ChangeLevel("PlayLevel");
 		EditGui::Editor->SetLevel(1);
+		EditGui::Editor->SetBPM(150);
 	}
 	//if (GameEngineInput::IsDown("Level2"))
 	//{
@@ -82,7 +83,7 @@ void TitleLevel::LevelChangeStart()
 	}
 
 	EditGui::Editor->LoadtoString("Title1~2");
-	EditGui::Editor->SetBPM(150.f * 0.8f);
+	EditGui::Editor->SetBPM(static_cast<int>(150.f * 0.8f));
 	m_pStageInfo = EditGui::Editor->GetStageInfo(0);
 	m_fSpeed = m_pStageInfo.RotSpeed*2.f;
 	m_pRed = CreateActor<Planet>(OrderNum::PLANET);

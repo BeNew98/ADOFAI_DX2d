@@ -64,7 +64,7 @@ void EditLevel::Update(float _Deltatime)
 void EditLevel::LevelChangeStart()
 {	
 	m_pEditor->On();
-
+	m_pEditor->SetBPM(150);
 	m_pMouse = CreateActor<MyMouse>();
 
 	
