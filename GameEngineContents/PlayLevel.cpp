@@ -44,6 +44,7 @@ void PlayLevel::Start()
 void PlayLevel::LevelChangeStart()
 {
 	m_BGM = GameEngineSound::Play("1-X.wav");
+	//m_BGM = GameEngineSound::Play("sndkick.wav");
 	std::shared_ptr<GameEngineCamera> BackCam = CreateNewCamera(-1);
 	BackCam->SetProjectionType(CameraType::Perspective);
 	BackCam->GetTransform()->SetLocalPosition({ 0.f,0.f,-750.f });
