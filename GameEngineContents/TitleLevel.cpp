@@ -16,6 +16,7 @@
 #include "EditGui.h"
 #include "SquareGlowEffect.h"
 #include "Portal.h"
+#include "TitleBackGround.h"
 
 TitleLevel::TitleLevel() 
 {
@@ -30,6 +31,7 @@ void TitleLevel::Update(float _DeltaTime)
 {
 	if (m_bGameStart == false)
 	{
+		CenterCheck();
 		m_bGameStart = true;
 		m_BGM = GameEngineSound::Play("1-X.wav");
 		m_BGM.SetPitch(0.8f);
@@ -70,13 +72,15 @@ void TitleLevel::LevelChangeStart()
 		GetMainCamera()->SetProjectionType(CameraType::Orthogonal);
 		GetMainCamera()->GetTransform()->SetLocalPosition({ 0, 0, -1000.0f });
 
+		//std::shared_ptr<TitleBackGround> pBG = CreateActor<TitleBackGround>(OrderNum::BACKGROUND);
+
 		m_pBlackScreen = CreateActor<BlackScreen>(OrderNum::BACKGROUND);
 		m_pBlackScreen->GetTransform()->SetLocalPosition({ 0.f,0.f,0.f });
-
-		std::shared_ptr<BackGroundRenderer> pStar0 = m_pBlackScreen->CreateComponent<BackGroundRenderer>(OrderNum::BACKGROUND);
+		
+		std::shared_ptr<GameEngineSpriteRenderer> pStar0 = m_pBlackScreen->CreateComponent<GameEngineSpriteRenderer>(OrderNum::BACKGROUND);
 		pStar0->SetScaleToTexture("starfields1.png");
-
-		std::shared_ptr<BackGroundRenderer> pStar1 = m_pBlackScreen->CreateComponent<BackGroundRenderer>(OrderNum::BACKGROUND);
+		
+		std::shared_ptr<GameEngineSpriteRenderer> pStar1 = m_pBlackScreen->CreateComponent<GameEngineSpriteRenderer>(OrderNum::BACKGROUND);
 		pStar1->SetScaleToTexture("starfields2.png");
 
 		m_pLogo = CreateActor<TitleLogo>(OrderNum::BACKGROUND);

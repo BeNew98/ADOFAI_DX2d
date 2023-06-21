@@ -33,11 +33,10 @@ void PlayLevel::Update(float _DeltaTime)
 		m_bGameStart = true;
 		m_BGM = GameEngineSound::Play("1-X.wav");
 	}
-	//float test = m_iBPM / 60 * 180.f * 2.f;
-	//if (m_fStartTime< m_iBPM /60*180.f*2.f)
-	//{
-	//	return;
-	//}
+	if (m_fStartTime< m_fReadyTime)
+	{
+		return;
+	}
 	PlanetSwap();
 
 	//GetLevel()->GetMainCamera()->GetTransform()->SetWorldPosition(m_pCenter->GetTransform()->GetWorldPosition());
@@ -73,6 +72,7 @@ void PlayLevel::LevelChangeStart()
 
 	m_pStageInfo = EditGui::Editor->GetStageInfo(0);
 	m_iBPM = m_pStageInfo.BPM;
+	m_fReadyTime = m_iBPM / 60.f / 5.f * 3.f;
 	{
 		for (size_t i = 0; i < m_pStageInfo.AllTile.size(); i++)
 		{
@@ -90,7 +90,7 @@ void PlayLevel::LevelChangeStart()
 	m_pRed = CreateActor<Planet>(OrderNum::PLANET);
 	m_pBlue = CreateActor<Planet>(OrderNum::PLANET);
 	m_pBlue->GetTransform()->SetParent(m_pRed->GetTransform());
-	m_pBlue->GetTransform()->AddLocalPosition({ 150.f,0.f,0.f });
+	m_pBlue->GetTransform()->AddLocalPosition({ -150.f,0.f,0.f });
 	m_pCenter = m_pRed;
 	m_pTurn = m_pBlue;
 
