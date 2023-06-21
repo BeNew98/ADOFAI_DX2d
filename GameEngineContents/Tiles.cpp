@@ -100,18 +100,19 @@ void Tiles::ZoomEvent(float _DeltaTime)
 	}
 	std::vector<TileEvent>* vecEvt = &findIter->second;
 
+	if ((*vecEvt)[(*vecEvt).size()-1].End == true && m_fData.z == 360.f)
+	{
+		m_bEventTrigger = false;
+		for (size_t i = 0; i < (*vecEvt).size(); i++)
+		{
+			(*vecEvt)[i].End = false;
+		}
+		return;
+	}
+
 	for (size_t i = 0; i < (*vecEvt).size(); i++)
 	{
-		if (i == (*vecEvt).size()-1&& true == (*vecEvt)[i].End&&m_fData.z == 360.f)
-		{
-			m_bEventTrigger = false;
-			for (size_t i = 0; i < (*vecEvt).size(); i++)
-			{
-				(*vecEvt)[i].End = false;
-			}
-			return;
-
-		}
+		
 		if (true == (*vecEvt)[i].End)
 		{			
 			continue;
@@ -127,7 +128,7 @@ void Tiles::ZoomEvent(float _DeltaTime)
 				if (m_fPrevZoomRatio >= Evt.Ratio)
 				{
 					float fCal = m_fPrevZoomRatio - Evt.Ratio;
-					GetLevel()->GetMainCamera()->AddZoomRatio(-ZoomRatio+ fCal);
+					GetLevel()->GetMainCamera()->AddZoomRatio(-(ZoomRatio- fCal));
 					m_fPrevZoomRatio = 0.f;
 					(*vecEvt)[i].End = true;
 					return;
@@ -138,7 +139,7 @@ void Tiles::ZoomEvent(float _DeltaTime)
 				if (m_fPrevZoomRatio <= Evt.Ratio)
 				{
 					float fCal = m_fPrevZoomRatio - Evt.Ratio;
-					GetLevel()->GetMainCamera()->AddZoomRatio(-ZoomRatio + fCal);
+					GetLevel()->GetMainCamera()->AddZoomRatio(-(ZoomRatio- fCal));
 					m_fPrevZoomRatio = 0.f;
 					(*vecEvt)[i].End = true;
 					return;

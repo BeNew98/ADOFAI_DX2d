@@ -16,6 +16,7 @@
 #include "EditGui.h"
 #include "SquareGlowEffect.h"
 #include "Portal.h"
+#include "TitleBackGround.h"
 
 TitleLevel::TitleLevel() 
 {
@@ -28,6 +29,16 @@ TitleLevel::~TitleLevel()
 
 void TitleLevel::Update(float _DeltaTime)
 {
+	if (m_bGameStart == false)
+	{
+		CenterCheck();
+		m_bGameStart = true;
+		m_pCenter->SetGameStart(m_bGameStart);
+		m_pTurn->SetGameStart(m_bGameStart);
+		m_BGM = GameEngineSound::Play("1-X.wav");
+		m_BGM.SetPitch(0.8f);
+		m_BGM.SetLoop();
+	}
 	GlowTimeCheck(_DeltaTime);
 	PlanetSwap();
 
@@ -40,6 +51,7 @@ void TitleLevel::Update(float _DeltaTime)
 	{
 		GameEngineCore::ChangeLevel("PlayLevel");
 		EditGui::Editor->SetLevel(1);
+		EditGui::Editor->SetBPM(150);
 	}
 	//if (GameEngineInput::IsDown("Level2"))
 	//{
@@ -54,10 +66,7 @@ void TitleLevel::Start()
 
 void TitleLevel::LevelChangeStart()
 {
-	{		
-		m_BGM = GameEngineSound::Play("1-X.wav");
-		m_BGM.SetPitch(0.8f);
-		m_BGM.SetLoop();
+	{	
 		std::shared_ptr<GameEngineCamera> BackCam = CreateNewCamera(-1);
 		BackCam->SetProjectionType(CameraType::Perspective);
 		BackCam->GetTransform()->SetLocalPosition({ 0.f,0.f,-750.f });
@@ -65,13 +74,15 @@ void TitleLevel::LevelChangeStart()
 		GetMainCamera()->SetProjectionType(CameraType::Orthogonal);
 		GetMainCamera()->GetTransform()->SetLocalPosition({ 0, 0, -1000.0f });
 
+		//std::shared_ptr<TitleBackGround> pBG = CreateActor<TitleBackGround>(OrderNum::BACKGROUND);
+
 		m_pBlackScreen = CreateActor<BlackScreen>(OrderNum::BACKGROUND);
 		m_pBlackScreen->GetTransform()->SetLocalPosition({ 0.f,0.f,0.f });
-
-		std::shared_ptr<BackGroundRenderer> pStar0 = m_pBlackScreen->CreateComponent<BackGroundRenderer>(OrderNum::BACKGROUND);
+		
+		std::shared_ptr<GameEngineSpriteRenderer> pStar0 = m_pBlackScreen->CreateComponent<GameEngineSpriteRenderer>(OrderNum::BACKGROUND);
 		pStar0->SetScaleToTexture("starfields1.png");
-
-		std::shared_ptr<BackGroundRenderer> pStar1 = m_pBlackScreen->CreateComponent<BackGroundRenderer>(OrderNum::BACKGROUND);
+		
+		std::shared_ptr<GameEngineSpriteRenderer> pStar1 = m_pBlackScreen->CreateComponent<GameEngineSpriteRenderer>(OrderNum::BACKGROUND);
 		pStar1->SetScaleToTexture("starfields2.png");
 
 		m_pLogo = CreateActor<TitleLogo>(OrderNum::BACKGROUND);
@@ -82,7 +93,7 @@ void TitleLevel::LevelChangeStart()
 	}
 
 	EditGui::Editor->LoadtoString("Title1~2");
-	EditGui::Editor->SetBPM(150.f * 0.8f);
+	EditGui::Editor->SetBPM(static_cast<int>(150.f * 0.8f));
 	m_pStageInfo = EditGui::Editor->GetStageInfo(0);
 	m_fSpeed = m_pStageInfo.RotSpeed*2.f;
 	m_pRed = CreateActor<Planet>(OrderNum::PLANET);
@@ -140,6 +151,7 @@ void TitleLevel::LevelChangeStart()
 void TitleLevel::LevelChangeEnd()
 {
 	m_BGM.Stop();
+	m_bGameStart = false;
 	AllActorDestroy();
 }
 

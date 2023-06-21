@@ -59,6 +59,12 @@
     <ClInclude Include="WrongMark.h">
       <Filter>PublicObject</Filter>
     </ClInclude>
+    <ClInclude Include="TitleBackGround.h">
+      <Filter>Levels\TitleLevel\Obj</Filter>
+    </ClInclude>
+    <ClInclude Include="TextObj.h">
+      <Filter>PublicObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DFICore.cpp" />
@@ -117,6 +123,12 @@
     </ClCompile>
     <ClCompile Include="BackGroundRenderer.cpp" />
     <ClCompile Include="WrongMark.cpp">
+      <Filter>PublicObject</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleBackGround.cpp">
+      <Filter>Levels\TitleLevel\Obj</Filter>
+    </ClCompile>
+    <ClCompile Include="TextObj.cpp">
       <Filter>PublicObject</Filter>
     </ClCompile>
   </ItemGroup>

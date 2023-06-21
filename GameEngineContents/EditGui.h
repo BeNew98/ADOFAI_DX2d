@@ -51,6 +51,7 @@ public:
 			MsgAssert("BPM이 0입니다");
 			return;
 		}
+		m_vecAllStage[0].BPM = _BPM;
 		m_vecAllStage[0].RotSpeed = static_cast<float>(180.f * (_BPM / 60.f));
 	}
 
