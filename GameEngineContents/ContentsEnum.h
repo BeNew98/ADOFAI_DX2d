@@ -6,7 +6,7 @@ enum class OrderNum
 	MAP,
 	EFFECT,
 	PLANET,
-
+	TEXT,
 };
 
 enum class ColNum

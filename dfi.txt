@@ -30,8 +30,6 @@ LoadtoString으로 맵을 불러 온 후
 
 LoadEvent함수를 통해 엑셀에서 수치를 불러와서 map에 eventtype으로 분류 후 벡터에 pushback
 
-MoveEvent는 center의 포지션을 불러와서, 현재 포지션으로 ratio의 속도로 이동하게끔 설정.
-
 
 
 topglow bottomglow가 따로임.
@@ -48,4 +46,4 @@ Planet 애니메이션화 해야함.
 
 title level1 이미지 추가 필요
 
-title zoom 고장난거 수정필요5
+title zoom 고장난거 수정필요

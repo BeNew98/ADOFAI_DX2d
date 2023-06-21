@@ -16,6 +16,7 @@
 #include "Portal.h"
 #include "Level1BackGround.h"
 #include "WrongMark.h"
+#include "TextObj.h"
 
 PlayLevel::PlayLevel()
 {
@@ -27,18 +28,30 @@ PlayLevel::~PlayLevel()
 
 void PlayLevel::Update(float _DeltaTime)
 {
-	m_fStartTime += _DeltaTime;
+	m_fReadyTime -= _DeltaTime;
 	if (m_bGameStart==false)
 	{
 		m_bGameStart = true;
 		m_BGM = GameEngineSound::Play("1-X.wav");
+		std::shared_ptr<TextObj> pText = CreateActor<TextObj>(OrderNum::TEXT);
+		pText->SetTxt("준비");
 	}
 	if (m_fStartTime< m_fReadyTime)
 	{
 		return;
 	}
+	else
+	{
+		m_bPlaying = true;
+	}
+	if (m_bPlaying == true)
+	{
+		m_bPlaying = false;
+		std::shared_ptr<TextObj> pText = CreateActor<TextObj>(OrderNum::TEXT);
+		pText->SetTxt("시작");
+	}
 	PlanetSwap();
-
+	
 	//GetLevel()->GetMainCamera()->GetTransform()->SetWorldPosition(m_pCenter->GetTransform()->GetWorldPosition());
 	//GetLevel()->GetCamera(-1)->GetTransform()->SetWorldPosition(m_pCenter->GetTransform()->GetWorldPosition());
 
@@ -123,9 +136,12 @@ void PlayLevel::Reset()
 	m_pTurn = nullptr;
 	m_BGM = nullptr;
 	m_bGameStart = false;
-	m_fStartTime = 0.f;
-	m_iCurIndex = 0;
+	m_bPlaying = false;
+
 	m_iBPM = 0;
+	m_fReadyTime = 0.f;
+	m_iCurIndex = 0;
+	m_fStartTime = 1.5f;
 }
 
 void PlayLevel::PlanetSwap()

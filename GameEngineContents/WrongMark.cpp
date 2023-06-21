@@ -18,7 +18,7 @@ void WrongMark::Start()
 	m_pRender->SetScaleToTexture("create_tile_direction_x_Sprite.png");
 
 
-	m_pFontRenderer = CreateComponent<GameEngineFontRenderer>(OrderNum::EFFECT);
+	m_pFontRenderer = CreateComponent<GameEngineFontRenderer>(OrderNum::TEXT);
 	m_pFontRenderer->GetTransform()->AddLocalPosition({-100.f,100.f});
 	m_pFontRenderer->SetFont("Ch2.0-1");
 	m_pFontRenderer->SetScale(75.f);
@@ -37,7 +37,5 @@ void WrongMark::Update(float _DeltaTime)
 	float4 f4FontColor = m_pFontRenderer->GetColor();
 	f4FontColor.a = m_fAlpha;
 	m_pFontRenderer->SetColor(f4FontColor);
-	
-
 }
 

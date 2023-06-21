@@ -62,6 +62,9 @@
     <ClInclude Include="TitleBackGround.h">
       <Filter>Levels\TitleLevel\Obj</Filter>
     </ClInclude>
+    <ClInclude Include="TextObj.h">
+      <Filter>PublicObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DFICore.cpp" />
@@ -124,6 +127,9 @@
     </ClCompile>
     <ClCompile Include="TitleBackGround.cpp">
       <Filter>Levels\TitleLevel\Obj</Filter>
+    </ClCompile>
+    <ClCompile Include="TextObj.cpp">
+      <Filter>PublicObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
