@@ -28,7 +28,7 @@ void TextObj::Update(float _DeltaTime)
 		m_fAlpha = 0.f;
 		Death();
 	}
-	float4 f4FontColor = m_pFontRenderer->GetColor();
+	float4 f4FontColor = float4::White;
 	f4FontColor.a = m_fAlpha;
 	m_pFontRenderer->SetColor(f4FontColor);
 }

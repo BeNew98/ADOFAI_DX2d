@@ -35,33 +35,22 @@ void PlayLevel::Update(float _DeltaTime)
 		m_bGameStart = true;
 		m_pCenter->SetGameStart(m_bGameStart);
 		m_pTurn->SetGameStart(m_bGameStart);
+		m_BGM = GameEngineSound::Play("1-X.wav");
+		m_bDelay = true;
 		std::shared_ptr<TextObj> pText = CreateActor<TextObj>(OrderNum::TEXT);
 		pText->SetTxt("준비");
 	}
-	if (m_fDelay <= m_fStartTime&& m_bDelay == false)
-	{
-		m_BGM = GameEngineSound::Play("1-X.wav");
-		m_bDelay = true;
-	}
+	//if (m_fDelay <= m_fStartTime&& m_bDelay == false)
+	//{
+	//	m_BGM = GameEngineSound::Play("1-X.wav");
+	//	m_bDelay = true;
+	//}
 	if (m_fStartTime< m_fReadyTime)
 	{
 		return;
 	}
-	else
-	{
-		m_bPlaying = true;
-	}
-	if (m_bPlaying == true)
-	{
-		m_bPlaying = false;
-		std::shared_ptr<TextObj> pText = CreateActor<TextObj>(OrderNum::TEXT);
-		pText->SetTxt("시작");
-	}
 	PlanetSwap();
 	
-	//GetLevel()->GetMainCamera()->GetTransform()->SetWorldPosition(m_pCenter->GetTransform()->GetWorldPosition());
-	//GetLevel()->GetCamera(-1)->GetTransform()->SetWorldPosition(m_pCenter->GetTransform()->GetWorldPosition());
-
 	if (GameEngineInput::IsDown("CenterLevel"))
 	{
 		GameEngineCore::ChangeLevel("CenterLevel");
@@ -94,6 +83,7 @@ void PlayLevel::LevelChangeStart()
 	m_iBPM = m_pStageInfo.BPM;
 	m_fReadyTime = m_iBPM / 60.f / 5.f * 3.f;
 	m_fDelay = m_iBPM / 60.f / 5.f *0.25f;
+	m_fDelay = 0.f;
 	{
 		for (size_t i = 0; i < m_pStageInfo.AllTile.size(); i++)
 		{
