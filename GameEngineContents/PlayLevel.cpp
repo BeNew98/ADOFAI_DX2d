@@ -28,10 +28,11 @@ PlayLevel::~PlayLevel()
 void PlayLevel::Update(float _DeltaTime)
 {
 	m_fStartTime += _DeltaTime;
-	//if (m_fStartTime< EditGui::Editor->GetStageInfo(0).BPM / 60.f * 2.f)
-	//{
-	//	return;
-	//}
+	if (m_bGameStart==false)
+	{
+		m_bGameStart = true;
+		m_BGM = GameEngineSound::Play("1-X.wav");
+	}
 	PlanetSwap();
 
 	//GetLevel()->GetMainCamera()->GetTransform()->SetWorldPosition(m_pCenter->GetTransform()->GetWorldPosition());
@@ -48,7 +49,6 @@ void PlayLevel::Start()
 }
 void PlayLevel::LevelChangeStart()
 {
-	m_BGM = GameEngineSound::Play("1-X.wav");
 	//m_BGM = GameEngineSound::Play("sndkick.wav");
 	std::shared_ptr<GameEngineCamera> BackCam = CreateNewCamera(-1);
 	BackCam->SetProjectionType(CameraType::Perspective);

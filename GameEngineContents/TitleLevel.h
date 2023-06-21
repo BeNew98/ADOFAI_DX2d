@@ -60,6 +60,7 @@ private:
 	bool m_bGlow = false;
 	float m_fGlowRatio = 0.f;
 	float m_fSpeed = 0.f;
+	bool m_bGameStart = false;
 
 
 

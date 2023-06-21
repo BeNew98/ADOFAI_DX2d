@@ -28,6 +28,13 @@ TitleLevel::~TitleLevel()
 
 void TitleLevel::Update(float _DeltaTime)
 {
+	if (m_bGameStart == false)
+	{
+		m_bGameStart = true;
+		m_BGM = GameEngineSound::Play("1-X.wav");
+		m_BGM.SetPitch(0.8f);
+		m_BGM.SetLoop();
+	}
 	GlowTimeCheck(_DeltaTime);
 	PlanetSwap();
 
@@ -55,10 +62,7 @@ void TitleLevel::Start()
 
 void TitleLevel::LevelChangeStart()
 {
-	{		
-		m_BGM = GameEngineSound::Play("1-X.wav");
-		m_BGM.SetPitch(0.8f);
-		m_BGM.SetLoop();
+	{	
 		std::shared_ptr<GameEngineCamera> BackCam = CreateNewCamera(-1);
 		BackCam->SetProjectionType(CameraType::Perspective);
 		BackCam->GetTransform()->SetLocalPosition({ 0.f,0.f,-750.f });
@@ -141,6 +145,7 @@ void TitleLevel::LevelChangeStart()
 void TitleLevel::LevelChangeEnd()
 {
 	m_BGM.Stop();
+	m_bGameStart = false;
 	AllActorDestroy();
 }
 
