@@ -48,6 +48,10 @@ void Planet::Start()
 
 void Planet::Update(float _DeltaTime)
 {
+	if (m_GameStart ==false)
+	{
+		return;
+	}
 	if (m_bCenter==true)
 	{
 		GetTransform()->AddLocalRotation({ 0.f,0.f,-m_fSpeed * _DeltaTime });

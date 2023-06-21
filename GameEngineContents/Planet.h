@@ -33,6 +33,10 @@ public:
 	{
 		return m_pCollision;
 	}
+	void SetGameStart(bool _Value)
+	{
+		m_GameStart = _Value;
+	}
 
 protected:
 	void Start() override;
@@ -43,6 +47,7 @@ private:
 	float m_fSpeed =360.f;
 	static int m_iUseCount;
 	bool m_bCenter = false;
+	bool m_GameStart = false;
 	std::shared_ptr<GameEngineCollision> m_pCollision = nullptr;
 };
 

@@ -29,12 +29,19 @@ PlayLevel::~PlayLevel()
 void PlayLevel::Update(float _DeltaTime)
 {
 	m_fReadyTime -= _DeltaTime;
+	m_fDelay -= _DeltaTime;
 	if (m_bGameStart==false)
 	{
 		m_bGameStart = true;
-		m_BGM = GameEngineSound::Play("1-X.wav");
+		m_pCenter->SetGameStart(m_bGameStart);
+		m_pTurn->SetGameStart(m_bGameStart);
 		std::shared_ptr<TextObj> pText = CreateActor<TextObj>(OrderNum::TEXT);
 		pText->SetTxt("¡ÿ∫Ò");
+	}
+	if (m_fDelay <= m_fStartTime&& m_bDelay == false)
+	{
+		m_BGM = GameEngineSound::Play("1-X.wav");
+		m_bDelay = true;
 	}
 	if (m_fStartTime< m_fReadyTime)
 	{
@@ -86,6 +93,7 @@ void PlayLevel::LevelChangeStart()
 	m_pStageInfo = EditGui::Editor->GetStageInfo(0);
 	m_iBPM = m_pStageInfo.BPM;
 	m_fReadyTime = m_iBPM / 60.f / 5.f * 3.f;
+	m_fDelay = m_iBPM / 60.f / 5.f *0.25f;
 	{
 		for (size_t i = 0; i < m_pStageInfo.AllTile.size(); i++)
 		{

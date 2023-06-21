@@ -33,6 +33,8 @@ void TitleLevel::Update(float _DeltaTime)
 	{
 		CenterCheck();
 		m_bGameStart = true;
+		m_pCenter->SetGameStart(m_bGameStart);
+		m_pTurn->SetGameStart(m_bGameStart);
 		m_BGM = GameEngineSound::Play("1-X.wav");
 		m_BGM.SetPitch(0.8f);
 		m_BGM.SetLoop();
