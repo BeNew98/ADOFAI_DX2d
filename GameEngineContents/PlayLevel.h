@@ -33,6 +33,7 @@ private:
 	std::shared_ptr<Planet> m_pCenter = nullptr;
 	std::shared_ptr<Planet> m_pTurn = nullptr;
 
+	int m_iBPM = 0;
 	int m_iCurIndex = 0;
 	bool m_bGameStart = false;
 	float m_fStartTime = 0.f;
