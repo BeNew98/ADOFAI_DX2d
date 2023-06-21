@@ -33,11 +33,11 @@ void PlayLevel::Update(float _DeltaTime)
 		m_bGameStart = true;
 		m_BGM = GameEngineSound::Play("1-X.wav");
 	}
-	float test = m_iBPM / 60 / 180.f * 2.f;
-	if (m_fStartTime< m_iBPM /60*180.f*2.f)
-	{
-		return;
-	}
+	//float test = m_iBPM / 60 * 180.f * 2.f;
+	//if (m_fStartTime< m_iBPM /60*180.f*2.f)
+	//{
+	//	return;
+	//}
 	PlanetSwap();
 
 	//GetLevel()->GetMainCamera()->GetTransform()->SetWorldPosition(m_pCenter->GetTransform()->GetWorldPosition());
