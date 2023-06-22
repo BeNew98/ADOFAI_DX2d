@@ -43,6 +43,7 @@ private:
 	int m_iCurIndex = 0;
 	float m_fStartTime = 0.f;
 
+	bool m_bGameEnd = false;
 
 	void PlanetSwap();
 	void Reset();

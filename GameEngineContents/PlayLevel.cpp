@@ -177,7 +177,7 @@ void PlayLevel::Reset()
 	m_bGameStart = false;
 	m_bDelay = false;
 	m_bPlaying = false;
-
+	m_bGameEnd = false;
 
 	m_fDelay = 0.f;
 	m_iBPM = 0;
@@ -213,15 +213,18 @@ void PlayLevel::PlanetSwap()
 	float4 f4NextTilePos = pNextTile->GetPivotPos();
 
 	float fAngle = float4::GetAngleVectorToVectorDeg360(f4NextTilePos - f4CenterPos, f4TurnPos - f4CenterPos);
-	if (fAngle < -90.f&& fAngle > -135.f)
+	if (fAngle>0.f)
 	{
-		//GameEngineCore::ChangeLevel("PlayLevel");
+		m_bGameEnd = false;
+	}
+	if (fAngle < -90.f&& fAngle > -135.f&&	m_bGameEnd == false)
+	{
+		GameEngineCore::ChangeLevel("PlayLevel");
 		return;
 	}
 
 	if (true == GameEngineInput::IsAnyKey())
 	{
-
 		if (fAngle >= 45.f || fAngle <= -45.f)
 		{
 			if ((fAngle >= 45.f && fAngle <= 180.f) || (-180.f <= fAngle && fAngle <= -135.f))
@@ -300,5 +303,7 @@ void PlayLevel::PlanetSwap()
 		pNextTile->EventOn();
 
 		++m_iCurIndex;
+
+		m_bGameEnd = true;
 	}
 }
