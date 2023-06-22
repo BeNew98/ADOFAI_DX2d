@@ -34,7 +34,7 @@ void DFICore::GameStart()
 	GameEngineCore::CreateLevel<TitleLevel>();
 	GameEngineCore::CreateLevel<PlayLevel>() ;
 	GameEngineCore::CreateLevel<CenterLevel>();
-	std::string Level = "TitleLevel";
+	std::string Level = "PlayLevel";
 	if (Level== "PlayLevel")
 	{
 		EditGui::Editor->SetLevel(1);
