@@ -42,7 +42,10 @@ private:
 	float m_fReadyTime = 0.f;
 	int m_iCurIndex = 0;
 	float m_fStartTime = 0.f;
+
+
 	void PlanetSwap();
 	void Reset();
+	bool Accuracy_Check(float _Angle);
 };
 

@@ -20,6 +20,11 @@ public:
 	{
 		m_pFontRenderer->SetText(_Text);
 	}
+	void SetColor(float4 _Color)
+	{
+		m_f4Color = { _Color.x/255.f,_Color.y / 255.f,_Color.z / 255.f};
+		m_pFontRenderer->SetColor(m_f4Color);
+	}
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
@@ -28,6 +33,7 @@ private:
 	std::shared_ptr<class GameEngineSpriteRenderer> m_pRender = nullptr;
 	std::shared_ptr<GameEngineFontRenderer> m_pFontRenderer = nullptr;
 	float m_fAlpha = 1.f;
+	float4 m_f4Color = float4::Zero;
 
 
 

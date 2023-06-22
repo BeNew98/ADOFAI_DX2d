@@ -14,9 +14,8 @@ TextObj::~TextObj()
 void TextObj::Start()
 {
 	m_pFontRenderer = CreateComponent<GameEngineFontRenderer>(OrderNum::TEXT);
-	m_pFontRenderer->GetTransform()->AddLocalPosition({ 0.f,200.f });
 	m_pFontRenderer->SetFont("Ch2.0-1");
-	m_pFontRenderer->SetScale(200.f);
+	m_pFontRenderer->SetScale(m_fScale);
 	m_pFontRenderer->SetColor(float4::White);
 	m_pFontRenderer->SetFontFlag(FW1_TEXT_FLAG::FW1_CENTER);
 }
@@ -36,8 +35,7 @@ void TextObj::Update(float _DeltaTime)
 		Death();
 	}
 
-	float4 f4FontColor = float4::White;
-	f4FontColor.a = m_fAlpha;
-	m_pFontRenderer->SetColor(f4FontColor);
+	m_f4Color.a = m_fAlpha;
+	m_pFontRenderer->SetColor(m_f4Color);
 }
 
