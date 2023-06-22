@@ -40,7 +40,8 @@ void PlayLevel::Update(float _DeltaTime)
 	}
 	if (m_fDelay <= m_fStartTime && m_bDelay == false)
 	{
-		m_BGM = GameEngineSound::Play("1-X.wav");
+		m_BGM.SetPause(false);
+		//m_BGM = GameEngineSound::Play("1-X.wav");
 		m_bDelay = true;
 	}
 	if (m_fStartTime < m_fReadyTime)
@@ -56,6 +57,12 @@ void PlayLevel::Update(float _DeltaTime)
 		m_bPlaying = false;
 		std::shared_ptr<TextObj> pText = CreateActor<TextObj>(OrderNum::TEXT);
 		pText->SetTxt("Ω√¿€");
+	}
+
+
+	if (GameEngineInput::IsDown("Reset"))
+	{
+		GameEngineCore::ChangeLevel("PlayLevel");
 	}
 	PlanetSwap();
 
@@ -73,6 +80,9 @@ void PlayLevel::Start()
 }
 void PlayLevel::LevelChangeStart()
 {
+	m_BGM = GameEngineSound::Play("1-X.wav");
+	m_BGM.SetPosition(0.f);
+	m_BGM.SetPause(true);
 	//m_BGM = GameEngineSound::Play("sndkick.wav");
 	std::shared_ptr<GameEngineCamera> BackCam = CreateNewCamera(-1);
 	BackCam->SetProjectionType(CameraType::Perspective);
@@ -135,8 +145,7 @@ void PlayLevel::LevelChangeEnd()
 
 void PlayLevel::Reset()
 {
-	AllActorDestroy();
-	m_BGM.Stop();
+	m_BGM.SetPause(true);
 	m_pStageInfo = {};
 	m_pRed = nullptr;
 	m_pBlue = nullptr;
@@ -144,12 +153,15 @@ void PlayLevel::Reset()
 	m_pTurn = nullptr;
 	m_BGM = nullptr;
 	m_bGameStart = false;
+	m_bDelay = false;
 	m_bPlaying = false;
 
+	m_fDelay = 0.f;
 	m_iBPM = 0;
 	m_fReadyTime = 0.f;
 	m_iCurIndex = 0;
-	m_fStartTime = 1.5f;
+	m_fStartTime = 0.f;
+	AllActorDestroy();
 }
 
 void PlayLevel::PlanetSwap()

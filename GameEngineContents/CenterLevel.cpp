@@ -29,6 +29,7 @@ void CenterLevel::Start()
 	GameEngineInput::CreateKey("PlayLevel", '8');
 	GameEngineInput::CreateKey("EditLevel", '9');
 	GameEngineInput::CreateKey("CenterLevel", '0');
+	GameEngineInput::CreateKey("Reset", 'R');
 	GameEngineFont::Load("Ch2.0-1");
 
 

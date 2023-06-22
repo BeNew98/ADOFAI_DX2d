@@ -23,7 +23,7 @@
       <Filter>Levels\TitleLevel\Obj</Filter>
     </ClInclude>
     <ClInclude Include="CenterLevel.h">
-      <Filter>Levels\EditLevel\CenterLevel</Filter>
+      <Filter>Levels\CenterLevel</Filter>
     </ClInclude>
     <ClInclude Include="Tiles.h">
       <Filter>Levels\EditLevel\Obj</Filter>
@@ -88,7 +88,7 @@
       <Filter>Levels\TitleLevel\Obj</Filter>
     </ClCompile>
     <ClCompile Include="CenterLevel.cpp">
-      <Filter>Levels\EditLevel\CenterLevel</Filter>
+      <Filter>Levels\CenterLevel</Filter>
     </ClCompile>
     <ClCompile Include="Tiles.cpp">
       <Filter>Levels\EditLevel\Obj</Filter>
@@ -157,9 +157,6 @@
     <Filter Include="PublicObject">
       <UniqueIdentifier>{df11f953-5c45-4952-85fb-a35bec5d2a60}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Levels\EditLevel\CenterLevel">
-      <UniqueIdentifier>{b9cbe269-9b4d-482a-bca6-90b7d293f58a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="PostEffect">
       <UniqueIdentifier>{878aa53d-9b07-46bb-9930-b34cfa029088}</UniqueIdentifier>
     </Filter>
@@ -171,6 +168,9 @@
     </Filter>
     <Filter Include="PublicObject\BackGround">
       <UniqueIdentifier>{843510cc-0d01-4876-a60c-8e5e933a858e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Levels\CenterLevel">
+      <UniqueIdentifier>{b9cbe269-9b4d-482a-bca6-90b7d293f58a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
