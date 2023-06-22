@@ -75,6 +75,39 @@ void GameEngineFont::LoadFont(const std::string_view& _Path)
 	}
 }
 
+
+void GameEngineFont::FontInstall(const std::string_view& _Path)
+{
+	std::string Path = _Path.data();
+	// 폰트 설치
+
+	if (0 == AddFontResource(GameEngineString::AnsiToUniCode(Path).c_str()))
+	{
+		// 폰트 설치 실패
+		MsgAssert("font 설치 실패");
+	}
+
+	if (S_OK != SendMessage(GameEngineWindow::GetHWnd(), WM_FONTCHANGE, 0, 0))
+	{
+		MsgAssert("font 적용 실패");
+	}
+	//HDC dc = GetDC(NULL);
+	//EnumFontFamilies(dc,NULL,static_cast<FONTENUMPROC>ENUMFONTFAMILESPROC)
+
+	FontRemove(_Path);
+}
+
+void GameEngineFont::FontRemove(const std::string_view& _Path)
+{
+	std::string Path = _Path.data();
+
+	if (0 == RemoveFontResource(GameEngineString::AnsiToUniCode(Path).c_str()))
+	{
+		// 폰트 제거 실패
+		MsgAssert("font 제거 실패");
+	}
+}
+
 void GameEngineFont::FontDraw(const std::string_view& _Text, const float4& _Pos, float _FontScale, const float4& _Color, FW1_TEXT_FLAG _FwTextFlag)
 {
 	std::wstring Text = GameEngineString::AnsiToUniCode(_Text);

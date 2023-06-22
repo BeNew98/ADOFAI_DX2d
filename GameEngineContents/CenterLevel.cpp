@@ -30,7 +30,6 @@ void CenterLevel::Start()
 	GameEngineInput::CreateKey("EditLevel", '9');
 	GameEngineInput::CreateKey("CenterLevel", '0');
 	GameEngineInput::CreateKey("Reset", 'R');
-	GameEngineFont::Load("Ch2.0-1");
 
 
 
@@ -62,7 +61,16 @@ void CenterLevel::Start()
 		GameEngineSound::Load(NewDir.GetPlusFileName("1-X.wav").GetFullPath());
 		GameEngineSound::Load(NewDir.GetPlusFileName("sndKick.wav").GetFullPath());
 	}
+	{
+		GameEngineDirectory NewDir;
+		NewDir.MoveParentToDirectory("ContentResources");
+		NewDir.Move("ContentResources");
+		NewDir.Move("Text");
 
+		GameEngineFont::FontInstall(NewDir.GetPlusFileName("cjkFonts-regular-normalized.otf").GetFullPath());
+		GameEngineFont::Load("Ch2.0-1");
+		//GameEngineFont::FontRemove(NewDir.GetPlusFileName("cjkFonts-regular-normalized.otf").GetFullPath());
+	}
 	//윗쪽은 MainCam 아랫쪽은 UICam
 	//왼쪽은 배경x	오른쪽은 배경o
 
@@ -81,7 +89,7 @@ void CenterLevel::Start()
 		std::shared_ptr<TestObject> render = CreateActor<TestObject>();
 		render->GetTransform()->AddLocalPosition({ 500.f,0.f });
 	}
-
+	
 
 }
 
