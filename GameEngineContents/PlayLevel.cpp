@@ -30,27 +30,38 @@ void PlayLevel::Update(float _DeltaTime)
 {
 	m_fReadyTime -= _DeltaTime;
 	m_fDelay -= _DeltaTime;
-	if (m_bGameStart==false)
+	if (m_bGameStart == false)
 	{
 		m_bGameStart = true;
 		m_pCenter->SetGameStart(m_bGameStart);
 		m_pTurn->SetGameStart(m_bGameStart);
-		m_BGM = GameEngineSound::Play("1-X.wav");
-		m_bDelay = true;
 		std::shared_ptr<TextObj> pText = CreateActor<TextObj>(OrderNum::TEXT);
 		pText->SetTxt("준비");
 	}
-	if (m_fDelay <= m_fStartTime&& m_bDelay == false)
+	if (m_fDelay <= m_fStartTime && m_bDelay == false)
 	{
 		m_BGM = GameEngineSound::Play("1-X.wav");
 		m_bDelay = true;
 	}
-	if (m_fStartTime< m_fReadyTime)
+	if (m_fStartTime < m_fReadyTime)
 	{
 		return;
 	}
+	else
+	{
+		m_bPlaying = true;
+	}
+	if (m_bPlaying == true)
+	{
+		m_bPlaying = false;
+		std::shared_ptr<TextObj> pText = CreateActor<TextObj>(OrderNum::TEXT);
+		pText->SetTxt("시작");
+	}
 	PlanetSwap();
-	
+
+	//GetLevel()->GetMainCamera()->GetTransform()->SetWorldPosition(m_pCenter->GetTransform()->GetWorldPosition());
+	//GetLevel()->GetCamera(-1)->GetTransform()->SetWorldPosition(m_pCenter->GetTransform()->GetWorldPosition());
+
 	if (GameEngineInput::IsDown("CenterLevel"))
 	{
 		GameEngineCore::ChangeLevel("CenterLevel");
@@ -82,8 +93,7 @@ void PlayLevel::LevelChangeStart()
 	m_pStageInfo = EditGui::Editor->GetStageInfo(0);
 	m_iBPM = m_pStageInfo.BPM;
 	m_fReadyTime = m_iBPM / 60.f / 5.f * 3.f;
-	m_fDelay = m_iBPM / 60.f / 5.f *0.25f;
-	m_fDelay = 0.f;
+	m_fDelay = m_iBPM / 60.f / 5.f * 0.25f;
 	{
 		for (size_t i = 0; i < m_pStageInfo.AllTile.size(); i++)
 		{
@@ -95,7 +105,7 @@ void PlayLevel::LevelChangeStart()
 
 			//tile->SetTileEvent(EventType::ROTATION,90.f, 1.f);
 		}
-		
+
 	}
 
 	m_pRed = CreateActor<Planet>(OrderNum::PLANET);
@@ -108,7 +118,7 @@ void PlayLevel::LevelChangeStart()
 	m_pCenter->GetTransform()->SetWorldPosition(m_pStageInfo.AllTile[0].m_pTile->GetPivotPos());
 
 	std::shared_ptr<Portal> m_pPortal1 = CreateActor<Portal>(OrderNum::MAP);
-	m_pPortal1->GetTransform()->SetLocalPosition(m_pStageInfo.AllTile[m_pStageInfo.AllTile.size()-1].m_pTile->GetPivotPos());
+	m_pPortal1->GetTransform()->SetLocalPosition(m_pStageInfo.AllTile[m_pStageInfo.AllTile.size() - 1].m_pTile->GetPivotPos());
 	m_pPortal1->SetFunction([]()
 		{
 			GameEngineCore::ChangeLevel("CenterLevel");
@@ -157,9 +167,9 @@ void PlayLevel::PlanetSwap()
 
 		float fAngle = float4::GetAngleVectorToVectorDeg360(f4NextTilePos - f4CenterPos, f4TurnPos - f4CenterPos);
 
-		if (fAngle>45.f|| fAngle<-45.f)
+		if (fAngle > 45.f || fAngle < -45.f)
 		{
-			if (fAngle > 45.f && fAngle<180.f)
+			if (fAngle > 45.f && fAngle < 180.f)
 			{
 				std::shared_ptr<WrongMark> pWorngMark = CreateActor<WrongMark>(OrderNum::MAP);
 				pWorngMark->GetTransform()->SetLocalPosition(m_pTurn->GetTransform()->GetWorldPosition());
