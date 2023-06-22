@@ -32,6 +32,7 @@ void PlayLevel::Update(float _DeltaTime)
 	if (true==GameEngineInput::IsAnyKey()&& m_bGameStart == false)
 	{
 		m_bGameStart = true;
+		m_pCount->GetRenderer()->SetScale(200.f);
 	}
 
 	if (m_bGameStart == true)
@@ -48,12 +49,16 @@ void PlayLevel::Update(float _DeltaTime)
 	m_fDelay -= _DeltaTime;
 	if (m_bPlaying == false)
 	{
-		m_pCount->SetTxt(std::to_string(static_cast<int>(m_fReadyTime * 3.f)));
+		
 		if (m_fReadyTime<=0.f)
 		{
 			m_pCount->SetTxt("½ÃÀÛ");
 			m_pCount->FadeOn();
 			m_bPlaying = true;
+		}
+		else
+		{
+			m_pCount->SetTxt(std::to_string(static_cast<int>(m_fReadyTime * 3.f)));
 		}
 	}
 	if (m_fDelay <= m_fStartTime && m_bDelay == false)
