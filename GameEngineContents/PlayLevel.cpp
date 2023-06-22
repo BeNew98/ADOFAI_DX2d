@@ -40,11 +40,11 @@ void PlayLevel::Update(float _DeltaTime)
 		std::shared_ptr<TextObj> pText = CreateActor<TextObj>(OrderNum::TEXT);
 		pText->SetTxt("¡ÿ∫Ò");
 	}
-	//if (m_fDelay <= m_fStartTime&& m_bDelay == false)
-	//{
-	//	m_BGM = GameEngineSound::Play("1-X.wav");
-	//	m_bDelay = true;
-	//}
+	if (m_fDelay <= m_fStartTime&& m_bDelay == false)
+	{
+		m_BGM = GameEngineSound::Play("1-X.wav");
+		m_bDelay = true;
+	}
 	if (m_fStartTime< m_fReadyTime)
 	{
 		return;
