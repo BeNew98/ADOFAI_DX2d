@@ -103,6 +103,7 @@ void TitleLevel::LevelChangeStart()
 	m_pBlue->GetTransform()->AddLocalPosition({ -100.f,0.f,0.f });
 	m_pCenter = m_pRed;
 	m_pTurn = m_pBlue;
+	m_pCenter->GetTransform()->SetLocalRotation({ 0.f,0.f,-135.f });
 	
 	for (size_t i = 16; i < 21; i++)
 	{

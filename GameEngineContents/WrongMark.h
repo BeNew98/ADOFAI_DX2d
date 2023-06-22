@@ -27,7 +27,6 @@ protected:
 private:
 	std::shared_ptr<class GameEngineSpriteRenderer> m_pRender = nullptr;
 	std::shared_ptr<GameEngineFontRenderer> m_pFontRenderer = nullptr;
-	bool m_bAlpha = false;
 	float m_fAlpha = 1.f;
 
 

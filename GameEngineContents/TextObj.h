@@ -20,6 +20,14 @@ public:
 	{
 		m_pFontRenderer->SetText(_Text);
 	}
+	void FadeOn()
+	{
+		m_bAlpha = true;
+	}
+	std::shared_ptr<GameEngineFontRenderer> GetRenderer()
+	{
+		return m_pFontRenderer;
+	}
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;

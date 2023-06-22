@@ -32,6 +32,7 @@ private:
 	std::shared_ptr<class Planet> m_pBlue = nullptr;
 	std::shared_ptr<Planet> m_pCenter = nullptr;
 	std::shared_ptr<Planet> m_pTurn = nullptr;
+	std::shared_ptr<class TextObj> m_pCount = nullptr;
 
 	bool m_bGameStart = false;
 	bool m_bPlaying = false;

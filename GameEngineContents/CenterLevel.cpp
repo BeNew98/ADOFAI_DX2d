@@ -67,7 +67,7 @@ void CenterLevel::Start()
 		NewDir.Move("ContentResources");
 		NewDir.Move("Text");
 
-		GameEngineFont::FontInstall(NewDir.GetPlusFileName("cjkFonts-regular-normalized.otf").GetFullPath());
+		GameEngineFont::FontInstall(NewDir.GetPlusFileName("cjkFonts-regular-normalized.otf").GetFullPath(), "Ch2.0-1 Regular");
 		GameEngineFont::Load("Ch2.0-1");
 		//GameEngineFont::FontRemove(NewDir.GetPlusFileName("cjkFonts-regular-normalized.otf").GetFullPath());
 	}

@@ -26,17 +26,35 @@ PlayLevel::~PlayLevel()
 {
 }
 
+
 void PlayLevel::Update(float _DeltaTime)
 {
-	m_fReadyTime -= _DeltaTime;
-	m_fDelay -= _DeltaTime;
-	if (m_bGameStart == false)
+	if (true==GameEngineInput::IsAnyKey()&& m_bGameStart == false)
 	{
 		m_bGameStart = true;
+	}
+
+	if (m_bGameStart == true)
+	{
 		m_pCenter->SetGameStart(m_bGameStart);
 		m_pTurn->SetGameStart(m_bGameStart);
-		std::shared_ptr<TextObj> pText = CreateActor<TextObj>(OrderNum::TEXT);
-		pText->SetTxt("준비");
+	}
+	else
+	{
+		return;
+	}
+
+	m_fReadyTime -= _DeltaTime;
+	m_fDelay -= _DeltaTime;
+	if (m_bPlaying == false)
+	{
+		m_pCount->SetTxt(std::to_string(static_cast<int>(m_fReadyTime * 3.f)));
+		if (m_fReadyTime<=0.f)
+		{
+			m_pCount->SetTxt("시작");
+			m_pCount->FadeOn();
+			m_bPlaying = true;
+		}
 	}
 	if (m_fDelay <= m_fStartTime && m_bDelay == false)
 	{
@@ -44,30 +62,19 @@ void PlayLevel::Update(float _DeltaTime)
 		//m_BGM = GameEngineSound::Play("1-X.wav");
 		m_bDelay = true;
 	}
+
 	if (m_fStartTime < m_fReadyTime)
 	{
 		return;
 	}
-	else
-	{
-		m_bPlaying = true;
-	}
-	if (m_bPlaying == true)
-	{
-		m_bPlaying = false;
-		std::shared_ptr<TextObj> pText = CreateActor<TextObj>(OrderNum::TEXT);
-		pText->SetTxt("시작");
-	}
 
+	PlanetSwap();
 
 	if (GameEngineInput::IsDown("Reset"))
 	{
 		GameEngineCore::ChangeLevel("PlayLevel");
 	}
-	PlanetSwap();
 
-	//GetLevel()->GetMainCamera()->GetTransform()->SetWorldPosition(m_pCenter->GetTransform()->GetWorldPosition());
-	//GetLevel()->GetCamera(-1)->GetTransform()->SetWorldPosition(m_pCenter->GetTransform()->GetWorldPosition());
 
 	if (GameEngineInput::IsDown("CenterLevel"))
 	{
@@ -80,6 +87,10 @@ void PlayLevel::Start()
 }
 void PlayLevel::LevelChangeStart()
 {
+	m_pCount = CreateActor<TextObj>(OrderNum::TEXT);
+	m_pCount->SetTxt("아무 키를 눌러 시작하세요");
+	m_pCount->GetRenderer()->SetScale(100.f);
+
 	m_BGM = GameEngineSound::Play("1-X.wav");
 	m_BGM.SetPosition(0.f);
 	m_BGM.SetPause(true);
@@ -103,7 +114,7 @@ void PlayLevel::LevelChangeStart()
 	m_pStageInfo = EditGui::Editor->GetStageInfo(0);
 	m_iBPM = m_pStageInfo.BPM;
 	m_fReadyTime = m_iBPM / 60.f / 5.f * 3.f;
-	m_fDelay = m_iBPM / 60.f / 5.f * 0.25f;
+	//m_fDelay = m_iBPM / 60.f / 5.f * 0.25f;
 	{
 		for (size_t i = 0; i < m_pStageInfo.AllTile.size(); i++)
 		{
@@ -120,10 +131,11 @@ void PlayLevel::LevelChangeStart()
 
 	m_pRed = CreateActor<Planet>(OrderNum::PLANET);
 	m_pBlue = CreateActor<Planet>(OrderNum::PLANET);
-	m_pBlue->GetTransform()->SetParent(m_pRed->GetTransform());
-	m_pBlue->GetTransform()->AddLocalPosition({ -150.f,0.f,0.f });
 	m_pCenter = m_pRed;
 	m_pTurn = m_pBlue;
+	m_pBlue->GetTransform()->SetParent(m_pRed->GetTransform());
+	m_pCenter->GetTransform()->SetLocalRotation({ 0.f,0.f,-135.f });
+	m_pBlue->GetTransform()->AddLocalPosition({ -150.f,0.f,0.f });
 
 	m_pCenter->GetTransform()->SetWorldPosition(m_pStageInfo.AllTile[0].m_pTile->GetPivotPos());
 
@@ -135,6 +147,8 @@ void PlayLevel::LevelChangeStart()
 		});
 
 	EditGui::Editor->Off();
+
+
 	GetMainCamera()->GetTransform()->SetLocalPosition({ 0, 0, -1000.0f });
 }
 
