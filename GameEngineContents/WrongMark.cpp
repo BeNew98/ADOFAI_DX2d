@@ -34,7 +34,7 @@ void WrongMark::Update(float _DeltaTime)
 		Death();
 	}
 	m_pRender->ColorOptionValue.MulColor = { 1.f,1.f,1.f,m_fAlpha };
-	float4 f4FontColor = m_pFontRenderer->GetColor();
+	float4 f4FontColor = float4::Red;
 	f4FontColor.a = m_fAlpha;
 	m_pFontRenderer->SetColor(f4FontColor);
 }

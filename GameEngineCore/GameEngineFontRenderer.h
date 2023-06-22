@@ -30,9 +30,9 @@ public:
 		FontColor = _FontColor;
 	}
 
-	float4 GetColor()
+	inline void SetFontFlag(FW1_TEXT_FLAG _Flag)
 	{
-		return FontColor;
+		FwTextFlag = _Flag;
 	}
 
 protected:
@@ -47,5 +47,6 @@ private:
 	std::string Text;
 	std::shared_ptr<GameEngineFont> Font;
 
+	FW1_TEXT_FLAG FwTextFlag = FW1_TEXT_FLAG::FW1_TOP;
 };
 

@@ -26,11 +26,11 @@ public:
 
 FontFactoryCreator InitFont;
 
-GameEngineFont::GameEngineFont() 
+GameEngineFont::GameEngineFont()
 {
 }
 
-GameEngineFont::~GameEngineFont() 
+GameEngineFont::~GameEngineFont()
 {
 	if (nullptr != Font)
 	{
@@ -40,13 +40,13 @@ GameEngineFont::~GameEngineFont()
 
 }
 
-void GameEngineFont::LoadFont(const std::string_view& _Path) 
+void GameEngineFont::LoadFont(const std::string_view& _Path)
 {
 	std::wstring WPath = GameEngineString::AnsiToUniCode(_Path.data());
 
 	D3D11_BLEND_DESC blendDesc = { 0, };
 	ZeroMemory(&blendDesc, sizeof(blendDesc));
-	for(int i=0; i < 4; ++i) {
+	for (int i = 0; i < 4; ++i) {
 		//blendDesc.RenderTarget[i].BlendEnable = TRUE;
 		//blendDesc.RenderTarget[i].SrcBlend = D3D11_BLEND_ONE;
 		//blendDesc.RenderTarget[i].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
@@ -75,11 +75,11 @@ void GameEngineFont::LoadFont(const std::string_view& _Path)
 	}
 }
 
-void GameEngineFont::FontDraw(const std::string_view& _Text, const float4& _Pos, float _FontScale, const float4& _Color)
+void GameEngineFont::FontDraw(const std::string_view& _Text, const float4& _Pos, float _FontScale, const float4& _Color, FW1_TEXT_FLAG _FwTextFlag)
 {
 	std::wstring Text = GameEngineString::AnsiToUniCode(_Text);
 
-	float4 Color = {1.0f, 0.0f, 0.0f, 1.0f};
+	float4 Color = { 1.0f, 0.0f, 0.0f, 1.0f };
 
-	Font->DrawString(GameEngineDevice::GetContext(), Text.c_str(), _FontScale, _Pos.x, _Pos.y, _Color.ColorToUint(), FW1_TOP);
+	Font->DrawString(GameEngineDevice::GetContext(), Text.c_str(), _FontScale, _Pos.x, _Pos.y, _Color.ColorToUint(), _FwTextFlag);
 }
