@@ -152,8 +152,28 @@ void TitleLevel::LevelChangeStart()
 void TitleLevel::LevelChangeEnd()
 {
 	m_BGM.Stop();
+	m_pStageInfo = {};
+	m_pRed = nullptr;
+	m_pBlue = nullptr;
+	m_pCenter = nullptr;
+	m_pTurn = nullptr;
+
+	m_pBlackScreen = nullptr;
+	m_pLogo = nullptr;
+
+	m_iCurIndex = 0;
+	m_fLerpTime = 0.f;
+
+	m_fCurTilePos = float4::Zero;
+	m_fPrevTilePos = float4::Zero;
+
+	m_fTime = 0.f;
+	m_bGlow = false;
+	m_fGlowRatio = 0.f;
+	m_fSpeed = 0.f;
 	m_bGameStart = false;
-	AllActorDestroy();
+	
+	m_pPortal1 = nullptr;
 }
 
 

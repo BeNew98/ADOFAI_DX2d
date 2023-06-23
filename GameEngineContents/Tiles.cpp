@@ -18,7 +18,6 @@ Tiles::~Tiles()
 
 void Tiles::Start()
 {
-	m_pStageInfo = EditGui::Editor->GetStageInfo(0);
 	m_pStartPivot = CreateComponent<GameEngineSpriteRenderer>();
 	m_pStartPivot->GetTransform()->SetLocalScale(float4(10.f, 10.f,1.f));
 	m_pEndPivot = CreateComponent<GameEngineSpriteRenderer>();
@@ -164,7 +163,7 @@ void Tiles::MoveEvent(float _DeltaTime)
 	std::vector<TileEvent>* vecEvt = &findIter->second;
 	if (m_fData.z != 360.f)
 	{
-		std::map<EventType, std::vector<TileEvent>>::iterator findPrevIter = m_pStageInfo.AllTile[m_iIndex - 1].m_pTile->m_mapAllEvent.find(EventType::MOVE);
+		std::map<EventType, std::vector<TileEvent>>::iterator findPrevIter = EditGui::Editor->GetStageInfo(0).AllTile[m_iIndex - 1].m_pTile->m_mapAllEvent.find(EventType::MOVE);
 		findPrevIter->second[0].End = true;
 	}
 

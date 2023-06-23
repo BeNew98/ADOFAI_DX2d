@@ -169,9 +169,6 @@ private:
 	std::map<EventType ,std::vector<TileEvent>> m_mapAllEvent;
 	bool m_bEventTrigger = false;
 
-
-	StageInfo m_pStageInfo = {};
-
 	void EventStart(float _DeltaTime);
 	void ZoomEvent(float _DeltaTime);
 	void MoveEvent(float _DeltaTime);
