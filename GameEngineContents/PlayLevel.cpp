@@ -38,6 +38,7 @@ void PlayLevel::Update(float _DeltaTime)
 
 	if (m_bGameStart == true)
 	{
+		m_BGM.SetPause(false);
 		m_pCenter->SetGameStart(m_bGameStart);
 		m_pTurn->SetGameStart(m_bGameStart);
 	}
@@ -47,7 +48,6 @@ void PlayLevel::Update(float _DeltaTime)
 	}
 
 	m_fReadyTime -= _DeltaTime;
-	m_fDelay -= _DeltaTime;
 	if (m_bPlaying == false)
 	{
 		
@@ -62,12 +62,6 @@ void PlayLevel::Update(float _DeltaTime)
 		{
 			m_pCount->SetTxt(std::to_string(static_cast<int>(m_fReadyTime * 3.f)));
 		}
-	}
-	if (m_fDelay <= m_fStartTime && m_bDelay == false)
-	{
-		m_BGM.SetPause(false);
-		//m_BGM = GameEngineSound::Play("1-X.wav");
-		m_bDelay = true;
 	}
 
 	if (m_fStartTime < m_fReadyTime)
@@ -122,7 +116,6 @@ void PlayLevel::LevelChangeStart()
 	m_pStageInfo = EditGui::Editor->GetStageInfo(0);
 	m_iBPM = m_pStageInfo.BPM;
 	m_fReadyTime = m_iBPM / 60.f / 5.f * 3.f;
-	//m_fDelay = m_iBPM / 60.f / 5.f * 0.25f;
 	{
 		for (size_t i = 0; i < m_pStageInfo.AllTile.size(); i++)
 		{
@@ -175,11 +168,9 @@ void PlayLevel::Reset()
 	m_pTurn = nullptr;
 	m_BGM = nullptr;
 	m_bGameStart = false;
-	m_bDelay = false;
 	m_bPlaying = false;
 	m_bGameEnd = false;
-
-	m_fDelay = 0.f;
+	
 	m_iBPM = 0;
 	m_fReadyTime = 0.f;
 	m_iCurIndex = 0;
