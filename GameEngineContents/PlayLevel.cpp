@@ -178,19 +178,6 @@ void PlayLevel::Reset()
 	AllActorDestroy();
 }
 
-bool PlayLevel::Accuracy_Check(float _Angle)
-{
-	//float fAngle = _Angle;
-	//
-	//
-	//else
-	//{
-	//	
-	//	return true;
-	//}
-	return false;
-}
-
 void PlayLevel::PlanetSwap()
 {
 

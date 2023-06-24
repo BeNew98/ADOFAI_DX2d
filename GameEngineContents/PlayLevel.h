@@ -45,6 +45,5 @@ private:
 
 	void PlanetSwap();
 	void Reset();
-	bool Accuracy_Check(float _Angle);
 };
 
