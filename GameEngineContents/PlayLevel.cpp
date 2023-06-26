@@ -34,15 +34,13 @@ void PlayLevel::Update(float _DeltaTime)
 		m_bGameStart = true;
 		m_pCount->GetRenderer()->SetScale(200.f);
 		m_pCount->SetPosition({ 0.f,200.f });
-	}
-
-	if (m_bGameStart == true)
-	{
 		m_BGM.SetPause(false);
+		m_BGM.setPosition(0);
 		m_pCenter->SetGameStart(m_bGameStart);
 		m_pTurn->SetGameStart(m_bGameStart);
 	}
-	else
+
+	if (m_bGameStart == false)
 	{
 		return;
 	}
@@ -123,7 +121,7 @@ void PlayLevel::LevelChangeStart()
 			tile->SetTileEvent(EventType::ZOOM, 0.05f, 0.05f);
 			tile->SetTileEvent(EventType::ZOOM, -0.05f, 0.1f);
 
-			tile->SetTileEvent(EventType::MOVE, 1.f, m_fReadyTime*5.f);
+			tile->SetTileEvent(EventType::MOVE, 0.f, m_fReadyTime*5.f);
 
 			//tile->SetTileEvent(EventType::ROTATION,90.f, 1.f);
 		}

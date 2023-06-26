@@ -80,6 +80,27 @@ void Tiles::Update(float _DeltaTime)
 
 void Tiles::EventStart(float _DeltaTime)
 {
+	if (m_bZoomTrigger&&m_bMoveTrigger&&m_bRotTrigger)
+	{
+		m_bEventTrigger = false; 
+		m_bZoomTrigger = false;
+		m_bMoveTrigger = false;
+		m_bRotTrigger = false;
+
+		int a = 0;
+		std::map<EventType, std::vector<TileEvent>>::iterator findIter = m_mapAllEvent.begin();
+
+		for (; findIter != m_mapAllEvent.end(); findIter++)
+		{
+			std::vector<TileEvent>* vecEvt = &findIter->second;
+			for (size_t i = 0; i < vecEvt->size(); i++)
+			{
+				(*vecEvt)[i].End = false;
+			}
+		}
+	}
+
+
 	if (m_bEventTrigger == false)
 	{
 		return;
@@ -93,19 +114,17 @@ void Tiles::ZoomEvent(float _DeltaTime)
 {
 	std::map<EventType, std::vector<TileEvent>>::iterator findIter = m_mapAllEvent.find(EventType::ZOOM);
 
-	if (findIter == m_mapAllEvent.end())
+	if (findIter == m_mapAllEvent.end()||m_bZoomTrigger ==true)
 	{
+		m_bZoomTrigger = true;
 		return;
 	}
 	std::vector<TileEvent>* vecEvt = &findIter->second;
 
 	if ((*vecEvt)[(*vecEvt).size()-1].End == true && m_fData.z == 360.f)
 	{
-		m_bEventTrigger = false;
-		for (size_t i = 0; i < (*vecEvt).size(); i++)
-		{
-			(*vecEvt)[i].End = false;
-		}
+		m_bZoomTrigger = true;
+		m_fPrevZoomRatio = 0.f;
 		return;
 	}
 
@@ -156,8 +175,9 @@ void Tiles::MoveEvent(float _DeltaTime)
 
 	std::map<EventType, std::vector<TileEvent>>::iterator findIter = m_mapAllEvent.find(EventType::MOVE);
 
-	if (findIter == m_mapAllEvent.end())
+	if (findIter == m_mapAllEvent.end()||m_bMoveTrigger == true)
 	{
+		m_bMoveTrigger = true;
 		return;
 	}
 	std::vector<TileEvent>* vecEvt = &findIter->second;
@@ -174,11 +194,8 @@ void Tiles::MoveEvent(float _DeltaTime)
 	{
 		if (i == (*vecEvt).size() - 1 && true == (*vecEvt)[i].End && m_fData.z == 360.f)
 		{
-			m_bEventTrigger = false;
-			for (size_t i = 0; i < (*vecEvt).size(); i++)
-			{
-				(*vecEvt)[i].End = false;
-			}
+			m_bMoveTrigger = true;
+			m_fPrevPosRatio = 0.f;
 			return;
 		}
 		if (true == (*vecEvt)[i].End)
@@ -187,16 +204,21 @@ void Tiles::MoveEvent(float _DeltaTime)
 		}
 		TileEvent Evt = (*vecEvt)[i];
 		{
-			float SpeedRatio = Evt.Ratio * _DeltaTime / Evt.Time;
+			float SpeedRatio = _DeltaTime / Evt.Time;
 			m_fPrevPosRatio += SpeedRatio;
-
+			if (m_fPrevPosRatio >= 1.f)
+			{
+				m_fPrevPosRatio = 1.f;
+			}
 			float4 Cam = GetLevel()->GetMainCamera()->GetTransform()->GetLocalPosition();
-			MainCamera->GetTransform()->SetLocalPosition(float4::Lerp(Cam, GetPivotPos(), m_fPrevPosRatio));
-			BackGroundCamera->GetTransform()->SetLocalPosition(float4::Lerp(Cam, GetPivotPos(), m_fPrevPosRatio));
+			
+			MainCamera->GetTransform()->SetLocalPosition(float4::Lerp(Cam, { GetPivotPos().x,GetPivotPos().y+ Evt.Ratio }, m_fPrevPosRatio));
+			BackGroundCamera->GetTransform()->SetLocalPosition(float4::Lerp(Cam, { GetPivotPos().x,GetPivotPos().y + Evt.Ratio }, m_fPrevPosRatio));
 
 			if (m_fPrevPosRatio >= 1.f)
 			{
 				(*vecEvt)[i].End = true;
+				m_fPrevPosRatio = 0.f;
 				return;
 			}
 
@@ -211,8 +233,9 @@ void Tiles::RotationEvent(float _DeltaTime)
 
 	std::map<EventType, std::vector<TileEvent>>::iterator findIter = m_mapAllEvent.find(EventType::ROTATION);
 
-	if (findIter == m_mapAllEvent.end())
+	if (findIter == m_mapAllEvent.end() || m_bRotTrigger == true)
 	{
+		m_bRotTrigger = true;
 		return;
 	}
 	std::vector<TileEvent>* vecEvt = &findIter->second;
@@ -224,11 +247,8 @@ void Tiles::RotationEvent(float _DeltaTime)
 	{
 		if (i == (*vecEvt).size() - 1 && true == (*vecEvt)[i].End && m_fData.z == 360.f)
 		{
-			m_bEventTrigger = false;
-			for (size_t i = 0; i < (*vecEvt).size(); i++)
-			{
-				(*vecEvt)[i].End = false;
-			}
+			m_bRotTrigger = true;
+			m_fPrevRotRatio = 0.f;
 			return;
 
 		}

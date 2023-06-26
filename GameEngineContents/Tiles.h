@@ -169,6 +169,11 @@ private:
 	std::map<EventType ,std::vector<TileEvent>> m_mapAllEvent;
 	bool m_bEventTrigger = false;
 
+
+	bool m_bZoomTrigger = false;
+	bool m_bMoveTrigger = false;
+	bool m_bRotTrigger = false;
+
 	void EventStart(float _DeltaTime);
 	void ZoomEvent(float _DeltaTime);
 	void MoveEvent(float _DeltaTime);

@@ -105,17 +105,16 @@ void TitleLevel::LevelChangeStart()
 	m_pTurn = m_pBlue;
 	m_pCenter->GetTransform()->SetLocalRotation({ 0.f,0.f,-135.f });
 	
-	for (size_t i = 16; i < 21; i++)
-	{
-		int a = 0;
-	}
-	for (size_t i = 41; i < m_pStageInfo.AllTile.size(); i++)
+	for (size_t i = 0; i < m_pStageInfo.AllTile.size(); i++)
 	{
 		std::shared_ptr<Tiles> tile = m_pStageInfo.AllTile[i].m_pTile;
 		tile->SetTileEvent(EventType::ZOOM, 0.05f, 0.05f);
-		tile->SetTileEvent(EventType::ZOOM, -0.05f, 0.1f);
+		tile->SetTileEvent(EventType::ZOOM, -0.05f, 0.05f);
+		if (i >= 43)
+		{
+			tile->SetTileEvent(EventType::MOVE, 200.f, 0.5f);
+		}
 
-		tile->SetTileEvent(EventType::MOVE, 1.f, 0.5f);
 	}
 
 
@@ -131,6 +130,10 @@ void TitleLevel::LevelChangeStart()
 			EditGui::Editor->SetLevel(1);
 			EditGui::Editor->SetBPM(150);
 		});
+	std::shared_ptr< GameEngineSpriteRenderer> pLevel1 = m_pStageInfo.AllTile[30].m_pTile->CreateComponent<GameEngineSpriteRenderer>(OrderNum::BACKGROUND);
+	pLevel1->SetTexture("1.png");
+	pLevel1->GetTransform()->SetLocalPosition({ 0.f,300.f });
+	pLevel1->GetTransform()->SetLocalScale({ 212.f,256.f });
 
 	m_pRed->GetTransform()->SetLocalPosition(m_pStageInfo.AllTile[12].m_pTile->GetTransform()->GetWorldPosition());
 
