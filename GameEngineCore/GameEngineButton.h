@@ -20,9 +20,29 @@ public:
 	GameEngineButton& operator=(const GameEngineButton& _Other) = delete;
 	GameEngineButton& operator=(GameEngineButton&& _Other) noexcept = delete;
 
-	void SetEvent(std::function<void()> _Click) 
+	void SetEvent(std::function<void()> _Click)
 	{
 		Click = _Click;
+	}
+
+	std::shared_ptr<GameEngineUIRenderer> GetRender()
+	{
+		return Render;
+	}
+
+	void SetReleaseTexture(const std::string_view& _ImageName)
+	{
+		ReleaseImage = _ImageName;
+	}
+
+	void SetHoverTexture(const std::string_view& _ImageName)
+	{
+		HoverImage = _ImageName;
+	}
+
+	void SetPressTexture(const std::string_view& _ImageName)
+	{
+		PressImage = _ImageName;
 	}
 
 protected:
@@ -32,6 +52,10 @@ protected:
 private:
 	std::shared_ptr<GameEngineUIRenderer> Render;
 	std::function<void()> Click;
+
+	std::string_view ReleaseImage = "";
+	std::string_view HoverImage = "";
+	std::string_view PressImage = "";
 
 	// std::shared_ptr<GameEngineCollision> Collision;
 };
