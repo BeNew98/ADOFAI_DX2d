@@ -112,7 +112,7 @@ void TitleLevel::LevelChangeStart()
 		tile->SetTileEvent(EventType::ZOOM, -0.05f, 0.1f);
 		if (i >= 43)
 		{
-			tile->SetTileEvent(EventType::MOVE, 200.f, 150.f*0.8f/60.f/3.f);
+			tile->SetTileEvent(EventType::MOVE, 200.f, 0.5f);
 		}
 
 	}
