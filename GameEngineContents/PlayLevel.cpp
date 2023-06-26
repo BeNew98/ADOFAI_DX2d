@@ -106,7 +106,6 @@ void PlayLevel::LevelChangeStart()
 
 
 	std::shared_ptr<Level1BackGround> m_pLevel1BackGround = CreateActor<Level1BackGround>(OrderNum::BACKGROUND);
-	//m_pLevel1BackGround->GetTransform()->AddLocalPosition({ -12500.f,0.f,0.f });
 
 
 	EditGui::Editor->LoadtoString("");
