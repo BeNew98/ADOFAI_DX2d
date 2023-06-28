@@ -62,14 +62,7 @@ void CenterLevel::Start()
 		GameEngineSound::Load(NewDir.GetPlusFileName("sndKick.wav").GetFullPath());
 	}
 	{
-		GameEngineDirectory NewDir;
-		NewDir.MoveParentToDirectory("ContentResources");
-		NewDir.Move("ContentResources");
-		NewDir.Move("Text");
-
-		GameEngineFont::FontInstall(NewDir.GetPlusFileName("cjkFonts-regular-normalized.otf").GetFullPath(), "Ch2.0-1 Regular");
 		GameEngineFont::Load("Ch2.0-1");
-		//GameEngineFont::FontRemove(NewDir.GetPlusFileName("cjkFonts-regular-normalized.otf").GetFullPath());
 	}
 	//윗쪽은 MainCam 아랫쪽은 UICam
 	//왼쪽은 배경x	오른쪽은 배경o
