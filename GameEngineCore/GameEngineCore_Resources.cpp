@@ -79,6 +79,44 @@ void GameEngineCore::CoreResourcesInit()
 		SamperData.MinLOD = -FLT_MAX;
 		SamperData.MaxLOD = FLT_MAX;
 
+		GameEngineSampler::Create("ENGINEBASE", SamperData);
+	}
+
+	{
+		D3D11_SAMPLER_DESC SamperData = {};
+		SamperData.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
+		SamperData.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
+		SamperData.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
+		SamperData.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
+		// ≈ÿΩ∫√≥∞° ∏÷∏Æ¿÷¿ª∂ß π∂∞∂≤®≥ƒ
+		// æ»π∂∞µ¥Ÿ.
+		SamperData.MipLODBias = 0.0f;
+		SamperData.MaxAnisotropy = 1;
+		SamperData.ComparisonFunc = D3D11_COMPARISON_ALWAYS;
+		SamperData.MinLOD = -FLT_MAX;
+		SamperData.MaxLOD = FLT_MAX;
+
+		GameEngineSampler::Create("POINTSAMPLER", SamperData);
+	}
+
+
+
+	{
+		D3D11_SAMPLER_DESC SamperData = {};
+
+		// 
+		SamperData.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+		SamperData.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
+		SamperData.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
+		SamperData.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
+		// ≈ÿΩ∫√≥∞° ∏÷∏Æ¿÷¿ª∂ß π∂∞∂≤®≥ƒ
+		// æ»π∂∞µ¥Ÿ.
+		SamperData.MipLODBias = 0.0f;
+		SamperData.MaxAnisotropy = 1;
+		SamperData.ComparisonFunc = D3D11_COMPARISON_ALWAYS;
+		SamperData.MinLOD = -FLT_MAX;
+		SamperData.MaxLOD = FLT_MAX;
+
 		GameEngineSampler::Create("CLAMPSAMPLER", SamperData);
 	}
 
@@ -550,6 +588,19 @@ void GameEngineCore::CoreResourcesInit()
 		}
 
 		{
+			std::shared_ptr<GameEngineRenderingPipeLine> Pipe = GameEngineRenderingPipeLine::Create("TileMap");
+
+			//Pipe->SetVertexBuffer("Rect");
+			//Pipe->SetIndexBuffer("Rect");
+			Pipe->SetVertexShader("TileMapShader.hlsl");
+			Pipe->SetRasterizer("Engine2DBase");
+			Pipe->SetPixelShader("TileMapShader.hlsl");
+			Pipe->SetBlendState("AlphaBlend");
+			Pipe->SetDepthState("EngineDepth");
+		}
+
+
+		{
 			std::shared_ptr<GameEngineRenderingPipeLine> Pipe = GameEngineRenderingPipeLine::Create("Merge");
 			//Pipe->SetVertexBuffer("FullRect");
 			//Pipe->SetIndexBuffer("FullRect");
@@ -573,6 +624,16 @@ void GameEngineCore::CoreResourcesInit()
 			Pipe->SetDepthState("AlwayDepth");
 		}
 
+	}
+
+	{
+		std::shared_ptr<GameEngineRenderingPipeLine> Pipe = GameEngineRenderingPipeLine::Create("Blur");
+
+		Pipe->SetVertexShader("BlurShader.hlsl");
+		Pipe->SetRasterizer("Engine2DBase");
+		Pipe->SetPixelShader("BlurShader.hlsl");
+		Pipe->SetBlendState("AlphaBlend");
+		Pipe->SetDepthState("EngineDepth");
 	}
 }
 

@@ -2,7 +2,7 @@
 #include <functional>
 #include <map>
 
-class StateParameter
+class StateParameter 
 {
 public:
 	std::string_view Name;
@@ -15,7 +15,7 @@ public:
 class GameEngineFSM
 {
 public:
-	class State
+	class State 
 	{
 	public:
 		std::string Name;
@@ -39,8 +39,8 @@ public:
 	void CreateState(const StateParameter& _StateFunction);
 
 	void ChangeFunction(const std::string_view& _Name, std::function<void()> Start,
-		std::function<void(float _Delta)> Update,
-		std::function<void()> End
+	std::function<void(float _Delta)> Update,
+	std::function<void()> End
 	);
 
 	void ChangeState(const std::string_view& _Name);

@@ -2,11 +2,11 @@
 #include "GameEngineFontRenderer.h"
 #include "GameEngineFont.h"
 
-GameEngineFontRenderer::GameEngineFontRenderer()
+GameEngineFontRenderer::GameEngineFontRenderer() 
 {
 }
 
-GameEngineFontRenderer::~GameEngineFontRenderer()
+GameEngineFontRenderer::~GameEngineFontRenderer() 
 {
 }
 
@@ -48,7 +48,7 @@ void GameEngineFontRenderer::Render(float _Delta)
 
 }
 
-void GameEngineFontRenderer::Start()
+void GameEngineFontRenderer::Start() 
 {
 	GameEngineRenderer::Start();
 }

@@ -26,7 +26,7 @@ public:
 	GameEngineResource& operator=(const GameEngineResource& _Other) = delete;
 	GameEngineResource& operator=(GameEngineResource&& _Other) noexcept = delete;
 
-	std::string_view GetPath()
+	std::string_view GetPath() 
 	{
 		return Path.c_str();
 	}
@@ -36,17 +36,15 @@ public:
 		Path = _Value;
 	}
 
-	static std::shared_ptr<ResourcesType> Find(const std::string_view& _Name)
+	static std::shared_ptr<ResourcesType> Find(const std::string_view& _Name) 
 	{
 		std::string UpperName = GameEngineString::ToUpper(_Name);
 
-		UnNamedLock.lock();
+		std::lock_guard<std::mutex> Lock(NameLock);
 		if (NamedResources.end() == NamedResources.find(UpperName.c_str()))
 		{
-			UnNamedLock.unlock();
 			return nullptr;
 		}
-		UnNamedLock.unlock();
 
 		return NamedResources[UpperName];
 	}
@@ -62,12 +60,11 @@ public:
 
 
 protected:
-	static std::shared_ptr<ResourcesType> CreateUnNamed()
+	static std::shared_ptr<ResourcesType> CreateUnNamed() 
 	{
 		std::shared_ptr<ResourcesType> NewRes = std::make_shared<ResourcesType>();
-		UnNamedLock.lock();
+		std::lock_guard<std::mutex> Lock(UnNamedLock);
 		UnNamedRes.push_back(NewRes);
-		UnNamedLock.unlock();
 		return NewRes;
 	}
 
@@ -75,14 +72,11 @@ protected:
 	{
 		std::string UpperName = GameEngineString::ToUpper(_Name);
 
-		NameLock.lock();
-		if (NamedResources.end() != NamedResources.find(UpperName))
+		if (nullptr != Find(UpperName))
 		{
 			MsgAssert("이미 존재하는 이름의 리소스를 또 만들려고 했습니다.");
-			NameLock.unlock();
 			return nullptr;
 		}
-		NameLock.unlock();
 
 		std::shared_ptr<ResourcesType> NewRes = std::make_shared<ResourcesType>();
 		NewRes->SetName(UpperName);
@@ -91,9 +85,8 @@ protected:
 		// NamedResources.insert(std::make_pair(UpperName, NewRes));
 		// 여기 사이에 좀 느려져도 이
 
-		NameLock.lock();
+		std::lock_guard<std::mutex> Lock(NameLock);
 		NamedResources.insert(std::map<std::string, std::shared_ptr<ResourcesType>>::value_type(UpperName, NewRes));
-		NameLock.unlock();
 		return NewRes;
 	}
 

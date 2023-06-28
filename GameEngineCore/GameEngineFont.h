@@ -29,18 +29,12 @@ public:
 		return Res;
 	}
 
-	static void	FontInstall(const std::string_view& _Path, const std::string_view& _FontName);	
-
-	static void	FontRemove(const std::string_view& _Path);
-
 	void FontDraw(const std::string_view& _Text, const float4& _Pos, float _FontScale, const float4& _Color, FW1_TEXT_FLAG _FwTextPlag);
-
 
 protected:
 
 private:
 	IFW1FontWrapper* Font;
 	void LoadFont(const std::string_view& _Path);
-
 };
 

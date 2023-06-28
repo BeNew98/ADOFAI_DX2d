@@ -160,6 +160,9 @@
     <ClInclude Include="GameEngineFontRenderer.h">
       <Filter>Object\Rendering\Component</Filter>
     </ClInclude>
+    <ClInclude Include="BlurEffect.h">
+      <Filter>Content\PostEffect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngineCore.cpp" />
@@ -314,6 +317,9 @@
     <ClCompile Include="GameEngineFontRenderer.cpp">
       <Filter>Object\Rendering\Component</Filter>
     </ClCompile>
+    <ClCompile Include="BlurEffect.cpp">
+      <Filter>Content\PostEffect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Object">
@@ -412,6 +418,9 @@
     <Filter Include="Resources\Font">
       <UniqueIdentifier>{a1cce2ad-1d76-4ebf-a170-51f35fee46c7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Content\PostEffect">
+      <UniqueIdentifier>{52096e8f-43e8-4674-be03-00a90e23b6f0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ThirdParty\DirectXTex\inc\DirectXTex.inl">
@@ -434,8 +443,6 @@
     <CopyFileToFolders Include="ThirdParty\FW1Font\lib\x64\Debug\FW1FontWrapper.dll">
       <Filter>ThirdParty\Fw1Font\bin\Debug</Filter>
     </CopyFileToFolders>
-    <CopyFileToFolders Include="ThirdParty\FW1Font\lib\x64\Release\FW1FontWrapper.dll">
-      <Filter>ThirdParty\Fw1Font\bin\Release</Filter>
-    </CopyFileToFolders>
+    <CopyFileToFolders Include="ThirdParty\FW1Font\lib\x64\Release\FW1FontWrapper.dll" />
   </ItemGroup>
 </Project>

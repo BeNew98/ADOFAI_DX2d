@@ -156,7 +156,7 @@ public:
 	}
 
 	GameEnginePixelColor GetPixel(int _X, int _Y, GameEnginePixelColor DefaultColor = GameEnginePixelColor::Black);
-
+	
 	void ReLoad();
 	void Release();
 

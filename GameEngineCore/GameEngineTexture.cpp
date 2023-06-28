@@ -98,11 +98,17 @@ void GameEngineTexture::ResLoad(const std::string_view& _Path)
 
 	if (Ext == ".TGA")
 	{
-		MsgAssert("아직 로드할 수 없는 포맷입니다." + std::string(_Path.data()));
+		if (S_OK != DirectX::LoadFromTGAFile(Path.c_str(), DirectX::TGA_FLAGS_NONE, &Data, Image))
+		{
+			MsgAssert("TGA 포맷 로드 실패." + std::string(_Path.data()));
+		}
 	}
 	else if (Ext == ".DDS")
 	{
-		MsgAssert("아직 로드할 수 없는 포맷입니다." + std::string(_Path.data()));
+		if (S_OK != DirectX::LoadFromDDSFile(Path.c_str(), DirectX::DDS_FLAGS_NONE, &Data, Image))
+		{
+			MsgAssert("DDS 포맷 로드 실패." + std::string(_Path.data()));
+		}
 	}
 	else if (S_OK != DirectX::LoadFromWICFile(Path.c_str(), DirectX::WIC_FLAGS_NONE, &Data, Image))
 	{
@@ -559,3 +565,13 @@ void GameEngineTexture::ReLoad()
 
 	ResLoad(GetPath());
 }
+
+//void GameEngineTexture::SetPixel(int _X, int _Y, GameEnginePixelColor DefaultColor)
+//{
+//	const DirectX::Image* Ptr = Image.GetImages();
+//
+//	//Ptr->pixels[0] = 0;
+//	//Ptr->pixels[1] = 0;
+//	//Ptr->pixels[2] = 0;
+//	//Ptr->pixels[3] = 0;
+//}

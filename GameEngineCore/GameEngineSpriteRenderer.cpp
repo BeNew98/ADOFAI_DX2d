@@ -111,6 +111,11 @@ void GameEngineSpriteRenderer::Start()
 void GameEngineSpriteRenderer::SetTexture(const std::string_view& _Name)
 {
 	GetShaderResHelper().SetTexture("DiffuseTex", _Name);
+
+	//Animation이 동작하는 SpriteRenderer에 다시 텍스처를 세팅할 때 사용됩니다.
+	CurAnimation = nullptr;
+	AtlasData = float4{ 0.0f, 0.0f, 1.0f, 1.0f };
+
 	std::shared_ptr<GameEngineTexture> FindTex = GameEngineTexture::Find(_Name);
 	if (nullptr == FindTex)
 	{
@@ -123,16 +128,19 @@ void GameEngineSpriteRenderer::SetTexture(const std::string_view& _Name)
 
 void GameEngineSpriteRenderer::SetFlipX()
 {
-	float4 LocalScale = GetTransform()->GetLocalScale();
-	LocalScale.x = -LocalScale.x;
-	GetTransform()->SetLocalScale(LocalScale);
+	Flip.x = Flip.x != 0.0f ? 0.0f : 1.0f;
+	//float4 LocalScale = GetTransform()->GetLocalScale();
+	//LocalScale.x = -LocalScale.x;
+	//GetTransform()->SetLocalScale(LocalScale);
 }
 
 void GameEngineSpriteRenderer::SetFlipY()
 {
-	float4 LocalScale = GetTransform()->GetLocalScale();
-	LocalScale.y = -LocalScale.y;
-	GetTransform()->SetLocalScale(LocalScale);
+	Flip.y = Flip.y != 0.0f ? 0.0f : 1.0f;
+
+	//float4 LocalScale = GetTransform()->GetLocalScale();
+	//LocalScale.y = -LocalScale.y;
+	//GetTransform()->SetLocalScale(LocalScale);
 }
 
 void GameEngineSpriteRenderer::SetScaleToTexture(const std::string_view& _Name)
@@ -405,6 +413,7 @@ void GameEngineSpriteRenderer::SpriteRenderInit()
 	GetShaderResHelper().SetConstantBufferLink("AtlasData", AtlasData);
 	GetShaderResHelper().SetConstantBufferLink("ColorOption", ColorOptionValue);
 	GetShaderResHelper().SetConstantBufferLink("ClipData", Clip);
+	GetShaderResHelper().SetConstantBufferLink("FlipData", Flip);
 }
 
 
