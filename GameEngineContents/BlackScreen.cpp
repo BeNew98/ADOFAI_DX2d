@@ -22,6 +22,6 @@ void BlackScreen::Start()
 
 void BlackScreen::Update(float _DeltaTime)
 {
-	//GetTransform()->SetLocalPosition(GetLevel()->GetMainCamera()->GetTransform()->GetLocalPosition());
+	GetTransform()->SetLocalPosition(GetLevel()->GetMainCamera()->GetTransform()->GetLocalPosition());
 }
 
