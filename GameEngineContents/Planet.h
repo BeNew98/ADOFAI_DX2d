@@ -37,6 +37,10 @@ public:
 	{
 		m_GameStart = _Value;
 	}
+	void SetDistance(float _Dist)
+	{
+		m_fDistance = _Dist;
+	}
 
 protected:
 	void Start() override;
@@ -45,9 +49,13 @@ protected:
 
 private:
 	float m_fSpeed =360.f;
+	float m_fDistance = 100.f;
+	float m_fScaleRatio = 0.f;
 	static int m_iUseCount;
 	bool m_bCenter = false;
 	bool m_GameStart = false;
 	std::shared_ptr<GameEngineCollision> m_pCollision = nullptr;
+	std::shared_ptr<class GameEngineSpriteRenderer> m_pRing = nullptr;
+	
 };
 

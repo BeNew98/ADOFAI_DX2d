@@ -130,7 +130,9 @@ void PlayLevel::LevelChangeStart()
 	m_pRed = CreateActor<Planet>(OrderNum::PLANET);
 	m_pBlue = CreateActor<Planet>(OrderNum::PLANET);
 	m_pCenter = m_pRed;
+	m_pCenter->SetDistance(150.f);
 	m_pTurn = m_pBlue;
+	m_pTurn->SetDistance(150.f);
 	m_pBlue->GetTransform()->SetParent(m_pRed->GetTransform());
 	m_pCenter->GetTransform()->SetLocalRotation({ 0.f,0.f,-135.f });
 	m_pBlue->GetTransform()->AddLocalPosition({ -150.f,0.f,0.f });

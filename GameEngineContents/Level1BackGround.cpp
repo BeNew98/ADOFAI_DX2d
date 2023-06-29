@@ -10,17 +10,17 @@ Level1BackGround::Level1BackGround()
 
 Level1BackGround::~Level1BackGround() 
 {
-}
+}	
 
 void Level1BackGround::Start()
 {
 	std::shared_ptr<BackGroundRenderer> render = CreateComponent<BackGroundRenderer>(OrderNum::BACKGROUND);
-		render->SetTexture("0.png");
+		render->SetTexture("Level1BGTest.png");
 		//render->ImageClippingX(0.23f,ClipXDir::Left);
 		//render->ImageClippingX(0.45f, ClipXDir::Right);
 
-		render->GetTransform()->SetLocalScale({ 20000.f,2500.f,1.f });
-		render->GetTransform()->AddLocalPosition({9000.f,0.f,1000.f});
+		render->GetTransform()->SetLocalScale({ 1920.f,	1080,1.f });
+		render->GetTransform()->AddLocalPosition({-100.f,0.f,10.f});
 
 
 	//for (size_t i = 0; i < 5; i++)

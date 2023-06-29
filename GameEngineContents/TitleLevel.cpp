@@ -102,7 +102,9 @@ void TitleLevel::LevelChangeStart()
 	m_pBlue->GetTransform()->SetParent(m_pRed->GetTransform());
 	m_pBlue->GetTransform()->AddLocalPosition({ -100.f,0.f,0.f });
 	m_pCenter = m_pRed;
+	m_pCenter->SetDistance(100.f);
 	m_pTurn = m_pBlue;
+	m_pTurn->SetDistance(100.f);
 	m_pCenter->GetTransform()->SetLocalRotation({ 0.f,0.f,-135.f });
 	
 	for (size_t i = 0; i < m_pStageInfo.AllTile.size(); i++)

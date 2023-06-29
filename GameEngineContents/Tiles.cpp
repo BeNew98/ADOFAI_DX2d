@@ -213,7 +213,6 @@ void Tiles::MoveEvent(float _DeltaTime)
 			float4 Cam = GetLevel()->GetMainCamera()->GetTransform()->GetLocalPosition();
 			
 			MainCamera->GetTransform()->SetLocalPosition(float4::Lerp(Cam, { GetPivotPos().x,GetPivotPos().y+ Evt.Ratio }, m_fPrevPosRatio));
-			BackGroundCamera->GetTransform()->SetLocalPosition(float4::Lerp(Cam, { GetPivotPos().x,GetPivotPos().y + Evt.Ratio }, m_fPrevPosRatio));
 
 			if (m_fPrevPosRatio >= 1.f)
 			{
