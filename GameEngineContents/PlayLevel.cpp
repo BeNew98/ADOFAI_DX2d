@@ -45,6 +45,16 @@ void PlayLevel::Update(float _DeltaTime)
 		return;
 	}
 
+	if (m_pTurn->GetTransform()->GetLocalPosition().x >= -m_fDistance && m_bStartDistance == false)
+	{
+		m_pTurn->GetTransform()->AddLocalPosition(float4(-m_fDistance, 0.f) * _DeltaTime);
+	}
+	else if (m_pTurn->GetTransform()->GetLocalPosition().x <= -m_fDistance && m_bStartDistance == false)
+	{
+		m_pTurn->GetTransform()->SetLocalPosition(float4(-m_fDistance, 0.f));
+		m_bStartDistance = true;
+	}
+
 	m_fReadyTime -= _DeltaTime;
 	if (m_bPlaying == false)
 	{
@@ -130,12 +140,11 @@ void PlayLevel::LevelChangeStart()
 	m_pRed = CreateActor<Planet>(OrderNum::PLANET);
 	m_pBlue = CreateActor<Planet>(OrderNum::PLANET);
 	m_pCenter = m_pRed;
-	m_pCenter->SetDistance(150.f);
+	m_pCenter->SetDistance(m_fDistance);
 	m_pTurn = m_pBlue;
-	m_pTurn->SetDistance(150.f);
+	m_pTurn->SetDistance(m_fDistance);
 	m_pBlue->GetTransform()->SetParent(m_pRed->GetTransform());
 	m_pCenter->GetTransform()->SetLocalRotation({ 0.f,0.f,-135.f });
-	m_pBlue->GetTransform()->AddLocalPosition({ -150.f,0.f,0.f });
 
 	m_pCenter->GetTransform()->SetWorldPosition(m_pStageInfo.AllTile[0].m_pTile->GetPivotPos());
 
@@ -169,6 +178,10 @@ void PlayLevel::Reset()
 	m_bGameStart = false;
 	m_bPlaying = false;
 	m_bGameEnd = false;
+
+
+	 m_fDistance = 150.f;
+	m_bStartDistance = false;
 	
 	m_iBPM = 0;
 	m_fReadyTime = 0.f;

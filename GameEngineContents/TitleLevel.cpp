@@ -39,6 +39,17 @@ void TitleLevel::Update(float _DeltaTime)
 		m_BGM.SetPitch(0.8f);
 		m_BGM.SetLoop();
 	}
+
+	if (m_pTurn->GetTransform()->GetLocalPosition().x >= -m_fDistance && m_bStartDistance == false)
+	{
+		m_pTurn->GetTransform()->AddLocalPosition(float4(-m_fDistance, 0.f) * _DeltaTime);
+	}
+	else if (m_pTurn->GetTransform()->GetLocalPosition().x <= -m_fDistance && m_bStartDistance == false)
+	{
+		m_pTurn->GetTransform()->SetLocalPosition(float4(-m_fDistance, 0.f));
+		m_bStartDistance = true;
+	}
+
 	GlowTimeCheck(_DeltaTime);
 	PlanetSwap();
 
@@ -100,11 +111,11 @@ void TitleLevel::LevelChangeStart()
 	m_pBlue = CreateActor<Planet>(OrderNum::PLANET);
 	float4 Tilepos = m_pStageInfo.AllTile[12].m_pTile->GetTransform()->GetWorldPosition();
 	m_pBlue->GetTransform()->SetParent(m_pRed->GetTransform());
-	m_pBlue->GetTransform()->AddLocalPosition({ -100.f,0.f,0.f });
+	//m_pBlue->GetTransform()->AddLocalPosition({ -100.f,0.f,0.f });
 	m_pCenter = m_pRed;
-	m_pCenter->SetDistance(100.f);
+	m_pCenter->SetDistance(m_fDistance);
 	m_pTurn = m_pBlue;
-	m_pTurn->SetDistance(100.f);
+	m_pTurn->SetDistance(m_fDistance);
 	m_pCenter->GetTransform()->SetLocalRotation({ 0.f,0.f,-135.f });
 	
 	for (size_t i = 0; i < m_pStageInfo.AllTile.size(); i++)

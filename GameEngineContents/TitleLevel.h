@@ -61,7 +61,8 @@ private:
 	float m_fGlowRatio = 0.f;
 	float m_fSpeed = 0.f;
 	bool m_bGameStart = false;
-
+	float m_fDistance = 100.f;
+	bool m_bStartDistance = false;
 
 
 	std::shared_ptr<class Portal> m_pPortal1 = nullptr;
