@@ -17,6 +17,7 @@ void BlackScreen::Start()
 {
 	std::shared_ptr<GameEngineSpriteRenderer> render = CreateComponent<GameEngineSpriteRenderer>(OrderNum::BACKGROUND);
 	render->SetTexture("BlackScreen.png");
+
 	render->GetTransform()->SetLocalScale(GameEngineWindow::GetScreenSize()*1.2f);
 }
 
