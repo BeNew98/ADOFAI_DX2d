@@ -60,17 +60,26 @@ void Planet::Start()
 
 bool bTiming = false;
 float fTime = 0.f;
+float fStarttime = 0.f;
 void Planet::Update(float _DeltaTime)
 {
 	if (m_bGameStart == false)
 	{
 		return;		
 	}
+	fStarttime += _DeltaTime;
+	if (fStarttime<= static_cast<float>(EditGui::Editor->GetStageInfo(0).BPM) / 60.f / 2.f/4.f)
+	{
+		return;
+	}
 	fTime += _DeltaTime;
+
 	if (fTime >= static_cast<float>(EditGui::Editor->GetStageInfo(0).BPM) / 60.f/2.f)
 	{
 		fTime -= static_cast<float>(EditGui::Editor->GetStageInfo(0).BPM) / 60.f /2.f;
 		bTiming = !bTiming;
+
+
 	}
 	if (bTiming)
 	{

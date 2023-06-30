@@ -35,8 +35,8 @@ void TitleLevel::Update(float _DeltaTime)
 		m_bGameStart = true;
 		m_pCenter->SetGameStart(m_bGameStart);
 		m_pTurn->SetGameStart(m_bGameStart);
-		m_BGM = GameEngineSound::Play("1-X.wav");
 		m_BGM.SetPitch(0.8f);
+		m_BGM.setPosition(0);
 		m_BGM.SetLoop();
 	}
 
@@ -81,6 +81,7 @@ void TitleLevel::LevelChangeStart()
 		std::shared_ptr<GameEngineCamera> BackCam = CreateNewCamera(-1);
 		BackCam->SetProjectionType(CameraType::Perspective);
 		BackCam->GetTransform()->SetLocalPosition({ 0.f,0.f,-750.f });*/
+		m_BGM = GameEngineSound::Play("1-X.wav");
 
 		GetMainCamera()->SetProjectionType(CameraType::Orthogonal);
 		GetMainCamera()->GetTransform()->SetLocalPosition({ 0, 0, -1000.0f });
