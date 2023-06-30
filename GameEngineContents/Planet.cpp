@@ -23,7 +23,7 @@ void Planet::CreateEffect()
 
 void Planet::Start()
 {
-	std::shared_ptr<GameEngineSpriteRenderer> render = CreateComponent<GameEngineSpriteRenderer>(OrderNum::PLANET);
+	pBall = CreateComponent<GameEngineSpriteRenderer>(OrderNum::PLANET);
 
 
 	m_fSpeed = EditGui::Editor->GetStageInfo(0).RotSpeed;
@@ -36,7 +36,7 @@ void Planet::Start()
 
 	if (m_iUseCount != 0)
 	{
-		render->SetScaleToTexture("ballsprites_blue_sheet_grid_0_Sprite.png");
+		pBall->SetScaleToTexture("ballsprites_blue_sheet_grid_0_Sprite.png");
 		m_iUseCount = 0;
 		m_bCenter = false;
 		m_pRing->ColorOptionValue.PlusColor = float4{ 0.f, 0.f,1.f ,0.f };
@@ -45,7 +45,7 @@ void Planet::Start()
 	}
 	else
 	{
-		render->SetScaleToTexture("ballsprites_red_sheet_grid_0_Sprite.png");
+		pBall->SetScaleToTexture("ballsprites_red_sheet_grid_0_Sprite.png");
 		m_bCenter = true;
 		m_bStartDistance = true;
 		++m_iUseCount;
@@ -58,11 +58,28 @@ void Planet::Start()
 	//GetTransform()->SetLocalScale({ 64.f, 64.f, 1.f });
 }
 
+bool bTiming = false;
+float fTime = 0.f;
 void Planet::Update(float _DeltaTime)
 {
 	if (m_bGameStart == false)
 	{
 		return;		
+	}
+	fTime += _DeltaTime;
+	if (fTime >= static_cast<float>(EditGui::Editor->GetStageInfo(0).BPM) / 60.f/2.f)
+	{
+		fTime -= static_cast<float>(EditGui::Editor->GetStageInfo(0).BPM) / 60.f /2.f;
+		bTiming = !bTiming;
+	}
+	if (bTiming)
+	{
+		pBall->ColorOptionValue.MulColor = float4::Zero;
+	}
+	else
+	{
+		pBall->ColorOptionValue.MulColor = float4::One;
+
 	}
 	if (m_bCenter == false && false == m_bStartDistance)
 	{
@@ -93,6 +110,7 @@ void Planet::Update(float _DeltaTime)
 			return;
 		}
 		m_pRing->GetTransform()->AddLocalScale(-float4{ m_fScaleRatio ,m_fScaleRatio ,0.f,0.f}*_DeltaTime * 2.f);
+
 	}
 	
 
