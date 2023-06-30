@@ -47,6 +47,7 @@ void Planet::Start()
 	{
 		render->SetScaleToTexture("ballsprites_red_sheet_grid_0_Sprite.png");
 		m_bCenter = true;
+		m_bStartDistance = true;
 		++m_iUseCount;
 
 		m_pRing->ColorOptionValue.PlusColor = float4{ 1.f, 0.f, 0.f ,0.f };
@@ -59,9 +60,21 @@ void Planet::Start()
 
 void Planet::Update(float _DeltaTime)
 {
-	if (m_GameStart == false)
+	if (m_bGameStart == false)
 	{
-		return;
+		return;		
+	}
+	if (m_bCenter == false && false == m_bStartDistance)
+	{
+		if (GetTransform()->GetLocalPosition().x >= -m_fDistance && m_bStartDistance == false)
+		{
+			GetTransform()->AddLocalPosition(float4(-m_fDistance, 0.f) * _DeltaTime*2.f);
+		}
+		else if (GetTransform()->GetLocalPosition().x <= -m_fDistance && m_bStartDistance == false)
+		{
+			GetTransform()->SetLocalPosition(float4(-m_fDistance, 0.f));
+			m_bStartDistance = true;
+		}
 	}
 	if (m_bCenter==true)
 	{
@@ -81,5 +94,20 @@ void Planet::Update(float _DeltaTime)
 		}
 		m_pRing->GetTransform()->AddLocalScale(-float4{ m_fScaleRatio ,m_fScaleRatio ,0.f,0.f}*_DeltaTime * 2.f);
 	}
+	
+
+	if (m_bGameEnd == true &&m_bCenter == false && true == m_bStartDistance)
+	{
+		if (GetTransform()->GetLocalPosition().x <= 0.f && m_bStartDistance == true)
+		{
+			GetTransform()->AddLocalPosition(float4(m_fDistance, 0.f) * _DeltaTime * 2.f);
+		}
+		else if (GetTransform()->GetLocalPosition().x >= 0.f && m_bStartDistance == true)
+		{
+			GetTransform()->SetLocalPosition(float4(0.f, 0.f));
+			m_bStartDistance = false;
+		}
+	}
+	
 }
 

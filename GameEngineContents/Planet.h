@@ -35,7 +35,11 @@ public:
 	}
 	void SetGameStart(bool _Value)
 	{
-		m_GameStart = _Value;
+		m_bGameStart = _Value;
+	}
+	void SetGameEnd(bool _Value)
+	{
+		m_bGameEnd = _Value;
 	}
 	void SetDistance(float _Dist)
 	{
@@ -53,7 +57,11 @@ private:
 	float m_fScaleRatio = 0.f;
 	static int m_iUseCount;
 	bool m_bCenter = false;
-	bool m_GameStart = false;
+	bool m_bGameStart = false;
+	bool m_bGameEnd = false;
+	bool m_bStartDistance = false;
+
+
 	std::shared_ptr<GameEngineCollision> m_pCollision = nullptr;
 	std::shared_ptr<class GameEngineSpriteRenderer> m_pRing = nullptr;
 	

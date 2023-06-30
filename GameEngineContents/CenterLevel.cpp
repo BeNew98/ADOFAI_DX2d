@@ -11,6 +11,7 @@
 #include "EditGui.h"
 #include "TestScreen.h"
 #include "TestObject.h"
+#include "FadeEffect.h"
 
 CenterLevel::CenterLevel() 
 {
@@ -31,11 +32,7 @@ void CenterLevel::Start()
 	GameEngineInput::CreateKey("CenterLevel", '0');
 	GameEngineInput::CreateKey("Reset", 'R');
 
-
-
-
-	GetMainCamera()->SetProjectionType(CameraType::Orthogonal);
-	GetMainCamera()->GetTransform()->SetLocalPosition({ 0, 0, -1000.0f });
+	
 
 	{
 		GameEngineDirectory NewDir;
@@ -70,18 +67,6 @@ void CenterLevel::Start()
 	//		Main + 배경x    Main + 배경o
 	
 	//		UI  + 배경x     UI  + 배경o 
-	{
-		std::shared_ptr<TestScreen> render = CreateActor<TestScreen>();
-	}
-
-	{
-		std::shared_ptr<TestObject> render = CreateActor<TestObject>();
-		render->GetTransform()->AddLocalPosition({-500.f,0.f});
-	} 
-	{
-		std::shared_ptr<TestObject> render = CreateActor<TestObject>();
-		render->GetTransform()->AddLocalPosition({ 500.f,0.f });
-	}
 	
 
 }
@@ -106,5 +91,32 @@ void CenterLevel::Update(float _DeltaTime)
 		GameEngineCore::ChangeLevel("EditLevel");
 	}
 
+}
+
+void CenterLevel::LevelChangeStart()
+{
+	GetMainCamera()->SetProjectionType(CameraType::Orthogonal);
+	GetMainCamera()->GetTransform()->SetLocalPosition({ 0, 0, -1000.0f });
+
+	{
+		std::shared_ptr<TestScreen> render = CreateActor<TestScreen>();
+	}
+
+	{
+		std::shared_ptr<TestObject> render = CreateActor<TestObject>();
+		render->GetTransform()->AddLocalPosition({ -500.f,0.f });
+	}
+	{
+		std::shared_ptr<TestObject> render = CreateActor<TestObject>();
+		render->GetTransform()->AddLocalPosition({ 500.f,0.f });
+	}
+
+	std::shared_ptr<FadeEffect> ptr = GetLastTarget()->CreateEffect<FadeEffect>();
+	ptr->FadeOut();
+}
+
+void CenterLevel::LevelChangeEnd()
+{
+	AllActorDestroy();
 }
 

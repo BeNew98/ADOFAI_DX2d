@@ -43,7 +43,6 @@ private:
 
 
 	float m_fDistance = 150.f;
-	bool m_bStartDistance = false;
 
 	bool m_bGameEnd = false;
 

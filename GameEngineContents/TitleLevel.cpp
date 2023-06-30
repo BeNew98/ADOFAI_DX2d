@@ -40,7 +40,7 @@ void TitleLevel::Update(float _DeltaTime)
 		m_BGM.SetLoop();
 	}
 
-	if (m_pTurn->GetTransform()->GetLocalPosition().x >= -m_fDistance && m_bStartDistance == false)
+	/*if (m_pTurn->GetTransform()->GetLocalPosition().x >= -m_fDistance && m_bStartDistance == false)
 	{
 		m_pTurn->GetTransform()->AddLocalPosition(float4(-m_fDistance, 0.f) * _DeltaTime);
 	}
@@ -48,7 +48,7 @@ void TitleLevel::Update(float _DeltaTime)
 	{
 		m_pTurn->GetTransform()->SetLocalPosition(float4(-m_fDistance, 0.f));
 		m_bStartDistance = true;
-	}
+	}*/
 
 	GlowTimeCheck(_DeltaTime);
 	PlanetSwap();
@@ -77,10 +77,10 @@ void TitleLevel::Start()
 
 void TitleLevel::LevelChangeStart()
 {
-	{	
+	{	/*
 		std::shared_ptr<GameEngineCamera> BackCam = CreateNewCamera(-1);
 		BackCam->SetProjectionType(CameraType::Perspective);
-		BackCam->GetTransform()->SetLocalPosition({ 0.f,0.f,-750.f });
+		BackCam->GetTransform()->SetLocalPosition({ 0.f,0.f,-750.f });*/
 
 		GetMainCamera()->SetProjectionType(CameraType::Orthogonal);
 		GetMainCamera()->GetTransform()->SetLocalPosition({ 0, 0, -1000.0f });

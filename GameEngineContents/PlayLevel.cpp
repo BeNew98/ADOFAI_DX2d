@@ -17,6 +17,7 @@
 #include "Level1BackGround.h"
 #include "WrongMark.h"
 #include "TextObj.h"
+#include "FadeEffect.h"
 
 PlayLevel::PlayLevel()
 {
@@ -44,16 +45,7 @@ void PlayLevel::Update(float _DeltaTime)
 	{
 		return;
 	}
-
-	if (m_pTurn->GetTransform()->GetLocalPosition().x >= -m_fDistance && m_bStartDistance == false)
-	{
-		m_pTurn->GetTransform()->AddLocalPosition(float4(-m_fDistance, 0.f) * _DeltaTime);
-	}
-	else if (m_pTurn->GetTransform()->GetLocalPosition().x <= -m_fDistance && m_bStartDistance == false)
-	{
-		m_pTurn->GetTransform()->SetLocalPosition(float4(-m_fDistance, 0.f));
-		m_bStartDistance = true;
-	}
+	
 
 	m_fReadyTime -= _DeltaTime;
 	if (m_bPlaying == false)
@@ -181,7 +173,6 @@ void PlayLevel::Reset()
 
 
 	 m_fDistance = 150.f;
-	m_bStartDistance = false;
 	
 	m_iBPM = 0;
 	m_fReadyTime = 0.f;
@@ -203,9 +194,18 @@ void PlayLevel::PlanetSwap()
 	float4 f4NextTilePos = pNextTile->GetPivotPos();
 
 	float fAngle = float4::GetAngleVectorToVectorDeg360(f4NextTilePos - f4CenterPos, f4TurnPos - f4CenterPos);
-	if (fAngle>0.f)
+	if (fAngle>0.f&&true == m_bGameEnd)
 	{
 		m_bGameEnd = false;
+	}
+	else if(fAngle <-120.f&&false == m_bGameEnd)
+	{
+		//게임 종료
+		m_pCenter->SetGameEnd(true);
+		m_pTurn->SetGameEnd(true);
+		int a = 0;
+
+		return;
 	}
 	//if (fAngle < -90.f&& fAngle > -135.f&&	m_bGameEnd == false)
 	//{
@@ -215,16 +215,16 @@ void PlayLevel::PlanetSwap()
 
 	if (true == GameEngineInput::IsAnyKey())
 	{
-		if (fAngle >= 45.f || fAngle <= -45.f)
+		if (fAngle >= 60.f || fAngle <= -60.f)
 		{
-			if ((fAngle >= 45.f && fAngle <= 180.f) || (-180.f <= fAngle && fAngle <= -135.f))
+			if ((fAngle >= 60.f && fAngle <= 180.f) /*|| (-180.f <= fAngle && fAngle <= -120.f)*/)
 			{
 				std::shared_ptr<WrongMark> pWorngMark = CreateActor<WrongMark>(OrderNum::MAP);
 				pWorngMark->GetTransform()->SetLocalPosition(m_pTurn->GetTransform()->GetWorldPosition());
 				pWorngMark->SetTxt("너무 빠름");
 				pWorngMark->SetColor({ 255.f,0.f,0.f });
 			}
-			else if (fAngle <= -45.f && fAngle >= -90.f)
+			else if (fAngle <= -60.f && fAngle >= -180.f)
 			{
 				std::shared_ptr<WrongMark> pWorngMark = CreateActor<WrongMark>(OrderNum::MAP);
 				pWorngMark->GetTransform()->SetLocalPosition(m_pTurn->GetTransform()->GetWorldPosition());
@@ -259,24 +259,24 @@ void PlayLevel::PlanetSwap()
 		pTextObj->SetScale(75.f);
 		pTextObj->SetPosition({ 0.f,200.f });
 		pTextObj->FadeOn();
-		if ((fAngle < 45.f && fAngle >= 33.75f))
+		if ((fAngle < 60.f && fAngle >= 45.f))
 		{
 
 			pTextObj->SetTxt("빠름!");
 			pTextObj->SetColor({ 196.f, 63.f, 38.f });
 		}
-		else if (fAngle > -45.f && fAngle <= -33.75f)
+		else if (fAngle > -60.f && fAngle <= -45.f)
 		{
 			pTextObj->SetTxt("느림!");
 			pTextObj->SetColor({ 196.f, 63.f, 38.f });
 		}
 
-		else if ((fAngle < 33.75f && fAngle >= 22.5f))
+		else if ((fAngle < 45.f && fAngle >= 30.f))
 		{
 			pTextObj->SetTxt("빠름");
 			pTextObj->SetColor({ 152.f, 244.f, 73.f });
 		}
-		else if (fAngle > -33.75f && fAngle <= -22.5f)
+		else if (fAngle > -45.f && fAngle <= -30.f)
 		{
 			pTextObj->SetTxt("느림");
 			pTextObj->SetColor({ 152.f, 244.f, 73.f });

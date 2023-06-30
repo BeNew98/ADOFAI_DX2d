@@ -45,7 +45,7 @@ void DFICore::ContentsResourcesCreate()
 		Pipe->SetVertexShader("FadeShader.hlsl");
 		Pipe->SetRasterizer("Engine2DBase");
 		Pipe->SetPixelShader("FadeShader.hlsl");
-		Pipe->SetBlendState("AlphaBlend");
+		Pipe->SetBlendState("MergeBlend");
 		Pipe->SetDepthState("EngineDepth");
 	}
 
