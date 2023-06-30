@@ -105,9 +105,9 @@ void PlayLevel::LevelChangeStart()
 	m_BGM.SetPosition(0.f);
 	m_BGM.SetPause(true);
 	//m_BGM = GameEngineSound::Play("sndkick.wav");
-	std::shared_ptr<GameEngineCamera> BackCam = CreateNewCamera(-1);
-	BackCam->SetProjectionType(CameraType::Perspective);
-	BackCam->GetTransform()->SetLocalPosition({ 0.f,0.f,-750.f });
+	//std::shared_ptr<GameEngineCamera> BackCam = CreateNewCamera(-1);
+	//BackCam->SetProjectionType(CameraType::Perspective);
+	//BackCam->GetTransform()->SetLocalPosition({ 0.f,0.f,-750.f });
 
 	GetMainCamera()->SetProjectionType(CameraType::Orthogonal);
 
@@ -116,7 +116,7 @@ void PlayLevel::LevelChangeStart()
 
 
 	std::shared_ptr<Level1BackGround> m_pLevel1BackGround = CreateActor<Level1BackGround>(OrderNum::BACKGROUND);
-
+	m_pLevel1BackGround->GetTransform()->SetLocalPosition({ 0.f,0.f,0.f });
 
 	EditGui::Editor->LoadtoString("");
 
@@ -158,7 +158,7 @@ void PlayLevel::LevelChangeStart()
 	EditGui::Editor->Off();
 
 
-	GetMainCamera()->GetTransform()->SetLocalPosition({ 0, 0, -1000.0f });
+	GetLevel()->GetMainCamera()->GetTransform()->SetWorldPosition(float4::Zero);
 }
 
 void PlayLevel::LevelChangeEnd()
@@ -207,11 +207,11 @@ void PlayLevel::PlanetSwap()
 	{
 		m_bGameEnd = false;
 	}
-	if (fAngle < -90.f&& fAngle > -135.f&&	m_bGameEnd == false)
-	{
-		GameEngineCore::ChangeLevel("PlayLevel");
-		return;
-	}
+	//if (fAngle < -90.f&& fAngle > -135.f&&	m_bGameEnd == false)
+	//{
+	//	GameEngineCore::ChangeLevel("PlayLevel");
+	//	return;
+	//}
 
 	if (true == GameEngineInput::IsAnyKey())
 	{
