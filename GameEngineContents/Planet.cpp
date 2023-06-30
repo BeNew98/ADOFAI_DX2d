@@ -114,6 +114,20 @@ void Planet::Update(float _DeltaTime)
 	}
 	else
 	{
+		if (m_bGameEnd == true && m_bCenter == false && true == m_bStartDistance)
+		{
+			if (GetTransform()->GetLocalPosition().x <= 0.f && m_bStartDistance == true)
+			{
+				GetTransform()->AddLocalPosition(float4(m_fDistance, 0.f) * _DeltaTime * 2.f);
+			}
+			else if (GetTransform()->GetLocalPosition().x >= 0.f && m_bStartDistance == true)
+			{
+				GetTransform()->SetLocalPosition(float4(0.f, 0.f));
+				m_bStartDistance = false;
+				m_bGameStart = false;
+			}
+		}
+
 		if (m_pRing->GetTransform()->GetLocalScale().x<= 74.f)
 		{
 			return;
@@ -123,18 +137,6 @@ void Planet::Update(float _DeltaTime)
 	}
 	
 
-	if (m_bGameEnd == true &&m_bCenter == false && true == m_bStartDistance)
-	{
-		if (GetTransform()->GetLocalPosition().x <= 0.f && m_bStartDistance == true)
-		{
-			GetTransform()->AddLocalPosition(float4(m_fDistance, 0.f) * _DeltaTime * 2.f);
-		}
-		else if (GetTransform()->GetLocalPosition().x >= 0.f && m_bStartDistance == true)
-		{
-			GetTransform()->SetLocalPosition(float4(0.f, 0.f));
-			m_bStartDistance = false;
-		}
-	}
 	
 }
 

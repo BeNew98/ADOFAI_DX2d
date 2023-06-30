@@ -200,17 +200,13 @@ void PlayLevel::PlanetSwap()
 	}
 	else if(fAngle <-120.f&&false == m_bGameEnd)
 	{
-		//게임 종료
 		m_pCenter->SetGameEnd(true);
 		m_pTurn->SetGameEnd(true);
-		int a = 0;
-
 		return;
 	}
 	//if (fAngle < -90.f&& fAngle > -135.f&&	m_bGameEnd == false)
 	//{
 	//	GameEngineCore::ChangeLevel("PlayLevel");
-	//	return;
 	//}
 
 	if (true == GameEngineInput::IsAnyKey())
