@@ -23,10 +23,7 @@ public:
 	{
 		return m_bCenter;
 	}
-	void CenterChange()
-	{
-		m_bCenter = !m_bCenter;
-	}
+	void CenterChange();
 
 	void CreateEffect();
 	std::shared_ptr<GameEngineCollision> GetCol()
@@ -61,7 +58,7 @@ private:
 	bool m_bGameEnd = false;
 	bool m_bStartDistance = false;
 
-	std::shared_ptr<class GameEngineSpriteRenderer> pBall = nullptr;
+	std::shared_ptr<class GameEngineSpriteRenderer> m_pBall = nullptr;
 	std::shared_ptr<GameEngineCollision> m_pCollision = nullptr;
 	std::shared_ptr<GameEngineSpriteRenderer> m_pRing = nullptr;
 	

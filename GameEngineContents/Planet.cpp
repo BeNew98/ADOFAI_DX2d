@@ -17,13 +17,32 @@ Planet::~Planet()
 }
  
 
+void Planet::CenterChange()
+{
+	m_bCenter = !m_bCenter;
+	if (true == m_bCenter)
+	{
+		float4 test = m_pBall->GetTransform()->GetLocalPosition();
+		m_pBall->GetTransform()->AddLocalPosition({ 0.f,0.f,-1.f });
+		float4 test1 = m_pBall->GetTransform()->GetLocalPosition();
+		int a = 0;
+	}
+	else
+	{
+		float4 test = m_pBall->GetTransform()->GetLocalPosition();
+ 		m_pBall->GetTransform()->AddLocalPosition({ 0.f,0.f,1.f });
+		float4 test1 = m_pBall->GetTransform()->GetLocalPosition();
+		int a = 0;
+	}
+}
+
 void Planet::CreateEffect()
 {
 }
 
 void Planet::Start()
 {
-	pBall = CreateComponent<GameEngineSpriteRenderer>(OrderNum::PLANET);
+	m_pBall = CreateComponent<GameEngineSpriteRenderer>(OrderNum::PLANET);
 
 
 	m_fSpeed = EditGui::Editor->GetStageInfo(0).RotSpeed;
@@ -36,7 +55,7 @@ void Planet::Start()
 
 	if (m_iUseCount != 0)
 	{
-		pBall->SetScaleToTexture("ballsprites_blue_sheet_grid_0_Sprite.png");
+		m_pBall->SetScaleToTexture("ballsprites_blue_sheet_grid_0_Sprite.png");
 		m_iUseCount = 0;
 		m_bCenter = false;
 		m_pRing->ColorOptionValue.PlusColor = float4{ 0.f, 0.f,1.f ,0.f };
@@ -45,7 +64,8 @@ void Planet::Start()
 	}
 	else
 	{
-		pBall->SetScaleToTexture("ballsprites_red_sheet_grid_0_Sprite.png");
+		m_pBall->SetScaleToTexture("ballsprites_red_sheet_grid_0_Sprite.png");
+		m_pBall->GetTransform()->AddLocalPosition({ 0.f,0.f,-1.f });
 		m_bCenter = true;
 		m_bStartDistance = true;
 		++m_iUseCount;
@@ -63,6 +83,7 @@ float fTime = 0.f;
 float fStarttime = 0.f;
 void Planet::Update(float _DeltaTime)
 {
+	float4 test = m_pBall->GetTransform()->GetLocalPosition();
 	if (m_bGameStart == false)
 	{
 		return;		
