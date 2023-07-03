@@ -12,24 +12,25 @@ struct OutPut
     float4 UV : TEXCOORD;
 };
 
+
 OutPut FireWork_VS(Input _Value)
 {
-    OutPut OutPutValue = (OutPut) 0;
+    OutPut OutPutValue = (OutPut)0;
     OutPutValue.Pos = _Value.Pos;
     OutPutValue.UV = _Value.UV;
-    
+
     // 화면 전체 범위
     return OutPutValue;
-}
+};
 
 
-cbuffer FireWorkValue : register(b9)
+cbuffer FireWorkValue : register(b1)
 {
     // 상수버퍼는 
     float4 Time;
     float4 ScreenSize;
     float4 Mouse;
-}
+};
 
 
 Texture2D DiffuseTex : register(t0);
@@ -43,9 +44,7 @@ float4 FireWork_PS(OutPut _Value) : SV_Target0
 
     return Color;
 }
-/// <summary>
-/// test
-/// </summary>
+
 
 float3 glow(float2 p, float2 lpos)
 {
@@ -55,11 +54,6 @@ float3 glow(float2 p, float2 lpos)
 
     return float3(1.0,0.f,0.f)* atten;
 }
-
-
-
-////////////////
-
 
 float rand(float2 co) 
 {
@@ -88,7 +82,7 @@ float3 lastExplosion(float time)
     //      index of last explosion,
     //      time until next explosion)
     float t = fmod(time, 10.f);
-    float interval = floor(time / 10.);
+    float interval = floor(time / 10.f);
     float t0max = 0., imax = -1.;
     float t0next = 10.;
     for (float i = 0.; i < 10.; i++)

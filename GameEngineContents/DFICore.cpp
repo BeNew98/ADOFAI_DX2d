@@ -40,7 +40,7 @@ void DFICore::GameStart()
 		EditGui::Editor->SetLevel(1);
 		EditGui::Editor->SetBPM(150);
 	}
-	GameEngineCore::ChangeLevel("TitleLevel");
+	GameEngineCore::ChangeLevel("CenterLevel");
 }
 
 void DFICore::GameEnd()
