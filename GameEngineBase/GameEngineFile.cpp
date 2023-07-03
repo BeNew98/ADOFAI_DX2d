@@ -2,16 +2,16 @@
 #include "GameEngineFile.h"
 #include "GameEngineDebug.h"
 
-GameEngineFile::GameEngineFile() 
+GameEngineFile::GameEngineFile()
 {
 }
 
-GameEngineFile::~GameEngineFile() 
+GameEngineFile::~GameEngineFile()
 {
 }
 
 
-GameEngineFile::GameEngineFile(std::filesystem::path _Path) 
+GameEngineFile::GameEngineFile(std::filesystem::path _Path)
 	: Path(_Path)
 {
 
@@ -77,7 +77,9 @@ void GameEngineFile::LoadBin(GameEngineSerializer& _Data)
 	}
 
 	size_t FileSize = std::filesystem::file_size(Path.Path);
-	
+
+	_Data.BufferResize(FileSize);
+
 	fread_s(_Data.GetData(), _Data.GetBufferSize(), FileSize, 1, FilePtr);
 
 	if (nullptr != FilePtr)
