@@ -168,7 +168,6 @@ public:
 
 	std::string GetTexName();
 
-	float4 GetAtlasData();
 
 	void SetRenderEndCallBack(std::function<void(GameEngineRenderer*)> _CallBack)
 	{

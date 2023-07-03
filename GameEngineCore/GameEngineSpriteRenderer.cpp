@@ -454,8 +454,3 @@ void GameEngineSpriteRenderer::ImageClippingY(float _Ratio, ClipYDir _Dir)
 		Clip.y = 0.0f;
 	}
 }
-
-float4 GameEngineSpriteRenderer::GetAtlasData()
-{
-
-}
