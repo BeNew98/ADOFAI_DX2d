@@ -65,6 +65,9 @@
     <ClInclude Include="TextObj.h">
       <Filter>PublicObject</Filter>
     </ClInclude>
+    <ClInclude Include="FireWorkEffect.h">
+      <Filter>PostEffect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DFICore.cpp" />
@@ -130,6 +133,9 @@
     </ClCompile>
     <ClCompile Include="TextObj.cpp">
       <Filter>PublicObject</Filter>
+    </ClCompile>
+    <ClCompile Include="FireWorkEffect.cpp">
+      <Filter>PostEffect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

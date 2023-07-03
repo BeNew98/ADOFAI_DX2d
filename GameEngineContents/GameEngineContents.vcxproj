@@ -189,6 +189,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="FadeEffect.h" />
+    <ClInclude Include="FireWorkEffect.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="TextObj.h">
       <SubType>
       </SubType>
@@ -278,6 +282,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="FadeEffect.cpp" />
+    <ClCompile Include="FireWorkEffect.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="TextObj.cpp">
       <SubType>
       </SubType>

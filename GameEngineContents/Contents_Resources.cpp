@@ -60,6 +60,17 @@ void DFICore::ContentsResourcesCreate()
 		Pipe->SetDepthState("EngineDepth");
 	}
 
+	{
+		std::shared_ptr<GameEngineRenderingPipeLine> Pipe = GameEngineRenderingPipeLine::Create("FireWork");
+
+		//Pipe->SetVertexBuffer("FullRect");
+		//Pipe->SetIndexBuffer("FullRect");
+		Pipe->SetVertexShader("FireWorkShader.hlsl");
+		Pipe->SetRasterizer("Engine2DBase");
+		Pipe->SetPixelShader("FireWorkShader.hlsl");
+		Pipe->SetBlendState("MergeBlend");
+		Pipe->SetDepthState("EngineDepth");
+	}
 	//{
 	//	std::shared_ptr<GameEngineRenderingPipeLine> Pipe = GameEngineRenderingPipeLine::Create("DebugSphere");
 	//	Pipe->SetVertexBuffer("Sphere");
