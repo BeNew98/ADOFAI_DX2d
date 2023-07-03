@@ -72,29 +72,29 @@ void Planet::Update(float _DeltaTime)
 	{
 		return;
 	}
-	fTime += _DeltaTime;
-
-	if (fTime >= static_cast<float>(EditGui::Editor->GetStageInfo(0).BPM) / 60.f/2.f)
-	{
-		fTime -= static_cast<float>(EditGui::Editor->GetStageInfo(0).BPM) / 60.f /2.f;
-		bTiming = !bTiming;
-
-
-	}
-	if (bTiming)
-	{
-		pBall->ColorOptionValue.MulColor = float4::Zero;
-	}
-	else
-	{
-		pBall->ColorOptionValue.MulColor = float4::One;
-
-	}
+	//fTime += _DeltaTime;
+	//
+	//if (fTime >= static_cast<float>(EditGui::Editor->GetStageInfo(0).BPM) / 60.f/2.f)
+	//{
+	//	fTime -= static_cast<float>(EditGui::Editor->GetStageInfo(0).BPM) / 60.f /2.f;
+	//	bTiming = !bTiming;
+	//
+	//
+	//}
+	//if (bTiming)
+	//{
+	//	pBall->ColorOptionValue.MulColor = float4::Zero;
+	//}
+	//else
+	//{
+	//	pBall->ColorOptionValue.MulColor = float4::One;
+	//
+	//}
 	if (m_bCenter == false && false == m_bStartDistance)
 	{
 		if (GetTransform()->GetLocalPosition().x >= -m_fDistance && m_bStartDistance == false)
 		{
-			GetTransform()->AddLocalPosition(float4(-m_fDistance, 0.f) * _DeltaTime*2.f);
+			GetTransform()->AddLocalPosition(float4(-m_fDistance * _DeltaTime * 2.f, 0.f) );
 		}
 		else if (GetTransform()->GetLocalPosition().x <= -m_fDistance && m_bStartDistance == false)
 		{
@@ -118,13 +118,29 @@ void Planet::Update(float _DeltaTime)
 		{
 			if (GetTransform()->GetLocalPosition().x <= 0.f && m_bStartDistance == true)
 			{
-				GetTransform()->AddLocalPosition(float4(m_fDistance, 0.f) * _DeltaTime * 2.f);
+				GetTransform()->AddLocalPosition(float4(m_fDistance * _DeltaTime * 2.f, 0.f));
+
+				if (GetTransform()->GetLocalPosition().x >= 0.f && m_bStartDistance == true)
+				{
+					//TransformData data = GetTransform()->GetTransDataRef();
+					GetTransform()->SetLocalPosition(float4(0.f, 0.f));
+					m_bStartDistance = false;
+					m_bGameStart = false;
+				}
 			}
+
+
 			else if (GetTransform()->GetLocalPosition().x >= 0.f && m_bStartDistance == true)
 			{
-				GetTransform()->SetLocalPosition(float4(0.f, 0.f));
-				m_bStartDistance = false;
-				m_bGameStart = false;
+				GetTransform()->AddLocalPosition(float4(-m_fDistance * _DeltaTime * 2.f, 0.f));
+
+				if (GetTransform()->GetLocalPosition().x <= 0.f && m_bStartDistance == true)
+				{
+					//TransformData data = GetTransform()->GetTransDataRef();
+					GetTransform()->SetLocalPosition(float4(0.f, 0.f));
+					m_bStartDistance = false;
+					m_bGameStart = false;
+				}
 			}
 		}
 
