@@ -12,6 +12,7 @@
 #include "TestScreen.h"
 #include "TestObject.h"
 #include "FadeEffect.h"
+#include "FireWorkEffect.h"
 
 CenterLevel::CenterLevel() 
 {
@@ -111,8 +112,7 @@ void CenterLevel::LevelChangeStart()
 		render->GetTransform()->AddLocalPosition({ 500.f,0.f });
 	}
 
-	std::shared_ptr<FadeEffect> ptr = GetLastTarget()->CreateEffect<FadeEffect>();
-	ptr->FadeOut();
+	GetLastTarget()->CreateEffect<FireWorkEffect>();
 }
 
 void CenterLevel::LevelChangeEnd()

@@ -17,7 +17,7 @@ void FireWorkEffect::Start(GameEngineRenderTarget* _Target)
 
 	m_sBaseValue.ScreenScale = GameEngineWindow::GetScreenSize();
 
-	m_pFWUnit->ShaderResHelper.SetConstantBufferLink("FireWorkData", m_sBaseValue);
+	m_pFWUnit->ShaderResHelper.SetConstantBufferLink("FireWorkValue", m_sBaseValue);
 
 	ResultTarget = GameEngineRenderTarget::Create(DXGI_FORMAT::DXGI_FORMAT_R32G32B32A32_FLOAT, GameEngineWindow::GetScreenSize(), float4::Null);
 }
