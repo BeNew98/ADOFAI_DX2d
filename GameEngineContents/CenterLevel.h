@@ -22,6 +22,6 @@ protected:
 	void LevelChangeStart() override;
 	void LevelChangeEnd() override;
 private:
-
+	std::shared_ptr<class FireWorkEffect> ptr = nullptr;
 };
 

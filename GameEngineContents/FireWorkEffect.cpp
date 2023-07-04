@@ -15,7 +15,7 @@ void FireWorkEffect::Start(GameEngineRenderTarget* _Target)
 	m_pFWUnit->SetMesh("FullRect");
 	m_pFWUnit->SetPipeLine("FireWork");
 
-	m_sBaseValue.ScreenScale = GameEngineWindow::GetScreenSize();
+	m_sBaseValue.ScreenSize = GameEngineWindow::GetScreenSize();
 
 	m_pFWUnit->ShaderResHelper.SetConstantBufferLink("FireWorkValue", m_sBaseValue);
 
@@ -24,12 +24,7 @@ void FireWorkEffect::Start(GameEngineRenderTarget* _Target)
 
 void FireWorkEffect::Effect(GameEngineRenderTarget* _Target, float _DeltaTime)
 {
-	m_sBaseValue.Mouse = GameEngineWindow::GetMousePosition();
-	m_sBaseValue.Mouse.z = GameEngineInput::IsPress("EngineMouseLeft");
-	m_sBaseValue.Mouse.w = GameEngineInput::IsPress("EngineMouseLeft");
-
-	m_sBaseValue.Time.x += _DeltaTime;
-	m_sBaseValue.Time.y = _DeltaTime;
+	m_sBaseValue.fTime = m_fExplTime;
 
 	ResultTarget->Clear();
 	m_pFWUnit->ShaderResHelper.SetTexture("DiffuseTex", _Target->GetTexture(0));

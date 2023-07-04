@@ -27,9 +27,10 @@ OutPut FireWork_VS(Input _Value)
 cbuffer FireWorkValue : register(b1)
 {
     // 상수버퍼는 
-    float4 Time;
+    float4 fTime;
     float4 ScreenSize;
-    float4 Mouse;
+    float4 PlusColor;
+    
 };
 
 
@@ -38,10 +39,11 @@ SamplerState WRAPSAMPLER : register(s0);
 
 float4 FireWork_PS(OutPut _Value) : SV_Target0
 {
-    float4 Color = DiffuseTex.Sample(WRAPSAMPLER, _Value.UV.xy);
-
     float2 uv = _Value.UV.xy;
 
+    float4 Color = DiffuseTex.Sample(WRAPSAMPLER, _Value.UV.xy);
+
+    Color += PlusColor;
     return Color;
 }
 
@@ -49,10 +51,10 @@ float4 FireWork_PS(OutPut _Value) : SV_Target0
 float3 glow(float2 p, float2 lpos)
 {
     float2 q = p - lpos;
-    float atten = 1. / dot(q, q);
+    float atten = 1.f / dot(q, q);
     //atten *= (1. + atten*1e-4); // Make the inside slightly sharper
 
-    return float3(1.0,0.f,0.f)* atten;
+    return float3(1.0f,0.f,0.f)* atten;
 }
 
 float rand(float2 co) 
@@ -83,11 +85,12 @@ float3 lastExplosion(float time)
     //      time until next explosion)
     float t = fmod(time, 10.f);
     float interval = floor(time / 10.f);
-    float t0max = 0., imax = -1.;
-    float t0next = 10.;
-    for (float i = 0.; i < 10.; i++)
+    float t0max = 0.f;
+    float imax = -1.f;
+    float t0next = 10.f;
+    for (float i = 0.f; i < 10.f; i++)
     {
-        float t0 = rand(float2(interval, i)) * 10.;
+        float t0 = rand(float2(interval, i)) * 10.f;
         if (t > t0 && t0 > t0max)
         {
             t0max = t0;
@@ -98,18 +101,18 @@ float3 lastExplosion(float time)
             t0next = t0;
         }
     }
-    return float3(t - t0max, 10. * interval + imax, t0next - t);
+    return float3(t - t0max, 10.f * interval + imax, t0next - t);
 }
 
 
 
 void mainImage(out float4 fragColor, in float2 fragCoord)
 {
-    float2 p = (2.f * fragCoord - ScreenSize.xy) / ScreenSize.y;
+    float2 p = =(2.f * fragCoord - ScreenSize.xy) / ScreenSize.y;
 
     float3 col = float3(0.f, 0.f, 0.f);
 
-    float3 lastExpl = lastExplosion(Time.x);
+    float3 lastExpl = lastExplosion(fTime);
     float t = lastExpl.x;
     float explNum = lastExpl.y;
     float tFadeout = lastExpl.z;
@@ -118,8 +121,8 @@ void mainImage(out float4 fragColor, in float2 fragCoord)
     float3 baseCol = float3(0.5f, 0.5f, 0.5f) + 0.4f * sin(float3(1.f,0.f,0.f) * explNum + float3(0.f, 2.1f, -2.1f));
 
     // Number of particles
-    float N_LIGHTS = 100.;
-    for (float i = 0.; i < N_LIGHTS; i++)
+    float N_LIGHTS = 100.f;
+    for (int i = 0; i < (int)N_LIGHTS; i++)
     {
 
         // Generate points uniformly on hemisphere
@@ -144,11 +147,12 @@ void mainImage(out float4 fragColor, in float2 fragCoord)
     }
 
 
-    col = max(col, 0.);
+    col = max(col, 0.f);
     //col = 1.-exp(-col); // Tone mapping
     col = (col * (2.51 * col + 0.03)) / (col * (2.43 * col + 0.59) + 0.14); // Tone mapping
     //col = col/(1.+col);
     col = sqrt(col); // gamma correction
 
-    fragColor = float4(col, 1.0);
+    float4 test= (col, 1.0f, 0.f, 1.f);
+    fragColor = test;// float4(col, 1.0f, 0.f, 1.f);
 }

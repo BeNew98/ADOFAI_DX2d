@@ -72,7 +72,7 @@ void CenterLevel::Start()
 
 }
 
-
+float Time = 0.f;
 void CenterLevel::Update(float _DeltaTime)
 {
 	if (GameEngineInput::IsDown("TitleLevel"))
@@ -92,10 +92,19 @@ void CenterLevel::Update(float _DeltaTime)
 		GameEngineCore::ChangeLevel("EditLevel");
 	}
 
+
+	//if (Time >= 3.f)
+	//{
+	//	Time -= 3.f;
+	//}
+	Time += _DeltaTime;
+	ptr->SetTime(Time);
+
 }
 
 void CenterLevel::LevelChangeStart()
 {
+	ptr = GetLastTarget()->CreateEffect<FireWorkEffect>();
 	GetMainCamera()->SetProjectionType(CameraType::Orthogonal);
 	GetMainCamera()->GetTransform()->SetLocalPosition({ 0, 0, -1000.0f });
 
@@ -112,7 +121,6 @@ void CenterLevel::LevelChangeStart()
 		render->GetTransform()->AddLocalPosition({ 500.f,0.f });
 	}
 
-	GetLastTarget()->CreateEffect<FireWorkEffect>();
 }
 
 void CenterLevel::LevelChangeEnd()
