@@ -40,10 +40,12 @@ SamplerState WRAPSAMPLER : register(s0);
 float4 FireWork_PS(OutPut _Value) : SV_Target0
 {
     float2 uv = _Value.UV.xy;
+    
 
     float4 Color = DiffuseTex.Sample(WRAPSAMPLER, _Value.UV.xy);
 
-    Color += PlusColor;
+    //Color += PlusColor;
+
     return Color;
 }
 
