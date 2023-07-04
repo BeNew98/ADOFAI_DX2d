@@ -108,7 +108,7 @@ float3 lastExplosion(float time)
 
 void mainImage(out float4 fragColor, in float2 fragCoord)
 {
-    float2 p = =(2.f * fragCoord - ScreenSize.xy) / ScreenSize.y;
+    float2 p =(2.f * fragCoord - ScreenSize.xy) / ScreenSize.y;
 
     float3 col = float3(0.f, 0.f, 0.f);
 
