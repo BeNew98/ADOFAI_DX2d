@@ -20,10 +20,6 @@ public:
 	FireWorkEffect(FireWorkEffect&& _Other) noexcept = delete;
 	FireWorkEffect& operator=(const FireWorkEffect& _Other) = delete;
 	FireWorkEffect& operator=(FireWorkEffect&& _Other) noexcept = delete;
-	void SetTime(float _Time)
-	{
-		m_fExplTime = _Time;
-	}
 protected:
 	void Start(GameEngineRenderTarget* _Target) override;
 	void Effect(GameEngineRenderTarget* _Target, float _DeltaTime) override;
@@ -31,6 +27,5 @@ protected:
 private:
 	FWCBValue m_sBaseValue;
 	std::shared_ptr<GameEngineRenderUnit> m_pFWUnit;
-	float m_fExplTime = 0.f;
 };
 

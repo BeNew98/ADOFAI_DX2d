@@ -96,9 +96,12 @@ float3 lastExplosion(float time)
 
 void mainImage(out float4 fragColor, in float2 fragCoord)
 {
-    // float2 p = (2. * fragCoord - iResolution.xy) / iResolution.y;
+     //float2 p = (2. * fragCoord - iResolution.xy) / iResolution.y;
     
-    float2 p = fragCoord;
+    float2 p = float2(fragCoord.x, -fragCoord.y);
+
+
+    //float2 p = ( float2(fragCoord.x, -fragCoord.y) - float2(ScreenSize.x, ScreenSize.y)) / ScreenSize.y;
 
     float3 col = (float3) 0;
     
@@ -106,11 +109,11 @@ void mainImage(out float4 fragColor, in float2 fragCoord)
     float t = lastExpl.x, explNum = lastExpl.y, tFadeout = lastExpl.z;
     
     // Fireworks base color
-    float3 baseCol = float3(0.5f, 0.5f, 0.5f) + 0.4 * sin(float3(1.0f, 1.0f, 1.0f) * explNum + float3(0., 2.1, -2.1));
+    float3 baseCol = float3(0.5f, 0.5f, 0.5f) + 0.4 * sin((float3)1.0f * explNum + float3(0., 2.1, -2.1));
     
     // Number of particles
-    float N_LIGHTS = 100.;
-    for (float i = 0.; i < N_LIGHTS; i++)
+    float N_LIGHTS = 100.f;
+    for (int i = 0.; i < (int)N_LIGHTS; i++)
     {
         
         // Generate points uniformly on hemisphere

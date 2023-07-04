@@ -93,12 +93,6 @@ void CenterLevel::Update(float _DeltaTime)
 	}
 
 
-	if (Time >= 3.f)
-	{
-		ptr->SetTime(Time);
-		Time -= 3.f;
-	}
-	Time += _DeltaTime;
 
 }
 
