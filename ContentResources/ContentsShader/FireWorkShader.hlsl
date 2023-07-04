@@ -47,7 +47,7 @@ float4 FireWork_PS(OutPut _Value) : SV_Target0
     return Color;
 }
 
-
+//https://www.shadertoy.com/view/WtdBRj#
 float3 glow(float2 p, float2 lpos)
 {
     float2 q = p - lpos;
