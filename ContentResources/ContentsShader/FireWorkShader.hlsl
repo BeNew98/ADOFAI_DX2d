@@ -44,7 +44,7 @@ float4 FireWork_PS(OutPut _Value) : SV_Target0
 
     float4 Color = DiffuseTex.Sample(WRAPSAMPLER, _Value.UV.xy);
 
-    //Color += PlusColor;
+    Color += PlusColor;
 
     return Color;
 }
