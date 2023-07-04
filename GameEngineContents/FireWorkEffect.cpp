@@ -24,7 +24,7 @@ void FireWorkEffect::Start(GameEngineRenderTarget* _Target)
 
 void FireWorkEffect::Effect(GameEngineRenderTarget* _Target, float _DeltaTime)
 {
-	m_sBaseValue.fTime = m_fExplTime;
+	m_sBaseValue.fTime.x += _DeltaTime;
 
 	ResultTarget->Clear();
 	m_pFWUnit->ShaderResHelper.SetTexture("DiffuseTex", _Target->GetTexture(0));

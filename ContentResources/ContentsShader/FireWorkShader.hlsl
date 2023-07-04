@@ -34,20 +34,6 @@ cbuffer FireWorkValue : register(b1)
 };
 
 
-Texture2D DiffuseTex : register(t0);
-SamplerState WRAPSAMPLER : register(s0);
-
-float4 FireWork_PS(OutPut _Value) : SV_Target0
-{
-    float2 uv = _Value.UV.xy;
-    
-
-    float4 Color = DiffuseTex.Sample(WRAPSAMPLER, _Value.UV.xy);
-
-    Color += PlusColor;
-
-    return Color;
-}
 
 //https://www.shadertoy.com/view/WtdBRj#
 float3 glow(float2 p, float2 lpos)
@@ -56,10 +42,10 @@ float3 glow(float2 p, float2 lpos)
     float atten = 1.f / dot(q, q);
     //atten *= (1. + atten*1e-4); // Make the inside slightly sharper
 
-    return float3(1.0f,0.f,0.f)* atten;
+    return float3(1.0f, 0.f, 0.f) * atten;
 }
 
-float rand(float2 co) 
+float rand(float2 co)
 {
     return frac(sin(dot(co.xy, float2(12.9898f, 78.233f))) * 43758.5453f);
 }
@@ -82,7 +68,7 @@ float rand(float p)
 
 float3 lastExplosion(float time)
 {
-    // vec3(time since last explosion,
+    // float3(time since last explosion,
     //      index of last explosion,
     //      time until next explosion)
     float t = fmod(time, 10.f);
@@ -110,23 +96,23 @@ float3 lastExplosion(float time)
 
 void mainImage(out float4 fragColor, in float2 fragCoord)
 {
-    float2 p =(2.f * fragCoord - ScreenSize.xy) / ScreenSize.y;
+    // float2 p = (2. * fragCoord - iResolution.xy) / iResolution.y;
+    
+    float2 p = fragCoord;
 
-    float3 col = float3(0.f, 0.f, 0.f);
-
-    float3 lastExpl = lastExplosion(fTime);
-    float t = lastExpl.x;
-    float explNum = lastExpl.y;
-    float tFadeout = lastExpl.z;
-
+    float3 col = (float3) 0;
+    
+    float3 lastExpl = lastExplosion(fTime.x);
+    float t = lastExpl.x, explNum = lastExpl.y, tFadeout = lastExpl.z;
+    
     // Fireworks base color
-    float3 baseCol = float3(0.5f, 0.5f, 0.5f) + 0.4f * sin(float3(1.f,0.f,0.f) * explNum + float3(0.f, 2.1f, -2.1f));
-
+    float3 baseCol = float3(0.5f, 0.5f, 0.5f) + 0.4 * sin(float3(1.0f, 1.0f, 1.0f) * explNum + float3(0., 2.1, -2.1));
+    
     // Number of particles
-    float N_LIGHTS = 100.f;
-    for (int i = 0; i < (int)N_LIGHTS; i++)
+    float N_LIGHTS = 100.;
+    for (float i = 0.; i < N_LIGHTS; i++)
     {
-
+        
         // Generate points uniformly on hemisphere
         // (see Total Compendium eq. (34))
         float f = i / N_LIGHTS;
@@ -147,14 +133,31 @@ void mainImage(out float4 fragColor, in float2 fragCoord)
         intensity *= clamp(3. * tFadeout, 0., 1.); // Fade out before next explosion
         col += glow(p, lpos) * intensity * baseCol;
     }
-
-
-    col = max(col, 0.f);
+    
+    
+    col = max(col, 0.);
     //col = 1.-exp(-col); // Tone mapping
     col = (col * (2.51 * col + 0.03)) / (col * (2.43 * col + 0.59) + 0.14); // Tone mapping
     //col = col/(1.+col);
     col = sqrt(col); // gamma correction
+    
+    fragColor = float4(col, 1.0);
+}
 
-    float4 test= (col, 1.0f, 0.f, 1.f);
-    fragColor = test;// float4(col, 1.0f, 0.f, 1.f);
+Texture2D DiffuseTex : register(t0);
+SamplerState WRAPSAMPLER : register(s0);
+
+float4 FireWork_PS(OutPut _Value) : SV_Target0
+{
+    float2 uv = _Value.UV.xy;
+    
+    float4 Color = (float4) 0.0f;
+    
+    mainImage(Color, uv);
+
+    float4 TexColor = DiffuseTex.Sample(WRAPSAMPLER, _Value.UV.xy);
+
+    Color += TexColor;
+
+    return Color;
 }

@@ -3,7 +3,7 @@
 
 struct FWCBValue
 {
-	float fTime;
+	float4 fTime;
 	float4 ScreenSize;
 	float4 PlusColor = float4::Red;
 };
