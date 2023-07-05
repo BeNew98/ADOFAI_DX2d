@@ -98,11 +98,12 @@ void mainImage(out float4 fragColor, in float2 fragCoord)
 {
      //float2 p = (2. * fragCoord - iResolution.xy) / iResolution.y;
     
-    float2 p = float2(fragCoord.x, -fragCoord.y);
-
-
-    //float2 p = ( float2(fragCoord.x, -fragCoord.y) - float2(ScreenSize.x, ScreenSize.y)) / ScreenSize.y;
-
+    //float2 p = float2(fragCoord.x * ScreenSize.x / 100.f, -fragCoord.y * ScreenSize.y / 100.f);
+    //p.x -= 800.f;
+    //p.y += ScreenSize.y / 2.f;
+    float2 p =  float2(fragCoord.x, -fragCoord.y);
+    p.x -=0.5f;
+    p.y += 0.5f;
     float3 col = (float3) 0;
     
     float3 lastExpl = lastExplosion(fTime.x);
