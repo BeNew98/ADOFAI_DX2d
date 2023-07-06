@@ -40,7 +40,7 @@ float3 glow(float2 p, float2 lpos)
 {
     float2 q = p - lpos;
     float atten = 1.f / dot(q, q);
-    //atten *= (1. + atten*1e-4); // Make the inside slightly sharper
+    atten *= (1. + atten*1e-4); // Make the inside slightly sharper
 
     return float3(1.0f, 0.f, 0.f) * atten;
 }
@@ -64,7 +64,6 @@ float rand(float p)
     p *= p + p;
     return frac(p);
 }
-
 
 float3 lastExplosion(float time)
 {
@@ -98,12 +97,12 @@ void mainImage(out float4 fragColor, in float2 fragCoord)
 {
      //float2 p = (2. * fragCoord - iResolution.xy) / iResolution.y;
     
-    //float2 p = float2(fragCoord.x * ScreenSize.x / 100.f, -fragCoord.y * ScreenSize.y / 100.f);
+    float2 p = 2.7*float2(fragCoord.x * ScreenSize.x , -fragCoord.y * ScreenSize.y) / ScreenSize.y;
     //p.x -= 800.f;
     //p.y += ScreenSize.y / 2.f;
-    float2 p =  float2(fragCoord.x, -fragCoord.y);
-    p.x -=0.5f;
-    p.y += 0.5f;
+    //float2 p =  float2(fragCoord.x, -fragCoord.y);
+    p.x -= 2.7f;
+    p.y += 1.5;
     float3 col = (float3) 0;
     
     float3 lastExpl = lastExplosion(fTime.x);
@@ -129,7 +128,7 @@ void mainImage(out float4 fragColor, in float2 fragCoord)
         float2 lpos = float2(cos(th), sin(th)) * r;
         // Add some physics
         lpos.xy *= (1. - exp(-3. * t / weight)) * weight; // explosion, easing out
-        lpos.y += t * 0.3 * weight - t * (1. - exp(-t * weight)) * 0.6 * weight; // vertical free-fall motion
+        //lpos.y += t * 0.3 * weight - t * (1. - exp(-t * weight)) * 0.6 * weight; // vertical free-fall motion // 떨어지는 모션
         float intensity = 2e-4;
         intensity *= exp(-2. * t); // Fade out with time
         intensity *= (1. - 0.5 * hash); // Randomize per particle

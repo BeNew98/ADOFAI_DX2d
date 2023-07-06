@@ -24,6 +24,10 @@ void FireWorkEffect::Start(GameEngineRenderTarget* _Target)
 
 void FireWorkEffect::Effect(GameEngineRenderTarget* _Target, float _DeltaTime)
 {
+	if (false ==m_bUpdate)
+	{
+		return;
+	}
 	m_sBaseValue.fTime.x += _DeltaTime;
 
 	ResultTarget->Clear();

@@ -72,7 +72,6 @@ void CenterLevel::Start()
 
 }
 
-float Time = 0.f;
 void CenterLevel::Update(float _DeltaTime)
 {
 	if (GameEngineInput::IsDown("TitleLevel"))
@@ -91,14 +90,12 @@ void CenterLevel::Update(float _DeltaTime)
 	{
 		GameEngineCore::ChangeLevel("EditLevel");
 	}
-
-
-
 }
 
 void CenterLevel::LevelChangeStart()
 {
 	ptr = GetLastTarget()->CreateEffect<FireWorkEffect>();
+	ptr->On();
 	GetMainCamera()->SetProjectionType(CameraType::Orthogonal);
 	GetMainCamera()->GetTransform()->SetLocalPosition({ 0, 0, -1000.0f });
 
