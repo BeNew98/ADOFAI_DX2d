@@ -75,19 +75,19 @@ float3 lastExplosion(float time)
     float t0max = 0.f;
     float imax = -1.f;
     float t0next = 1.5f;
-    //for (int i = 0; i < 1; i++)
-    //{
-        float t0 = rand(float2(interval, 0.f)) * 10.f;
+    for (int i = 0; i < 0; i++)
+    {
+        float t0 = rand(float2(interval, (float)i)) * 10.f;
         if (t > t0 && t0 > t0max)
         {
             t0max = t0;
-            imax = 0.f;
+            imax = (float)i;
         }
         if (t < t0 && t0 < t0next)
         {
             t0next = t0;
         }
-    //}
+    }
     return float3(t - t0max, 10.f * interval + imax, t0next - t);
 }
 
@@ -97,12 +97,12 @@ void mainImage(out float4 fragColor, in float2 fragCoord)
 {
      //float2 p = (2. * fragCoord - iResolution.xy) / iResolution.y;
     
-    float2 p = 2.7*float2(fragCoord.x * ScreenSize.x , -fragCoord.y * ScreenSize.y) / ScreenSize.y;
-    //p.x -= 800.f;
-    //p.y += ScreenSize.y / 2.f;
+    float2 p = 2.f *float2(fragCoord.x * ScreenSize.x , -fragCoord.y * ScreenSize.y) / ScreenSize.y;
+    p.x -= 0.5f;
+    p.y += 0.5f;
     //float2 p =  float2(fragCoord.x, -fragCoord.y);
-    p.x -= 2.7f;
-    p.y += 1.5;
+    //p.x -= 2.7f;
+    //p.y += 1.5;
     float3 col = (float3) 0;
     
     float3 lastExpl = lastExplosion(fTime.x);
