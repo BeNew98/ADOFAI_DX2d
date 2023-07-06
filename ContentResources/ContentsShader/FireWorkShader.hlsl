@@ -74,20 +74,20 @@ float3 lastExplosion(float time)
     float interval = floor(time / 10.f);
     float t0max = 0.f;
     float imax = -1.f;
-    float t0next = 10.f;
-    for (float i = 0.f; i < 10.f; i++)
-    {
-        float t0 = rand(float2(interval, i)) * 10.f;
+    float t0next = 1.5f;
+    //for (int i = 0; i < 1; i++)
+    //{
+        float t0 = rand(float2(interval, 0.f)) * 10.f;
         if (t > t0 && t0 > t0max)
         {
             t0max = t0;
-            imax = i;
+            imax = 0.f;
         }
         if (t < t0 && t0 < t0next)
         {
             t0next = t0;
         }
-    }
+    //}
     return float3(t - t0max, 10.f * interval + imax, t0next - t);
 }
 
