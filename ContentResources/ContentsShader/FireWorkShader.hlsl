@@ -97,9 +97,9 @@ void mainImage(out float4 fragColor, in float2 fragCoord)
 {
      //float2 p = (2. * fragCoord - iResolution.xy) / iResolution.y;
     
-    float2 p = 2.f *float2(fragCoord.x * ScreenSize.x , -fragCoord.y * ScreenSize.y) / ScreenSize.y;
-    p.x -= 0.5f;
-    p.y += 0.5f;
+    float2 p = 2.f *float2(fragCoord.x * ScreenSize.x , -fragCoord.y * ScreenSize.y) / ScreenSize.y/0.7f;
+    p.x -= ScreenSize.x/ ScreenSize.y/0.7f;
+    p.y += ScreenSize.y / ScreenSize.y / 0.7f;
     //float2 p =  float2(fragCoord.x, -fragCoord.y);
     //p.x -= 2.7f;
     //p.y += 1.5;
