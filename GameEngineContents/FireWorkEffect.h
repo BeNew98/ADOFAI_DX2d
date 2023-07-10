@@ -29,6 +29,10 @@ public:
 	{
 		m_bUpdate = false;
 	}
+	void SetColor(float4 _Color)
+	{
+		m_sBaseValue.PlusColor = _Color;
+	}
 protected:
 	void Start(GameEngineRenderTarget* _Target) override;
 	void Effect(GameEngineRenderTarget* _Target, float _DeltaTime) override;

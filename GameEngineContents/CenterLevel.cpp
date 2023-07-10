@@ -95,6 +95,7 @@ void CenterLevel::Update(float _DeltaTime)
 void CenterLevel::LevelChangeStart()
 {
 	ptr = GetLastTarget()->CreateEffect<FireWorkEffect>();
+	ptr->SetColor(float4::Blue);
 	ptr->On();
 	GetMainCamera()->SetProjectionType(CameraType::Orthogonal);
 	GetMainCamera()->GetTransform()->SetLocalPosition({ 0, 0, -1000.0f });

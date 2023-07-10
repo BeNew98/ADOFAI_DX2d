@@ -113,7 +113,7 @@ void mainImage(out float4 fragColor, in float2 fragCoord)
     
     // Number of particles
     float N_LIGHTS = 100.f;
-    for (int i = 0.; i < (int)N_LIGHTS; i++)
+    for (int i = 0; i < (int)N_LIGHTS; i++)
     {
         
         // Generate points uniformly on hemisphere
@@ -155,12 +155,13 @@ float4 FireWork_PS(OutPut _Value) : SV_Target0
     float2 uv = _Value.UV.xy;
     
     float4 Color = (float4) 0.0f;
-    
+
     mainImage(Color, uv);
 
     float4 TexColor = DiffuseTex.Sample(WRAPSAMPLER, _Value.UV.xy);
-
+    
     Color += TexColor;
+    Color = saturate(Color);
 
     return Color;
 }
