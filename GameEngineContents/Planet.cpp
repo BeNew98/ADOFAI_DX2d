@@ -120,9 +120,9 @@ void Planet::Update(float _DeltaTime)
 	else
 	{
 
-		if (m_fSmokeEffectTime >= 0.05f)
+		if (m_fSmokeEffectTime >= 0.01f)
 		{
-			m_fSmokeEffectTime -= 0.05f;
+			m_fSmokeEffectTime -= 0.01f;
 			std::shared_ptr<SmokeEffect>m_pSmokeEffect = GetLevel()->CreateActor<SmokeEffect>(OrderNum::EFFECT);
 			m_pSmokeEffect->SetColor(m_f4Color);
 			m_pSmokeEffect->GetTransform()->SetWorldPosition(GetTransform()->GetWorldPosition());
