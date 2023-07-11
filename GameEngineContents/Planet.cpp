@@ -3,7 +3,9 @@
 
 #include <GameEngineCore/GameEngineSpriteRenderer.h>
 #include <GameEngineCore/GameEngineCollision.h>
+#include <GameEngineCore/GameEngineLevel.h>
 
+#include "SmokeEffect.h"
 #include "EditGui.h"
 
 int Planet::m_iUseCount = 0;
@@ -32,7 +34,6 @@ void Planet::CenterChange()
 		float4 test = m_pBall->GetTransform()->GetLocalPosition();
  		m_pBall->GetTransform()->AddLocalPosition({ 0.f,0.f,1.f });
 		float4 test1 = m_pBall->GetTransform()->GetLocalPosition();
-		int a = 0;
 	}
 }
 
@@ -58,8 +59,11 @@ void Planet::Start()
 		m_pBall->SetScaleToTexture("ballsprites_blue_sheet_grid_0_Sprite.png");
 		m_iUseCount = 0;
 		m_bCenter = false;
-		m_pRing->ColorOptionValue.PlusColor = float4{ 0.f, 0.f,1.f ,0.f };
-		m_pRing->ColorOptionValue.MulColor = float4{ 0.f, 0.f,1.f,0.35f };
+		m_f4Color = float4::Blue;
+		m_pRing->ColorOptionValue.PlusColor = m_f4Color;
+		m_pRing->ColorOptionValue.PlusColor.w = 0.f;
+		m_pRing->ColorOptionValue.MulColor = m_f4Color;
+		m_pRing->ColorOptionValue.MulColor.w = 0.35f;
 
 	}
 	else
@@ -67,50 +71,31 @@ void Planet::Start()
 		m_pBall->SetScaleToTexture("ballsprites_red_sheet_grid_0_Sprite.png");
 		m_pBall->GetTransform()->AddLocalPosition({ 0.f,0.f,-1.f });
 		m_bCenter = true;
+		m_f4Color = float4::Red;
+
+
 		m_bStartDistance = true;
 		++m_iUseCount;
 
-		m_pRing->ColorOptionValue.PlusColor = float4{ 1.f, 0.f, 0.f ,0.f };
-		m_pRing->ColorOptionValue.MulColor = float4{ 1.f, 0.f,0.f,0.35f };
+		m_pRing->ColorOptionValue.PlusColor = m_f4Color;
+		m_pRing->ColorOptionValue.PlusColor.w = 0.f;
+		m_pRing->ColorOptionValue.MulColor = m_f4Color;
+		m_pRing->ColorOptionValue.MulColor.w = 0.35f;
 	}
-
 
 	//GetTransform()->SetLocalScale({ 64.f, 64.f, 1.f });
 }
 
-bool bTiming = false;
 float fTime = 0.f;
-float fStarttime = 0.f;
+
+
 void Planet::Update(float _DeltaTime)
 {
-	float4 test = m_pBall->GetTransform()->GetLocalPosition();
 	if (m_bGameStart == false)
 	{
 		return;		
 	}
-	fStarttime += _DeltaTime;
-	if (fStarttime<= static_cast<float>(EditGui::Editor->GetStageInfo(0).BPM) / 60.f / 2.f/4.f)
-	{
-		return;
-	}
-	//fTime += _DeltaTime;
-	//
-	//if (fTime >= static_cast<float>(EditGui::Editor->GetStageInfo(0).BPM) / 60.f/2.f)
-	//{
-	//	fTime -= static_cast<float>(EditGui::Editor->GetStageInfo(0).BPM) / 60.f /2.f;
-	//	bTiming = !bTiming;
-	//
-	//
-	//}
-	//if (bTiming)
-	//{
-	//	pBall->ColorOptionValue.MulColor = float4::Zero;
-	//}
-	//else
-	//{
-	//	pBall->ColorOptionValue.MulColor = float4::One;
-	//
-	//}
+	fTime += _DeltaTime;
 	if (m_bCenter == false && false == m_bStartDistance)
 	{
 		if (GetTransform()->GetLocalPosition().x >= -m_fDistance && m_bStartDistance == false)
@@ -135,6 +120,14 @@ void Planet::Update(float _DeltaTime)
 	}
 	else
 	{
+
+		if (fTime >= 0.05f)
+		{
+			fTime -= 0.05f;
+			std::shared_ptr<SmokeEffect>m_pSmokeEffect = GetLevel()->CreateActor<SmokeEffect>(OrderNum::EFFECT);
+			m_pSmokeEffect->SetColor(m_f4Color);
+			m_pSmokeEffect->GetTransform()->SetWorldPosition(GetTransform()->GetWorldPosition());
+		}
 		if (m_bGameEnd == true && m_bCenter == false && true == m_bStartDistance)
 		{
 			if (GetTransform()->GetLocalPosition().x <= 0.f && m_bStartDistance == true)

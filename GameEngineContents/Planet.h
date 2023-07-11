@@ -58,9 +58,11 @@ private:
 	bool m_bGameEnd = false;
 	bool m_bStartDistance = false;
 
+	float4 m_f4Color = float4::Zero;
 	std::shared_ptr<class GameEngineSpriteRenderer> m_pBall = nullptr;
 	std::shared_ptr<GameEngineCollision> m_pCollision = nullptr;
 	std::shared_ptr<GameEngineSpriteRenderer> m_pRing = nullptr;
+	std::shared_ptr<class SmokeEffect> m_pSmokeEffect = nullptr;
 	
 };
 
