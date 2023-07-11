@@ -49,6 +49,7 @@ protected:
 
 
 private:
+	float m_fSmokeEffectTime = 0.f;
 	float m_fSpeed =360.f;
 	float m_fDistance = 100.f;
 	float m_fScaleRatio = 0.f;

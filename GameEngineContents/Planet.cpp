@@ -86,7 +86,6 @@ void Planet::Start()
 	//GetTransform()->SetLocalScale({ 64.f, 64.f, 1.f });
 }
 
-float fTime = 0.f;
 
 
 void Planet::Update(float _DeltaTime)
@@ -95,7 +94,7 @@ void Planet::Update(float _DeltaTime)
 	{
 		return;		
 	}
-	fTime += _DeltaTime;
+	m_fSmokeEffectTime += _DeltaTime;
 	if (m_bCenter == false && false == m_bStartDistance)
 	{
 		if (GetTransform()->GetLocalPosition().x >= -m_fDistance && m_bStartDistance == false)
@@ -121,9 +120,9 @@ void Planet::Update(float _DeltaTime)
 	else
 	{
 
-		if (fTime >= 0.05f)
+		if (m_fSmokeEffectTime >= 0.05f)
 		{
-			fTime -= 0.05f;
+			m_fSmokeEffectTime -= 0.05f;
 			std::shared_ptr<SmokeEffect>m_pSmokeEffect = GetLevel()->CreateActor<SmokeEffect>(OrderNum::EFFECT);
 			m_pSmokeEffect->SetColor(m_f4Color);
 			m_pSmokeEffect->GetTransform()->SetWorldPosition(GetTransform()->GetWorldPosition());
