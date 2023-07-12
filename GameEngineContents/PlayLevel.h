@@ -32,7 +32,8 @@ private:
 	std::shared_ptr<class Planet> m_pBlue = nullptr;
 	std::shared_ptr<Planet> m_pCenter = nullptr;
 	std::shared_ptr<Planet> m_pTurn = nullptr;
-	std::shared_ptr<class TextObj> m_pCount = nullptr;
+	std::shared_ptr<class TextObj> m_pCountText = nullptr;
+	std::shared_ptr<class TextObj> m_pProgressText = nullptr;
 
 	bool m_bGameStart = false;
 	bool m_bPlaying = false;
@@ -41,6 +42,8 @@ private:
 	int m_iCurIndex = 0;
 	float m_fStartTime = 0.f;
 
+	float m_fProgressPer = 0.f;
+	float m_fTotalProgress = 0.f;
 
 	float m_fDistance = 150.f;
 

@@ -33,8 +33,8 @@ void PlayLevel::Update(float _DeltaTime)
 	if (true==GameEngineInput::IsAnyKey()&& m_bGameStart == false)
 	{
 		m_bGameStart = true;
-		m_pCount->GetRenderer()->SetScale(200.f);
-		m_pCount->SetPosition({ 0.f,200.f });
+		m_pCountText->GetRenderer()->SetScale(200.f);
+		m_pCountText->SetPosition({ 0.f,200.f });
 		m_BGM.SetPause(false);
 		m_BGM.setPosition(0);
 		m_pCenter->SetGameStart(m_bGameStart);
@@ -53,14 +53,22 @@ void PlayLevel::Update(float _DeltaTime)
 		
 		if (m_fReadyTime<=0.f)
 		{
-			m_pCount->SetTxt("시작");
-			m_pCount->SetColor({ 255.f,255.f,255.f });
-			m_pCount->FadeOn();
+			m_pCountText->SetTxt("시작");
+			m_pCountText->SetColor({ 255.f,255.f,255.f });
+			m_pCountText->FadeOn();
 			m_bPlaying = true;
 		}
 		else
 		{
-			m_pCount->SetTxt(std::to_string(static_cast<int>(m_fReadyTime * 3.f)));
+			
+			if (m_fReadyTime * 3.f>=4.f)
+			{
+				m_pCountText->SetTxt("준비");
+			}
+			else
+			{
+				m_pCountText->SetTxt(std::to_string(static_cast<int>(m_fReadyTime * 3.f)));
+			}
 		}
 	}
 
@@ -88,10 +96,10 @@ void PlayLevel::Start()
 }
 void PlayLevel::LevelChangeStart()
 {
-	m_pCount = CreateActor<TextObj>(OrderNum::TEXT);
-	m_pCount->SetTxt("아무 키를 눌러 시작하세요");
-	m_pCount->GetRenderer()->SetScale(100.f);
-	m_pCount->SetPosition({ 0.f,100.f });
+	m_pCountText = CreateActor<TextObj>(OrderNum::TEXT);
+	m_pCountText->SetTxt("아무 키를 눌러 시작하세요");
+	m_pCountText->GetRenderer()->SetScale(100.f);
+	m_pCountText->SetPosition({ 0.f,100.f });
 
 	m_BGM = GameEngineSound::Play("1-X.wav");
 	m_BGM.SetPosition(0.f);
@@ -149,6 +157,7 @@ void PlayLevel::LevelChangeStart()
 
 	EditGui::Editor->Off();
 
+	m_fProgressPer = 100.f / m_pStageInfo.AllTile.size();
 
 	GetLevel()->GetMainCamera()->GetTransform()->SetWorldPosition(float4::Zero);
 }
@@ -170,9 +179,10 @@ void PlayLevel::Reset()
 	m_bGameStart = false;
 	m_bPlaying = false;
 	m_bGameEnd = false;
+	m_fProgressPer = 0.f;
+	m_fTotalProgress = 0.f;
 
-
-	 m_fDistance = 150.f;
+	m_fDistance = 150.f;
 	
 	m_iBPM = 0;
 	m_fReadyTime = 0.f;
@@ -202,6 +212,9 @@ void PlayLevel::PlanetSwap()
 	{
 		m_pCenter->SetGameEnd(true);
 		m_pTurn->SetGameEnd(true);
+		m_pProgressText->SetTxt(std::to_string(static_cast<int>(m_fTotalProgress)));
+		m_pProgressText->SetPosition(float4(0.f, -100.f));
+		m_pProgressText->SetScale(100.f);
 		return;
 	}
 	//if (fAngle < -90.f&& fAngle > -135.f&&	m_bGameEnd == false)
@@ -287,7 +300,7 @@ void PlayLevel::PlanetSwap()
 		m_pStageInfo.AllTile[m_iCurIndex + 1].m_pTile->GlowOn();
 
 		pNextTile->EventOn();
-
+		m_fTotalProgress += m_fProgressPer;
 		++m_iCurIndex;
 
 		m_bGameEnd = true;
