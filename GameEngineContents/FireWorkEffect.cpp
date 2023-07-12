@@ -13,7 +13,7 @@ void FireWorkEffect::Start(GameEngineRenderTarget* _Target)
 {
 	m_pFWUnit = std::make_shared<GameEngineRenderUnit>();
 	m_pFWUnit->SetMesh("FullRect");
-	m_pFWUnit->SetPipeLine("FireWork");
+	m_pFWUnit->SetPipeLine("FireWork2");
 
 	m_sBaseValue.ScreenSize = GameEngineWindow::GetScreenSize();
 

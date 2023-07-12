@@ -4,5 +4,6 @@
     <FxCompile Include="MyShader.fx" />
     <FxCompile Include="FadeShader.hlsl" />
     <FxCompile Include="FireWorkShader.hlsl" />
+    <FxCompile Include="FireWork2.hlsl" />
   </ItemGroup>
 </Project>
