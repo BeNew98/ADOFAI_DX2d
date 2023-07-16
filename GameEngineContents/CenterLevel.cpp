@@ -13,6 +13,7 @@
 #include "TestObject.h"
 #include "FadeEffect.h"
 #include "FireWorkEffect.h"
+#include "TestEffect.h"
 
 CenterLevel::CenterLevel() 
 {
@@ -98,7 +99,7 @@ void CenterLevel::LevelChangeStart()
 	ptr->SetColor(float4::Red);
 	ptr->On();
 
-	std::shared_ptr< FireWorkEffect>ptr2 = GetLastTarget()->CreateEffect<FireWorkEffect>();
+	std::shared_ptr< TestEffect>ptr2 = GetLastTarget()->CreateEffect<TestEffect>();
 	ptr2->SetColor(float4::Blue);
 	ptr2->On();
 	GetMainCamera()->SetProjectionType(CameraType::Orthogonal);

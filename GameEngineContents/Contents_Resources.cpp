@@ -84,6 +84,17 @@ void DFICore::ContentsResourcesCreate()
 		Pipe->SetVertexShader("FireWork2.hlsl");
 		Pipe->SetPixelShader("FireWork2.hlsl");
 	}
+	{
+		std::shared_ptr<GameEngineRenderingPipeLine> Pipe = GameEngineRenderingPipeLine::Create("test");
+
+		//Pipe->SetVertexBuffer("FullRect");
+		//Pipe->SetIndexBuffer("FullRect");
+		Pipe->SetRasterizer("Engine2DBase");
+		Pipe->SetBlendState("MergeBlend");
+		Pipe->SetDepthState("EngineDepth");
+		Pipe->SetVertexShader("test.hlsl");
+		Pipe->SetPixelShader("test.hlsl");
+	}
 	//{
 	//	std::shared_ptr<GameEngineRenderingPipeLine> Pipe = GameEngineRenderingPipeLine::Create("DebugSphere");
 	//	Pipe->SetVertexBuffer("Sphere");

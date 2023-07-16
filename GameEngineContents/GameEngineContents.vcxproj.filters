@@ -71,6 +71,9 @@
     <ClInclude Include="SmokeEffect.h">
       <Filter>PublicObject\Effect</Filter>
     </ClInclude>
+    <ClInclude Include="TestEffect.h">
+      <Filter>PostEffect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DFICore.cpp" />
@@ -142,6 +145,9 @@
     </ClCompile>
     <ClCompile Include="SmokeEffect.cpp">
       <Filter>PublicObject\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="TestEffect.cpp">
+      <Filter>PostEffect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

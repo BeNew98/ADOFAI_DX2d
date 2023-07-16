@@ -197,6 +197,10 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="TestEffect.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="TextObj.h">
       <SubType>
       </SubType>
@@ -291,6 +295,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="SmokeEffect.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="TestEffect.cpp">
       <SubType>
       </SubType>
     </ClCompile>

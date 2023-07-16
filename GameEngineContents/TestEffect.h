@@ -1,7 +1,7 @@
 #pragma once
 #include <GameEngineCore/GameEngineRenderTarget.h>
 
-struct FWCBValue
+struct testValue
 {
 	float4 fTime;
 	float4 ScreenSize;
@@ -9,18 +9,18 @@ struct FWCBValue
 };
 
 // Ό³Έν :
-class FireWorkEffect : public GameEnginePostProcess
+class TestEffect : public GameEnginePostProcess
 {
 public:
 	// constrcuter destructer
-	FireWorkEffect();
-	~FireWorkEffect();
+	TestEffect();
+	~TestEffect();
 
 	// delete Function
-	FireWorkEffect(const FireWorkEffect& _Other) = delete;
-	FireWorkEffect(FireWorkEffect&& _Other) noexcept = delete;
-	FireWorkEffect& operator=(const FireWorkEffect& _Other) = delete;
-	FireWorkEffect& operator=(FireWorkEffect&& _Other) noexcept = delete;
+	TestEffect(const TestEffect& _Other) = delete;
+	TestEffect(TestEffect&& _Other) noexcept = delete;
+	TestEffect& operator=(const TestEffect& _Other) = delete;
+	TestEffect& operator=(TestEffect&& _Other) noexcept = delete;
 
 	void On()
 	{
@@ -39,7 +39,7 @@ protected:
 	void Effect(GameEngineRenderTarget* _Target, float _DeltaTime) override;
 
 private:
-	FWCBValue m_sBaseValue;
+	testValue m_sBaseValue;
 	std::shared_ptr<GameEngineRenderUnit> m_pFWUnit;
 	bool m_bUpdate = false;
 };
