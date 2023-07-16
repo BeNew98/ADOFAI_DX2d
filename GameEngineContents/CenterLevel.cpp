@@ -73,8 +73,17 @@ void CenterLevel::Start()
 
 }
 
+float testtime = 0.f;
+
 void CenterLevel::Update(float _DeltaTime)
 {
+	testtime += _DeltaTime;
+	if (testtime>=3.5f)
+	{
+		GetLastTarget()->ReleaseEffect(ptr);
+		GetLastTarget()->ReleaseEffect(ptr2);
+	}
+
 	if (GameEngineInput::IsDown("TitleLevel"))
 	{
 		GameEngineCore::ChangeLevel("TitleLevel");
@@ -97,11 +106,9 @@ void CenterLevel::LevelChangeStart()
 {
 	ptr = GetLastTarget()->CreateEffect<FireWorkEffect>();
 	ptr->SetColor(float4::Red);
-	ptr->On();
 
-	std::shared_ptr< TestEffect>ptr2 = GetLastTarget()->CreateEffect<TestEffect>();
+	ptr2 = GetLastTarget()->CreateEffect<TestEffect>();
 	ptr2->SetColor(float4::Blue);
-	ptr2->On();
 	GetMainCamera()->SetProjectionType(CameraType::Orthogonal);
 	GetMainCamera()->GetTransform()->SetLocalPosition({ 0, 0, -1000.0f });
 

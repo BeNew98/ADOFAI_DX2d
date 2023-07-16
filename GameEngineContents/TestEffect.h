@@ -22,14 +22,6 @@ public:
 	TestEffect& operator=(const TestEffect& _Other) = delete;
 	TestEffect& operator=(TestEffect&& _Other) noexcept = delete;
 
-	void On()
-	{
-		m_bUpdate = true;
-	}
-	void Off()
-	{
-		m_bUpdate = false;
-	}
 	void SetColor(float4 _Color)
 	{
 		m_sBaseValue.PlusColor = _Color;

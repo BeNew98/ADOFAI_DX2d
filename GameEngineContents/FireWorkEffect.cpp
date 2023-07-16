@@ -21,13 +21,8 @@ void FireWorkEffect::Start(GameEngineRenderTarget* _Target)
 
 	ResultTarget = GameEngineRenderTarget::Create(DXGI_FORMAT::DXGI_FORMAT_R32G32B32A32_FLOAT, GameEngineWindow::GetScreenSize(), float4::Null);
 }
-
 void FireWorkEffect::Effect(GameEngineRenderTarget* _Target, float _DeltaTime)
 {
-	if (false ==m_bUpdate)
-	{
-		return;
-	}
 	m_sBaseValue.fTime.x += _DeltaTime;
 	ResultTarget->Clear();
 	m_pFWUnit->ShaderResHelper.SetTexture("DiffuseTex", _Target->GetTexture(0));

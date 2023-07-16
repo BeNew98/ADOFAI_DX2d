@@ -24,10 +24,6 @@ void TestEffect::Start(GameEngineRenderTarget* _Target)
 
 void TestEffect::Effect(GameEngineRenderTarget* _Target, float _DeltaTime)
 {
-	if (false == m_bUpdate)
-	{
-		return;
-	}
 	m_sBaseValue.fTime.x += _DeltaTime;
 	ResultTarget->Clear();
 	m_pFWUnit->ShaderResHelper.SetTexture("DiffuseTex", _Target->GetTexture(0));
