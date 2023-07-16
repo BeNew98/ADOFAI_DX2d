@@ -78,7 +78,7 @@ float2x2 InverseMatrix(float2x2 _matrix)
 
 
 float DE(float3 pos, float3 dir, float index) {
-    float rVal = 1.f; //rand(index);
+    float rVal = 0.1f; //rand(index);
     float block = max(4.0, abs(rVal) * 10.0);//최대 폭발까지의 달성 시간
     float subTime = frac(fTime.x / block);
     float timeBlock = floor(fTime.x / block);
@@ -151,7 +151,7 @@ float DE(float3 pos, float3 dir, float index) {
 }
 
 float3 march(float3 pos, float3 dir, float3 clr, float index) {
-    float rVal = 1;//rand(index);
+    float rVal = 0.1;//rand(index);
     float block = max(4.0, abs(rVal) * 10.0);
     float subTime = frac(fTime.x / block);
     float timeBlock = floor(fTime.x / block);
