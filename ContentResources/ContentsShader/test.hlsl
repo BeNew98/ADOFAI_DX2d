@@ -30,7 +30,7 @@ cbuffer FireWorkValue : register(b1)
     float4 fTime;
     float4 ScreenSize;
     float4 PlusColor;
-    
+
 };
 
 
@@ -40,10 +40,13 @@ cbuffer FireWorkValue : register(b1)
 #define UP float3(-1,1,-1)
 #define PI 3.1415926
 #define GOLDEN 2.3999632
-
-float rand(float n) { return frac(sin(n) * 43758.5453123); }
+//float rand(float n) { return frac(sin(n) * 43758.5453123); }
+//float rand(float2 n) {
+//    return frac(sin(dot(n, float2(12.9898, 4.1414))) * 43758.5453);
+//}
+float rand(float n) { return frac(sin(n) * 1); }
 float rand(float2 n) {
-    return frac(sin(dot(n, float2(12.9898, 4.1414))) * 43758.5453);
+    return frac(sin(dot(n, float2(1, 1))) * 1);
 }
 
 float atan(in float y, in float x) {
@@ -76,13 +79,14 @@ float2x2 InverseMatrix(float2x2 _matrix)
 
 float DE(float3 pos, float3 dir, float index) {
     float rVal = 1.f; //rand(index);
-    float block = max(4.0, abs(rVal) * 10.0);
+    float block = max(4.0, abs(rVal) * 10.0);//최대 폭발까지의 달성 시간
     float subTime = frac(fTime.x / block);
-    float timeBlock =  floor(fTime.x / block);
+    float timeBlock = floor(fTime.x / block);
 
     float3 offset = (0);// float3((rand(timeBlock) * 2.0 - 1.0) * 300.0,
-        //(rand(timeBlock + 1.0) * 2.0 - 1.0) * 100.0 - subTime * subTime * 20.0,
-        //(rand(timeBlock + 2.0) * 2.0 - 1.0) * 300.0);
+    //(rand(timeBlock + 1.0) * 2.0 - 1.0) * 100.0 - subTime * subTime * 20.0,
+    //(rand(timeBlock + 2.0) * 2.0 - 1.0) * 300.0);
+//추가위치 랜덤값 오프셋
     float boubleRadius = grow(subTime);
 
     float3 newPos = normalize(pos - offset);
@@ -108,15 +112,15 @@ float DE(float3 pos, float3 dir, float index) {
 
     float2 p1 = mul(floor(mul(q, m_inv)), m);
 
-    float2 p2 = mul(q,m_inv);
+    float2 p2 = mul(q, m_inv);
     p2.x = floor(p2.x);
     p2.y = ceil(p2.y);
-    p2 = mul(p2 , m);
-    float2 p3 = mul(q,m_inv);
+    p2 = mul(p2, m);
+    float2 p3 = mul(q, m_inv);
     p3.x = ceil(p3.x);
     p3.y = floor(p3.y);
-    p3 = mul(p3 , m);
-    float2 p4 = mul(ceil(mul(q , m_inv)) , m);
+    p3 = mul(p3, m);
+    float2 p4 = mul(ceil(mul(q, m_inv)), m);
 
     float l1 = dot(p1 - q, p1 - q) + 1000.0 * float(abs(p1.x) > 1.0);
     float l2 = dot(p2 - q, p2 - q) + 1000.0 * float(abs(p2.x) > 1.0);
@@ -141,14 +145,14 @@ float DE(float3 pos, float3 dir, float index) {
     newPos.y = resultY;
     newPos.z = cos(resultTheta) * radius;
 
-    newPos *= boubleRadius +rand(res) * 10.0;
+    newPos *= boubleRadius +rand(res)* 10.0;
 
     return max(0.0, min(length(newPos + offset - pos) - 1.0, length(pos - offset)));
 }
 
 float3 march(float3 pos, float3 dir, float3 clr, float index) {
     float rVal = 1;//rand(index);
-    float block = max(4.0, abs(rVal)* 10.0);
+    float block = max(4.0, abs(rVal) * 10.0);
     float subTime = frac(fTime.x / block);
     float timeBlock = floor(fTime.x / block);
 
@@ -179,15 +183,15 @@ float3 march(float3 pos, float3 dir, float3 clr, float index) {
     return lerp(result, (float3)0, subTime);
 }
 
-void mainImage(out float4 fragColor, in float2 fragCoord) 
+void mainImage(out float4 fragColor, in float2 fragCoord)
 {
 
-   // float2 centered = fragCoord-ScreenSize.xy / 2.0f;
-    float2 centered = float2(fragCoord.x * ScreenSize.x, -fragCoord.y * ScreenSize.y)/2.f;
-    centered.x -= ScreenSize.x /2.f/2.f;
-    centered.y += ScreenSize.y /2.f/2.f; 
-    float3 eye      = float3(sin(fTime.x * 0.1) * 510, 0.0, cos(fTime.x * 0.1) * 510);
-    float3 center   = float3(sin(fTime.x * 0.1) * 500.0, 0.0, cos(fTime.x * 0.1) * 500.0);
+    // float2 centered = fragCoord-ScreenSize.xy / 2.0f;
+    float2 centered = float2(fragCoord.x * ScreenSize.x, -fragCoord.y * ScreenSize.y) / 2.f;
+    centered.x -= ScreenSize.x / 2.f / 2.f;
+    centered.y += ScreenSize.y / 2.f / 2.f;
+    float3 eye = float3(sin(fTime.x * 0.1) * 510, 0.0, cos(fTime.x * 0.1) * 510);
+    float3 center = float3(sin(fTime.x * 0.1) * 500.0, 0.0, cos(fTime.x * 0.1) * 500.0);
     float3 dir = normalize(center - eye);
     float3 right = cross(dir, UP);
 
@@ -216,13 +220,13 @@ SamplerState WRAPSAMPLER : register(s0);
 float4 FireWork_PS(OutPut _Value) : SV_Target0
 {
     float2 uv = _Value.UV.xy;
-    
+
     float4 Color = (float4) 0.0f;
 
     mainImage(Color, uv);
 
     float4 TexColor = DiffuseTex.Sample(WRAPSAMPLER, _Value.UV.xy);
-    
+
     Color += TexColor;
     //Color = saturate(Color);
 
