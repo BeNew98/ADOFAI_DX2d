@@ -24,16 +24,11 @@ void Planet::CenterChange()
 	m_bCenter = !m_bCenter;
 	if (true == m_bCenter)
 	{
-		float4 test = m_pBall->GetTransform()->GetLocalPosition();
 		m_pBall->GetTransform()->AddLocalPosition({ 0.f,0.f,-1.f });
-		float4 test1 = m_pBall->GetTransform()->GetLocalPosition();
-		int a = 0;
 	}
 	else
 	{
-		float4 test = m_pBall->GetTransform()->GetLocalPosition();
  		m_pBall->GetTransform()->AddLocalPosition({ 0.f,0.f,1.f });
-		float4 test1 = m_pBall->GetTransform()->GetLocalPosition();
 	}
 }
 
