@@ -55,7 +55,7 @@ float atan(in float y, in float x) {
 }
 
 float grow(float x) {
-    return (cos(exp(-20.0 * x) * PI) * 0.5 + 0.5) * 150.0;
+    return (cos(exp(-30.0 * x) * PI) * 0.5 + 0.5) * 150.0;
 }
 
 float falloff(float x) {
@@ -94,7 +94,7 @@ float DE(float3 pos, float3 dir, float index) {
     float theta = atan(newPos.x, newPos.z);
     float y = newPos.y;
 
-    float samples = 500;//200.0 + rand(timeBlock) * 10.0; // has to be at least 29
+    float samples = 400.0 + rand(timeBlock) * 10.0; // has to be at least 29
 
 
     ////
@@ -145,7 +145,7 @@ float DE(float3 pos, float3 dir, float index) {
     newPos.y = resultY;
     newPos.z = cos(resultTheta) * radius;
 
-    newPos *= boubleRadius + rand(res) * 10.0;
+    newPos *= boubleRadius /*+ rand(res) *10.0*/;
 
     return max(0.0, min(length(newPos + offset - pos) - 1.0, length(pos - offset)));
 }
@@ -196,20 +196,6 @@ void mainImage(out float4 fragColor, in float2 fragCoord)
     float3 right = cross(dir, UP);
 
     float3 color = march(right * centered.x + UP * centered.y + eye, dir, PlusColor, 1);
-    //float3 color = march(right * centered.x + UP * centered.y + eye, dir, float3(1, 0, 0), 1.0);
-    //color += march(right * centered.x + UP * centered.y + eye, dir, float3(1, 0.2, 0), 2.0);
-    //color += march(right * centered.x + UP * centered.y + eye, dir, float3(0.2, 1.0, 0.0), 3.0);
-    //color += march(right * centered.x + UP * centered.y + eye, dir, float3(0.2, 0.3, 1.0), 4.0);
-    //color += march(right * centered.x + UP * centered.y + eye, dir, float3(1, 0.9, 0.4), 5.0);
-    //color += march(right * centered.x + UP * centered.y + eye, dir, float3(1, 0.2, 0), 6.0);
-    //color += march(right * centered.x + UP * centered.y + eye, dir, float3(0.2, 1.0, 0.0), 7.0);
-    //color += march(right * centered.x + UP * centered.y + eye, dir, float3(1, 0.2, 0), 8.0);
-    //color += march(right * centered.x + UP * centered.y + eye, dir, float3(0.2, 1.0, 0.0), 9.0);
-    //color += march(right * centered.x + UP * centered.y + eye, dir, float3(0.2, 0.3, 1.0), 10.0);
-    //color += march(right * centered.x + UP * centered.y + eye, dir, float3(1, 0.9, 0.4), 11.0);
-    //color += march(right * centered.x + UP * centered.y + eye, dir, float3(1, 0.2, 0), 12.0);
-    //color += march(right * centered.x + UP * centered.y + eye, dir, float3(0.2, 1.0, 0.0), 13.0);
-
 
     fragColor = float4(color, 1.0);
 }
@@ -228,7 +214,7 @@ float4 FireWork_PS(OutPut _Value) : SV_Target0
     float4 TexColor = DiffuseTex.Sample(WRAPSAMPLER, _Value.UV.xy);
 
     Color += TexColor;
-    //Color = saturate(Color);
+    Color = saturate(Color);
 
     return Color;
 }
