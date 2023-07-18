@@ -30,14 +30,14 @@ cbuffer FireWorkValue : register(b1)
     float4 fTime;
     float4 ScreenSize;
     float4 PlusColor;
-
+    float4 f4Dir;
 };
 
 
 #define ITER 100
 #define MAX_DIST 1000
 #define MIN_DIST 0.1
-#define UP float3(-1,1,-1)
+#define UP f4Dir.xyz
 #define PI 3.1415926
 #define GOLDEN 2.3999632
 //float rand(float n) { return frac(sin(n) * 43758.5453123); }

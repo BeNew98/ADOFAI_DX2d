@@ -23,6 +23,6 @@ protected:
 	void LevelChangeEnd() override;
 private:
 	std::shared_ptr<class FireWorkEffect> ptr = nullptr;
-	std::shared_ptr<class TestEffect>ptr2 = nullptr;
+	std::shared_ptr<class FireWorkEffect> ptr2 = nullptr;
 };
 
