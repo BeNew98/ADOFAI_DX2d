@@ -100,14 +100,14 @@ void PlayLevel::LevelChangeStart()
 	m_pCountText->SetTxt("아무 키를 눌러 시작하세요");
 	m_pCountText->GetRenderer()->SetScale(100.f);
 	m_pCountText->SetPosition({ 0.f,100.f });
-
+	m_pProgressText = CreateActor<TextObj>(OrderNum::TEXT);
 	m_BGM = GameEngineSound::Play("1-X.wav");
 	m_BGM.SetPosition(0.f);
 	m_BGM.SetPause(true);
 	//m_BGM = GameEngineSound::Play("sndkick.wav");
 	//std::shared_ptr<GameEngineCamera> BackCam = CreateNewCamera(-1);
 	//BackCam->SetProjectionType(CameraType::Perspective);
-	//BackCam->GetTransform()->SetLocalPosition({ 0.f,0.f,-750.f });
+	//BackCam->GetTransform()->SetLocalPosition({ 0.f,0.f,-750.f })08;
 
 	GetMainCamera()->SetProjectionType(CameraType::Orthogonal);
 
@@ -217,10 +217,6 @@ void PlayLevel::PlanetSwap()
 		m_pProgressText->SetScale(100.f);
 		return;
 	}
-	//if (fAngle < -90.f&& fAngle > -135.f&&	m_bGameEnd == false)
-	//{
-	//	GameEngineCore::ChangeLevel("PlayLevel");
-	//}
 
 	if (true == GameEngineInput::IsAnyKey())
 	{
