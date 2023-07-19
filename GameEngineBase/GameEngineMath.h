@@ -132,6 +132,14 @@ public:
 
 		float CosSeta = DotProduct3D(Left, Right);
 
+		if (CosSeta >= 1.f)
+		{
+			CosSeta = 0.999999f;
+		}
+		else if (CosSeta <= -1.f)
+		{
+			CosSeta = -0.999999f;
+		}
 
 		float Angle = 0.f;
 		(Left.x * Right.y) - (Left.y * Right.x) > 0.0f ? Angle = acosf(CosSeta) : Angle = -acosf(CosSeta);
