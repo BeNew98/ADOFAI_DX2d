@@ -106,9 +106,12 @@ void CenterLevel::LevelChangeStart()
 {
 	ptr = GetLastTarget()->CreateEffect<FireWorkEffect>();
 	ptr->SetColor(float4::Red);
+	ptr->SetDir(float4{ -1.f,1.f,-1.f,0.f });
 
-	ptr2 = GetLastTarget()->CreateEffect<TestEffect>();
+	ptr2 = GetLastTarget()->CreateEffect<FireWorkEffect>();
 	ptr2->SetColor(float4::Blue);
+	ptr2->SetDir(float4{ 1.f,1.f,1.f,0.f });
+
 	GetMainCamera()->SetProjectionType(CameraType::Orthogonal);
 	GetMainCamera()->GetTransform()->SetLocalPosition({ 0, 0, -1000.0f });
 

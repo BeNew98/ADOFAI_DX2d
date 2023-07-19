@@ -6,6 +6,7 @@ struct FWCBValue
 	float4 fTime;
 	float4 ScreenSize;
 	float4 PlusColor = float4::Red;
+	float4 f4Dir = float4::Zero;
 };
 
 // Ό³Έν :
@@ -25,6 +26,10 @@ public:
 	void SetColor(float4 _Color)
 	{
 		m_sBaseValue.PlusColor = _Color;
+	}
+	void SetDir(float4 _Dir)
+	{
+		m_sBaseValue.f4Dir = _Dir;
 	}
 protected:
 	void Start(GameEngineRenderTarget* _Target) override;
