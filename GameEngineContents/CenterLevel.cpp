@@ -42,7 +42,7 @@ void CenterLevel::Start()
 		NewDir.Move("ContentResources");
 
 
-		std::vector<GameEngineFile> File = NewDir.GetAllFile({ ".Png", });
+		std::vector<GameEngineFile> File = NewDir.GetAllFile({ ".Png",});
 
 
 		for (size_t i = 0; i < File.size(); i++)
@@ -57,8 +57,14 @@ void CenterLevel::Start()
 		NewDir.Move("ContentResources");
 		NewDir.Move("Sound");
 
-		GameEngineSound::Load(NewDir.GetPlusFileName("1-X.wav").GetFullPath());
-		GameEngineSound::Load(NewDir.GetPlusFileName("sndKick.wav").GetFullPath());
+		std::vector<GameEngineFile> File = NewDir.GetAllFile({ ".wav" , });
+
+		for (size_t i = 0; i < File.size(); i++)
+		{
+			GameEngineSound::Load(File[i].GetFullPath());
+		}
+		//GameEngineSound::Load(NewDir.GetPlusFileName("1-X.wav").GetFullPath());
+		//GameEngineSound::Load(NewDir.GetPlusFileName("sndKick.wav").GetFullPath());
 	}
 	{
 		GameEngineFont::Load("Ch2.0-1");

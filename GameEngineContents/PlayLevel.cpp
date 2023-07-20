@@ -54,12 +54,10 @@ void PlayLevel::Start()
 void PlayLevel::LevelChangeStart()
 {
 	m_pCountText = CreateActor<TextObj>(OrderNum::TEXT);
-	m_pCountText->SetBold();
 	m_pCountText->SetTxt("아무 키를 눌러 시작하세요");
 	m_pCountText->GetRenderer()->SetScale(100.f);
 	m_pCountText->SetPosition({ 0.f,100.f });
 	m_pProgressText = CreateActor<TextObj>(OrderNum::TEXT);
-	m_pProgressText->SetBold();
 	m_BGM = GameEngineSound::Play("1-X.wav");
 	m_BGM.SetPosition(0.f);
 	m_BGM.SetPause(true);
@@ -217,6 +215,9 @@ void PlayLevel::EndFireWork(float _DeltaTime)
 		{
 			return;
 		}
+
+		m_BGM.SetPause(true);
+		
 		m_fFireEffectTime = 0.f;
 		m_pRedFire = GetLastTarget()->CreateEffect<FireWorkEffect>();
 		m_pRedFire->SetColor(float4::Red);
@@ -226,6 +227,17 @@ void PlayLevel::EndFireWork(float _DeltaTime)
 		m_pBlueFire->SetColor(float4::Blue);
 		m_pBlueFire->SetDir(float4{ 1.f,1.f,1.f,0.f });
 		m_bFireEffectOn = true;
+
+
+		GameEngineSound::Play("sndPlanetPreExplosion.wav");
+
+
+		char cArray[256];
+		sprintf_s(cArray, "%0.2f", m_fTotalProgress);
+		std::string sProgress = cArray;
+		m_pProgressText->SetTxt(sProgress + "%\n 아무 키나 눌러 다시 시작");
+		m_pProgressText->SetPosition(GetMainCamera()->GetTransform()->GetWorldPosition() + float4(0.f, -100.f));
+		m_pProgressText->SetScale(100.f);
 	}
 	if (true == m_bFireEffectOn)
 	{
@@ -237,9 +249,6 @@ void PlayLevel::EndFireWork(float _DeltaTime)
 			m_pRedFire = nullptr;
 			m_pBlueFire = nullptr;
 
-			m_pProgressText->SetTxt(std::to_string(static_cast<int>(m_fTotalProgress)) + "\n 아무 키나 눌러 다시 시작");
-			m_pProgressText->SetPosition(GetMainCamera()->GetTransform()->GetWorldPosition() + float4(0.f, -100.f));
-			m_pProgressText->SetScale(100.f);
 		};
 	}
 	else
