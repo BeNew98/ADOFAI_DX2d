@@ -16,6 +16,25 @@
 
 //////////////////////////// GameEngineSoundPlayer ////////////////////////////
 
+GameEngineSoundPlayer::GameEngineSoundPlayer(FMOD::Channel* _Channel)
+	: Channel(_Channel)
+{
+	if (Channel == nullptr)
+	{
+		return;
+	}
+	std::list<GameEngineSoundPlayer*>::iterator StartIter = GameEngineSound::SoundList.begin();
+	std::list<GameEngineSoundPlayer*>::iterator EndIter = GameEngineSound::SoundList.end();
+	for (;StartIter!= EndIter; ++StartIter)
+	{
+		if (*StartIter == this)
+		{
+			return;
+		}
+	}
+	GameEngineSound::SoundList.push_back(this);
+}
+
 void GameEngineSoundPlayer::SoundFadeIn(double _Time, float _Volume)
 {
 	if (false == IsValid())
@@ -101,6 +120,8 @@ public:
 };
 
 SoundSystemCreator SoundInitObject = SoundSystemCreator();
+
+std::list<class GameEngineSoundPlayer*> GameEngineSound::SoundList;
 
 void GameEngineSound::SoundUpdate()
 {

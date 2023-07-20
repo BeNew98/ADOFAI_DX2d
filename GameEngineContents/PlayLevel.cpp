@@ -20,6 +20,8 @@
 #include "FireWorkEffect.h"
 #include "RoundGlowEffect.h"
 
+#include "GlobalClass.h"
+
 PlayLevel::PlayLevel()
 {
 }
@@ -28,16 +30,20 @@ PlayLevel::~PlayLevel()
 {
 }
 
+GameEngineSoundPlayer PlayLevel::BGm = GameEngineSoundPlayer(nullptr);
 
 void PlayLevel::Update(float _DeltaTime)
 {
+	std::list<GameEngineSoundPlayer*> test = GameEngineSound::SoundList;
 	StartMechanism(_DeltaTime);
 	EndFireWork(_DeltaTime);
 	PlanetSwap();
 
 	if (GameEngineInput::IsDown("Reset"))
 	{
-		GameEngineCore::ChangeLevel("PlayLevel");
+		BGm = GameEngineSound::Play("sndKick.wav");
+		GameEngineSoundPlayer test = GameEngineSound::Play("sndKick.wav");
+		//GameEngineCore::ChangeLevel("PlayLevel");
 	}
 
 

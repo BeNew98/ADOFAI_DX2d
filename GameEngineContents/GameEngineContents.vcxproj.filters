@@ -74,6 +74,9 @@
     <ClInclude Include="TestEffect.h">
       <Filter>PostEffect</Filter>
     </ClInclude>
+    <ClInclude Include="GlobalClass.h">
+      <Filter>TestObj</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DFICore.cpp" />
@@ -148,6 +151,9 @@
     </ClCompile>
     <ClCompile Include="TestEffect.cpp">
       <Filter>PostEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="GlobalClass.cpp">
+      <Filter>TestObj</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -2,6 +2,7 @@
 #include <GameEnginePlatform/ThirdParty/FMOD/inc/fmod.hpp>
 #include <string_view>
 #include <unordered_map> 
+#include <GameEngineContents/GlobalClass.h>
 
 class GameEngineSoundPlayer
 {
@@ -9,16 +10,8 @@ private:
 	FMOD::Channel* Channel = nullptr;
 
 public:
-	GameEngineSoundPlayer()
-	{
 
-	}
-
-	GameEngineSoundPlayer(FMOD::Channel* _Channel)
-		: Channel(_Channel)
-	{
-
-	}
+	GameEngineSoundPlayer(FMOD::Channel* _Channel);
 
 	inline bool IsValid() const
 	{
@@ -143,6 +136,8 @@ public:
 	static void Load(const std::string_view& _Name, const std::string_view& _Path);
 
 	static GameEngineSoundPlayer Play(const std::string_view& _Name);
+
+	static std::list<class GameEngineSoundPlayer*> SoundList;
 
 protected:
 
