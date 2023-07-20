@@ -135,8 +135,6 @@ void Planet::Update(float _DeltaTime)
 				GetTransform()->GetParent()->AddLocalScale(-float4(_DeltaTime , _DeltaTime, 0.f, 0.f));
 
 
-				m_pBall->ColorOptionValue.MulColor = { 1.f,1.f,1.f,_DeltaTime };
-				m_pRing->ColorOptionValue.MulColor = { 1.f,1.f,1.f,_DeltaTime };
 				if (GetTransform()->GetLocalPosition().x >= 0.f && m_bStartDistance == true)
 				{
 					GetTransform()->SetLocalPosition(float4(0.f, 0.f));
@@ -151,11 +149,13 @@ void Planet::Update(float _DeltaTime)
 			else if (GetTransform()->GetLocalPosition().x >= 0.f && m_bStartDistance == true)
 			{
 				GetTransform()->AddLocalPosition(float4(-m_fDistance * _DeltaTime * 2.f, 0.f));
+				GetTransform()->GetParent()->AddLocalScale(-float4(_DeltaTime, _DeltaTime, 0.f, 0.f));
 
 				if (GetTransform()->GetLocalPosition().x <= 0.f && m_bStartDistance == true)
 				{
-					//TransformData data = GetTransform()->GetTransDataRef();
 					GetTransform()->SetLocalPosition(float4(0.f, 0.f));
+
+					GetTransform()->GetParent()->SetLocalScale(float4{ 0.f,0.f,0.f,1.f });
 					m_bStartDistance = false;
 					m_bGameStart = false;
 				}
