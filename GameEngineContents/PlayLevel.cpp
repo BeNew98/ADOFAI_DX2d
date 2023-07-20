@@ -18,6 +18,7 @@
 #include "WrongMark.h"
 #include "TextObj.h"
 #include "FireWorkEffect.h"
+#include "RoundGlowEffect.h"
 
 PlayLevel::PlayLevel()
 {
@@ -76,6 +77,10 @@ void PlayLevel::LevelChangeStart()
 	EditGui::Editor->LoadtoString("");
 
 	m_pStageInfo = EditGui::Editor->GetStageInfo(0);
+
+	std::shared_ptr<RoundGlowEffect> pRGlow = GetLevel()->CreateActor<RoundGlowEffect>(OrderNum::EFFECT);
+	pRGlow->GetTransform()->SetWorldPosition(m_pStageInfo.AllTile[0].m_pTile->GetPivotPos());
+
 	m_iBPM = m_pStageInfo.BPM;
 	m_fReadyTime = m_iBPM / 60.f / 5.f * 3.f;
 	{
@@ -228,6 +233,10 @@ void PlayLevel::EndFireWork(float _DeltaTime)
 			GetLastTarget()->ReleaseEffect(m_pBlueFire);
 			m_pRedFire = nullptr;
 			m_pBlueFire = nullptr;
+
+			m_pProgressText->SetTxt(std::to_string(static_cast<int>(m_fTotalProgress)) + "\n 아무 키나 눌러 다시 시작");
+			m_pProgressText->SetPosition(GetMainCamera()->GetTransform()->GetWorldPosition() + float4(0.f, -100.f));
+			m_pProgressText->SetScale(100.f);
 		};
 	}
 	else
@@ -257,9 +266,6 @@ void PlayLevel::PlanetSwap()
 	{
 		m_pCenter->SetGameEnd(true);
 		m_pTurn->SetGameEnd(true);
-		m_pProgressText->SetTxt(std::to_string(static_cast<int>(m_fTotalProgress)));
-		m_pProgressText->SetPosition(GetMainCamera()->GetTransform()->GetWorldPosition()+float4(0.f, -100.f));
-		m_pProgressText->SetScale(100.f);
 		m_bGameFail = true;
 		return;
 	}

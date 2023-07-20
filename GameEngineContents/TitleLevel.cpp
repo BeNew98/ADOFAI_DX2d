@@ -151,6 +151,9 @@ void TitleLevel::LevelChangeStart()
 
 	m_pRed->GetTransform()->SetLocalPosition(m_pStageInfo.AllTile[12].m_pTile->GetTransform()->GetWorldPosition());
 
+	std::shared_ptr<SquareGlowEffect> pSGlow = GetLevel()->CreateActor<SquareGlowEffect>(OrderNum::EFFECT);
+	pSGlow->GetTransform()->SetWorldPosition(m_pStageInfo.AllTile[12].m_pTile->GetTransform()->GetWorldPosition());
+
 
 	for (size_t i = 0; i < m_pStageInfo.AllTile.size(); i++)
 	{

@@ -5,6 +5,7 @@
 #include <GameEngineCore/GameEngineCollision.h>
 #include <GameEngineCore/GameEngineLevel.h>
 
+#include "RoundGlowEffect.h"
 #include "SmokeEffect.h"
 #include "EditGui.h"
 
@@ -47,10 +48,12 @@ void Planet::Start()
 	m_pCollision->GetTransform()->SetLocalScale({ 74.f, 74.f, 1.f });
 	m_pRing = CreateComponent<GameEngineSpriteRenderer>(OrderNum::EFFECT);
 	m_pRing->SetTexture("white-ring.png");
-	//m_pRing->GetTransform()->SetLocalScale({ m_fDistance*2.f,m_fDistance*2.f,1.f });
+
+
 
 	if (m_iUseCount != 0)
 	{
+		SetName("Blue");
 		m_pBall->SetScaleToTexture("ballsprites_blue_sheet_grid_0_Sprite.png");
 		m_iUseCount = 0;
 		m_bCenter = false;
@@ -63,10 +66,12 @@ void Planet::Start()
 	}
 	else
 	{
+		SetName("Red");
 		m_pBall->SetScaleToTexture("ballsprites_red_sheet_grid_0_Sprite.png");
 		m_pBall->GetTransform()->AddLocalPosition({ 0.f,0.f,-1.f });
 		m_bCenter = true;
 		m_f4Color = float4::Red;
+
 
 
 		m_bStartDistance = true;
@@ -127,11 +132,16 @@ void Planet::Update(float _DeltaTime)
 			if (GetTransform()->GetLocalPosition().x <= 0.f && m_bStartDistance == true)
 			{
 				GetTransform()->AddLocalPosition(float4(m_fDistance * _DeltaTime * 2.f, 0.f));
+				GetTransform()->GetParent()->AddLocalScale(-float4(_DeltaTime , _DeltaTime, 0.f, 0.f));
 
+
+				m_pBall->ColorOptionValue.MulColor = { 1.f,1.f,1.f,_DeltaTime };
+				m_pRing->ColorOptionValue.MulColor = { 1.f,1.f,1.f,_DeltaTime };
 				if (GetTransform()->GetLocalPosition().x >= 0.f && m_bStartDistance == true)
 				{
-					//TransformData data = GetTransform()->GetTransDataRef();
 					GetTransform()->SetLocalPosition(float4(0.f, 0.f));
+
+					GetTransform()->GetParent()->SetLocalScale(float4{0.f,0.f,0.f,1.f});
 					m_bStartDistance = false;
 					m_bGameStart = false;
 				}
