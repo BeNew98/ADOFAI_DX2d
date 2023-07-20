@@ -15,6 +15,8 @@ public:
 	CenterLevel& operator=(const CenterLevel& _Other) = delete;
 	CenterLevel& operator=(CenterLevel&& _Other) noexcept = delete;
 
+	static class GameEngineSoundPlayer Bgm;
+
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
@@ -22,6 +24,7 @@ protected:
 	void LevelChangeStart() override;
 	void LevelChangeEnd() override;
 private:
+	float testtime = 0.f;
 	std::shared_ptr<class FireWorkEffect> ptr = nullptr;
 	std::shared_ptr<class FireWorkEffect> ptr2 = nullptr;
 };

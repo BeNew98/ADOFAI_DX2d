@@ -11,6 +11,7 @@ private:
 public:
 
 	GameEngineSoundPlayer(FMOD::Channel* _Channel);
+	GameEngineSoundPlayer()	{}
 
 	inline bool IsValid() const
 	{

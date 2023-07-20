@@ -29,20 +29,16 @@ PlayLevel::~PlayLevel()
 {
 }
 
-GameEngineSoundPlayer PlayLevel::BGm = GameEngineSoundPlayer(nullptr);
 
 void PlayLevel::Update(float _DeltaTime)
 {
-	std::list<GameEngineSoundPlayer*> test = GameEngineSound::SoundList;
 	StartMechanism(_DeltaTime);
 	EndFireWork(_DeltaTime);
 	PlanetSwap();
 
 	if (GameEngineInput::IsDown("Reset"))
 	{
-		BGm = GameEngineSound::Play("sndKick.wav");
-		GameEngineSoundPlayer test = GameEngineSound::Play("sndKick.wav");
-		//GameEngineCore::ChangeLevel("PlayLevel");
+		GameEngineCore::ChangeLevel("PlayLevel");
 	}
 
 

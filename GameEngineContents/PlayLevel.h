@@ -17,7 +17,6 @@ public:
 	PlayLevel& operator=(const PlayLevel& _Other) = delete;
 	PlayLevel& operator=(PlayLevel&& _Other) noexcept = delete;
 
-	static class GameEngineSoundPlayer BGm;
 	GameEngineSoundPlayer m_BGM = nullptr;
 protected:
 	void Update(float _DeltaTime) override;
