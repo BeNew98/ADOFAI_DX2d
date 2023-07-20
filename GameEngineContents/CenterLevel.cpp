@@ -62,6 +62,8 @@ void CenterLevel::Start()
 	}
 	{
 		GameEngineFont::Load("Ch2.0-1");
+
+		GameEngineFont::Load("godoMaum");
 	}
 	//윗쪽은 MainCam 아랫쪽은 UICam
 	//왼쪽은 배경x	오른쪽은 배경o

@@ -14,7 +14,8 @@ TextObj::~TextObj()
 void TextObj::Start()
 {
 	m_pFontRenderer = CreateComponent<GameEngineFontRenderer>(OrderNum::TEXT);
-	m_pFontRenderer->SetFont("Ch2.0-1");
+	//m_pFontRenderer->SetFont("Ch2.0-1");
+	m_pFontRenderer->SetFont("godoMaum");
 	m_pFontRenderer->SetScale(m_fScale);
 	m_pFontRenderer->SetColor(float4::White);
 	m_pFontRenderer->SetFontFlag(FW1_TEXT_FLAG::FW1_CENTER);

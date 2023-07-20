@@ -54,10 +54,12 @@ void PlayLevel::Start()
 void PlayLevel::LevelChangeStart()
 {
 	m_pCountText = CreateActor<TextObj>(OrderNum::TEXT);
+	m_pCountText->SetBold();
 	m_pCountText->SetTxt("아무 키를 눌러 시작하세요");
 	m_pCountText->GetRenderer()->SetScale(100.f);
 	m_pCountText->SetPosition({ 0.f,100.f });
 	m_pProgressText = CreateActor<TextObj>(OrderNum::TEXT);
+	m_pProgressText->SetBold();
 	m_BGM = GameEngineSound::Play("1-X.wav");
 	m_BGM.SetPosition(0.f);
 	m_BGM.SetPause(true);
