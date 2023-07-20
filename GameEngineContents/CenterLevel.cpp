@@ -73,7 +73,7 @@ void CenterLevel::Start()
 
 }
 
-GameEngineSoundPlayer CenterLevel::Bgm = GameEngineSoundPlayer(nullptr);
+GameEngineSoundPlayer CenterLevel::Bgm;
 
 void CenterLevel::Update(float _DeltaTime)
 {
