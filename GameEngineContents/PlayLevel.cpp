@@ -17,7 +17,7 @@
 #include "Level1BackGround.h"
 #include "WrongMark.h"
 #include "TextObj.h"
-#include "FadeEffect.h"
+#include "FireWorkEffect.h"
 
 PlayLevel::PlayLevel()
 {
@@ -30,53 +30,8 @@ PlayLevel::~PlayLevel()
 
 void PlayLevel::Update(float _DeltaTime)
 {
-	if (true==GameEngineInput::IsAnyKey()&& m_bGameStart == false)
-	{
-		m_bGameStart = true;
-		m_pCountText->GetRenderer()->SetScale(200.f);
-		m_pCountText->SetPosition({ 0.f,200.f });
-		m_BGM.SetPause(false);
-		m_BGM.setPosition(0);
-		m_pCenter->SetGameStart(m_bGameStart);
-		m_pTurn->SetGameStart(m_bGameStart);
-	}
-
-	if (m_bGameStart == false)
-	{
-		return;
-	}
-	
-
-	m_fReadyTime -= _DeltaTime;
-	if (m_bPlaying == false)
-	{
-		
-		if (m_fReadyTime<=0.f)
-		{
-			m_pCountText->SetTxt("시작");
-			m_pCountText->SetColor({ 255.f,255.f,255.f });
-			m_pCountText->FadeOn();
-			m_bPlaying = true;
-		}
-		else
-		{
-			
-			if (m_fReadyTime * 3.f>=4.f)
-			{
-				m_pCountText->SetTxt("준비");
-			}
-			else
-			{
-				m_pCountText->SetTxt(std::to_string(static_cast<int>(m_fReadyTime * 3.f)));
-			}
-		}
-	}
-
-	if (m_fStartTime < m_fReadyTime)
-	{
-		return;
-	}
-
+	StartMechanism(_DeltaTime);
+	EndFireWork();
 	PlanetSwap();
 
 	if (GameEngineInput::IsDown("Reset"))
@@ -179,6 +134,8 @@ void PlayLevel::Reset()
 	m_bGameStart = false;
 	m_bPlaying = false;
 	m_bGameEnd = false;
+	m_bGameFail = false;
+	m_bFireEffectOn = false;
 	m_fProgressPer = 0.f;
 	m_fTotalProgress = 0.f;
 
@@ -191,10 +148,74 @@ void PlayLevel::Reset()
 	AllActorDestroy();
 }
 
+void PlayLevel::StartMechanism(float _DeltaTime)
+{
+	if (true == GameEngineInput::IsAnyKey() && m_bGameStart == false)
+	{
+		m_bGameStart = true;
+		m_pCountText->GetRenderer()->SetScale(200.f);
+		m_pCountText->SetPosition({ 0.f,200.f });
+		m_BGM.SetPause(false);
+		m_BGM.setPosition(0);
+		m_pCenter->SetGameStart(m_bGameStart);
+		m_pTurn->SetGameStart(m_bGameStart);
+	}
+
+	if (m_bGameStart == false)
+	{
+		return;
+	}
+
+
+	m_fReadyTime -= _DeltaTime;
+	if (m_bPlaying == false)
+	{
+
+		if (m_fReadyTime <= 0.f)
+		{
+			m_pCountText->SetTxt("시작");
+			m_pCountText->SetColor({ 255.f,255.f,255.f });
+			m_pCountText->FadeOn();
+			m_bPlaying = true;
+		}
+		else
+		{
+
+			if (m_fReadyTime * 3.f >= 4.f)
+			{
+				m_pCountText->SetTxt("준비");
+			}
+			else
+			{
+				m_pCountText->SetTxt(std::to_string(static_cast<int>(m_fReadyTime * 3.f)));
+			}
+		}
+	}
+
+	if (m_fStartTime < m_fReadyTime)
+	{
+		return;
+	}
+}
+
+void PlayLevel::EndFireWork()
+{
+	if (true == m_bGameFail)
+	{
+		m_pRedFire = GetLastTarget()->CreateEffect<FireWorkEffect>();
+		m_pRedFire->SetColor(float4::Red);
+		m_pRedFire->SetDir(float4{ -1.f,1.f,-1.f,0.f });
+
+		m_pBlueFire = GetLastTarget()->CreateEffect<FireWorkEffect>();
+		m_pBlueFire->SetColor(float4::Blue);
+		m_pBlueFire->SetDir(float4{ 1.f,1.f,1.f,0.f });
+	}
+}
+
 void PlayLevel::PlanetSwap()
 {
 
-	if (m_iCurIndex + 1 >= m_pStageInfo.AllTile.size())
+	if (m_iCurIndex + 1 >= m_pStageInfo.AllTile.size()|| true == m_bGameFail)
 	{
 		return;
 	}
@@ -213,8 +234,9 @@ void PlayLevel::PlanetSwap()
 		m_pCenter->SetGameEnd(true);
 		m_pTurn->SetGameEnd(true);
 		m_pProgressText->SetTxt(std::to_string(static_cast<int>(m_fTotalProgress)));
-		m_pProgressText->SetPosition(float4(0.f, -100.f));
+		m_pProgressText->SetPosition(GetMainCamera()->GetTransform()->GetWorldPosition()+float4(0.f, -100.f));
 		m_pProgressText->SetScale(100.f);
+		m_bGameFail = true;
 		return;
 	}
 

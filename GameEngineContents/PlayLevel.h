@@ -34,6 +34,8 @@ private:
 	std::shared_ptr<Planet> m_pTurn = nullptr;
 	std::shared_ptr<class TextObj> m_pCountText = nullptr;
 	std::shared_ptr<class TextObj> m_pProgressText = nullptr;
+	std::shared_ptr<class FireWorkEffect> m_pRedFire = nullptr;
+	std::shared_ptr<class FireWorkEffect> m_pBlueFire = nullptr;
 
 	bool m_bGameStart = false;
 	bool m_bPlaying = false;
@@ -48,8 +50,12 @@ private:
 	float m_fDistance = 150.f;
 
 	bool m_bGameEnd = false;
+	bool m_bGameFail = false;
+	bool m_bFireEffectOn = false;
 
 	void PlanetSwap();
 	void Reset();
+	void StartMechanism(float _DeltaTime);
+	void EndFireWork();
 };
 
