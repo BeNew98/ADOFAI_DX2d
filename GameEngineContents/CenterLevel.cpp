@@ -73,7 +73,7 @@ void CenterLevel::Start()
 
 }
 
-GameEngineSoundPlayer CenterLevel::Bgm;
+GameEngineSoundPlayer CenterLevel::Bgm = GameEngineSoundPlayer(nullptr);
 
 void CenterLevel::Update(float _DeltaTime)
 {
@@ -83,7 +83,7 @@ void CenterLevel::Update(float _DeltaTime)
 		GetLastTarget()->ReleaseEffect(ptr);
 		GetLastTarget()->ReleaseEffect(ptr2);
 	}
-
+	
 	std::list<GameEngineSoundPlayer*> test = GameEngineSound::SoundList;
 	
 	if (GameEngineInput::IsDown("Reset"))
@@ -92,9 +92,8 @@ void CenterLevel::Update(float _DeltaTime)
 		GameEngineSoundPlayer test = GameEngineSound::Play("sndKick.wav");
 	}
 	if (GameEngineInput::IsDown("TitleLevel"))
-	{
-		GameEngineSoundPlayer test = GameEngineSound::Play("sndKick.wav");
-		//GameEngineCore::ChangeLevel("TitleLevel");
+	{		
+		GameEngineCore::ChangeLevel("TitleLevel");
 	}
 
 	if (GameEngineInput::IsDown("PlayLevel"))
