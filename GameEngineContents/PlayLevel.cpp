@@ -36,10 +36,10 @@ void PlayLevel::Update(float _DeltaTime)
 	EndFireWork(_DeltaTime);
 	PlanetSwap();
 
-	if (GameEngineInput::IsDown("Reset"))
-	{
-		GameEngineCore::ChangeLevel("PlayLevel");
-	}
+	//if (GameEngineInput::IsDown("Reset"))
+	//{
+	//	GameEngineCore::ChangeLevel("PlayLevel");
+	//}
 
 
 	if (GameEngineInput::IsDown("CenterLevel"))
@@ -238,18 +238,26 @@ void PlayLevel::EndFireWork(float _DeltaTime)
 		m_pProgressText->SetTxt(sProgress + "%\n 아무 키나 눌러 다시 시작");
 		m_pProgressText->SetPosition(GetMainCamera()->GetTransform()->GetWorldPosition() + float4(0.f, -100.f));
 		m_pProgressText->SetScale(100.f);
+
 	}
 	if (true == m_bFireEffectOn)
 	{
 		m_fFireEffectTime += _DeltaTime;
-		if (m_fFireEffectTime>=4.f)
+		if (m_fFireEffectTime>=4.f&& m_pRedFire!=nullptr && m_pBlueFire != nullptr)
 		{
 			GetLastTarget()->ReleaseEffect(m_pRedFire);
 			GetLastTarget()->ReleaseEffect(m_pBlueFire);
 			m_pRedFire = nullptr;
 			m_pBlueFire = nullptr;
 
-		};
+		}
+		else 
+		{
+			if (GameEngineInput::IsAnyKey())
+			{
+				GameEngineCore::ChangeLevel("PlayLevel");
+			}
+		}
 	}
 	else
 	{

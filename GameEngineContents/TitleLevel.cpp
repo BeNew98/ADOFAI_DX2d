@@ -144,9 +144,10 @@ void TitleLevel::LevelChangeStart()
 			EditGui::Editor->SetLevel(1);
 			EditGui::Editor->SetBPM(150);
 		});
+
 	std::shared_ptr< GameEngineSpriteRenderer> pLevel1 = m_pStageInfo.AllTile[30].m_pTile->CreateComponent<GameEngineSpriteRenderer>(OrderNum::BACKGROUND);
 	pLevel1->SetTexture("1.png");
-	pLevel1->GetTransform()->SetLocalPosition({ 0.f,300.f });
+	pLevel1->GetTransform()->SetLocalPosition({ 0.f,250.f });
 	pLevel1->GetTransform()->SetLocalScale({ 212.f,256.f,1.f });
 
 	std::shared_ptr< GameEngineSpriteRenderer> pLevel1Fog = m_pStageInfo.AllTile[30].m_pTile->CreateComponent<GameEngineSpriteRenderer>(OrderNum::BACKGROUND);

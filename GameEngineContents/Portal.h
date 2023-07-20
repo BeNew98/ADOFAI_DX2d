@@ -29,7 +29,9 @@ protected:
 
 private:
 	bool m_EventTrigger = false;
+	
 	std::shared_ptr<class GameEngineCollision> m_pCollision = nullptr;
+	std::shared_ptr<class GameEngineSpriteRenderer> m_pEffect = nullptr;
 	std::function<void()> m_Ptr = nullptr;
 
 };
