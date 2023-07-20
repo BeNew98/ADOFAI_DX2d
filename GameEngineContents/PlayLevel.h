@@ -52,10 +52,11 @@ private:
 	bool m_bGameEnd = false;
 	bool m_bGameFail = false;
 	bool m_bFireEffectOn = false;
+	float m_fFireEffectTime = 0.f;
 
 	void PlanetSwap();
 	void Reset();
 	void StartMechanism(float _DeltaTime);
-	void EndFireWork();
+	void EndFireWork(float _DeltaTime);
 };
 

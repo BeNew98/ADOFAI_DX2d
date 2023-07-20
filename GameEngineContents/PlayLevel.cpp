@@ -31,7 +31,7 @@ PlayLevel::~PlayLevel()
 void PlayLevel::Update(float _DeltaTime)
 {
 	StartMechanism(_DeltaTime);
-	EndFireWork();
+	EndFireWork(_DeltaTime);
 	PlanetSwap();
 
 	if (GameEngineInput::IsDown("Reset"))
@@ -138,6 +138,7 @@ void PlayLevel::Reset()
 	m_bFireEffectOn = false;
 	m_fProgressPer = 0.f;
 	m_fTotalProgress = 0.f;
+	m_fFireEffectTime = 0.f;
 
 	m_fDistance = 150.f;
 	
@@ -198,10 +199,17 @@ void PlayLevel::StartMechanism(float _DeltaTime)
 	}
 }
 
-void PlayLevel::EndFireWork()
+void PlayLevel::EndFireWork(float _DeltaTime)
 {
-	if (true == m_bGameFail)
+
+	if (true == m_bGameFail && false == m_bFireEffectOn)
 	{
+		m_fFireEffectTime += _DeltaTime;
+		if (m_fFireEffectTime <= 1.f)
+		{
+			return;
+		}
+		m_fFireEffectTime = 0.f;
 		m_pRedFire = GetLastTarget()->CreateEffect<FireWorkEffect>();
 		m_pRedFire->SetColor(float4::Red);
 		m_pRedFire->SetDir(float4{ -1.f,1.f,-1.f,0.f });
@@ -209,13 +217,29 @@ void PlayLevel::EndFireWork()
 		m_pBlueFire = GetLastTarget()->CreateEffect<FireWorkEffect>();
 		m_pBlueFire->SetColor(float4::Blue);
 		m_pBlueFire->SetDir(float4{ 1.f,1.f,1.f,0.f });
+		m_bFireEffectOn = true;
+	}
+	if (true == m_bFireEffectOn)
+	{
+		m_fFireEffectTime += _DeltaTime;
+		if (m_fFireEffectTime>=4.f)
+		{
+			GetLastTarget()->ReleaseEffect(m_pRedFire);
+			GetLastTarget()->ReleaseEffect(m_pBlueFire);
+			m_pRedFire = nullptr;
+			m_pBlueFire = nullptr;
+		};
+	}
+	else
+	{
+		return;
 	}
 }
 
 void PlayLevel::PlanetSwap()
 {
 
-	if (m_iCurIndex + 1 >= m_pStageInfo.AllTile.size()|| true == m_bGameFail)
+	if (m_iCurIndex + 1 >= m_pStageInfo.AllTile.size()|| true == m_bGameFail|| 0< m_fReadyTime)
 	{
 		return;
 	}

@@ -55,7 +55,7 @@ float atan(in float y, in float x) {
 }
 
 float grow(float x) {
-    return (cos(exp(-30.0 * x) * PI) * 0.5 + 0.5) * 150.0;
+    return (cos(exp(-30.0 * x) * PI) * 0.5 + 0.5) * 200.f;
 }
 
 float falloff(float x) {
