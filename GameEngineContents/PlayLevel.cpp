@@ -232,7 +232,7 @@ void PlayLevel::EndFireWork(float _DeltaTime)
 		GameEngineSound::Play("sndPlanetPreExplosion.wav");
 
 
-		char cArray[256];
+		char cArray[20];
 		sprintf_s(cArray, "%0.2f", m_fTotalProgress);
 		std::string sProgress = cArray;
 		m_pProgressText->SetTxt(sProgress + "%\n 아무 키나 눌러 다시 시작");

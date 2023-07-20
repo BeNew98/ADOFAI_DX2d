@@ -147,7 +147,12 @@ void TitleLevel::LevelChangeStart()
 	std::shared_ptr< GameEngineSpriteRenderer> pLevel1 = m_pStageInfo.AllTile[30].m_pTile->CreateComponent<GameEngineSpriteRenderer>(OrderNum::BACKGROUND);
 	pLevel1->SetTexture("1.png");
 	pLevel1->GetTransform()->SetLocalPosition({ 0.f,300.f });
-	pLevel1->GetTransform()->SetLocalScale({ 212.f,256.f });
+	pLevel1->GetTransform()->SetLocalScale({ 212.f,256.f,1.f });
+
+	std::shared_ptr< GameEngineSpriteRenderer> pLevel1Fog = m_pStageInfo.AllTile[30].m_pTile->CreateComponent<GameEngineSpriteRenderer>(OrderNum::BACKGROUND);
+	pLevel1Fog->SetTexture("StageFog.png");
+	pLevel1Fog->GetTransform()->SetLocalPosition(pLevel1->GetTransform()->GetLocalPosition());
+	pLevel1Fog->GetTransform()->SetLocalScale({ 212.f*1.5f,256.f * 1.5f,1.f });
 
 	m_pRed->GetTransform()->SetLocalPosition(m_pStageInfo.AllTile[12].m_pTile->GetTransform()->GetWorldPosition());
 
