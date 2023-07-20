@@ -20,7 +20,6 @@
 #include "FireWorkEffect.h"
 #include "RoundGlowEffect.h"
 
-#include "GlobalClass.h"
 
 PlayLevel::PlayLevel()
 {
