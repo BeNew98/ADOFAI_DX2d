@@ -2,7 +2,6 @@
 #include "BlackScreen.h"
 
 #include <GameEngineCore/GameEngineSpriteRenderer.h>
-#include "BackGroundRenderer.h"
 #include <GameEngineCore/GameEngineLevel.h>
 
 BlackScreen::BlackScreen() 

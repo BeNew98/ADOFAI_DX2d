@@ -3,7 +3,6 @@
 
 #include <GameEngineCore/GameEngineSpriteRenderer.h>
 #include <GameEngineCore/GameEngineLevel.h>
-#include "BackGroundRenderer.h"
 
 Level1BackGround::Level1BackGround() 
 {

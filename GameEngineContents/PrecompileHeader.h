@@ -6,3 +6,4 @@
 #include <GameEngineCore/GameEngineGUI.h>
 #include <GameEngineCore/GameEngineCamera.h>
 #include "ContentsEnum.h"
+#include "GlobalValue.h"

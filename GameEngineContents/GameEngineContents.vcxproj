@@ -163,10 +163,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="BackGroundRenderer.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
     <ClInclude Include="BlackScreen.h">
       <SubType>
       </SubType>
@@ -190,6 +186,10 @@
     </ClInclude>
     <ClInclude Include="FadeEffect.h" />
     <ClInclude Include="FireWorkEffect.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="GlobalValue.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -264,10 +264,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BackGroundRenderer.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
     <ClCompile Include="BlackScreen.cpp">
       <SubType>
       </SubType>
@@ -291,6 +287,10 @@
     </ClCompile>
     <ClCompile Include="FadeEffect.cpp" />
     <ClCompile Include="FireWorkEffect.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="GlobalValue.cpp">
       <SubType>
       </SubType>
     </ClCompile>

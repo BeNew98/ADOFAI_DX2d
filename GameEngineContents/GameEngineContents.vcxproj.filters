@@ -55,7 +55,6 @@
     <ClInclude Include="Level1BackGround.h">
       <Filter>Levels\PlayLevel\Obj</Filter>
     </ClInclude>
-    <ClInclude Include="BackGroundRenderer.h" />
     <ClInclude Include="WrongMark.h">
       <Filter>PublicObject</Filter>
     </ClInclude>
@@ -74,6 +73,7 @@
     <ClInclude Include="TestEffect.h">
       <Filter>PostEffect</Filter>
     </ClInclude>
+    <ClInclude Include="GlobalValue.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DFICore.cpp" />
@@ -130,7 +130,6 @@
     <ClCompile Include="Level1BackGround.cpp">
       <Filter>Levels\PlayLevel\Obj</Filter>
     </ClCompile>
-    <ClCompile Include="BackGroundRenderer.cpp" />
     <ClCompile Include="WrongMark.cpp">
       <Filter>PublicObject</Filter>
     </ClCompile>
@@ -149,6 +148,7 @@
     <ClCompile Include="TestEffect.cpp">
       <Filter>PostEffect</Filter>
     </ClCompile>
+    <ClCompile Include="GlobalValue.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Levels">

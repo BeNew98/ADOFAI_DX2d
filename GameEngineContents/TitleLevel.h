@@ -63,7 +63,10 @@ private:
 	bool m_bGameStart = false;
 	float m_fDistance = 100.f;
 
+	float m_fTexttime = 0.f;
 
+
+	std::shared_ptr<class TextObj> m_pAccuracyText = nullptr;
 	std::shared_ptr<class Portal> m_pPortal1 = nullptr;
 	void PlanetSwap();
 

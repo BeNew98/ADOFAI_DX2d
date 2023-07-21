@@ -41,12 +41,8 @@ public:
 
 	void SetColor(float4 _Color)
 	{
-		m_f4Color = { _Color.x / 255.f,_Color.y / 255.f,_Color.z / 255.f };
+		m_f4Color = { _Color.x / 255.f,_Color.y / 255.f,_Color.z / 255.f,_Color.a / 255.f };
 		m_pFontRenderer->SetColor(m_f4Color);
-	}
-	void SetBold()
-	{
-		m_pFontRenderer->SetFont("godoMaum");
 	}
 
 protected:

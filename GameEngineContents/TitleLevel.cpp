@@ -7,7 +7,6 @@
 #include <GameEngineCore/GameEngineSpriteRenderer.h>
 #include <GameEngineCore/GameEngineResource.h>
 
-#include "BackGroundRenderer.h"
 #include "TitleLogo.h"
 #include "EditGui.h"
 #include "BlackScreen.h"
@@ -17,6 +16,7 @@
 #include "SquareGlowEffect.h"
 #include "Portal.h"
 #include "TitleBackGround.h"
+#include "TextObj.h"
 
 TitleLevel::TitleLevel() 
 {
@@ -40,19 +40,9 @@ void TitleLevel::Update(float _DeltaTime)
 		m_BGM.SetLoop();
 	}
 
-	/*if (m_pTurn->GetTransform()->GetLocalPosition().x >= -m_fDistance && m_bStartDistance == false)
-	{
-		m_pTurn->GetTransform()->AddLocalPosition(float4(-m_fDistance, 0.f) * _DeltaTime);
-	}
-	else if (m_pTurn->GetTransform()->GetLocalPosition().x <= -m_fDistance && m_bStartDistance == false)
-	{
-		m_pTurn->GetTransform()->SetLocalPosition(float4(-m_fDistance, 0.f));
-		m_bStartDistance = true;
-	}*/
 
 	GlowTimeCheck(_DeltaTime);
 	PlanetSwap();
-
 
 	if (GameEngineInput::IsDown("CenterLevel"))
 	{
@@ -103,7 +93,7 @@ void TitleLevel::LevelChangeStart()
 
 		
 	}
-
+	GlobalValue::GetInst()->vec_Accuracy.resize(2);
 	EditGui::Editor->LoadtoString("Title1~2");
 	EditGui::Editor->SetBPM(static_cast<int>(150.f * 0.8f));
 	m_pStageInfo = EditGui::Editor->GetStageInfo(0);
@@ -132,6 +122,8 @@ void TitleLevel::LevelChangeStart()
 	}
 
 
+
+	m_pAccuracyText = CreateActor<TextObj>(OrderNum::TEXT);
 	for (size_t i = 0; i < m_pStageInfo.AllTile.size(); i++)
 	{
 		m_pStageInfo.AllTile[i].m_pTile->GetTransform()->AddWorldPosition({ -Tilepos.x, -Tilepos.y });
@@ -144,6 +136,7 @@ void TitleLevel::LevelChangeStart()
 			EditGui::Editor->SetLevel(1);
 			EditGui::Editor->SetBPM(150);
 		});
+	m_pPortal1->SetText(m_pAccuracyText);
 
 	std::shared_ptr< GameEngineSpriteRenderer> pLevel1 = m_pStageInfo.AllTile[30].m_pTile->CreateComponent<GameEngineSpriteRenderer>(OrderNum::BACKGROUND);
 	pLevel1->SetTexture("1.png");
@@ -169,6 +162,12 @@ void TitleLevel::LevelChangeStart()
 		}
 		m_pStageInfo.AllTile[i].m_pTile->GetRender()->ColorOptionValue.MulColor = { 1.f, 1.f, 1.f, 0.f };
 	}
+	m_pAccuracyText->SetScale(75.f);
+	m_pAccuracyText->GetTransform()->SetWorldPosition(pLevel1->GetTransform()->GetWorldPosition());
+	//m_pAccuracyText->Off();
+	m_pAccuracyText->SetTxt("플레이 기록 없음");
+	m_pAccuracyText->SetPosition({ 0.f,64.f });
+	m_pAccuracyText->SetColor({ 255.f ,255.f ,255.f , 0.f});
 	
 	EditGui::Editor->Off();
 	//EditGui::Editor->On();

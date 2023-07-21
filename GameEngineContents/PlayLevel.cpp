@@ -350,17 +350,20 @@ void PlayLevel::PlanetSwap()
 
 		else if ((fAngle < 45.f && fAngle >= 30.f))
 		{
+			++GlobalValue::GetInst()->vec_Accuracy[0].s_iEarlyPerfect;
 			pTextObj->SetTxt("빠름");
 			pTextObj->SetColor({ 152.f, 244.f, 73.f });
 		}
 		else if (fAngle > -45.f && fAngle <= -30.f)
 		{
+			++GlobalValue::GetInst()->vec_Accuracy[0].s_iLatePerfect;
 			pTextObj->SetTxt("느림");
 			pTextObj->SetColor({ 152.f, 244.f, 73.f });
 		}
 
 		else
 		{
+			++GlobalValue::GetInst()->vec_Accuracy[0].s_iPerfect;
 			pTextObj->SetTxt("정확");
 			pTextObj->SetColor({ 92.f, 248.f, 74.f });
 		}

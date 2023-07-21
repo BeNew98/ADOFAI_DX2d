@@ -119,7 +119,7 @@ void CenterLevel::Update(float _DeltaTime)
 		FMOD::Channel* pChannel = nullptr;
 		int iChannelSize = 0;
 		GameEngineSound::ChannelGroup->getNumChannels(&iChannelSize);
-		for (size_t i = 0; i < iChannelSize; i++)
+		for (int i = 0; i < iChannelSize; i++)
 		{
 
 			GameEngineSound::ChannelGroup->getChannel(i, &pChannel);

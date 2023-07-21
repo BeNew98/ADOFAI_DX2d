@@ -23,16 +23,29 @@ public:
 		m_Ptr = _Ptr;
 	}
 
+	void AccEventOn()
+	{
+		m_EventTrigger2 = true;
+	}
+	void SetText( std::shared_ptr<class TextObj> _Text)
+	{
+		m_pText = _Text;
+	}
+	
 protected:
 	void Start()override;
 	void Update(float _DeltaTime) override;
 
 private:
 	bool m_EventTrigger = false;
+	bool m_EventTrigger2 = false;
+	float m_fTextTime = 0.f;
 	
 	std::shared_ptr<class GameEngineCollision> m_pCollision = nullptr;
+	std::shared_ptr<class GameEngineCollision> m_pAccuracyCol = nullptr;
 	std::shared_ptr<class GameEngineSpriteRenderer> m_pEffect = nullptr;
 	std::function<void()> m_Ptr = nullptr;
+	std::shared_ptr<class TextObj>  m_pText = nullptr;
 
 };
 
