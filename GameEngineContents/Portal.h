@@ -23,10 +23,6 @@ public:
 		m_Ptr = _Ptr;
 	}
 
-	void AccEventOn()
-	{
-		m_EventTrigger2 = true;
-	}
 	void SetText( std::shared_ptr<class TextObj> _Text)
 	{
 		m_pText = _Text;
