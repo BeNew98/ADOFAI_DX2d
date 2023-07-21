@@ -38,7 +38,6 @@ protected:
 
 private:
 	bool m_EventTrigger = false;
-	bool m_EventTrigger2 = false;
 	float m_fTextTime = 0.f;
 	
 	std::shared_ptr<class GameEngineCollision> m_pCollision = nullptr;

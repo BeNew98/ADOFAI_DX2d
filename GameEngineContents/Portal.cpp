@@ -65,14 +65,13 @@ void Portal::Update(float _DeltaTime)
 
 			if (pPlanet2->IsCenter() == true && m_pText != nullptr /*&& false == m_EventTrigger2*/)
 			{
+				m_fTextTime += _DeltaTime;
 				if (m_fTextTime >= 1.f)
 				{
 					m_fTextTime = 1.f;
 					m_pText->SetColor({ 255.f ,255.f ,255.f , 255.f * m_fTextTime });
 					return;
 				}
-				m_fTextTime += _DeltaTime;
-				//m_pText->On();
 				m_pText->SetColor({ 255.f ,255.f ,255.f , 255.f * m_fTextTime });
 			}
 
@@ -88,6 +87,7 @@ void Portal::Update(float _DeltaTime)
 			{
 				if (m_pText != nullptr /*&& true == m_EventTrigger2*/)
 				{
+					m_fTextTime -= _DeltaTime;
 					if (m_fTextTime <= 0.f)
 					{
 						m_fTextTime = 0.f;
@@ -95,7 +95,6 @@ void Portal::Update(float _DeltaTime)
 						return;
 						//m_EventTrigger2 = false;
 					}
-					m_fTextTime -= _DeltaTime;
 					m_pText->SetColor({ 255.f,255.f ,255.f , 255.f * m_fTextTime });
 				}
 			}
@@ -105,6 +104,7 @@ void Portal::Update(float _DeltaTime)
 	{
 		if (m_pText != nullptr /*&& true == m_EventTrigger2*/)
 		{
+			m_fTextTime -= _DeltaTime;
 			if (m_fTextTime <= 0.f)
 			{
 				m_fTextTime = 0.f;
@@ -112,7 +112,6 @@ void Portal::Update(float _DeltaTime)
 				return;
 				//m_EventTrigger2 = false;
 			}
-			m_fTextTime -= _DeltaTime;
 			m_pText->SetColor({ 255.f,255.f ,255.f , 255.f * m_fTextTime });
 		}
 	}
