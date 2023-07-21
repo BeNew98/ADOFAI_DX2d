@@ -101,15 +101,14 @@ void CenterLevel::Update(float _DeltaTime)
 	}
 	if (GameEngineInput::IsDown("TitleLevel"))
 	{
-		FMOD::Channel* testch = nullptr;
-		int a = 0;
-		GameEngineSound::ChannelGroup->getNumChannels(&a);
-		int b = a;
-		for (size_t i = 0; i < a; i++)
+		FMOD::Channel* pChannel = nullptr;
+		int iChannelSize = 0;
+		GameEngineSound::ChannelGroup->getNumChannels(&iChannelSize);
+		for (size_t i = 0; i < iChannelSize; i++)
 		{
 
-			GameEngineSound::ChannelGroup->getChannel(i, &testch);
-			testch->setVolume(0.f);
+			GameEngineSound::ChannelGroup->getChannel(i, &pChannel);
+			pChannel->setVolume(0.f);
 		}
 		//Bgm.Stop();
 		//Bgm = GameEngineSound::Play("1-X.wav");
