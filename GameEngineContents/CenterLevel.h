@@ -15,7 +15,7 @@ public:
 	CenterLevel& operator=(const CenterLevel& _Other) = delete;
 	CenterLevel& operator=(CenterLevel&& _Other) noexcept = delete;
 
-	static class GameEngineSoundPlayer Bgm;
+	//static class GameEngineSoundPlayer Bgm;
 
 protected:
 	void Start() override;

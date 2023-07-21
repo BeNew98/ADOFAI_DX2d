@@ -7,11 +7,18 @@ class GameEngineSoundPlayer
 {
 private:
 	FMOD::Channel* Channel = nullptr;
-public:
 
-	GameEngineSoundPlayer(const std::string_view&,FMOD::Channel* _Channel);
-	GameEngineSoundPlayer(FMOD::Channel* _Channel) {}
-	GameEngineSoundPlayer()	{}
+public:
+	GameEngineSoundPlayer()
+	{
+
+	}
+
+	GameEngineSoundPlayer(FMOD::Channel* _Channel)
+		: Channel(_Channel)
+	{
+
+	}
 
 	inline bool IsValid() const
 	{
@@ -136,8 +143,6 @@ public:
 	static void Load(const std::string_view& _Name, const std::string_view& _Path);
 
 	static GameEngineSoundPlayer Play(const std::string_view& _Name);
-
-	static std::map<std::string,class GameEngineSoundPlayer*> SoundList;
 
 protected:
 
