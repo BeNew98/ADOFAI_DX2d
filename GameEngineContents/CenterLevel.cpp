@@ -92,7 +92,7 @@ void CenterLevel::Update(float _DeltaTime)
 		GetLastTarget()->ReleaseEffect(ptr2);
 	}
 	
-	std::list<GameEngineSoundPlayer*> test = GameEngineSound::SoundList;
+	std::map<std::string , GameEngineSoundPlayer*> test = GameEngineSound::SoundList;
 	
 	if (GameEngineInput::IsDown("Reset"))
 	{
@@ -100,8 +100,10 @@ void CenterLevel::Update(float _DeltaTime)
 		GameEngineSoundPlayer test = GameEngineSound::Play("sndKick.wav");
 	}
 	if (GameEngineInput::IsDown("TitleLevel"))
-	{		
-		GameEngineCore::ChangeLevel("TitleLevel");
+	{	
+		Bgm.Stop();
+		Bgm = GameEngineSound::Play("1-X.wav");
+		//GameEngineCore::ChangeLevel("TitleLevel");
 	}
 
 	if (GameEngineInput::IsDown("PlayLevel"))
