@@ -16,13 +16,11 @@
 
 //////////////////////////// GameEngineSoundPlayer ////////////////////////////
 
-FMOD::ChannelGroup* GameEngineSoundPlayer::ChannelSubGroup = nullptr;
 GameEngineSoundPlayer::GameEngineSoundPlayer(FMOD::Channel* _Channel)
 	: Channel(_Channel)
 {
 	Channel->setChannelGroup(GameEngineSound::ChannelGroup);
-	GameEngineSound::ChannelGroup->addGroup(ChannelSubGroup);
-}
+ }
 
 void GameEngineSoundPlayer::SoundFadeIn(double _Time, float _Volume)
 {

@@ -9,7 +9,6 @@ private:
 	FMOD::Channel* Channel = nullptr;
 
 public:
-	static FMOD::ChannelGroup* ChannelSubGroup;
 	GameEngineSoundPlayer()
 	{
 

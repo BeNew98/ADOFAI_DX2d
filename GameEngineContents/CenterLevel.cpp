@@ -40,7 +40,7 @@ void CenterLevel::Start()
 		GameEngineDirectory NewDir;
 		NewDir.MoveParentToDirectory("ContentResources");
 		NewDir.Move("ContentResources");
-
+		NewDir.Move("Sprite");
 
 		std::vector<GameEngineFile> File = NewDir.GetAllFile({ ".Png",});
 
@@ -96,23 +96,10 @@ void CenterLevel::Update(float _DeltaTime)
 	
 	if (GameEngineInput::IsDown("Reset"))
 	{
-		//Bgm = GameEngineSound::Play("sndKick.wav");
 		GameEngineSoundPlayer test = GameEngineSound::Play("1-X.wav");
 	}
 	if (GameEngineInput::IsDown("TitleLevel"))
-	{
-		FMOD::Channel* pChannel = nullptr;
-		int iChannelSize = 0;
-		GameEngineSound::ChannelGroup->getNumChannels(&iChannelSize);
-		for (size_t i = 0; i < iChannelSize; i++)
-		{
-
-			GameEngineSound::ChannelGroup->getChannel(i, &pChannel);
-			pChannel->setVolume(0.f);
-		}
-		//Bgm.Stop();
-		//Bgm = GameEngineSound::Play("1-X.wav");
-		//GameEngineCore::ChangeLevel("TitleLevel");
+	{GameEngineCore::ChangeLevel("TitleLevel");
 	}
 
 	if (GameEngineInput::IsDown("PlayLevel"))
@@ -125,6 +112,19 @@ void CenterLevel::Update(float _DeltaTime)
 	if (GameEngineInput::IsDown("EditLevel"))
 	{
 		GameEngineCore::ChangeLevel("EditLevel");
+	}
+
+	if (GameEngineInput::IsDown("CenterLevel"))
+	{
+		FMOD::Channel* pChannel = nullptr;
+		int iChannelSize = 0;
+		GameEngineSound::ChannelGroup->getNumChannels(&iChannelSize);
+		for (size_t i = 0; i < iChannelSize; i++)
+		{
+
+			GameEngineSound::ChannelGroup->getChannel(i, &pChannel);
+			pChannel->setVolume(0.f);
+		}
 	}
 }
 
