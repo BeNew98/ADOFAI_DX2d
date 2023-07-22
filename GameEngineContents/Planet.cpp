@@ -46,7 +46,7 @@ void Planet::Start()
 	m_fScaleRatio = m_fDistance *2.f / 60.f * EditGui::Editor->GetStageInfo(0).BPM;
 	m_pCollision = CreateComponent<GameEngineCollision>(ColNum::PLANET);
 	m_pCollision->GetTransform()->SetLocalScale({ 74.f, 74.f, 1.f });
-	m_pRing = CreateComponent<GameEngineSpriteRenderer>(OrderNum::EFFECT);
+	m_pRing = CreateComponent<GameEngineSpriteRenderer>(OrderNum::PLANET);
 	m_pRing->SetTexture("white-ring.png");
 
 

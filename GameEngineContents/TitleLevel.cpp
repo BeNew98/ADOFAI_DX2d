@@ -50,9 +50,8 @@ void TitleLevel::Update(float _DeltaTime)
 	}
 	if (GameEngineInput::IsDown("Level1"))
 	{
-		GameEngineCore::ChangeLevel("PlayLevel");
-		EditGui::Editor->SetLevel(1);
-		EditGui::Editor->SetBPM(150);
+		m_pCenter->GetTransform()->SetLocalPosition(m_pPortal1->GetAccPosition()); 
+		CenterCheck();
 	}
 	//if (GameEngineInput::IsDown("Level2"))
 	//{
@@ -147,6 +146,8 @@ void TitleLevel::LevelChangeStart()
 	pLevel1Fog->SetTexture("StageFog.png");
 	pLevel1Fog->GetTransform()->SetLocalPosition(pLevel1->GetTransform()->GetLocalPosition());
 	pLevel1Fog->GetTransform()->SetLocalScale({ 212.f*1.5f,256.f * 1.5f,1.f });
+	pLevel1Fog->ColorOptionValue.PlusColor = float4{ 137.f / 255.f, 152.f / 255.f, 154.f / 255.f,0.f };
+	pLevel1Fog->ColorOptionValue.MulColor = float4{ 137.f / 255.f, 152.f / 255.f, 154.f / 255.f,0.8f };
 
 	m_pRed->GetTransform()->SetLocalPosition(m_pStageInfo.AllTile[12].m_pTile->GetTransform()->GetWorldPosition());
 
@@ -242,6 +243,10 @@ void TitleLevel::CenterCheck()
 
 void TitleLevel::PlanetSwap()
 {
+	if (false == GameEngineInput::IsFree("Level1"))
+	{
+		return;
+	}
 	if (true == GameEngineInput::IsAnyKey())
 	{
 		std::shared_ptr<GameEngineCollision> pCenterColTile = m_pCenter->GetCol()->Collision(ColNum::TILE);

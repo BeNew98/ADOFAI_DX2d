@@ -1,5 +1,6 @@
 #pragma once
 #include <GameEngineCore/GameEngineActor.h>
+#include <GameEngineCore/GameEngineCollision.h>
 
 // Ό³Έν :
 class Portal : public GameEngineActor
@@ -27,6 +28,13 @@ public:
 	{
 		m_pText = _Text;
 	}
+
+	float4 GetAccPosition()
+	{
+		return m_pAccuracyCol->GetTransform()->GetWorldPosition();
+	}
+	
+
 	
 protected:
 	void Start()override;

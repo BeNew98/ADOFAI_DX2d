@@ -2,7 +2,7 @@
 #include "Portal.h"
 
 #include <GameEngineCore/GameEngineSpriteRenderer.h>
-#include <GameEngineCore/GameEngineCollision.h>
+#include <GameEngineCore/GameEngineLevel.h>
 #include "Planet.h"
 #include "TextObj.h"
 Portal::Portal() 
@@ -66,6 +66,7 @@ void Portal::Update(float _DeltaTime)
 			if (pPlanet2->IsCenter() == true && m_pText != nullptr /*&& false == m_EventTrigger2*/)
 			{
 				m_fTextTime += _DeltaTime;
+				GetLevel()->GetMainCamera()->GetTransform()->SetWorldPosition(float4::LerpClamp(GetLevel()->GetMainCamera()->GetTransform()->GetWorldPosition(), GetAccPosition()+float4{0.f,200.f}, m_fTextTime));
 				if (m_fTextTime >= 1.f)
 				{
 					m_fTextTime = 1.f;

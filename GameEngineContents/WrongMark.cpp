@@ -20,7 +20,7 @@ void WrongMark::Start()
 	
 	m_pFontRenderer = CreateComponent<GameEngineFontRenderer>(OrderNum::TEXT);
 	m_pFontRenderer->GetTransform()->AddLocalPosition({0.f,100.f});
-	m_pFontRenderer->SetFont("Ch2.0-1");
+	m_pFontRenderer->SetFont("godoMaum");
 	m_pFontRenderer->SetScale(75.f);
 	m_pFontRenderer->SetFontFlag(FW1_TEXT_FLAG::FW1_CENTER);
 }
