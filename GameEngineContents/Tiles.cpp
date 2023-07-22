@@ -6,6 +6,7 @@
 
 #include "SquareGlowEffect.h"
 #include "RoundGlowEffect.h"
+#include "BackGroundRenderer.h"
 
 Tiles::Tiles() 
 {
@@ -80,12 +81,13 @@ void Tiles::Update(float _DeltaTime)
 
 void Tiles::EventStart(float _DeltaTime)
 {
-	if (m_bZoomTrigger&&m_bMoveTrigger&&m_bRotTrigger)
+	if (m_bZoomTrigger&&m_bMoveTrigger&&m_bRotTrigger&& m_bMonoTrigger)
 	{
 		m_bEventTrigger = false; 
 		m_bZoomTrigger = false;
 		m_bMoveTrigger = false;
 		m_bRotTrigger = false;
+		m_bMonoTrigger = false;
 
 		int a = 0;
 		std::map<EventType, std::vector<TileEvent>>::iterator findIter = m_mapAllEvent.begin();
@@ -105,6 +107,7 @@ void Tiles::EventStart(float _DeltaTime)
 	{
 		return;
 	}
+	MonoEvent();
 	ZoomEvent(_DeltaTime);
 	MoveEvent(_DeltaTime);
 	RotationEvent(_DeltaTime);
@@ -291,6 +294,52 @@ void Tiles::RotationEvent(float _DeltaTime)
 			return;
 		}
 	}
+}
+
+void Tiles::MonoEvent()
+{
+	std::map<EventType, std::vector<TileEvent>>::iterator findIter = m_mapAllEvent.find(EventType::BLACK);
+
+	if (findIter == m_mapAllEvent.end() || m_bMonoTrigger == true)
+	{
+		m_bMonoTrigger = true;
+		return;
+	}
+	std::vector<TileEvent>* vecEvt = &findIter->second;
+
+	if ((*vecEvt)[(*vecEvt).size() - 1].End == true)
+	{
+		m_bMonoTrigger = true;
+		return;
+	}
+
+	for (size_t i = 0; i < (*vecEvt).size(); i++)
+	{
+
+		if (true == (*vecEvt)[i].End)
+		{
+			continue;
+		}
+		TileEvent Evt = (*vecEvt)[i];
+		{
+
+			if (Evt.Ratio)
+			{
+				BackGroundRenderer::SwitchMonoChrome(true);
+				(*vecEvt)[i].End = true;
+				return;
+			}
+			else
+			{
+				BackGroundRenderer::SwitchMonoChrome(false);
+				(*vecEvt)[i].End = true;
+				return;
+			}
+			return;
+		}
+	}
+
+	
 }
 
 

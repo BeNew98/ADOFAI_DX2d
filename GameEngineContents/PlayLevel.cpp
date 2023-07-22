@@ -97,6 +97,12 @@ void PlayLevel::LevelChangeStart()
 			//tile->SetTileEvent(EventType::ROTATION,90.f, 1.f);
 		}			
 	}
+	std::shared_ptr<Tiles> tile = m_pStageInfo.AllTile[5].m_pTile;
+	tile->SetTileEvent(EventType::BLACK, 1.f, 0.f);
+	tile = m_pStageInfo.AllTile[7].m_pTile;
+	tile->SetTileEvent(EventType::BLACK, 0.f, 0.f);
+
+
 
 	m_pRed = CreateActor<Planet>(OrderNum::PLANET);
 	m_pBlue = CreateActor<Planet>(OrderNum::PLANET);

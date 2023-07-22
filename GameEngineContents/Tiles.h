@@ -173,10 +173,12 @@ private:
 	bool m_bZoomTrigger = false;
 	bool m_bMoveTrigger = false;
 	bool m_bRotTrigger = false;
+	bool m_bMonoTrigger = false;
 
 	void EventStart(float _DeltaTime);
 	void ZoomEvent(float _DeltaTime);
 	void MoveEvent(float _DeltaTime);
 	void RotationEvent(float _DeltaTime);
+	void MonoEvent();
 };
 
