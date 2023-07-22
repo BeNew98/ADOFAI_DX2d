@@ -25,14 +25,14 @@ void DFICore::ContentsResourcesCreate()
 	}
 
 	{
-		std::shared_ptr<GameEngineRenderingPipeLine> Pipe = GameEngineRenderingPipeLine::Create("My2DTexture");
+		std::shared_ptr<GameEngineRenderingPipeLine> Pipe = GameEngineRenderingPipeLine::Create("Mono");
 
 		//Pipe->SetVertexBuffer("Rect");
 		//Pipe->SetIndexBuffer("Rect");
 		Pipe->SetVertexShader("MyShader.fx");
 		Pipe->SetRasterizer("Engine2DBase");
 		Pipe->SetPixelShader("MyShader.fx");
-		Pipe->SetBlendState("AlphaBlend");
+		Pipe->SetBlendState("MergeBlend");
 		Pipe->SetDepthState("EngineDepth");
 	}
 
@@ -83,17 +83,6 @@ void DFICore::ContentsResourcesCreate()
 		Pipe->SetDepthState("EngineDepth");
 		Pipe->SetVertexShader("FireWork2.hlsl");
 		Pipe->SetPixelShader("FireWork2.hlsl");
-	}
-	{
-		std::shared_ptr<GameEngineRenderingPipeLine> Pipe = GameEngineRenderingPipeLine::Create("test");
-
-		//Pipe->SetVertexBuffer("FullRect");
-		//Pipe->SetIndexBuffer("FullRect");
-		Pipe->SetRasterizer("Engine2DBase");
-		Pipe->SetBlendState("MergeBlend");
-		Pipe->SetDepthState("EngineDepth");
-		Pipe->SetVertexShader("test.hlsl");
-		Pipe->SetPixelShader("test.hlsl");
 	}
 	//{
 	//	std::shared_ptr<GameEngineRenderingPipeLine> Pipe = GameEngineRenderingPipeLine::Create("DebugSphere");

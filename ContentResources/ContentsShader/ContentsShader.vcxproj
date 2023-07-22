@@ -131,7 +131,6 @@
     <FxCompile Include="FireWorkShader.hlsl" />
     <FxCompile Include="MyShader.fx" />
     <FxCompile Include="FireWork2.hlsl" />
-    <FxCompile Include="test.hlsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

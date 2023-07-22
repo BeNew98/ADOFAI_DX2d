@@ -88,9 +88,9 @@ cbuffer ColorOption : register(b0)
     float4 PlusColor;
 }
 
-cbuffer TestColor : register(b1)
+cbuffer MonoChrome : register(b1)
 {
-    float4 AColor;
+    float4 MonoChrome;
 }
 
 Texture2D DiffuseTex : register(t0);
@@ -109,8 +109,12 @@ float4 MyShader_PS(OutPut _Value) : SV_Target0
     float4 Color = DiffuseTex.Sample(WRAPSAMPLER, _Value.UV.xy);
     
     Color *= MulColor;
-    Color += PlusColor; 
-    Color += AColor;
+    Color += PlusColor;
+
+    if (MonoChrome.x)
+    {
+        Color.xyz = (Color.x + Color.y + Color.z) / 3;
+    }
     
     return Color;
 }

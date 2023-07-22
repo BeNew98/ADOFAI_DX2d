@@ -163,6 +163,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="BackGroundRenderer.h" />
     <ClInclude Include="BlackScreen.h">
       <SubType>
       </SubType>
@@ -264,6 +265,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BackGroundRenderer.cpp" />
     <ClCompile Include="BlackScreen.cpp">
       <SubType>
       </SubType>

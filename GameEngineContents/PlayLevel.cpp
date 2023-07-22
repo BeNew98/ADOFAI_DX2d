@@ -19,7 +19,7 @@
 #include "TextObj.h"
 #include "FireWorkEffect.h"
 #include "RoundGlowEffect.h"
-
+#include "BackGroundRenderer.h"
 
 PlayLevel::PlayLevel()
 {
@@ -67,7 +67,9 @@ void PlayLevel::LevelChangeStart()
 	//BackCam->GetTransform()->SetLocalPosition({ 0.f,0.f,-750.f })08;
 
 	GetMainCamera()->SetProjectionType(CameraType::Orthogonal);
-
+	CreateNewCamera(-1);
+	GetCamera(-1)->SetProjectionType(CameraType::Orthogonal);
+	GetCamera(-1)->GetTransform()->SetWorldPosition(float4::Zero);
 	//std::shared_ptr<BlackScreen> m_pBlackScreen = CreateActor<BlackScreen>(OrderNum::BACKGROUND);
 	//m_pBlackScreen->GetTransform()->SetLocalPosition({ 0.f,0.f,0.f });
 
@@ -92,10 +94,8 @@ void PlayLevel::LevelChangeStart()
 			tile->SetTileEvent(EventType::ZOOM, -0.05f, 0.1f);
 
 			tile->SetTileEvent(EventType::MOVE, 0.f, m_fReadyTime*5.f);
-
 			//tile->SetTileEvent(EventType::ROTATION,90.f, 1.f);
-		}
-
+		}			
 	}
 
 	m_pRed = CreateActor<Planet>(OrderNum::PLANET);
@@ -272,6 +272,8 @@ void PlayLevel::PlanetSwap()
 	{
 		return;
 	}
+
+	BackGroundRenderer::SwitchMonoChrome(test);
 	float4 f4CenterPos = m_pCenter->GetTransform()->GetWorldPosition();
 	float4 f4TurnPos = m_pTurn->GetTransform()->GetWorldPosition();
 	std::shared_ptr<Tiles> pNextTile = m_pStageInfo.AllTile[m_iCurIndex + 1].m_pTile;
@@ -350,20 +352,20 @@ void PlayLevel::PlanetSwap()
 
 		else if ((fAngle < 45.f && fAngle >= 30.f))
 		{
-			++GlobalValue::GetInst()->vec_Accuracy[0].s_iEarlyPerfect;
+			//++GlobalValue::GetInst()->vec_Accuracy[0].s_iEarlyPerfect;
 			pTextObj->SetTxt("빠름");
 			pTextObj->SetColor({ 152.f, 244.f, 73.f });
 		}
 		else if (fAngle > -45.f && fAngle <= -30.f)
 		{
-			++GlobalValue::GetInst()->vec_Accuracy[0].s_iLatePerfect;
+			//++GlobalValue::GetInst()->vec_Accuracy[0].s_iLatePerfect;
 			pTextObj->SetTxt("느림");
 			pTextObj->SetColor({ 152.f, 244.f, 73.f });
 		}
 
 		else
 		{
-			++GlobalValue::GetInst()->vec_Accuracy[0].s_iPerfect;
+			//++GlobalValue::GetInst()->vec_Accuracy[0].s_iPerfect;
 			pTextObj->SetTxt("정확");
 			pTextObj->SetColor({ 92.f, 248.f, 74.f });
 		}

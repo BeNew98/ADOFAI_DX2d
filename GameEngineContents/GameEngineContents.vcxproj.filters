@@ -74,6 +74,9 @@
       <Filter>PostEffect</Filter>
     </ClInclude>
     <ClInclude Include="GlobalValue.h" />
+    <ClInclude Include="BackGroundRenderer.h">
+      <Filter>PostEffect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DFICore.cpp" />
@@ -149,6 +152,9 @@
       <Filter>PostEffect</Filter>
     </ClCompile>
     <ClCompile Include="GlobalValue.cpp" />
+    <ClCompile Include="BackGroundRenderer.cpp">
+      <Filter>PostEffect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Levels">

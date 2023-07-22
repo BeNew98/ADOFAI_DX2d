@@ -9,15 +9,15 @@ BlackScreen::BlackScreen()
 }
 
 BlackScreen::~BlackScreen() 
-{	
+{
 }
 
 void BlackScreen::Start()
 {
-	std::shared_ptr<GameEngineSpriteRenderer> render = CreateComponent<GameEngineSpriteRenderer>(OrderNum::BACKGROUND);
-	render->SetTexture("BlackScreen.png");
+	m_pRender = CreateComponent<GameEngineSpriteRenderer>(OrderNum::BACKGROUND);
+	m_pRender->SetTexture("BlackScreen.png");
 
-	render->GetTransform()->SetLocalScale(GameEngineWindow::GetScreenSize()*1.2f);
+	m_pRender->GetTransform()->SetLocalScale(GameEngineWindow::GetScreenSize() * 1.2f);
 }
 
 void BlackScreen::Update(float _DeltaTime)
