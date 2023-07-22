@@ -273,7 +273,6 @@ void PlayLevel::PlanetSwap()
 		return;
 	}
 
-	BackGroundRenderer::SwitchMonoChrome(test);
 	float4 f4CenterPos = m_pCenter->GetTransform()->GetWorldPosition();
 	float4 f4TurnPos = m_pTurn->GetTransform()->GetWorldPosition();
 	std::shared_ptr<Tiles> pNextTile = m_pStageInfo.AllTile[m_iCurIndex + 1].m_pTile;
