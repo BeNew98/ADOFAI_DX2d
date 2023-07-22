@@ -97,10 +97,23 @@ void PlayLevel::LevelChangeStart()
 			//tile->SetTileEvent(EventType::ROTATION,90.f, 1.f);
 		}			
 	}
-	std::shared_ptr<Tiles> tile = m_pStageInfo.AllTile[5].m_pTile;
-	tile->SetTileEvent(EventType::BLACK, 1.f, 0.f);
-	tile = m_pStageInfo.AllTile[7].m_pTile;
-	tile->SetTileEvent(EventType::BLACK, 0.f, 0.f);
+
+	//////////test///////////
+	{
+		for (size_t i = 0; i < m_pStageInfo.AllTile.size(); i++)
+		{
+			std::shared_ptr<Tiles> tile = m_pStageInfo.AllTile[i].m_pTile;
+			if (i%2)
+			{
+				tile->SetTileEvent(EventType::BLACK, 1.f, 0.f);
+			}
+			else
+			{
+				tile->SetTileEvent(EventType::BLACK, 0.f, 0.f);
+
+			}
+		}
+	}
 
 
 
