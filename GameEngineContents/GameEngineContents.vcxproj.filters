@@ -28,9 +28,6 @@
     <ClInclude Include="Tiles.h">
       <Filter>Levels\EditLevel\Obj</Filter>
     </ClInclude>
-    <ClInclude Include="MyMouse.h">
-      <Filter>PublicObject</Filter>
-    </ClInclude>
     <ClInclude Include="FadeEffect.h">
       <Filter>PostEffect</Filter>
     </ClInclude>
@@ -55,9 +52,6 @@
     <ClInclude Include="Level1BackGround.h">
       <Filter>Levels\PlayLevel\Obj</Filter>
     </ClInclude>
-    <ClInclude Include="WrongMark.h">
-      <Filter>PublicObject</Filter>
-    </ClInclude>
     <ClInclude Include="TitleBackGround.h">
       <Filter>Levels\TitleLevel\Obj</Filter>
     </ClInclude>
@@ -78,6 +72,9 @@
       <Filter>PostEffect</Filter>
     </ClInclude>
     <ClInclude Include="BgmSpeed.h">
+      <Filter>Levels\PlayLevel\Obj</Filter>
+    </ClInclude>
+    <ClInclude Include="WrongMark.h">
       <Filter>Levels\PlayLevel\Obj</Filter>
     </ClInclude>
   </ItemGroup>
@@ -108,9 +105,6 @@
     <ClCompile Include="Tiles.cpp">
       <Filter>Levels\EditLevel\Obj</Filter>
     </ClCompile>
-    <ClCompile Include="MyMouse.cpp">
-      <Filter>PublicObject</Filter>
-    </ClCompile>
     <ClCompile Include="FadeEffect.cpp">
       <Filter>PostEffect</Filter>
     </ClCompile>
@@ -136,9 +130,6 @@
     <ClCompile Include="Level1BackGround.cpp">
       <Filter>Levels\PlayLevel\Obj</Filter>
     </ClCompile>
-    <ClCompile Include="WrongMark.cpp">
-      <Filter>PublicObject</Filter>
-    </ClCompile>
     <ClCompile Include="TitleBackGround.cpp">
       <Filter>Levels\TitleLevel\Obj</Filter>
     </ClCompile>
@@ -159,6 +150,9 @@
       <Filter>PostEffect</Filter>
     </ClCompile>
     <ClCompile Include="BgmSpeed.cpp">
+      <Filter>Levels\PlayLevel\Obj</Filter>
+    </ClCompile>
+    <ClCompile Include="WrongMark.cpp">
       <Filter>Levels\PlayLevel\Obj</Filter>
     </ClCompile>
   </ItemGroup>

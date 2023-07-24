@@ -18,6 +18,10 @@ public:
 	PlayLevel& operator=(PlayLevel&& _Other) noexcept = delete;
 
 	GameEngineSoundPlayer m_BGM = nullptr;
+	bool GetGameEnd()
+	{
+		return m_bGameEnd;
+	}
 protected:
 	void Update(float _DeltaTime) override;
 	void Start() override;

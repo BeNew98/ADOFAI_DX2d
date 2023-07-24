@@ -26,6 +26,7 @@ public:
 	GlobalValue& operator=(const GlobalValue& _Other) = delete;
 	GlobalValue& operator=(GlobalValue&& _Other) noexcept = delete;
 	std::vector<Accuracy> vec_Accuracy;
+	float BPM = 1.f;
 
 protected:
 

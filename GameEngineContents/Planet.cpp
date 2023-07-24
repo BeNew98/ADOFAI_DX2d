@@ -9,6 +9,7 @@
 #include "SmokeEffect.h"
 #include "EditGui.h"
 
+
 int Planet::m_iUseCount = 0;
 
 Planet::Planet()
@@ -109,8 +110,8 @@ void Planet::Update(float _DeltaTime)
 	}
 	if (m_bCenter==true)
 	{
-		GetTransform()->AddLocalRotation({ 0.f,0.f,-m_fSpeed * _DeltaTime });
-		m_pRing->GetTransform()->AddWorldRotation({ 0.f,0.f,-m_fSpeed * _DeltaTime / 6.f });
+		GetTransform()->AddLocalRotation({ 0.f,0.f,-m_fSpeed * GlobalValue::GetInst()->BPM *_DeltaTime });
+		m_pRing->GetTransform()->AddWorldRotation({ 0.f,0.f,-m_fSpeed * GlobalValue::GetInst()->BPM * _DeltaTime / 6.f });
 		if (m_pRing->GetTransform()->GetLocalScale().x >= m_fDistance * 2.f)
 		{
 			return;

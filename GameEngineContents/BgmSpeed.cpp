@@ -5,6 +5,7 @@
 #include <GameEngineCore/GameEngineCollision.h>
 
 #include "Planet.h"
+#include "PlayLevel.h"
 
 BgmSpeed::BgmSpeed() 
 {
@@ -14,9 +15,45 @@ BgmSpeed::~BgmSpeed()
 {
 }
 
+void BgmSpeed::SetType(BpmType _Type)
+{
+	m_eType = _Type;
+
+	switch (m_eType)
+	{
+	case BpmType::NONE:
+	{
+		MsgAssert("NONE으로 세팅 할 수 없습니다.");
+		return;
+	}
+	break;
+	case BpmType::RABBIT:
+	{
+		m_pRenderer->SetTexture("tile_rabbit_light_new0_Sprite.png");
+	}
+	break;
+	case BpmType::SNAIL:
+	{
+		m_pRenderer->SetTexture("tile_snail_light_new0_Sprite.png");
+	}
+	break;
+	case BpmType::DOUBLE_RABBIT:
+	{
+		m_pRenderer->SetTexture("tile_rabbit_double_light_new0_Sprite.png");
+	}
+	break;
+	case BpmType::DOUBLE_SNAIL:
+	{
+		m_pRenderer->SetTexture("tile_snail_double_light_new0_Sprite.png");
+	}
+	break;
+	}
+}
+
 void BgmSpeed::Start()
 {
 	m_pRenderer = CreateComponent<GameEngineSpriteRenderer>(OrderNum::EFFECT);
+	m_pRenderer->GetTransform()->SetWorldScale({ 64.f, 64.f, 1.f });
 
 	m_pCollision = CreateComponent<GameEngineCollision>(OrderNum::EFFECT);;
 	m_pCollision->GetTransform()->SetWorldScale({ 64.f, 64.f, 1.f });
@@ -35,20 +72,36 @@ void BgmSpeed::Update(float _DeltaTime)
 		std::shared_ptr<Planet> pPlanet = pColPlanet->GetActor()->DynamicThis<Planet>();
 		if (nullptr != pPlanet)
 		{
-
-			if (pPlanet->IsCenter() == true && m_eType != BpmType::NONE&& m_bTrigger == false)
+			std::shared_ptr<PlayLevel> pPlayLevel = GetLevel()->DynamicThis<PlayLevel>();
+			if (pPlanet->IsCenter() == true && m_eType != BpmType::NONE&& m_bTrigger == false&& pPlayLevel->GetGameEnd() == false)
 			{
 				switch (m_eType)
 				{
 				case BpmType::NONE:
 					break;
 				case BpmType::RABBIT:
+				{
+					m_bTrigger = true;
+					GlobalValue::GetInst()->BPM = 2.f;
+				}
 					break;
 				case BpmType::SNAIL:
+				{
+					m_bTrigger = true;
+					GlobalValue::GetInst()->BPM = 0.5f;
+				}
 					break;
 				case BpmType::DOUBLE_RABBIT:
+				{
+					m_bTrigger = true;
+					GlobalValue::GetInst()->BPM = 4.f;
+				}
 					break;
 				case BpmType::DOUBLE_SNAIL:
+				{
+					m_bTrigger = true;
+					GlobalValue::GetInst()->BPM = 0.25f;
+				}
 					break;
 				default:
 					break;

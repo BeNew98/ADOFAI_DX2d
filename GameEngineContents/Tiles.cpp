@@ -7,6 +7,7 @@
 #include "SquareGlowEffect.h"
 #include "RoundGlowEffect.h"
 #include "BackGroundRenderer.h"
+#include "BgmSpeed.h"
 
 Tiles::Tiles() 
 {
@@ -342,6 +343,13 @@ void Tiles::MonoEvent()
 	
 }
 
+
+void Tiles::SetSpeedObj(BpmType _Type)
+{
+	std::shared_ptr< BgmSpeed> pSpeedObj = GetLevel()->CreateActor<BgmSpeed>();
+	pSpeedObj->SetType(_Type);
+	pSpeedObj->GetTransform()->SetWorldPosition(GetPivotPos());
+}
 
 void Tiles::CreateTile(TileDeg _TileDeg)
 {

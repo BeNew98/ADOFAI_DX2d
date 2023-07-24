@@ -222,10 +222,6 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="MyMouse.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
     <ClInclude Include="Planet.h">
       <SubType>
       </SubType>
@@ -325,10 +321,6 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="SquareGlowEffect.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="MyMouse.cpp">
       <SubType>
       </SubType>
     </ClCompile>

@@ -7,7 +7,6 @@
 #include <GameEngineCore/GameEngineCamera.h>
 
 #include "Tiles.h"
-#include "MyMouse.h"
 #include "Planet.h"
 #include "WrongMark.h"
 
@@ -65,7 +64,6 @@ void EditLevel::LevelChangeStart()
 {	
 	m_pEditor->On();
 	m_pEditor->SetBPM(150);
-	m_pMouse = CreateActor<MyMouse>();
 
 	
 	GetMainCamera()->SetProjectionType(CameraType::Orthogonal);

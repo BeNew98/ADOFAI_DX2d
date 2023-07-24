@@ -29,6 +29,7 @@ public:
 	Tiles& operator=(const Tiles& _Other) = delete;
 	Tiles& operator=(Tiles&& _Other) noexcept = delete;
 
+	void SetSpeedObj(BpmType _Type);
 	
 	void CreateTile(TileDeg _TileDeg);
 

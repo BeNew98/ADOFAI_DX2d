@@ -38,7 +38,6 @@ private:
 	std::shared_ptr<Planet> m_pTurn = nullptr;
 
 	std::shared_ptr<class EditGui> m_pEditor = nullptr;
-	std::shared_ptr<class MyMouse> m_pMouse = nullptr;
 
 	int m_iCurIndex = 0;
 

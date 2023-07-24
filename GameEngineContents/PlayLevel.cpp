@@ -114,6 +114,10 @@ void PlayLevel::LevelChangeStart()
 			}
 		}
 	}
+	{
+		m_pStageInfo.AllTile[161].m_pTile->SetSpeedObj(BpmType::DOUBLE_SNAIL);
+	}
+
 
 
 
@@ -171,6 +175,7 @@ void PlayLevel::Reset()
 	m_fReadyTime = 0.f;
 	m_iCurIndex = 0;
 	m_fStartTime = 0.f;
+	GlobalValue::GetInst()->BPM = 1.f;
 	AllActorDestroy();
 }
 
