@@ -42,3 +42,12 @@ enum class EventType
 	ROTATION,
 
 };
+
+enum class BpmType
+{
+	NONE,
+	RABBIT,
+	SNAIL,
+	DOUBLE_RABBIT,
+	DOUBLE_SNAIL,
+};
