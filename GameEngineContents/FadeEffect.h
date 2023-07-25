@@ -48,7 +48,6 @@ protected:
 	void Effect(GameEngineRenderTarget* _Target, float _DeltaTime) override;
 
 private:
-	float m_fTime = 0.f;
 	float4 FadeData = {1.0f, 1.0f, 1.0f, 1.0f};
 	float m_fTimeRatio = 0.f;
 	FadeState State = FadeState::None;

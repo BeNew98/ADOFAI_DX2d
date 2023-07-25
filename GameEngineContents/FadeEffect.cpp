@@ -23,12 +23,6 @@ void FadeEffect::Start(GameEngineRenderTarget* _Target)
 void FadeEffect::Effect(GameEngineRenderTarget* _Target, float _DeltaTime)
 {
 	float fTime = m_fTimeRatio * _DeltaTime;
-	m_fTime += fTime;
-	if (m_fTime>1.f)
-	{
-		m_fTime = 1.f;
-		return;
-	}
 	if (State == FadeState::None)
 	{
 		return;

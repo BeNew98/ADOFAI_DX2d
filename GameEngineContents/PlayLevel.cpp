@@ -310,9 +310,9 @@ void PlayLevel::TileEventSetting()
 			}
 
 
-			m_pStageInfo.AllTile[3].m_pTile->SetTileEvent(EventType::ZOOM, -0.3, 0.01f);
+			m_pStageInfo.AllTile[3].m_pTile->SetTileEvent(EventType::ZOOM, -0.3f, 0.01f);
 
-			m_pStageInfo.AllTile[5].m_pTile->SetTileEvent(EventType::ZOOM, 0.3, 0.01f);
+			m_pStageInfo.AllTile[5].m_pTile->SetTileEvent(EventType::ZOOM, 0.3f, 0.01f);
 		}
 
 		{
