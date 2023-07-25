@@ -28,7 +28,12 @@ void FadeEffect::Effect(GameEngineRenderTarget* _Target, float _DeltaTime)
 		return;
 	}
 
-	if (State == FadeState::FadeOut && 1.0f <= FadeData.x)
+	if (State == FadeState::FadeIn && 1.0f < FadeData.x&& FadeData.y!=0)
+	{
+		FadeOut();
+		return;
+	}
+	if (State == FadeState::FadeOut && 0.0f > FadeData.x)
 	{
 		return;
 	}

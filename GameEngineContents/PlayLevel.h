@@ -59,6 +59,8 @@ private:
 	bool m_bFireEffectOn = false;
 	float m_fFireEffectTime = 0.f;
 
+	float m_fGameSuccess = false;
+
 
 	void PlanetSwap();
 	void Reset();

@@ -40,6 +40,8 @@ protected:
 	void LevelChangeEnd() override;
 
 private:
+	float4 PrevPosition = float4::Zero;
+
 	StageInfo m_pStageInfo = {};
 	std::shared_ptr<class Planet> m_pRed = nullptr;
 	std::shared_ptr<class Planet> m_pBlue = nullptr;
@@ -68,6 +70,8 @@ private:
 
 	std::shared_ptr<class TextObj> m_pAccuracyText = nullptr;
 	std::shared_ptr<class Portal> m_pPortal1 = nullptr;
+
+	void Reset();
 	void PlanetSwap();
 
 	void GlowTimeCheck(float _DeltaTime);

@@ -133,11 +133,12 @@ void TitleLevel::LevelChangeStart()
 	}
 	m_pPortal1 = CreateActor<Portal>(OrderNum::MAP);
 	m_pPortal1->GetTransform()->SetLocalPosition(m_pStageInfo.AllTile[30].m_pTile->GetTransform()->GetWorldPosition());
-	m_pPortal1->SetFunction([]() 
+	m_pPortal1->SetFunction([this]() 
 		{
 			GameEngineCore::ChangeLevel("PlayLevel"); 
 			EditGui::Editor->SetLevel(1);
 			EditGui::Editor->SetBPM(150);
+			PrevPosition = m_pPortal1->GetAccPosition();
 		});
 	m_pPortal1->SetText(m_pAccuracyText);
 
@@ -153,10 +154,10 @@ void TitleLevel::LevelChangeStart()
 	pLevel1Fog->ColorOptionValue.PlusColor = float4{ 137.f / 255.f, 152.f / 255.f, 154.f / 255.f,0.f };
 	pLevel1Fog->ColorOptionValue.MulColor = float4{ 137.f / 255.f, 152.f / 255.f, 154.f / 255.f,0.8f };
 
-	m_pRed->GetTransform()->SetLocalPosition(m_pStageInfo.AllTile[12].m_pTile->GetTransform()->GetWorldPosition());
+	m_pRed->GetTransform()->SetLocalPosition(PrevPosition);
 
 	std::shared_ptr<SquareGlowEffect> pSGlow = GetLevel()->CreateActor<SquareGlowEffect>(OrderNum::EFFECT);
-	pSGlow->GetTransform()->SetWorldPosition(m_pStageInfo.AllTile[12].m_pTile->GetTransform()->GetWorldPosition());
+	pSGlow->GetTransform()->SetWorldPosition(PrevPosition);
 
 
 	for (size_t i = 0; i < m_pStageInfo.AllTile.size(); i++)
@@ -176,34 +177,14 @@ void TitleLevel::LevelChangeStart()
 	
 	EditGui::Editor->Off();
 	//EditGui::Editor->On();
-	GetLevel()->GetMainCamera()->GetTransform()->SetWorldPosition(float4::Zero);
+
+	GetLevel()->GetMainCamera()->GetTransform()->SetWorldPosition(PrevPosition);
+
 }
 
 void TitleLevel::LevelChangeEnd()
 {
-	m_BGM.Stop();
-	m_pStageInfo = {};
-	m_pRed = nullptr;
-	m_pBlue = nullptr;
-	m_pCenter = nullptr;
-	m_pTurn = nullptr;
-
-	m_pBlackScreen = nullptr;
-	m_pLogo = nullptr;
-
-	m_iCurIndex = 0;
-	m_fLerpTime = 0.f;
-
-	m_fCurTilePos = float4::Zero;
-	m_fPrevTilePos = float4::Zero;
-
-	m_fTime = 0.f;
-	m_bGlow = false;
-	m_fGlowRatio = 0.f;
-	m_fSpeed = 0.f;
-	m_bGameStart = false;
-	
-	m_pPortal1 = nullptr;
+	Reset();
 }
 
 
@@ -243,6 +224,29 @@ void TitleLevel::CenterCheck()
 		m_pLogo->AlphaSwitch(false);
 	}
 
+}
+
+void TitleLevel::Reset()
+{
+	m_BGM.Stop();
+	m_pStageInfo = {};
+
+
+	 m_iCurIndex = 0;
+	 m_fLerpTime = 0.f;
+
+	 m_fCurTilePos = float4::Zero;
+	 m_fPrevTilePos = float4::Zero;
+
+	 m_fTime = 0.f;
+	 m_bGlow = false;
+	 m_fGlowRatio = 0.f;
+	 m_fSpeed = 0.f;
+	 m_bGameStart = false;
+	 m_fDistance = 100.f;
+
+	 m_fTexttime = 0.f;
+	 AllActorDestroy();
 }
 
 void TitleLevel::PlanetSwap()

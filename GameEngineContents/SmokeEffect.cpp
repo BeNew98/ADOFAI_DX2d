@@ -27,7 +27,7 @@ void SmokeEffect::Start()
 
 void SmokeEffect::Update(float _DeltaTime)
 {
-	m_fTime += _DeltaTime;
+	m_fTime += _DeltaTime*GlobalValue::GetInst()->BPM;
 	if (0.01f<= m_fTime)
 	{
 		if (m_fRatio <= 0.f)

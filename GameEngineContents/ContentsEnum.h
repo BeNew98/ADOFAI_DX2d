@@ -5,6 +5,7 @@ enum class OrderNum
 	BACKGROUND,
 	MAP,
 	EFFECT,
+	RING,
 	PLANET,
 	TEXT,
 };

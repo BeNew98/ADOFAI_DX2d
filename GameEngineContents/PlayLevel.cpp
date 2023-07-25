@@ -34,6 +34,10 @@ void PlayLevel::Update(float _DeltaTime)
 {
 	StartMechanism(_DeltaTime);
 
+	if (m_fGameSuccess&&GameEngineInput::IsAnyKey())
+	{
+		GameEngineCore::ChangeLevel("TitleLevel");
+	}
 	EndFireWork(_DeltaTime);
 	PlanetSwap();
 
@@ -58,19 +62,17 @@ void PlayLevel::Start()
 
 void PlayLevel::LevelChangeStart()
 {
-	m_FadeEffect = GetLastTarget()->CreateEffect<FadeEffect>();
-	m_FadeEffect->FadeIn();
-	m_FadeEffect->SetWhite();
-	m_FadeEffect->SetTimeRatio(10.f);
 	m_pCountText = CreateActor<TextObj>(OrderNum::TEXT);
 	m_pCountText->SetTxt("아무 키를 눌러 시작하세요");
 	m_pCountText->GetRenderer()->SetScale(100.f);
 	m_pCountText->SetPosition({ 0.f,100.f });
+
 	m_pProgressText = CreateActor<TextObj>(OrderNum::TEXT);
+	m_pProgressText->GetRenderer()->SetScale(150.f);
+
 	m_pTitleNameText = CreateActor<TextObj>(OrderNum::TEXT);
 	m_pTitleNameText->SetTxt("1-X A Dance of Fire and Ice");
 	m_pTitleNameText->GetRenderer()->SetScale(70.f);
-	m_pTitleNameText->SetPosition({ 0.f,400.f });
 	m_BGM = GameEngineSound::Play("1-X.wav");
 	m_BGM.SetPosition(0.f);
 	m_BGM.SetPause(true);
@@ -123,7 +125,10 @@ void PlayLevel::LevelChangeStart()
 			m_FadeEffect = GetLastTarget()->CreateEffect<FadeEffect>();
 			m_FadeEffect->FadeIn();
 			m_FadeEffect->SetWhite();
-			m_FadeEffect->SetTimeRatio(10.f);
+			m_FadeEffect->SetTimeRatio(5.f);
+			m_pProgressText->SetTxt("축하합니다!");
+			m_pProgressText->SetPosition(m_pStageInfo.AllTile[m_pStageInfo.AllTile.size() - 1].m_pTile->GetPivotPos()+float4{0,-400.f});
+			m_fGameSuccess = true;
 		});
 
 	EditGui::Editor->Off();
@@ -152,6 +157,7 @@ void PlayLevel::Reset()
 	m_bGameEnd = false;
 	m_bGameFail = false;
 	m_bFireEffectOn = false;
+	m_fGameSuccess = false;
 	m_fProgressPer = 0.f;
 	m_fTotalProgress = 0.f;
 	m_fFireEffectTime = 0.f;
