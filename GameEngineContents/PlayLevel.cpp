@@ -30,9 +30,18 @@ PlayLevel::~PlayLevel()
 {
 }
 
+float testtime = 0.f;
+
+std::shared_ptr<FadeEffect> ptr = nullptr;
 
 void PlayLevel::Update(float _DeltaTime)
 {
+	testtime += _DeltaTime*3.f;
+
+	if (testtime>=1.f)
+	{
+		ptr->FadeOut();
+	}
 	StartMechanism(_DeltaTime);
 
 	if (m_bSuccess)
@@ -62,13 +71,12 @@ void PlayLevel::Start()
 }
 
 
-std::shared_ptr<FadeEffect> ptr = nullptr; 
 void PlayLevel::LevelChangeStart()
 {
 	ptr= GetLastTarget()->CreateEffect<FadeEffect>();
 	ptr->FadeIn();
 	ptr->SetWhite();
-	ptr->SetTimeRatio(5.f);
+	ptr->SetTimeRatio(3.f);
 	m_pCountText = CreateActor<TextObj>(OrderNum::TEXT);
 	m_pCountText->SetTxt("아무 키를 눌러 시작하세요");
 	m_pCountText->GetRenderer()->SetScale(100.f);
