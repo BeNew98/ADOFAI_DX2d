@@ -55,6 +55,10 @@ public:
 		m_vecAllStage[0].RotSpeed = static_cast<float>(180.f * (_BPM / 60.f));
 	}
 
+	int GetLevelValue()
+	{
+		return m_iLevelSize;
+	}
 
 protected:
 	void Start() override; 

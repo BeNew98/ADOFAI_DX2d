@@ -37,7 +37,17 @@ float4 Fade_PS(OutPut _Value) : SV_Target0
 {
     float4 Color = DiffuseTex.Sample(WRAPSAMPLER, _Value.UV.xy);
     float Value = FadeValue.x;
+
     Value = saturate(Value);
-    Color.xyz *= Value;
+
+    if (0==FadeValue.y)
+    {
+        Color.xyz *= Value;
+    }
+    else
+    {
+        Color.xyz += Value;
+    }
+    Color = saturate(Color);
     return Color;
 }

@@ -25,22 +25,32 @@ public:
 	void FadeIn() 
 	{
 		State = FadeState::FadeIn;
-		FadeData.x = 1.0f;
+		FadeData.x = 0.0f;
 	}
 
 	void FadeOut() 
 	{
 		State = FadeState::FadeOut;
-		FadeData.x = 0.0f;
+		FadeData.x = 1.0f;
 	}
+	void SetWhite()
+	{
+		FadeData.y = 1.f;
+	}
+	void SetTimeRatio(float _Ratio)
+	{
+		m_fTimeRatio = _Ratio;
+	}
+
 
 protected:
 	void Start(GameEngineRenderTarget* _Target) override;
 	void Effect(GameEngineRenderTarget* _Target, float _DeltaTime) override;
 
 private:
+	float m_fTime = 0.f;
 	float4 FadeData = {1.0f, 1.0f, 1.0f, 1.0f};
-
+	float m_fTimeRatio = 0.f;
 	FadeState State = FadeState::None;
 
 	std::shared_ptr<GameEngineRenderUnit> FadeUnit;

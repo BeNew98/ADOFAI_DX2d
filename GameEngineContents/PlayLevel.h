@@ -58,9 +58,13 @@ private:
 	bool m_bFireEffectOn = false;
 	float m_fFireEffectTime = 0.f;
 
+
+	bool m_bSuccess = false;
+	void LevelSuccess();
 	void PlanetSwap();
 	void Reset();
 	void StartMechanism(float _DeltaTime);
 	void EndFireWork(float _DeltaTime);
+	void TileEventSetting();
 };
 

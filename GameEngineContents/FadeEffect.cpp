@@ -22,6 +22,12 @@ void FadeEffect::Start(GameEngineRenderTarget* _Target)
 
 void FadeEffect::Effect(GameEngineRenderTarget* _Target, float _DeltaTime)
 {
+	if (m_fTime>1.f)
+	{
+		m_fTime = 1.f;
+		return;
+	}
+	m_fTime = m_fTimeRatio * _DeltaTime;
 	if (State == FadeState::None)
 	{
 		return;
@@ -34,17 +40,19 @@ void FadeEffect::Effect(GameEngineRenderTarget* _Target, float _DeltaTime)
 
 	if (State == FadeState::FadeOut)
 	{
-		FadeData.x += _DeltaTime;
+		FadeData.x -= m_fTime;
+
 	}
-	else {
-		FadeData.x -= _DeltaTime;
+	else 
+	{
+		FadeData.x += m_fTime;
 	}
 
 
 	ResultTarget->Clear();
 	FadeUnit->ShaderResHelper.SetTexture("DiffuseTex", _Target->GetTexture(0));
 	ResultTarget->Setting();
-	FadeUnit->Render(_DeltaTime);
+	FadeUnit->Render(m_fTime);
 	FadeUnit->ShaderResHelper.AllResourcesReset();
 
 	_Target->Clear();

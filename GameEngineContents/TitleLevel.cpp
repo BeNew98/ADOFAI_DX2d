@@ -17,6 +17,7 @@
 #include "Portal.h"
 #include "TitleBackGround.h"
 #include "TextObj.h"
+#include "BackGroundRenderer.h"
 
 TitleLevel::TitleLevel() 
 {
@@ -66,6 +67,9 @@ void TitleLevel::Start()
 
 void TitleLevel::LevelChangeStart()
 {
+	CreateNewCamera(-1);
+	GetCamera(-1)->SetProjectionType(CameraType::Orthogonal);
+	GetCamera(-1)->GetTransform()->SetWorldPosition(float4::Zero);
 	{	/*
 		std::shared_ptr<GameEngineCamera> BackCam = CreateNewCamera(-1);
 		BackCam->SetProjectionType(CameraType::Perspective);
@@ -111,8 +115,8 @@ void TitleLevel::LevelChangeStart()
 	for (size_t i = 0; i < m_pStageInfo.AllTile.size(); i++)
 	{
 		std::shared_ptr<Tiles> tile = m_pStageInfo.AllTile[i].m_pTile;
-		tile->SetTileEvent(EventType::ZOOM, 0.05f, 0.05f);
-		tile->SetTileEvent(EventType::ZOOM, -0.05f, 0.1f);
+		tile->SetTileEvent(EventType::ZOOM, -0.05f, 0.05f);
+		tile->SetTileEvent(EventType::ZOOM, 0.05f, 0.1f);
 		if (i >= 43)
 		{
 			tile->SetTileEvent(EventType::MOVE, 200.f, 0.5f);

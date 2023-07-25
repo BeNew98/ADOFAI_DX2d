@@ -17,6 +17,7 @@
 #include "Level1BackGround.h"
 #include "WrongMark.h"
 #include "TextObj.h"
+#include "FadeEffect.h"
 #include "FireWorkEffect.h"
 #include "RoundGlowEffect.h"
 #include "BackGroundRenderer.h"
@@ -33,6 +34,12 @@ PlayLevel::~PlayLevel()
 void PlayLevel::Update(float _DeltaTime)
 {
 	StartMechanism(_DeltaTime);
+
+	if (m_bSuccess)
+	{
+		LevelSuccess();
+		return;
+	}
 	EndFireWork(_DeltaTime);
 	PlanetSwap();
 
@@ -53,8 +60,15 @@ void PlayLevel::Update(float _DeltaTime)
 void PlayLevel::Start()
 {
 }
+
+
+std::shared_ptr<FadeEffect> ptr = nullptr; 
 void PlayLevel::LevelChangeStart()
 {
+	ptr= GetLastTarget()->CreateEffect<FadeEffect>();
+	ptr->FadeIn();
+	ptr->SetWhite();
+	ptr->SetTimeRatio(5.f);
 	m_pCountText = CreateActor<TextObj>(OrderNum::TEXT);
 	m_pCountText->SetTxt("아무 키를 눌러 시작하세요");
 	m_pCountText->GetRenderer()->SetScale(100.f);
@@ -92,38 +106,8 @@ void PlayLevel::LevelChangeStart()
 
 	m_iBPM = m_pStageInfo.BPM;
 	m_fReadyTime = m_iBPM / 60.f / 5.f * 3.f;
-	{
-		for (size_t i = 0; i < m_pStageInfo.AllTile.size(); i++)
-		{
-			std::shared_ptr<Tiles> tile = m_pStageInfo.AllTile[i].m_pTile;
-			tile->SetTileEvent(EventType::ZOOM, 0.05f, 0.05f);
-			tile->SetTileEvent(EventType::ZOOM, -0.05f, 0.1f);
 
-			tile->SetTileEvent(EventType::MOVE, 0.f, m_fReadyTime*5.f);
-			//tile->SetTileEvent(EventType::ROTATION,90.f, 1.f);
-		}			
-	}
-
-	//////////test///////////
-	{
-		for (size_t i = 0; i < m_pStageInfo.AllTile.size(); i++)
-		{
-			std::shared_ptr<Tiles> tile = m_pStageInfo.AllTile[i].m_pTile;
-			if (i%2)
-			{
-				tile->SetTileEvent(EventType::BLACK, 1.f, 0.f);
-			}
-			else
-			{
-				tile->SetTileEvent(EventType::BLACK, 0.f, 0.f);
-
-			}
-		}
-	}
-	{
-		m_pStageInfo.AllTile[3].m_pTile->SetSpeedObj(BpmType::DOUBLE_SNAIL);
-		//m_pStageInfo.AllTile[161].m_pTile->SetSpeedObj(BpmType::DOUBLE_SNAIL);
-	}
+	TileEventSetting();
 
 
 
@@ -172,6 +156,7 @@ void PlayLevel::Reset()
 	m_bGameEnd = false;
 	m_bGameFail = false;
 	m_bFireEffectOn = false;
+	m_bSuccess = true;
 	m_fProgressPer = 0.f;
 	m_fTotalProgress = 0.f;
 	m_fFireEffectTime = 0.f;
@@ -294,6 +279,43 @@ void PlayLevel::EndFireWork(float _DeltaTime)
 	{
 		return;
 	}
+}
+
+void PlayLevel::TileEventSetting()
+{
+	if (1 == EditGui::Editor->GetLevelValue())
+	{
+
+		{
+			for (size_t i = 0; i < m_pStageInfo.AllTile.size(); i++)
+			{
+				std::shared_ptr<Tiles> tile = m_pStageInfo.AllTile[i].m_pTile;
+				tile->SetTileEvent(EventType::MOVE, 0.f, m_fReadyTime * 5.f);
+
+				if (i == 3 || i == 4 || i == 5)
+				{
+					continue;
+				}
+				tile->SetTileEvent(EventType::ZOOM, -0.05f, 0.05f);
+				tile->SetTileEvent(EventType::ZOOM, 0.05f, 0.1f);
+
+			}
+
+
+			m_pStageInfo.AllTile[3].m_pTile->SetTileEvent(EventType::ZOOM, -0.3, 0.01f);
+
+			m_pStageInfo.AllTile[5].m_pTile->SetTileEvent(EventType::ZOOM, 0.3, 0.01f);
+		}
+
+		{
+			m_pStageInfo.AllTile[161].m_pTile->SetSpeedObj(BpmType::DOUBLE_SNAIL);
+		}
+	}
+}
+
+void PlayLevel::LevelSuccess()
+{
+	
 }
 
 void PlayLevel::PlanetSwap()
