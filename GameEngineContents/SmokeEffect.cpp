@@ -20,7 +20,7 @@ void SmokeEffect::SetColor(float4 _Color)
 
 void SmokeEffect::Start()
 {
-	m_pRender = CreateComponent< GameEngineSpriteRenderer>(OrderNum::EFFECT);
+	m_pRender = CreateComponent< GameEngineSpriteRenderer>(OrderNum::SHADOW);
 	m_pRender->SetTexture("smokeA.png");
 	m_pRender->GetTransform()->SetLocalScale(float4(45.f, 45.f, 1.f, 1.f));
 }

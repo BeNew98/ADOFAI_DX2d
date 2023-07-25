@@ -65,6 +65,7 @@ private:
 	bool m_bGameStart = false;
 	float m_fDistance = 100.f;
 
+	float m_fReadyTime = 0.f;
 	float m_fTexttime = 0.f;
 
 
@@ -72,8 +73,8 @@ private:
 	std::shared_ptr<class Portal> m_pPortal1 = nullptr;
 
 	void Reset();
-	void PlanetSwap();
-
+	void PlanetSwap(); 
+	void StartMechanism(float _DeltaTime);
 	void GlowTimeCheck(float _DeltaTime);
 };
 

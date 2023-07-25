@@ -61,11 +61,13 @@ private:
 
 	float m_fGameSuccess = false;
 
+	bool m_bPause = false;
 
 	void PlanetSwap();
 	void Reset();
 	void StartMechanism(float _DeltaTime);
 	void EndFireWork(float _DeltaTime);
+	void GameSuccess();
 	void TileEventSetting();
 };
 

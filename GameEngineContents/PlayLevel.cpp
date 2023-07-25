@@ -29,15 +29,15 @@ PlayLevel::PlayLevel()
 PlayLevel::~PlayLevel()
 {
 }
-
 void PlayLevel::Update(float _DeltaTime)
 {
-	StartMechanism(_DeltaTime);
-
-	if (m_fGameSuccess&&GameEngineInput::IsAnyKey())
+	if (m_bPause != GetMainCamera()->IsFreeCamera())
 	{
-		GameEngineCore::ChangeLevel("TitleLevel");
+		m_bPause = GetMainCamera()->IsFreeCamera();
+		m_BGM.SetPause(m_bPause);
 	}
+	StartMechanism(_DeltaTime);
+	GameSuccess();
 	EndFireWork(_DeltaTime);
 	PlanetSwap();
 
@@ -127,7 +127,7 @@ void PlayLevel::LevelChangeStart()
 			m_FadeEffect->SetWhite();
 			m_FadeEffect->SetTimeRatio(5.f);
 			m_pProgressText->SetTxt("축하합니다!");
-			m_pProgressText->SetPosition(m_pStageInfo.AllTile[m_pStageInfo.AllTile.size() - 1].m_pTile->GetPivotPos()+float4{0,-400.f});
+			m_pProgressText->SetPosition(m_pStageInfo.AllTile[m_pStageInfo.AllTile.size() - 1].m_pTile->GetPivotPos()+float4{0,-200.f});
 			m_fGameSuccess = true;
 		});
 
@@ -145,6 +145,7 @@ void PlayLevel::LevelChangeEnd()
 
 void PlayLevel::Reset()
 {
+	m_bPause = false;
 	m_BGM.SetPause(true);
 	m_pStageInfo = {};
 	m_pRed = nullptr;
@@ -275,6 +276,18 @@ void PlayLevel::EndFireWork(float _DeltaTime)
 				GameEngineCore::ChangeLevel("PlayLevel");
 			}
 		}
+	}
+	else
+	{
+		return;
+	}
+}
+
+void PlayLevel::GameSuccess()
+{
+	if (m_fGameSuccess && GameEngineInput::IsAnyKey())
+	{
+		GameEngineCore::ChangeLevel("TitleLevel");
 	}
 	else
 	{

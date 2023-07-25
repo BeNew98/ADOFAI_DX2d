@@ -6,6 +6,7 @@ enum class OrderNum
 	MAP,
 	EFFECT,
 	RING,
+	SHADOW,
 	PLANET,
 	TEXT,
 };

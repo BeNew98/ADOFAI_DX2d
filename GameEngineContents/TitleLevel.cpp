@@ -27,21 +27,9 @@ TitleLevel::~TitleLevel()
 {
 }
 
-
 void TitleLevel::Update(float _DeltaTime)
 {
-	if (m_bGameStart == false)
-	{
-		CenterCheck();
-		m_bGameStart = true;
-		m_pCenter->SetGameStart(m_bGameStart);
-		m_pTurn->SetGameStart(m_bGameStart);
-		m_BGM.SetPitch(0.8f);
-		m_BGM.setPosition(0);
-		m_BGM.SetLoop();
-	}
-
-
+	StartMechanism(_DeltaTime);
 	GlowTimeCheck(_DeltaTime);
 	PlanetSwap();
 
@@ -178,6 +166,7 @@ void TitleLevel::LevelChangeStart()
 	EditGui::Editor->Off();
 	//EditGui::Editor->On();
 
+	m_fReadyTime = EditGui::Editor->GetStageInfo(0).BPM / 60.f / 5.f;
 	GetLevel()->GetMainCamera()->GetTransform()->SetWorldPosition(PrevPosition);
 
 }
@@ -319,6 +308,24 @@ void TitleLevel::PlanetSwap()
 
 
 }
+void TitleLevel::StartMechanism(float _DeltaTime)
+{
+	if (m_bGameStart == false)
+	{
+		CenterCheck();
+		m_bGameStart = true;
+		m_pCenter->SetGameStart(m_bGameStart);
+		m_pTurn->SetGameStart(m_bGameStart);
+		m_BGM.SetPitch(0.8f);
+		m_BGM.setPosition(0);
+		m_BGM.SetLoop();
+	}
+	m_fReadyTime -= _DeltaTime;
+	if (m_fReadyTime >= 0.f)
+	{
+		return;
+	}
+}
 void TitleLevel::GlowTimeCheck(float _DeltaTime)
 {
 	if (m_fTime>= m_fSpeed)
@@ -327,5 +334,5 @@ void TitleLevel::GlowTimeCheck(float _DeltaTime)
 		m_bGlow = !m_bGlow;
 	}
 
-	m_fTime += m_fSpeed * _DeltaTime;
+	m_fTime += m_fSpeed * _DeltaTime*2.f;
 }
