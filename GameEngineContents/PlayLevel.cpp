@@ -30,25 +30,10 @@ PlayLevel::~PlayLevel()
 {
 }
 
-float testtime = 0.f;
-
-std::shared_ptr<FadeEffect> ptr = nullptr;
-
 void PlayLevel::Update(float _DeltaTime)
 {
-	testtime += _DeltaTime*3.f;
-
-	if (testtime>=1.f)
-	{
-		ptr->FadeOut();
-	}
 	StartMechanism(_DeltaTime);
 
-	if (m_bSuccess)
-	{
-		LevelSuccess();
-		return;
-	}
 	EndFireWork(_DeltaTime);
 	PlanetSwap();
 
@@ -73,10 +58,10 @@ void PlayLevel::Start()
 
 void PlayLevel::LevelChangeStart()
 {
-	ptr= GetLastTarget()->CreateEffect<FadeEffect>();
-	ptr->FadeIn();
-	ptr->SetWhite();
-	ptr->SetTimeRatio(3.f);
+	m_FadeEffect = GetLastTarget()->CreateEffect<FadeEffect>();
+	m_FadeEffect->FadeIn();
+	m_FadeEffect->SetWhite();
+	m_FadeEffect->SetTimeRatio(10.f);
 	m_pCountText = CreateActor<TextObj>(OrderNum::TEXT);
 	m_pCountText->SetTxt("아무 키를 눌러 시작하세요");
 	m_pCountText->GetRenderer()->SetScale(100.f);
@@ -133,9 +118,12 @@ void PlayLevel::LevelChangeStart()
 
 	std::shared_ptr<Portal> m_pPortal1 = CreateActor<Portal>(OrderNum::MAP);
 	m_pPortal1->GetTransform()->SetLocalPosition(m_pStageInfo.AllTile[m_pStageInfo.AllTile.size() - 1].m_pTile->GetPivotPos());
-	m_pPortal1->SetFunction([]()
+	m_pPortal1->SetFunction([this]()
 		{
-			GameEngineCore::ChangeLevel("CenterLevel");
+			m_FadeEffect = GetLastTarget()->CreateEffect<FadeEffect>();
+			m_FadeEffect->FadeIn();
+			m_FadeEffect->SetWhite();
+			m_FadeEffect->SetTimeRatio(10.f);
 		});
 
 	EditGui::Editor->Off();
@@ -164,7 +152,6 @@ void PlayLevel::Reset()
 	m_bGameEnd = false;
 	m_bGameFail = false;
 	m_bFireEffectOn = false;
-	m_bSuccess = true;
 	m_fProgressPer = 0.f;
 	m_fTotalProgress = 0.f;
 	m_fFireEffectTime = 0.f;
@@ -319,11 +306,6 @@ void PlayLevel::TileEventSetting()
 			m_pStageInfo.AllTile[161].m_pTile->SetSpeedObj(BpmType::DOUBLE_SNAIL);
 		}
 	}
-}
-
-void PlayLevel::LevelSuccess()
-{
-	
 }
 
 void PlayLevel::PlanetSwap()

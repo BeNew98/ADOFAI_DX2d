@@ -40,6 +40,7 @@ private:
 	std::shared_ptr<class TextObj> m_pTitleNameText = nullptr;
 	std::shared_ptr<class FireWorkEffect> m_pRedFire = nullptr;
 	std::shared_ptr<class FireWorkEffect> m_pBlueFire = nullptr;
+	std::shared_ptr<class FadeEffect> m_FadeEffect = nullptr;
 
 	bool m_bGameStart = false;
 	bool m_bPlaying = false;
@@ -59,8 +60,6 @@ private:
 	float m_fFireEffectTime = 0.f;
 
 
-	bool m_bSuccess = false;
-	void LevelSuccess();
 	void PlanetSwap();
 	void Reset();
 	void StartMechanism(float _DeltaTime);
