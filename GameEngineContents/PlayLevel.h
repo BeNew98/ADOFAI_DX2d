@@ -37,6 +37,7 @@ private:
 	std::shared_ptr<Planet> m_pTurn = nullptr;
 	std::shared_ptr<class TextObj> m_pCountText = nullptr;
 	std::shared_ptr<class TextObj> m_pProgressText = nullptr;
+	std::shared_ptr<class TextObj> m_pTitleNameText = nullptr;
 	std::shared_ptr<class FireWorkEffect> m_pRedFire = nullptr;
 	std::shared_ptr<class FireWorkEffect> m_pBlueFire = nullptr;
 

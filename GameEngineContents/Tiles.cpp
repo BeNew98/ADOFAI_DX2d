@@ -145,12 +145,15 @@ void Tiles::ZoomEvent(float _DeltaTime)
 			float fRatio = GetLevel()->GetMainCamera()->GetZoomRatio();
 			float ZoomRatio = Evt.Ratio * _DeltaTime / Evt.Time;
 			m_fPrevZoomRatio += ZoomRatio;
+
+			std::shared_ptr<GameEngineCamera> BackGroundCamera = GetLevel()->GetCamera(-1);
 			if (Evt.Ratio > 0.f)
 			{
 				if (m_fPrevZoomRatio >= Evt.Ratio)
 				{
 					float fCal = m_fPrevZoomRatio - Evt.Ratio;
 					GetLevel()->GetMainCamera()->AddZoomRatio(-(ZoomRatio- fCal));
+					BackGroundCamera->AddZoomRatio(-(ZoomRatio - fCal));
 					m_fPrevZoomRatio = 0.f;
 					(*vecEvt)[i].End = true;
 					return;
@@ -162,6 +165,7 @@ void Tiles::ZoomEvent(float _DeltaTime)
 				{
 					float fCal = m_fPrevZoomRatio - Evt.Ratio;
 					GetLevel()->GetMainCamera()->AddZoomRatio(-(ZoomRatio- fCal));
+					BackGroundCamera->AddZoomRatio(-(ZoomRatio - fCal));
 					m_fPrevZoomRatio = 0.f;
 					(*vecEvt)[i].End = true;
 					return;
@@ -169,6 +173,7 @@ void Tiles::ZoomEvent(float _DeltaTime)
 			}
 
 			GetLevel()->GetMainCamera()->AddZoomRatio(-ZoomRatio);
+			BackGroundCamera->AddZoomRatio(-ZoomRatio);
 			return;
 		}
 	}

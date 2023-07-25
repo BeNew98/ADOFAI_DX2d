@@ -42,6 +42,8 @@ void PlayLevel::Update(float _DeltaTime)
 	//}
 
 
+	m_pTitleNameText->SetPosition(float4{ 0.f,400.f } + GetMainCamera()->GetTransform()->GetWorldPosition());
+
 	if (GameEngineInput::IsDown("CenterLevel"))
 	{
 		GameEngineCore::ChangeLevel("CenterLevel");
@@ -58,6 +60,10 @@ void PlayLevel::LevelChangeStart()
 	m_pCountText->GetRenderer()->SetScale(100.f);
 	m_pCountText->SetPosition({ 0.f,100.f });
 	m_pProgressText = CreateActor<TextObj>(OrderNum::TEXT);
+	m_pTitleNameText = CreateActor<TextObj>(OrderNum::TEXT);
+	m_pTitleNameText->SetTxt("1-X A Dance of Fire and Ice");
+	m_pTitleNameText->GetRenderer()->SetScale(70.f);
+	m_pTitleNameText->SetPosition({ 0.f,400.f });
 	m_BGM = GameEngineSound::Play("1-X.wav");
 	m_BGM.SetPosition(0.f);
 	m_BGM.SetPause(true);
@@ -115,7 +121,8 @@ void PlayLevel::LevelChangeStart()
 		}
 	}
 	{
-		m_pStageInfo.AllTile[161].m_pTile->SetSpeedObj(BpmType::DOUBLE_SNAIL);
+		m_pStageInfo.AllTile[3].m_pTile->SetSpeedObj(BpmType::DOUBLE_SNAIL);
+		//m_pStageInfo.AllTile[161].m_pTile->SetSpeedObj(BpmType::DOUBLE_SNAIL);
 	}
 
 
@@ -143,7 +150,7 @@ void PlayLevel::LevelChangeStart()
 
 	m_fProgressPer = 100.f / m_pStageInfo.AllTile.size();
 
-	GetLevel()->GetMainCamera()->GetTransform()->SetWorldPosition(float4::Zero);
+	GetMainCamera()->GetTransform()->SetWorldPosition(float4::Zero);
 }
 
 void PlayLevel::LevelChangeEnd()
