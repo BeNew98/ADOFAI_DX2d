@@ -324,7 +324,35 @@ void PlayLevel::TileEventSetting()
 					i == 56 ||
 					i == 65 ||
 					i == 81 ||
-					i == 97
+					i == 97 ||
+					i == 109 ||
+					i == 110 ||
+					i == 111 ||
+					i == 112 ||
+					i == 113 ||
+					i == 121 ||
+					i == 122 ||
+					i == 123 ||
+					i == 124 ||
+					i == 125 ||
+					i == 126 ||
+					i == 127 ||
+					i == 128 ||
+					i == 129 ||
+					i == 141 ||
+					i == 142 ||
+					i == 143 ||
+					i == 144 ||
+					i == 145 ||
+					i == 153 ||
+					i == 154 ||
+					i == 155 ||
+					i == 156 ||
+					i == 157 ||
+					i == 158 ||
+					i == 159 ||
+					i == 160 
+
 					)
 				{
 					continue;
@@ -353,7 +381,7 @@ void PlayLevel::TileEventSetting()
 			m_pStageInfo.AllTile[63 + 1].m_pTile->SetTileEvent(EventType::ROTATION, 10.f, 1.5f);
 			m_pStageInfo.AllTile[79 + 1].m_pTile->SetTileEvent(EventType::ROTATION, 10.f, 1.5f);
 			m_pStageInfo.AllTile[95 + 1].m_pTile->SetTileEvent(EventType::ROTATION, 10.f, 1.5f);
-
+			 
 			m_pStageInfo.AllTile[31].m_pTile->SetTileEvent(EventType::BLACK, 1.f, 0.f);
 			m_pStageInfo.AllTile[47].m_pTile->SetTileEvent(EventType::BLACK, 1.f, 0.f);
 			m_pStageInfo.AllTile[63].m_pTile->SetTileEvent(EventType::BLACK, 1.f, 0.f);
@@ -403,7 +431,68 @@ void PlayLevel::TileEventSetting()
 			m_pStageInfo.AllTile[63 + 2].m_pTile->SetTileEvent(EventType::ZOOM, 0.05f, 0.1f);
 			m_pStageInfo.AllTile[79 + 2].m_pTile->SetTileEvent(EventType::ZOOM, 0.05f, 0.1f);
 			m_pStageInfo.AllTile[95 + 2].m_pTile->SetTileEvent(EventType::ZOOM, 0.05f, 0.1f);
+		}
 
+
+		{
+			m_pStageInfo.AllTile[109].m_pTile->SetTileEvent(EventType::ROTATION, 10.f, 1.5f);
+			m_pStageInfo.AllTile[121].m_pTile->SetTileEvent(EventType::ROTATION, 10.f, 1.5f);
+			m_pStageInfo.AllTile[141].m_pTile->SetTileEvent(EventType::ROTATION, 10.f, 1.5f);
+			m_pStageInfo.AllTile[153].m_pTile->SetTileEvent(EventType::ROTATION, 10.f, 1.5f);
+
+
+			for (size_t i = 109; i < 113; i++)
+			{
+				m_pStageInfo.AllTile[i].m_pTile->SetTileEvent(EventType::ZOOM, -0.07f, 0.01f);
+
+			}
+			m_pStageInfo.AllTile[113].m_pTile->SetTileEvent(EventType::ZOOM, 0.28f, 0.01f);
+
+
+			for (size_t i = 121; i < 129; i++)
+			{
+				m_pStageInfo.AllTile[i].m_pTile->SetTileEvent(EventType::ZOOM, -0.03f, 0.01f);
+
+			}
+			m_pStageInfo.AllTile[129].m_pTile->SetTileEvent(EventType::ZOOM, 0.24f, 0.01f);
+
+
+			for (size_t i = 141; i < 145; i++)
+			{
+				m_pStageInfo.AllTile[i].m_pTile->SetTileEvent(EventType::ZOOM, -0.05f, 0.01f);
+
+			}
+			m_pStageInfo.AllTile[145].m_pTile->SetTileEvent(EventType::ZOOM, 0.2f, 0.01f);
+
+
+			for (size_t i = 153; i < 157; i++)
+			{
+				m_pStageInfo.AllTile[i].m_pTile->SetTileEvent(EventType::ZOOM, -0.05f, 0.01f);
+
+			}
+			m_pStageInfo.AllTile[160].m_pTile->SetTileEvent(EventType::ZOOM, -0.1f, 0.01f);
+			m_pStageInfo.AllTile[161].m_pTile->SetTileEvent(EventType::ZOOM, 0.3f, 0.01f);
+
+			m_pStageInfo.AllTile[109].m_pTile->SetTileEvent(EventType::BLACK, 1.f, 0.f);
+			m_pStageInfo.AllTile[121].m_pTile->SetTileEvent(EventType::BLACK, 1.f, 0.f);
+			m_pStageInfo.AllTile[141].m_pTile->SetTileEvent(EventType::BLACK, 1.f, 0.f);
+			m_pStageInfo.AllTile[153].m_pTile->SetTileEvent(EventType::BLACK, 1.f, 0.f);
+
+			m_pStageInfo.AllTile[109+1].m_pTile->SetTileEvent(EventType::ROTATION, 10.f, 1.5f);
+			m_pStageInfo.AllTile[121+1].m_pTile->SetTileEvent(EventType::ROTATION, 10.f, 1.5f);
+			m_pStageInfo.AllTile[141+1].m_pTile->SetTileEvent(EventType::ROTATION, 10.f, 1.5f);
+			m_pStageInfo.AllTile[153+1].m_pTile->SetTileEvent(EventType::ROTATION, 10.f, 1.5f);
+
+
+			m_pStageInfo.AllTile[113].m_pTile->SetTileEvent(EventType::ROTATION, 0.f, 0.01f);
+			m_pStageInfo.AllTile[129].m_pTile->SetTileEvent(EventType::ROTATION, 0.f, 0.01f);
+			m_pStageInfo.AllTile[145].m_pTile->SetTileEvent(EventType::ROTATION, 0.f, 0.01f);
+			m_pStageInfo.AllTile[161].m_pTile->SetTileEvent(EventType::ROTATION, 0.f, 0.01f);
+
+			m_pStageInfo.AllTile[113].m_pTile->SetTileEvent(EventType::BLACK, 0.f, 0.f);
+			m_pStageInfo.AllTile[129].m_pTile->SetTileEvent(EventType::BLACK, 0.f, 0.f);
+			m_pStageInfo.AllTile[145].m_pTile->SetTileEvent(EventType::BLACK, 0.f, 0.f);
+			m_pStageInfo.AllTile[161].m_pTile->SetTileEvent(EventType::BLACK, 0.f, 0.f);
 		}
 
 		{
