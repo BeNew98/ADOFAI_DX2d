@@ -56,6 +56,7 @@ void PlayLevel::Start()
 
 void PlayLevel::LevelChangeStart()
 {
+	BackGroundRenderer::SwitchMonoChrome(false);
 	m_pCountText = CreateActor<TextObj>(OrderNum::TEXT);
 	m_pCountText->SetTxt("아무 키를 눌러 시작하세요");
 	m_pCountText->GetRenderer()->SetScale(100.f);
