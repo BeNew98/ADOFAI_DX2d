@@ -6,6 +6,7 @@
 struct TileEvent
 {
 	friend class Tiles;
+	friend class PlayLevel;
 public:
 	EventType Type = EventType::NONE;
 	float Ratio=0.f;
@@ -18,6 +19,7 @@ class Tiles : public GameEngineActor
 {
 	friend class SquareGlowEffect;
 	friend class Player;
+	friend class PlayLevel;
 public:
 	// constrcuter destructer
 	Tiles();

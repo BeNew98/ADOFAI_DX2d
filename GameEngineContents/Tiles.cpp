@@ -152,11 +152,9 @@ void Tiles::ZoomEvent(float _DeltaTime)
 				if (m_fPrevZoomRatio >= Evt.Ratio)
 				{
 					float fCal = m_fPrevZoomRatio - Evt.Ratio;
-					GetLevel()->GetMainCamera()->AddZoomRatio(-(ZoomRatio- fCal));
-					if (Evt.Ratio <= 0.1f)
-					{
-						BackGroundCamera->AddZoomRatio(-(ZoomRatio - fCal));
-					}
+					GetLevel()->GetMainCamera()->AddZoomRatio(-(ZoomRatio - fCal));
+					BackGroundCamera->AddZoomRatio(-(ZoomRatio - fCal));
+
 					m_fPrevZoomRatio = 0.f;
 					(*vecEvt)[i].End = true;
 					return;
@@ -167,11 +165,9 @@ void Tiles::ZoomEvent(float _DeltaTime)
 				if (m_fPrevZoomRatio <= Evt.Ratio)
 				{
 					float fCal = m_fPrevZoomRatio - Evt.Ratio;
-					GetLevel()->GetMainCamera()->AddZoomRatio(-(ZoomRatio- fCal));
-					if (Evt.Ratio <= 0.1f)
-					{
-						BackGroundCamera->AddZoomRatio(-(ZoomRatio - fCal));
-					}
+					GetLevel()->GetMainCamera()->AddZoomRatio(-(ZoomRatio - fCal));
+					BackGroundCamera->AddZoomRatio(-(ZoomRatio - fCal));
+
 					m_fPrevZoomRatio = 0.f;
 					(*vecEvt)[i].End = true;
 					return;
@@ -179,10 +175,8 @@ void Tiles::ZoomEvent(float _DeltaTime)
 			}
 
 			GetLevel()->GetMainCamera()->AddZoomRatio(-ZoomRatio);
-			if (Evt.Ratio <= 0.1f)
-			{
-				BackGroundCamera->AddZoomRatio(-(ZoomRatio));
-			}
+			BackGroundCamera->AddZoomRatio(-(ZoomRatio));
+
 			return;
 		}
 	}
