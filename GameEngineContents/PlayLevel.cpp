@@ -41,12 +41,6 @@ void PlayLevel::Update(float _DeltaTime)
 	EndFireWork(_DeltaTime);
 	PlanetSwap();
 
-	//if (GameEngineInput::IsDown("Reset"))
-	//{
-	//	GameEngineCore::ChangeLevel("PlayLevel");
-	//}
-
-
 	m_pTitleNameText->SetPosition(float4{ 0.f,400.f } + GetMainCamera()->GetTransform()->GetWorldPosition());
 
 	if (GameEngineInput::IsDown("CenterLevel"))

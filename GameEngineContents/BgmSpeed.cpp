@@ -23,8 +23,7 @@ void BgmSpeed::SetType(BpmType _Type)
 	{
 	case BpmType::NONE:
 	{
-		MsgAssert("NONE으로 세팅 할 수 없습니다.");
-		return;
+		m_pRenderer->SetTexture("nothing.png");
 	}
 	break;
 	case BpmType::RABBIT:
@@ -78,6 +77,10 @@ void BgmSpeed::Update(float _DeltaTime)
 				switch (m_eType)
 				{
 				case BpmType::NONE:
+				{
+					m_bTrigger = true;
+					GlobalValue::GetInst()->BPM = 1.f;
+				}
 					break;
 				case BpmType::RABBIT:
 				{
