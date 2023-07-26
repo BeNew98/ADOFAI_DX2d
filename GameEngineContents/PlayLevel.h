@@ -42,6 +42,7 @@ private:
 	std::shared_ptr<class FireWorkEffect> m_pBlueFire = nullptr;
 	std::shared_ptr<class FadeEffect> m_FadeEffect = nullptr;
 
+
 	bool m_bGameStart = false;
 	bool m_bPlaying = false;
 	int m_iBPM = 0;

@@ -22,6 +22,13 @@
 #include "RoundGlowEffect.h"
 #include "BackGroundRenderer.h"
 
+#ifdef _DEBUG
+float fDelay = 0.f;
+#else
+float fDelay = 0.5f;
+#endif
+
+
 PlayLevel::PlayLevel()
 {
 }
@@ -96,7 +103,7 @@ void PlayLevel::LevelChangeStart()
 
 	m_iBPM = m_pStageInfo.BPM;
 	m_fReadyTime = m_iBPM / 60.f / 5.f * 3.f;
-
+	m_fReadyTime += fDelay;
 	TileEventSetting();
 
 
