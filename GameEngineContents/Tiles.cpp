@@ -153,7 +153,10 @@ void Tiles::ZoomEvent(float _DeltaTime)
 				{
 					float fCal = m_fPrevZoomRatio - Evt.Ratio;
 					GetLevel()->GetMainCamera()->AddZoomRatio(-(ZoomRatio- fCal));
-					BackGroundCamera->AddZoomRatio(-(ZoomRatio - fCal));
+					if (Evt.Ratio <= 0.1f)
+					{
+						BackGroundCamera->AddZoomRatio(-(ZoomRatio - fCal));
+					}
 					m_fPrevZoomRatio = 0.f;
 					(*vecEvt)[i].End = true;
 					return;
@@ -165,7 +168,10 @@ void Tiles::ZoomEvent(float _DeltaTime)
 				{
 					float fCal = m_fPrevZoomRatio - Evt.Ratio;
 					GetLevel()->GetMainCamera()->AddZoomRatio(-(ZoomRatio- fCal));
-					BackGroundCamera->AddZoomRatio(-(ZoomRatio - fCal));
+					if (Evt.Ratio <= 0.1f)
+					{
+						BackGroundCamera->AddZoomRatio(-(ZoomRatio - fCal));
+					}
 					m_fPrevZoomRatio = 0.f;
 					(*vecEvt)[i].End = true;
 					return;
@@ -173,7 +179,10 @@ void Tiles::ZoomEvent(float _DeltaTime)
 			}
 
 			GetLevel()->GetMainCamera()->AddZoomRatio(-ZoomRatio);
-			BackGroundCamera->AddZoomRatio(-ZoomRatio);
+			if (Evt.Ratio <= 0.1f)
+			{
+				BackGroundCamera->AddZoomRatio(-(ZoomRatio));
+			}
 			return;
 		}
 	}
@@ -239,6 +248,15 @@ void Tiles::MoveEvent(float _DeltaTime)
 void Tiles::RotationEvent(float _DeltaTime)
 {
 
+	if (m_fData.z != 360.f)
+	{
+		std::map<EventType, std::vector<TileEvent>>::iterator findPrevIter = EditGui::Editor->GetStageInfo(0).AllTile[m_iIndex - 1].m_pTile->m_mapAllEvent.find(EventType::ROTATION);
+		if (findPrevIter != EditGui::Editor->GetStageInfo(0).AllTile[m_iIndex - 1].m_pTile->m_mapAllEvent.end())
+		{
+			findPrevIter->second[0].End = true;
+		}
+	}
+
 	std::map<EventType, std::vector<TileEvent>>::iterator findIter = m_mapAllEvent.find(EventType::ROTATION);
 
 	if (findIter == m_mapAllEvent.end() || m_bRotTrigger == true)
@@ -246,6 +264,7 @@ void Tiles::RotationEvent(float _DeltaTime)
 		m_bRotTrigger = true;
 		return;
 	}
+
 	std::vector<TileEvent>* vecEvt = &findIter->second;
 
 	std::shared_ptr<GameEngineCamera>MainCamera = GetLevel()->GetMainCamera();
@@ -266,6 +285,15 @@ void Tiles::RotationEvent(float _DeltaTime)
 		}
 		TileEvent Evt = (*vecEvt)[i];
 		{
+			if (Evt.Ratio == 0.f)
+			{
+				MainCamera->GetTransform()->SetWorldRotation({ 0.f,0.f,Evt.Ratio });
+				BackGroundCamera->GetTransform()->SetWorldRotation({ 0.f,0.f,Evt.Ratio });
+
+				m_fPrevRotRatio = 0.f;
+				(*vecEvt)[i].End = true;
+				return;
+			}
 			float RotRatio = Evt.Ratio * _DeltaTime / Evt.Time;
 			m_fPrevRotRatio += RotRatio;
 			if (Evt.Ratio > 0.f)
