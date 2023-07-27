@@ -25,7 +25,7 @@
 #ifdef _DEBUG
 float fDelay = 0.f;
 #else
-float fDelay = 0.5f;
+float fDelay = 0.0f;
 #endif
 
 
