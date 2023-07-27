@@ -114,7 +114,6 @@ void TitleLevel::LevelChangeStart()
 
 
 
-	m_pAccuracyText = CreateActor<TextObj>(OrderNum::TEXT);
 	for (size_t i = 0; i < m_pStageInfo.AllTile.size(); i++)
 	{
 		m_pStageInfo.AllTile[i].m_pTile->GetTransform()->AddWorldPosition({ -Tilepos.x, -Tilepos.y });
@@ -128,12 +127,25 @@ void TitleLevel::LevelChangeStart()
 			EditGui::Editor->SetBPM(150);
 			PrevPosition = m_pPortal1->GetAccPosition();
 		});
-	m_pPortal1->SetText(m_pAccuracyText);
+	//m_pPortal1->SetText(m_pAccuracyText);
 
 	std::shared_ptr< GameEngineSpriteRenderer> pLevel1 = m_pStageInfo.AllTile[30].m_pTile->CreateComponent<GameEngineSpriteRenderer>(OrderNum::BACKGROUND);
 	pLevel1->SetTexture("1.png");
 	pLevel1->GetTransform()->SetLocalPosition({ 0.f,250.f });
-	pLevel1->GetTransform()->SetLocalScale({ 212.f,256.f,1.f });
+	pLevel1->GetTransform()->SetLocalScale({212.f,256.f,1.f });
+
+
+
+	std::shared_ptr< GameEngineSpriteRenderer> pLevel1Name = m_pStageInfo.AllTile[30].m_pTile->CreateComponent<GameEngineSpriteRenderer>(OrderNum::BACKGROUND);
+	pLevel1Name->SetScaleToTexture("menu_names_lowres.png");
+	pLevel1Name->GetTransform()->SetLocalPosition({ 0.f,550.f });
+	//pLevel1Name->GetTransform()->SetLocalScale({ 212.f,256.f,1.f });
+
+	m_pAccuracyText = CreateActor<TextObj>(OrderNum::TEXT);
+	m_pAccuracyText->SetScale(50.f);
+	m_pAccuracyText->SetPosition(pLevel1Name->GetTransform()->GetWorldPosition()-float4{0.f,20.f});
+	m_pAccuracyText->SetTxt("1번째 세계");
+	
 
 	std::shared_ptr< GameEngineSpriteRenderer> pLevel1Fog = m_pStageInfo.AllTile[30].m_pTile->CreateComponent<GameEngineSpriteRenderer>(OrderNum::BACKGROUND);
 	pLevel1Fog->SetTexture("StageFog.png");
@@ -156,19 +168,27 @@ void TitleLevel::LevelChangeStart()
 		}
 		m_pStageInfo.AllTile[i].m_pTile->GetRender()->ColorOptionValue.MulColor = { 1.f, 1.f, 1.f, 0.f };
 	}
-	m_pAccuracyText->SetScale(75.f);
-	m_pAccuracyText->GetTransform()->SetWorldPosition(pLevel1->GetTransform()->GetWorldPosition());
-	//m_pAccuracyText->Off();
-	m_pAccuracyText->SetTxt("플레이 기록 없음");
-	m_pAccuracyText->SetPosition({ 0.f,64.f });
-	m_pAccuracyText->SetColor({ 255.f ,255.f ,255.f , 0.f});
+	//m_pAccuracyText->SetScale(75.f);
+	//m_pAccuracyText->GetTransform()->SetWorldPosition(pLevel1->GetTransform()->GetWorldPosition());
+	////m_pAccuracyText->Off();
+	//m_pAccuracyText->SetTxt("플레이 기록 없음");
+	//m_pAccuracyText->SetPosition({ 0.f,64.f });
+	//m_pAccuracyText->SetColor({ 255.f ,255.f ,255.f , 0.f});
 	
 	EditGui::Editor->Off();
 	//EditGui::Editor->On();
 
 	m_fReadyTime = EditGui::Editor->GetStageInfo(0).BPM / 60.f / 5.f;
-	GetLevel()->GetMainCamera()->GetTransform()->SetWorldPosition(PrevPosition);
+	if (PrevPosition!=float4::Zero)
+	{
+		GetLevel()->GetMainCamera()->GetTransform()->SetWorldPosition(PrevPosition+float4{0.f,200.f});
+	}
+	else
+	{
+		GetLevel()->GetMainCamera()->GetTransform()->SetWorldPosition(PrevPosition);
+	}
 
+	CenterCheck();
 }
 
 void TitleLevel::LevelChangeEnd()
